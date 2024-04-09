@@ -1,0 +1,654 @@
+0:00 | OPERATOR: --
+0:00 | The following content is provided under a Creative
+0:02 | Commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation, or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:22 | PROFESSOR: At the end of the lecture on Tuesday, a number
+0:27 | of people asked me questions, asked Professor Grimson
+0:30 | questions, which made it clear that I had been less than
+0:35 | clear on at least a few things, so I want to come back
+0:39 | and revisit a couple of the things we talked about at the
+0:43 | end of the lecture.
+0:45 | You'll remember that I had drawn this decision tree, in
+0:58 | part because it's an important concept I want you to
+1:00 | understand, the concept of decision trees, and also to
+1:05 | illustrate, I hope, visually, some things related to dynamic
+1:10 | programming.
+1:11 | So we had in that decision tree, is we had the weight
+1:17 | vector, and I just given a very simple one [5,3,2], and
+1:23 | we had a very simple value vector, [9,7,8].
+1:32 | And then the way we drew the tree, was we started at the
+1:44 | top, and said all right, we're going to first look at item
+1:53 | number 2, which was the third item in our list of items, of
+1:57 | course, and say that we had five pounds left of weight
+2:04 | that our knapsack that could hold, and currently had a
+2:07 | value of 0.
+2:11 | And then we made a decision, to not put that last item in
+2:18 | the backpack, and said if we made that decision, the next
+2:23 | item we had to consider was item 1, we still had five
+2:28 | pounds available, and we still had a weight 0 available.
+2:35 | Now I, said the next item to consider is item 1, but really
+2:40 | what I meant is, 1 and all of the items proceeding it in the
+2:45 | list. This is my shorthand for saying the list up to and
+2:51 | including items sub 1, kind of a normal way
+2:55 | to think about it.
+2:58 | And then we finish building the tree, left first step
+3:01 | first, looking at all the no branches, 0,5,0 and then we
+3:09 | were done, that was one branch.
+3:15 | We then backed up, and said let's look at a yes, we'll
+3:21 | include item number 1.
+3:25 | Well, what happens here, if we've included that, it uses
+3:33 | up all the available weight, and gave us the value of 9.
+3:37 | STUDENT: [UNINTELLIGIBLE]
+3:41 | PROFESSOR: Pardon?
+3:44 | STUDENT: -- want to be off the bottom branch.
+3:49 | PROFESSOR: Yup, Off by 1.
+3:52 | Yeah, I wanted to come off this branch, because I've
+3:54 | backtrack just 1, thank you.
+4:03 | And then I backtrack up to this branch, and
+4:09 | from here we got 0,2,7.
+4:13 | And I'm not going to draw the rest of the tree for you here,
+4:16 | because I drew it last time, and you don't need to see the
+4:19 | whole tree.
+4:20 | The point I wanted to make is that for every node, except
+4:29 | the leaves, the leaves are the bottom of a tree in this case,
+4:34 | computer scientists are weird, right, they draw trees where
+4:36 | the root is at the top, and the leaves are at the bottom.
+4:40 | And I don't know why, but since time immemorial that is
+4:44 | the way computer scientists have drawn trees.
+4:49 | That's why we're not biologists, I guess.
+4:52 | We don't understand these things.
+4:54 | But what I want you to notice is that for each node, except
+4:58 | the leaves, the solution for that node can be computed from
+5:05 | the solutions from it's children.
+5:10 | So in order to look at the solution of this node, I
+5:16 | choose one of the solutions of it's children, a or b, is the
+5:23 | best solution if I'm here, and of course this is the better
+5:26 | of the 2 solutions.
+5:29 | If I look at this node, I get to choose its solution as the
+5:34 | better of the solution for this node, and this node.
+5:39 | All the way up to the top, where when I have to choose
+5:43 | the best solution to the whole problem, it's either the best
+5:47 | solution to the left node, or the best solution
+5:49 | to the right node.
+5:51 | This happens to be a binary decision tree.
+5:58 | There's nothing magic about there being only two nodes,
+6:03 | for the knapsack problem, that's just the way it works
+6:05 | out, but there are other problems where there might be
+6:09 | multiple decisions to make, more than a or yes or no, but
+6:13 | it's always the case here that I have what we last time
+6:19 | talked about as what?
+6:23 | Optimal sub structure.
+6:36 | As I defined it last time, it means that I can solve a
+6:42 | problem by finding the optimal solution to smaller sub
+6:48 | problems. Classic divide and conquer that we've seen over
+6:54 | and over again in the term.
+6:57 | Take a hard problem, say well, I can solve it by solving 2
+7:02 | smaller problems and combine their solution, and this case,
+7:06 | the combining is choosing the best, it's a or b.
+7:16 | So then, I went directly from that way of thinking about the
+7:20 | problem, to this straightforward, at the top of
+7:26 | the slide here, also at the top of your handout, both
+7:31 | yesterday and today, a straightforward implementation
+7:35 | of max val, that basically just did this.
+7:44 | And as you might have guessed, when you're doing this sort of
+7:48 | thing, recursion is a very natural way to implement it.
+7:54 | We then ran this, demonstrated that it got the right answer
+7:58 | on problems that were small enough that we knew with the
+8:00 | right answer was, ran it on a big problem, got what we hoped
+8:08 | was the right answer, but we had no good way to check it in
+8:10 | our heads, but noticed it took a long time to run.
+8:17 | And then we asked ourselves, why did it
+8:19 | take so long to run?
+8:21 | And when we turned on the print statement, what we saw
+8:24 | is because it was doing the same thing
+8:26 | over and over again.
+8:31 | Because we had a lot of the sub-problems were the same.
+8:37 | It was as if, when we went through this search tree, we
+8:40 | never remembered what we got at the bottom, and we just
+8:43 | re-computed things over and over.
+8:46 | So that led us to look at memoization, the sort of key
+8:51 | idea behind dynamic programming, which says let's
+9:03 | remember the work we've done and not do it all over again.
+9:08 | We used a dictionary to implement the memo, and that
+9:12 | got us to the fast max val, which got called from max val
+9:18 | 0, because I wanted to make sure I didn't change the
+9:23 | specification of max val by introducing this memo that
+9:27 | users shouldn't know even exists, because it's part of
+9:30 | the implementation, not part of the problem statement.
+9:35 | We did that, and all I did was take the original code and
+9:40 | keep track of what I've done, and say have I computed this
+9:43 | value before, if so, don't compute it again.
+9:50 | And that's the key idea that you'll see over and over again
+9:54 | as you solve problems with dynamic programming, is you
+9:57 | say, have I already solved this problem, if so, let me
+10:02 | look up the answer.
+10:05 | If I haven't solved the problem, let me solve it, and
+10:08 | store the answer away for later reference.
+10:15 | Very simple idea, and typically the beauty of
+10:19 | dynamic programming as you've seen here, is not only is the
+10:22 | idea simple, even the implementation is simple.
+10:26 | There are a lot of complicated algorithmic ideas, dynamic
+10:30 | programming is not one of them.
+10:32 | Which is one of the reasons we teach it here.
+10:35 | The other reason we teach it here, in addition to it being
+10:37 | simple, is that it's incredibly useful.
+10:42 | It's probably among the most useful ideas there is for
+10:46 | solving complicated problems.
+10:50 | All right, now let's look at it.
+10:55 | So here's the fast version, we looked at it last time, I'm
+10:57 | not going to bore you by going through the details of it
+11:00 | again, but we'll run it.
+11:07 | This was the big example we looked at last time, where we
+11:15 | had 30 items we could put in to choose from, so when we do
+11:22 | it exponentially, it looks like it's 2 to the 30, which
+11:25 | is a big number, but when we ran this, it found the answer,
+11:33 | and it took only 1805 calls.
+11:38 | Now I got really excited about this because, to me it's
+11:42 | really amazing, that we've taken a problem that is
+11:46 | apparently exponential, and solved it like that.
+11:51 | And in fact, I could double the size of the items to
+11:56 | choose from, and it would still run like.
+11:59 | Eh - I'm not very good at snapping my fingers -- it
+12:02 | would still run quickly.
+12:04 | All right, so here's the question: have I found a way
+12:11 | to solve an inherently exponential
+12:14 | problem in linear time.
+12:17 | Because what we'll see here, and we saw a little of this
+12:20 | last time, as I double the size of the items, I only
+12:26 | really roughly double the running time.
+12:29 | Quite amazing.
+12:32 | So have I done that?
+12:34 | Well, I wish I had, because then I would be really famous,
+12:39 | and my department head would give me a big raise, and all
+12:42 | sorts of wonderful things would follow.
+12:45 | But, I'm not famous, and I didn't solve that problem.
+12:51 | What's going on?
+12:53 | Well this particular algorithm takes roughly, and I'll come
+12:58 | back to the roughly question, order (n,s) time, where n is
+13:12 | the number of items in the list and s, roughly speaking,
+13:21 | is the size of the knapsack.
+13:26 | We should also observe, that it takes order and s space.
+13:37 | Because it's not free to store all these values.
+13:46 | So at one level what I'm doing is trading time for space.
+13:51 | It can run faster because I'm using some
+13:54 | space to save things.
+13:59 | So in this case, we had 30 items and the wait was 40,
+14:08 | and, you know, this gives us 1200 which is
+14:11 | kind of where we were.
+14:14 | And I'm really emphasizing kind of here, because really
+14:18 | what I'm using the available size for, is as a proxy for
+14:23 | the number of items that can fit in the knapsack.
+14:28 | Because the actual running time of this, and the actual
+14:32 | space of this algorithm, is governed, interestingly
+14:38 | enough, not by the size of the problem alone, but by the size
+14:45 | of the solution.
+14:51 | And I'm going to come back to that.
+14:58 | So how long it takes to run is related to how many items I
+15:05 | end up being able to fit into the knapsack.
+15:08 | If you think about it, this make sense.
+15:16 | An entry is made in the memo whenever an item, and an
+15:22 | available size pair is considered.
+15:27 | As soon as the available size goes to 0, I know I can't
+15:32 | enter any more items into the memo, right?
+15:37 | So the number of items I have to remember is related to how
+15:44 | many items I can fit in the knapsack.
+15:51 | And of course, the amount of running time is exactly the
+15:54 | number of things I have to remember,
+15:56 | almost exactly, right?
+15:58 | So you can see if you think about it abstractly, why the
+16:06 | amount of work I have to do here will be proportional to
+16:11 | the number of items I can fit in, that is to say, the size
+16:14 | of the solution.
+16:17 | This is not the way we'd like to talk about complexity.
+16:23 | When we talk about the order, or big O, as we keep writing
+16:27 | it, of a problem, we always prefer to talk about it in
+16:32 | terms of the size of the problem.
+16:34 | And that makes sense because in general we don't know the
+16:40 | size of the solution until we've solved it.
+16:45 | So we'd much rather define big O in terms of the inputs.
+16:53 | What we have here is what's called a
+16:57 | pseudo-polynomial algorithm.
+17:04 | You remember a polynomial algorithm is an algorithm
+17:08 | that's polynomial in the size of the inputs.
+17:15 | Here we have an algorithm that's polynomial in the size
+17:18 | of the solution, hence the qualifier pseudo.
+17:28 | More formally, and again this is not crucial to get all the
+17:33 | details on this, if we think about a numerical algorithm, a
+17:39 | pseudo-polynomial algorithm has running time that's
+17:45 | polynomial in the numeric value of the input.
+18:02 | I'm using a numeric example because it's easier to talk
+18:05 | about it that way.
+18:11 | So you might to look at, say, an implementation of
+18:13 | factorial, and say its running time is proportional to the
+18:19 | numerical value of the number who's factorial.
+18:22 | If I'm computing factorial of 8, I'll do 8 operations, Right
+18:29 | Factorial of 10, I'll do 10 operations.
+18:34 | Now the key issue to think about here, is that as we look
+18:39 | at this kind of thing, what we'll see is that, if we look
+18:48 | at a numeric value, we know that that's exponential number
+18:58 | in the number of digits.
+19:12 | So that's the key thing to think about, Right That you
+19:16 | can take a problem, and typically, when we're actually
+19:22 | formally looking at computational complexity, big
+19:26 | O, what we'll define the in terms of, is the size of the
+19:37 | coding of the input.
+19:48 | The number of bits required to represent the
+19:51 | input in the computer.
+19:59 | And so when we say something is exponential, we're talking
+20:03 | about in terms of the number of bits required
+20:05 | to represent it.
+20:10 | Now why am I going through all this, maybe I should use the
+20:14 | word pseudo-theory?
+20:18 | Only because I want you to understand that when we start
+20:22 | talking about complexity, it can be really quite subtle.
+20:27 | And you have to be very careful to think about what
+20:30 | you mean, or you can be very surprised at how long
+20:34 | something takes to run, or how much space it uses.
+20:38 | And you have to understand the difference between, are you
+20:43 | defining the performance in terms of the size of the
+20:46 | problem, or the size of the solution.
+20:49 | When you talk about the size of the problem, what do you
+20:53 | mean by that, is it the length of an array, is it the size of
+20:56 | the elements of the array, and it can matter.
+21:01 | So when we ask you to tell us something about the
+21:05 | efficiency, on for example a quiz, we want you to be very
+21:11 | careful not to just write something like, order n
+21:15 | squared, but to tell us what n is.
+21:22 | For example, the number of elements in the list. But if
+21:26 | you have a list of lists, maybe it's not just the number
+21:30 | elements in the list, maybe it depends upon what
+21:32 | the elements are.
+21:37 | So just sort of a warning to try and be very careful as you
+21:42 | think about these things, all right.
+21:51 | So I haven't done magic, I've given you a really fast way to
+21:55 | solve a knapsack problem, but it's still exponential deep
+22:02 | down in its heart, in something.
+22:05 | All right, in recitation you'll get a chance to look at
+22:10 | yet another kind of problem that can be solved by dynamic
+22:13 | programming, there are many of them.
+22:17 | Before we leave the knapsack problem though, I want to take
+22:21 | a couple of minutes to look at a slight
+22:23 | variation of the problem.
+22:26 | So let's look at this one.
+22:29 | Suppose I told you that not only was there a limit on the
+22:35 | total weight of the items in the knapsack,
+22:38 | but also on the volume.
+22:41 | OK, if I gave you a box of balloons, the fact that they
+22:45 | didn't weight anything wouldn't mean you couldn't
+22:48 | put, you could put lots of them in the knapsack, right?
+22:52 | Sometimes it's the volume not the weight that matters,
+22:56 | sometimes it's both.
+22:59 | So how would we go about solving this problem if I told
+23:02 | you not only was there a maximum weight, but there was
+23:04 | a maximum volume.
+23:07 | Well, we want to go back and attack it exactly the way we
+23:12 | attacked it the first time, which was write some
+23:14 | mathematical formulas.
+23:17 | So you'll remember that when we looked at it, we said that
+23:21 | the problem was to maximize the sum from i equals 1 to n,
+23:28 | of p sub i, x sub i, maybe it should be 0 to n minus 1, but
+23:34 | we won't worry about that.
+23:38 | And we had to do it subject to the constraint that the sum
+23:45 | from 1 to n of the weight sub i times x sub i, remember x is
+23:50 | 0 if it was in, 1 if it wasn't, was less than or equal
+23:54 | to the cost, as I wrote it this time, which was the
+23:58 | maximum allowable weight.
+24:02 | What do we do if we want to add volume, is an issue?
+24:06 | Does this change?
+24:07 | Does the goal change?
+24:10 | You're answering.
+24:11 | Answer out -- no one else can see you shake your head.
+24:13 | STUDENT: No.
+24:14 | PROFESSOR: No.
+24:15 | The goal does not change, it's still the same goal.
+24:18 | What changes?
+24:19 | STUDENT: The constraints.
+24:22 | PROFESSOR: Yeah, and you don't get another bar.
+24:24 | The constraint has to change.
+24:25 | I've added a constraint.
+24:28 | And, what's the constraint I've added?
+24:31 | Somebody else -- yeah?
+24:33 | STUDENT: You can't exceed the volume that the
+24:36 | knapsack can hold.
+24:37 | PROFESSOR: Right, but can you state in this
+24:38 | kind of formal way?
+24:39 | STUDENT: [INAUDIBLE]
+24:43 | PROFESSOR: -- sum from i equals 1 to n --
+24:44 | STUDENT: [INAUDIBLE]
+24:45 | PROFESSOR: Let's say v sub i, x sub i, is less than or equal
+24:55 | to, we'll write k for the total allowable volume.
+24:59 | Exactly.
+25:02 | So the thing to notice here, is it's actually quite a
+25:05 | simple little change we've made.
+25:13 | I've simply added this one extra constraint, nice thing
+25:18 | about thinking about it this way is it's easy to think
+25:20 | about it, and what do you think I'll have to do if I
+25:24 | want to go change the code?
+25:28 | I'm not going to do it for you, but what would I think
+25:32 | about doing when I change the code?
+25:35 | Well, let's look at the simple version first, because it's
+25:38 | easier to look at.
+25:39 | At the top.
+25:42 | Well basically, all I'd have to do is go through and find
+25:45 | every place I checked the constraint, and change it.
+25:51 | To incorporate the new constraint.
+25:55 | And when I went to the dynamic programming problem, what
+25:58 | would I have to do, what would change?
+26:02 | The memo would have to change, as well as the checks, right?
+26:07 | Because now, I not only would have to think about how much
+26:13 | weight did I have available, but I have to think about how
+26:17 | much volume did I have available.
+26:20 | So whereas before, I had a mapping from the item and the
+26:27 | weight available, now I would have to have it from a tuple
+26:31 | of the weight and the volume.
+26:35 | Very small changes.
+26:38 | That's one of the things I want you to sort of understand
+26:41 | as we look at algorithms, that they're very general, and once
+26:47 | you've figured out how to solve one problem, you can
+26:50 | often solve another problem by a very straightforward
+26:53 | reduction of this kind of thing.
+26:59 | All right, any questions about that.
+27:03 | Yeah?
+27:03 | STUDENT: I had a question about what you were talking
+27:05 | about just before.
+27:06 | PROFESSOR: The pseudo-polynomial?
+27:06 | STUDENT: Yes.
+27:07 | PROFESSOR: Ok.
+27:07 | STUDENT: So, how do you come to a conclusion as to which
+27:10 | you should use then, if you can determine the size based
+27:15 | on solution, or based on input, so how do you decide?
+27:22 | PROFESSOR: Great question.
+27:23 | So the question is, how do you choose an algorithm, why would
+27:27 | I choose to use a pseudo-polynomial algorithm
+27:30 | when I don't know how big the solution is likely to be, I
+27:33 | think that's one way to think about it.
+27:36 | Well, so if we think about the knapsack problem, we can look
+27:42 | at it, and we can ask ourselves, well first of all
+27:45 | we know that the brute force exponential solution is going
+27:50 | to be a loser if the number of items is large.
+27:55 | Fundamentally in this case, what I could look at is the
+27:58 | ratio of the number of items to the size of the knapsack,
+28:03 | say well, I've got lots items to choose from, I probably
+28:08 | won't put them all in.
+28:10 | But even if I did, it would still only
+28:13 | be 30 of them, right?
+28:17 | It's hard.
+28:18 | Typically what we'll discover is the pseudo-polynomial
+28:22 | algorithms are usually better, and in this case, never worse.
+28:33 | So this will never be worse than the brute force one. if I
+28:37 | get really unlucky, I end up checking the same number of
+28:40 | things, but I'd have to be really, it'd have to be a very
+28:44 | strange structure to the problem.
+28:47 | So it's almost always the case that, if you can find a
+28:54 | solution that uses dynamic programming, it will be better
+29:01 | than the brute force, and certainly not, well, maybe use
+29:05 | more space, but not use more time.
+29:09 | But there is no magic, here, and so the question you asked
+29:13 | is a very good question.
+29:15 | And it's sometimes the case in real life that you don't know
+29:20 | which is the better algorithm on the data you're actually
+29:23 | going to be crunching.
+29:26 | And you pays your money and you takes your chances, right?
+29:31 | And if the data is not what you think it's going to be,
+29:34 | you may be wrong in your choice, so you typically do
+29:37 | have to spend some time thinking about it, what's the
+29:40 | data going to actually look like.
+29:42 | Very good question.
+29:45 | Anything else?
+29:48 | All right, a couple of closing points before we leave this,
+29:55 | things I would like you to remember.
+29:59 | In dynamic programming, one of the things that's going on is
+30:09 | we're trading time for space.
+30:17 | Dynamic programming is not the only time we do that.
+30:21 | We've solved a lot of problems that way, in fact, by trading
+30:26 | time for space.
+30:30 | Table look-up, for example, right, that if you're going to
+30:32 | have trig tables, you may want to compute them all at once
+30:35 | and then just look it up.
+30:38 | So that's one thing.
+30:40 | Two, don't be intimidated by exponential problems. There's
+30:58 | a tendency for people to say, oh this problem's exponential,
+31:01 | I can't solve it.
+31:03 | Well, I solve 2 or 3 exponential problems before
+31:06 | breakfast every day.
+31:10 | You know things like, how to find my way to the bathroom is
+31:13 | inherently exponential, but I manage to solve it anyway.
+31:20 | Don't be intimidated.
+31:21 | Even though it is apparently exponential, a lot of times
+31:27 | you can actually solve it much, much faster.
+31:31 | Other issues.
+31:36 | Three: dynamic programming is broadly useful.
+31:53 | Whenever you're looking at a problem that seems to have a
+31:58 | natural recursive solution, think about whether you can
+32:02 | attack it with dynamic programming.
+32:07 | If you've got this optimal substructure, and overlapping
+32:10 | sub-problems, you can use dynamic programming.
+32:15 | So it's good for knapsacks, it's good for shortest paths,
+32:19 | it's good for change-making, it's good for a whole variety
+32:23 | of problems. And so keep it in your toolbox, and when you
+32:28 | have a hard problem to solve, one of the first questions you
+32:31 | should ask yourself is, can I use dynamic programming?
+32:35 | It's great for string-matching problems of a whole variety.
+32:40 | It's hugely useful.
+32:43 | And finally, I want you to keep in mind the whole concept
+32:48 | of problem reduction.
+32:54 | I started with this silly description of a burglar, and
+33:00 | said : Well this is really the knapsack problem, and now I
+33:03 | can go Google the knapsack problem and find
+33:06 | code to solve it.
+33:10 | Any time you can reduce something to a previously
+33:13 | solved problem, that's good.
+33:19 | And this is a hugely important lesson to learn.
+33:25 | People tend not to realize that the first question you
+33:28 | should always ask yourself, is this really just something
+33:31 | that's well-known in disguise?
+33:34 | Is it a shortest path problem?
+33:36 | Is it a nearest neighbor problem?
+33:38 | Is it what string is this most similar to problem?
+33:42 | There are scores of well-understood problems, but
+33:47 | only really scores, it's not thousands of them, and over
+33:52 | time you'll build up a vocabulary of these problems,
+33:56 | and when you see something in your domain, be it physics or
+33:59 | biology or anything else, linguistics, the question you
+34:04 | should ask is can I transform this into an existing problem?
+34:10 | Ok, double line.
+34:14 | If there are no questions I'm going to make a dramatic
+34:16 | change in topic.
+34:19 | We're going to temporarily get off of this more esoteric
+34:24 | stuff, and go back to Python.
+34:28 | And for the next, off and on for the next couple of weeks,
+34:33 | we'll be talking about Python and program organization.
+34:51 | And what I want to be talking about is modules of one sort,
+34:58 | and of course that's because what we're interested in is
+35:01 | modularity.
+35:06 | How do we take a complex program, again, divide and
+35:10 | conquer, I feel like a 1-trick pony, I keep repeating the
+35:14 | same thing over and over again.
+35:16 | Divide and conquer to make our programs modular so we can
+35:21 | write them a little piece at a time and understand them a
+35:23 | little piece at a time.
+35:26 | Now I think of a module as a
+35:29 | collection of related functions.
+35:44 | We've already seen these, and we're going to refer to the
+35:47 | functions using dot notation.
+36:01 | We've been doing this all term, right, probably
+36:04 | somewhere around lecture 2, we said import math, and then
+36:12 | somewhere in our program we wrote something like math dot
+36:17 | sqrt of 11, or some other number.
+36:25 | And the good news was we didn't have to worry about how
+36:28 | math did square root or anything like that, we just
+36:31 | got it and we used it.
+36:33 | Now we have the dot notation to avoid name conflicts.
+36:54 | Imagine, for example, that in my program I wrote something
+36:59 | like import set, because somebody had written a module
+37:05 | that implements mathematical sets, and somewhere else I'd
+37:11 | written something like import table, because someone had
+37:16 | something that implemented look-up tables of some sort,
+37:19 | something like dictionaries, for example.
+37:24 | And then, I wanted to ask something like membership.
+37:28 | Is something in the set, or is something in the table?
+37:31 | Well, what I would have written is something like
+37:35 | table dot member.
+37:43 | And then the element and maybe the table.
+37:48 | And the dot notation was used to disambiguate, because I
+37:51 | want the member operation from table, not the
+37:54 | member one from set.
+37:56 | This was important because the people who implemented table
+38:00 | and set might never have met each other, and so they can
+38:04 | hardly have been expected not to have used the same name
+38:06 | somewhere by accident.
+38:10 | Hence the use of the dot notation.
+38:14 | I now want to talk about a particular kind of module, and
+38:20 | those are the modules that include
+38:22 | classes or that are classes.
+38:32 | This is a very important concept as we'll see, it's why
+38:36 | MIT calls things like 6.00 subjects, so that they don't
+38:39 | get confused with classes in Python, something we really
+38:45 | need to remember here.
+38:46 | Now they can be used in different ways, and they have
+38:49 | been historically used in different ways.
+38:52 | In this subject we're going to emphasize using classes in the
+38:57 | context of what's called object-oriented programming.
+39:05 | And if you go look up at Python books on the web, or
+39:09 | Java books on the web, about 80% of them will include the
+39:13 | word object-oriented in their title.
+39:17 | Object-oriented Python programming for computer
+39:20 | games, or who knows what else.
+39:24 | And we're going to use this object-oriented programming,
+39:30 | typically to create something called data abstractions.
+39:38 | And over the next couple of days, you'll see what we mean
+39:41 | by this in detail.
+39:43 | A synonym for this is an abstract data type.
+39:48 | You'll see both terms used on the web, and the literature
+39:52 | etc., and think of them as synonyms. Now these ideas of
+39:57 | classes, object-oriented programming, data abstraction,
+40:01 | are about 40 years old, they're not new ideas.
+40:05 | But they've only been really widely accepted in practice
+40:09 | for 10 to 15 years.
+40:12 | It was in the mid-70's, people began to write articles
+40:16 | advocating this style of programming, and actually
+40:22 | building programming languages, notably Smalltalk
+40:25 | and Clue at MIT in fact, that provided linguistic support
+40:30 | for the ideas of data abstraction and
+40:32 | object-oriented programming.
+40:34 | But it really wasn't until, I would say, the arrival of Java
+40:40 | that object-oriented programming
+40:42 | caught the popular attention.
+40:47 | And then Java, C++ , Python of, course.
+40:58 | And today nobody advocates a programming language that does
+41:02 | not support it in some sort of way.
+41:07 | So what is this all about?
+41:10 | What is an object in object-oriented programming?
+41:27 | An object is a collection of data and functions.
+41:49 | In particular functions that operate on the data, perhaps
+41:53 | on other data as well.
+41:58 | The key idea here is to bind together the data and the
+42:05 | functions that operate on that data as a single thing.
+42:10 | Now typically that's probably not the way you've been
+42:12 | thinking about things.
+42:14 | When you think about an int or a float or a dictionary or a
+42:18 | list, you knew that there were functions
+42:21 | that operated on them.
+42:23 | But when you pass a parameter say, a list, you didn't think
+42:27 | that you were not only passing the list, you were also
+42:30 | passing the functions that operate on the
+42:31 | list. In fact you are.
+42:37 | It often doesn't matter, but it sometimes really does.
+42:45 | The advantage of that, is that when you pass an object to
+42:50 | another part of the program, that part of the program also
+42:56 | gets the ability to perform operations on the object.
+43:03 | Now when the only types we're dealing with are the built-in
+43:06 | types, the ones that came with the programming language, that
+43:10 | doesn't really matter.
+43:12 | Because, well, the programming language means everybody has
+43:16 | access to those operations.
+43:19 | But the key idea here is that we're going to be generating
+43:23 | user-defined types, we'll invent new types, and as we do
+43:33 | that we can't assume that if as we pass objects of that
+43:38 | type around, that the programming language is giving
+43:42 | us the appropriate operations on that type.
+43:51 | This combining of data and functions on that data is a
+43:56 | very essence of object-oriented programming.
+44:00 | That's really what defines it.
+44:03 | And the word that's often used for that is encapsulation.
+44:13 | Think of it as we got a capsule, like a pill or
+44:18 | something, and in that capsule we've got data and a bunch of
+44:23 | functions, which as we'll see are called methods.
+44:32 | Don't worry, it doesn't matter that they're called methods,
+44:34 | it's a historical artifact.
+44:43 | All right, so what's an example of this?
+44:46 | Well, we could create a circle object, that would store a
+44:51 | representation of the circle and also provide methods to
+44:56 | operate on it, for example, draw the circle on the screen,
+45:01 | return the area of the circle, inscribe it in a square, who
+45:06 | knows what you want to do with it.
+45:09 | As we talk about this, as people talk about this, in the
+45:14 | context of our object-oriented programming, they typically
+45:22 | will talk about it in terms of message pass, a message
+45:27 | passing metaphor.
+45:42 | I want to mention it's just a metaphor, just a way of
+45:45 | thinking about it, it's not anything very deep here.
+45:50 | So, the way people will talk about this, is one object can
+45:56 | pass a message to another object, and the receiving
+46:01 | object responds by executing one of its
+46:06 | methods on the object.
+46:08 | So let's think about lists.
+46:13 | So if l is a list, I can call something like s
+46:17 | dot sort, l dot sort.
+46:21 | You've seen this.
+46:22 | This says, pass the object l the message sort, and that
+46:32 | message says find the method sort, and apply it to the
+46:36 | object l, in this case mutating the object so that
+46:41 | the elements are now in sorted order.
+46:47 | If c is a circle, I might write
+46:50 | something like c dot area.
+46:55 | And this would say, pass to the object denoted by the
+46:58 | variable c, the message area, which says execute a method
+47:05 | called area, and in this case the method might return a
+47:09 | float, rather than have a side-effect.
+47:14 | Now again, don't get carried away, I almost didn't talk
+47:18 | about this whole message-passing paradigm, but
+47:22 | it's so pervasive in the world I felt you needed
+47:25 | to hear about it.
+47:27 | But it's nothing very deep, and if you want to not think
+47:30 | about messages, and just think oh, c has a method area, a
+47:34 | circle has a method area, and c as a circle will apply it
+47:38 | and do what it says, you won't get in any trouble at all.
+47:44 | Now the next concept to think about here, is the notion of
+47:57 | an instance.
+48:03 | So we've already thought about, we create instances of
+48:08 | types, so when we looked at lists, and we looked at the
+48:12 | notion of aliasing, we used the word instance, and said
+48:16 | this is 1 object, this is another object, each of those
+48:19 | objects is an instance of type list. So now that
+48:28 | gets us to a class.
+48:31 | A class is a collection of objects with
+48:51 | characteristics in common.
+49:05 | So you can think of class list. What is the
+49:09 | characteristic that all objects of class list have in
+49:12 | common, all instances of class list? it's the set of methods
+49:17 | that can be applied to lists.
+49:19 | Methods like sort, append, other things.
+49:26 | So you should think of all of the built-in types we've
+49:30 | talked about as actually just built-in classes, like
+49:35 | dictionaries, lists, etc.
+49:38 | The beauty of being able to define your own class is you
+49:43 | can now extend the language.
+49:47 | So if, for example, you're in the business, God forbid, of
+49:50 | writing financial software today, you might decide, I'd
+49:55 | really like to have a class called tanking stock, or bad
+50:00 | mortgage, or something like that or mortgage, right?
+50:03 | Which would have a bunch of operations, like, I won't go
+50:07 | into what they might be.
+50:08 | But you'd like to write your program not in terms of floats
+50:11 | and ints and lists, but in terms of mortgages, and CDOs,
+50:15 | and all of the objects that you read about in the paper,
+50:18 | the types you read about.
+50:20 | And so you get to build your own special purpose
+50:23 | programming language that helped you solve your problems
+50:26 | in biology or finance or whatever, and we'll pick up
+50:29 | here again on Tuesday.

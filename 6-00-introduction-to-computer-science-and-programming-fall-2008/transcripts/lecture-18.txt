@@ -1,0 +1,716 @@
+0:00 | OPERATOR: The following content is provided under a
+0:02 | Creative Commons license.
+0:03 | Your support helps MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:19 | PROFESSOR: You'll recall, at least some of you will recall,
+0:24 | that last time we ended up looking at a simulation of a
+0:28 | drunken university student wandering randomly in a field.
+0:33 | I'm going to return to that.
+0:37 | Before I get to the interesting part, I do want to
+0:40 | call your attention to something that some people
+0:44 | seemed a little bit confused by last time.
+0:47 | So you remember that we had this thing
+0:49 | called perform trial.
+0:53 | And the way we basically tested the drunk, what would
+0:58 | happen, is we would call this, passing in a time, the number
+1:03 | of steps, the amount of time that the drunk was wondering,
+1:07 | and the field.
+1:09 | And there was just 1 line, that I blazed past, probably
+1:14 | too quickly.
+1:16 | So what that line is saying, is we, from the field, we're
+1:23 | going to call the method get drunk, which is going to
+1:26 | return us a drunk.
+1:30 | And then we're going to call the move method for that
+1:33 | drunk, passing the field as an argument.
+1:38 | Now the question is, what would have happened if I had
+1:42 | left off these parentheses?
+1:47 | There.
+1:52 | A volunteer?
+1:54 | What would, we will do the experiment in a minute.
+1:59 | And by the way, I want to emphasize the importance of
+2:02 | experimentation.
+2:04 | I was kind of surprised, for example, to get email from
+2:07 | people saying, well, what was the correct answer to question
+2:10 | 3 on the quiz?
+2:12 | And my sort of response was, why don't you
+2:14 | type it and find out?
+2:18 | When in doubt, run the experiment.
+2:20 | So, what's going to happen, what would have happened, had
+2:24 | I failed to type that pair of parentheses?
+2:29 | Anybody?
+2:34 | Well, what is, get drunk?
+2:43 | It is a method.
+2:45 | And remember, in Python, methods, like classes, are
+2:50 | themselves objects.
+2:55 | So get drunk would have a returned an object which was a
+2:59 | method, and then, well, let's try it.
+3:10 | And the error message will tell us
+3:11 | everything we need to know.
+3:14 | Function has no attribute move.
+3:20 | Sure enough, the method does not have an attribute move.
+3:24 | The instance of the class has the attribute.
+3:28 | And so what those parentheses did, was tell me to invoke the
+3:37 | method get drunk, so now instead of that being the
+3:40 | method itself, it's the result returned by the method.
+3:45 | Which is an instance of class drunk, and that instance has
+3:51 | an attribute move, which is itself a method.
+3:57 | This is a very common programming paradigm, and it's
+4:00 | important to sort of lock into your heads, the distinction
+4:04 | between the method and an invocation of the method.
+4:10 | Because you can write either, and sometimes you won't get an
+4:13 | error message, you'll just get the wrong answer.
+4:17 | And that's kind of bad.
+4:19 | That make sense to everybody?
+4:22 | Does it not make sense to anybody, maybe is the question
+4:25 | I should ask?
+4:29 | All right, we'll go on, and we'll see more examples of
+4:32 | this kind of thing.
+4:34 | Now last week, I ran this several times to see what
+4:39 | would happen, and we saw that in fact contrary to
+4:42 | everyone's, most everyone's, expectation, the longer we ran
+4:46 | the simulation, the further the drunk was from the
+4:48 | starting point.
+4:50 | And we saw that by plotting how far the drunk was after
+4:54 | each time unit.
+4:57 | We ran it several times, we got different answers.
+5:01 | And at that point we should ask ourselves, is that really
+5:05 | the way to go about answering the original question?
+5:10 | Which was, how far should we expect the drunk to be?
+5:15 | The answer is no.
+5:17 | I don't want to sit there at the keyboard typing in 400
+5:21 | examples and then, in my head, trying to figure out what's
+5:25 | quote, typical, unquote.
+5:29 | Instead, I need to organize my simulation so that it runs a
+5:35 | number of trials for me and summarizes the results.
+5:42 | All the simulations we're going to look at it, in fact
+5:46 | almost all the simulations anyone will ever write, sort
+5:50 | of, have the same kind of structure.
+5:55 | We start with an inner loop that simulates one trial.
+6:14 | That's what we have here, right, we have happen to have
+6:17 | a function.
+6:18 | So when I say inner loop, what I mean is, not that I'll write
+6:22 | a program a bunch of nested loops, but that I'll write a
+6:26 | program with some function calls, and down at sort of the
+6:31 | bottom of the stack will be perform trial.
+6:36 | Which stimulates one trial of some number of
+6:39 | seconds, in this case.
+6:46 | And then I'll quote, enclose, unquote the inner loop in
+7:04 | another loop that conducts an appropriate number of trials.
+7:25 | Now a little bit later in the term, we'll get to the
+7:29 | question of, how do we know what an appropriate number is?
+7:33 | For today, we'll just say, a lot.
+7:39 | And we'll talk about that a little bit more.
+7:42 | And then finally, what we want to do, is calculate and
+7:55 | present some relevant statistics about the trials.
+8:07 | And we'll talk about what's relevant.
+8:11 | I want to emphasize today the presentation of them.
+8:17 | Last time we looked at a graph, which I think you'll
+8:20 | all agree, was a lot prettier to look at an array of, say,
+8:24 | 1000 numbers.
+8:33 | All right.
+8:34 | So now, on your handout and on the screen, you'll see the way
+8:41 | we've done this.
+8:43 | So perform trial, we've already seen, so we know what
+8:46 | the inner loop looks like.
+8:49 | We can ignore first test, that was just my taking the code
+8:53 | that I had in line last time and putting it in a function.
+8:58 | And now what you'll see in the handout is perform sim and
+9:03 | answer question.
+9:07 | So, let's look it those.
+9:11 | So perform sim, sim for simulation, takes the amount
+9:17 | of time, the number of steps for each trial, plus the
+9:21 | number of trials.
+9:26 | It starts with an empty list, dist short for distances here,
+9:32 | saying so far we haven't run any trials, we don't know what
+9:35 | any of the distances are.
+9:37 | And then for trial in range number of trials, it creates a
+9:42 | drunk, and I'm putting the trial as part of the drunk's
+9:50 | name, just so we can make sure that the
+9:53 | drunks are all different.
+9:56 | Then I'm going to create a field with that drunk in it at
+9:59 | location 0,0.
+10:03 | And then I'm going to call perform trial with the time in
+10:08 | that field to get the distances.
+10:14 | What does perform trial return?
+10:22 | We looked at it earlier.
+10:25 | What is perform trial returning?
+10:30 | Somebody?
+10:35 | Surely someone can figure this one out.
+10:39 | I have a whole new bag of candy here, post-Halloween.
+10:45 | What kind of thing is it returning?
+10:47 | Is it returning a number?
+10:49 | If you think it's returning a number, oh, ok, you gonna tell
+10:52 | me what kind of thing it's returning, please?
+10:55 | A list, thank you.
+10:57 | And it's a list of what?
+11:02 | I'm giving you the candy on spec, assuming you'll give me
+11:04 | the right answer.
+11:07 | List of distances, exactly.
+11:10 | So how far way it is after each time step?
+11:13 | This is exactly the list that we graphed last time.
+11:19 | So perform sim will get that list and append it to the
+11:26 | list. So dist list will be a list of lists, each element
+11:34 | will be a list of distances, right?
+11:38 | OK, so that's good.
+11:42 | And that's now step 2.
+11:50 | In some sense, all of this is irrelevant to the actual
+11:54 | question we started with, in some sense.
+11:58 | This is just the structure.
+12:00 | Then I'm going to write a function called answer
+12:03 | question, or ans quest, designed to actually address
+12:08 | the original question.
+12:12 | So it, too, is going to create a list. This is
+12:14 | a list called means.
+12:19 | Then it's going to call perform sim, to get this list
+12:23 | of lists, then it will go through that and calculate the
+12:35 | means and create a list of means.
+12:40 | And then it will plot it, and we'll get to, before this
+12:43 | lecture's over, how the plotting works.
+12:45 | So I'm following exactly that structure here.
+12:49 | It calls this function, which runs an appropriate number of
+12:55 | trials by calling that function, and then we'll
+12:58 | calculate and present some statistics.
+13:01 | So now let's run it.
+13:11 | All right, so what have I done?
+13:12 | I typed an inadvertent chara -- ah, yes, I typed an s which
+13:15 | I didn't intend to type.
+13:30 | It's going to take a little while, it's loading Pylab.
+13:33 | Now it's running the simulation.
+13:37 | All right, and here's a picture.
+13:43 | So, when we ran it, let's look at the code for a minute here,
+13:50 | what we can see is at the bottom, I called ans quest,
+13:55 | saying each trial should be 500 steps, and run 100 trials.
+14:04 | And then we'll plot this graph.
+14:20 | Graph is lurking somewhere in there, it is.
+14:23 | And one of the nice things we'll see is, it's kind of
+14:26 | smooth, And we'll come back to this, but the fact that it's
+14:31 | sort of smooth makes me feel that running 100 trials might
+14:38 | actually be enough to give me a consistent answer.
+14:43 | You know, if it had been bouncing up and down as we
+14:45 | went, then we'd say, jeez, no trend here.
+14:51 | Seeing a relatively smooth trend makes me feel somewhat
+14:56 | comfortable that we're actually getting an
+14:59 | appropriate answer.
+15:01 | And that if I were to run 500 trials, the line would be
+15:04 | smoother, but it would look kind of the same.
+15:08 | Because it doesn't look like it's moving here, in arbitrary
+15:12 | directions large amounts.
+15:14 | It's not like the stock market.
+15:19 | Should I be happy?
+15:23 | I've sort of done what I wanted, I kind of I think I
+15:25 | have an answer now, which is 500 steps, it should be four
+15:30 | and a half units away from the origin.
+15:37 | What do you think?
+15:39 | Who think this is the right answer?
+15:48 | So who thinks it's a wrong answer, raise your hand?
+15:55 | All right, TAs, what do you guys think?
+15:57 | Putting you on the spot.
+15:59 | Right answer or wrong answer?
+16:03 | They think it's right.
+16:06 | Well, shame on them.
+16:11 | Let's remember, rack our brains to a week ago, when we
+16:16 | ran a bunch of individual tests.
+16:19 | And let's see what we get if we do that.
+16:22 | And the point here is, it's always good to check.
+16:27 | My recollection, when I looked at this, was that
+16:30 | something was amiss.
+16:32 | Because I kind of remember, when I ran the test last time,
+16:36 | we were more like 40 away than four away.
+16:41 | Well all right, let's try it.
+16:44 | We'll, sometimes happens, all right, I'm going to have to
+16:58 | restart Idol here, just, as you all, at least all who use
+17:03 | Macintoshes know, this happens sometimes, it's not
+17:07 | catastrophic.
+17:18 | Sigh.
+17:22 | So this reminds me of the old joke.
+17:26 | That a computer scientist, a mechanical engineer, were
+17:31 | riding in a car and the car stalled, stopped running.
+17:36 | And the mechanical engineer said I know what to do, let's
+17:39 | go out and check the carburetor,
+17:41 | and look at the engine.
+17:43 | The computer scientist said, no that's the
+17:45 | wrong thing to do.
+17:47 | What you ought to do is, let's turn off the key, get out of
+17:50 | the car, shut the doors, open the doors, get back in and
+17:53 | restart it.
+17:56 | And sure enough, it worked.
+17:58 | So when in doubt, reboot.
+18:03 | So, we'll come down, we'll do that, and we're going to call
+18:09 | first test here, and see what that gives us.
+18:18 | And we'll, for the moment, ignore that.
+18:33 | Well, look at this.
+18:35 | We ran a bunch of Homer's random walks, and maybe it
+18:38 | isn't 40, but not even one of them was four.
+18:45 | So now we see is, we've run two tests, and we've gotten
+18:50 | inconsistent answers.
+18:54 | Well, we don't know which one is wrong.
+18:57 | We know that one of them is wrong.
+18:59 | We don't even know that, maybe we just got unlucky with these
+19:02 | five tests.
+19:04 | But odds are, something is wrong, that
+19:08 | there's a bug here.
+19:10 | And, we have to figure out which one.
+19:15 | So how would we go about doing that?
+19:20 | Well, I'm going to do what I always recommend people do.
+19:28 | Which was, find a really simple example, One for which
+19:34 | I actually know the answer.
+19:38 | So what would be a good example for which I might know
+19:41 | the answer?
+19:49 | Give me the simplest example of a simulation of the random
+19:53 | walk I could run, where you're confident you know
+19:57 | what the answer is.
+19:59 | Yeah? one step, exactly, and what's the
+20:03 | answer after one step?
+20:07 | One.
+20:08 | She can't catch and talk at the same time.
+20:12 | Exactly.
+20:12 | So we know if we simulate it, one, the drunk has moved in
+20:17 | some direction, and is going to be exactly one step from
+20:19 | the origin.
+20:21 | So now we can go and see what we get.
+20:25 | So let's do that.
+20:27 | And we'll change this to be one, and we'll
+20:36 | change this to be one.
+20:45 | We'll see what the answer is.
+20:56 | Well.
+20:59 | 50?
+21:02 | Well, kind of makes me worry.
+21:06 | 1.
+21:08 | All right, so we see that the simple test of Homer gives me
+21:15 | the right answer.
+21:15 | We don't know it's always the right answer, we know it's, at
+21:17 | least for this 1.
+21:18 | But we know the other 1 was just way off.
+21:22 | Interestingly, unlike the previous time, instead of
+21:24 | being way too low, it's way too high.
+21:29 | So that gives us some pause for thought.
+21:33 | And now we need to go in and debug it.
+21:37 | So let's go and debug it.
+21:40 | And seems to me the right thing to do is to go here.
+21:51 | Oh, boy, I'm going to have to restart it again, not good.
+21:56 | And we'll put an intermediate value.
+22:00 | Actually, maybe we'll do it.
+22:07 | What would be a nice thing to do here?
+22:16 | We're going to come here.
+22:18 | Well, let's, you know, we want to go somewhere halfway
+22:21 | through the program, print some intermediate value that
+22:24 | will give us some information.
+22:27 | So, this might be a good place.
+22:35 | And, what should we print?
+22:43 | Well, what values do you think you should get here?
+22:55 | Pardon?
+22:55 | STUDENT: The total distance so far.
+22:57 | PROFESSOR: The total distance so far.
+23:02 | So that would be a good thing to print.
+23:07 | And what do we think it should be?
+23:24 | We'll comment this 1 out since we think that works, and just
+23:29 | to be safe, let's not even run 100 trials let's, run one
+23:33 | trial, or two trials maybe.
+23:38 | See we get.
+23:45 | 0 and then 2.
+23:49 | W, 0 was sort of what we expected the first time
+23:51 | around, but 2?
+23:54 | How did you get to be 2?
+24:00 | Anyone want to see what's going on here?
+24:03 | So we see, right here we have the wrong answer.
+24:08 | Well, maybe we should see what things
+24:09 | looked like before this?
+24:18 | Is it the lists are wrong?
+24:19 | What am I doing wrong here?
+24:23 | I'll bet someone can figure this out.
+24:32 | Pardon?
+24:32 | STUDENT: [INAUDIBLE]
+24:35 | PROFESSOR: Well, I'm adding them up, fair enough.
+24:39 | But so tot looks OK.
+24:42 | So, all right, maybe we should take a look at means.
+24:48 | Right?
+24:49 | Let's take a look at what that looks like.
+25:03 | Not bad.
+25:06 | All right, so maybe my example's too simple.
+25:08 | Let's try a little bit bigger.
+25:19 | Hmmm --
+25:23 | 2.5?
+25:26 | All right, so now I know what's going wrong is, somehow
+25:30 | not that I'm messing up tot, but that I'm computing the
+25:34 | mean incorrectly.
+25:37 | Where am I computing the mean?
+25:39 | They're only two expressions here.
+25:41 | There's tot, we've checked that.
+25:44 | So there must be a problem with the divisor, that's the
+25:48 | only thing that's left.
+25:51 | Yeah?
+25:54 | STUDENT: [INAUDIBLE]
+25:55 | PROFESSOR: Exactly right.
+25:56 | I should be dividing by the length of the list. The number
+26:02 | of things I'm adding to tot.
+26:06 | So I just, inadvertently, divided by, I
+26:19 | have a list of lists.
+26:21 | And what I really wanted to do is, divide by
+26:23 | the number of lists.
+26:25 | Because I'm computing the mean for each list, adding it to
+26:28 | total, and then at the end I need to divide by the number
+26:31 | of lists who's means I computed, not by the length of
+26:35 | 1 of the lists, right?
+26:41 | So now, let's see what happens if we run it.
+26:49 | Now, we get some output printed, which I really didn't
+26:52 | want, but it happens.
+26:57 | Well this looks a lot better.
+27:02 | Right?
+27:02 | Sure enough, it's 1.
+27:08 | All right, so now I'm feeling better.
+27:10 | I'm going to get rid of this print statement, if we're
+27:12 | gonna run a more extensive test. And now we can go back
+27:17 | to our original question.
+27:25 | And run it.
+27:35 | Well, this looks a lot more consistent
+27:37 | with what we saw before.
+27:41 | It says that on average, you should be around 20.
+27:49 | So we feel pretty good about that.
+27:52 | Now, just to feel even better, I'm going to double the number
+27:56 | of trials and see what that tells us.
+28:10 | And it's still around 20.
+28:12 | Line a little smoother.
+28:15 | And if I where do 1000 trials will get a little smoother,
+28:18 | and it would still be around 20.
+28:21 | Maybe slightly different each time, but consistent with what
+28:26 | we saw before, when we ran the other program.
+28:29 | We can feel that we're actually
+28:31 | doing something useful.
+28:34 | And so now we can conclude, and would actually be the
+28:38 | correct conclusion, that we know about how far this random
+28:42 | drunk is going to move in 500 steps.
+28:47 | And if you want to know how far he would move in 1000
+28:50 | steps, we could try that, too.
+28:54 | All right.
+28:55 | What are the lessons here?
+28:59 | One lesson is to look at the labels on the axes.
+29:05 | Because if we just looked at it without noticing these
+29:08 | numbers, it looks the same.
+29:13 | Right?
+29:13 | This doesn't look any different, in some sense, than
+29:15 | when the numbers were four.
+29:18 | So you can't just look at the shape of the curve, you have
+29:20 | to look at the values.
+29:22 | So what does that tell me?
+29:25 | It tells me that a responsible person will
+29:30 | always label the axes.
+29:32 | As I have done here, not only giving you the numbers, but
+29:39 | telling you it's the distance.
+29:42 | I hate it when I look at graphs and I have to guess
+29:45 | what the x- and y- axes are.
+29:48 | Here it says time versus distance, and you also notice
+29:53 | I put a title on it.
+29:55 | So there's a point there.
+30:00 | And look, when you're doing it.
+30:08 | Ask if the answer make sense.
+30:16 | One of the things we'll see as we go on, is you can get all
+30:20 | your statistics right, and still get the wrong answer
+30:24 | because of a consistent bug.
+30:29 | And so always just say, do I believe it, or is this so
+30:33 | counterintuitive that I'm suspicious?
+30:37 | And as part of that ask, is it
+30:43 | consistent with other evidence?
+30:51 | In this case we had the evidence of watching an
+30:54 | individual walk.
+30:56 | Now those two things were not consistent, don't know which
+30:59 | is wrong, but it must be one of them.
+31:03 | And then the final point I wanted to make, is that you
+31:07 | can be pretty systematic about debugging, And in particular,
+31:20 | debug with a simple example.
+31:28 | Right, instead of trying to debug 500 steps and 100
+31:31 | trials, I said, all right, let's look at one step and
+31:35 | four trials, five trials.
+31:38 | OK, where in my head I knew what it should look like, and
+31:42 | then I could check it.
+31:44 | All right.
+31:47 | Jumping up a level or three of abstraction now.
+31:52 | What we've done, is we've introduced the notion of a
+31:54 | random walk in the context of a pretty contrived example.
+32:00 | But in fact, it's worth knowing that random walks are
+32:05 | used all over the place to solve real problems, deal with
+32:11 | real phenomena.
+32:13 | So for example, if you look at something like Brownian
+32:19 | motion, which can be used to model the path traced by a
+32:31 | molecule as it travels in a liquid or a gas.
+32:35 | Typically, people who do that model it using a random walk.
+32:41 | And, depending upon, say the density of the gas or the
+32:45 | liquid, the size of the molecules, they change
+32:49 | parameters in the simulation, how far it, say, goes in each
+32:53 | unit time and things like that.
+32:55 | But they use a random walk to try and model
+32:58 | what will really happened.
+33:02 | People have attempted, for several hundred years now, to
+33:06 | use, well, maybe a 150 years, to use random walks to model
+33:11 | the stock market.
+33:12 | There was a very famous book called A Random Walk Down Wall
+33:17 | Street, that argued that things happened as a, random
+33:23 | walk was a good way to model things.
+33:29 | There's a lot of evidence that says that's wrong, but people
+33:32 | continue to attempt to do it.
+33:36 | They use it a lot in biology to do
+33:39 | things like model kinetics.
+33:44 | So, the kinetics of a protein, DNA strand exchange, things of
+33:50 | that nature.
+33:52 | A separation of macro-molecules, the movement
+33:55 | of microorganisms all of those things are done in biology.
+34:02 | And do that.
+34:04 | People use it to model evolution.
+34:10 | They look at mutations as kind of a random event.
+34:15 | So, we'll come back to this, but random walks are used over
+34:20 | and over and over again in the sciences, the social sciences
+34:24 | and therefore a very useful thing to notice about.
+34:29 | All right, we're going to come back to that.
+34:30 | We're going to even come back to our drunken student and
+34:34 | look at other kinds of random walks other than the kind we
+34:37 | just looked at.
+34:38 | Before I do that, though, I wanted back up and take the
+34:42 | magic out of plotting.
+34:45 | So we've gone from the sublime, of what random walks
+34:49 | are good for, to in some sense the ridiculous, the actual
+34:54 | syntax for plotting things.
+34:56 | And maybe it's not ridiculous, but it's boring.
+35:01 | But you need it, so let's look at it.
+35:05 | So we're doing this using a package called Pylab, which is
+35:12 | in itself built on a package called Pylab, either
+35:27 | pronounced num p or num pi, you can choose your
+35:31 | pronunciation as you prefer.
+35:34 | This basically gives you a lot of operations on numbers,
+35:38 | numbered things, and on top of that, someone bill Pylab which
+35:43 | is designed to provide a Python interface to a lot of
+35:47 | the functionality you get in Matlab.
+35:50 | And in particular, we're going to be using today the plotting
+35:55 | functionality that comes with Matlab, or the version of it.
+36:00 | So we're going to say, from Pylab import star, that's just
+36:05 | so I don't have to type Pylab dot plot every time.
+36:09 | And I'm going import random which we're
+36:11 | going to use later.
+36:12 | So let's look at it now.
+36:15 | First thing we're going to do is plot 1, 2, 3, 4, and then
+36:19 | 1, 2, 3, and then 5, 6, 7, 8.
+36:24 | And then at the very bottom, you'll see this line show.
+36:28 | That's going to annoy the heck out of you throughout the
+36:31 | semester, the rest of the semester.
+36:34 | Because what happens is, Pylab produces all these beautiful
+36:37 | plots, and then does not display them
+36:40 | until you type show.
+36:43 | So remember, at the end of every program, kind of, the
+36:47 | last thing you should execute should be show.
+36:50 | You don't want to execute it in the middle, because what
+36:54 | happens in the middle is it, in an interactive mode at
+36:57 | least, it just stops.
+37:00 | And displays the graphs, and until you make the plots go
+37:03 | away, it won't execute the next line.
+37:07 | Which is why I've tucked the show at the very bottom of my
+37:09 | script here.
+37:11 | Inevitably, you will forget to type show.
+37:14 | You will ask a TA, how come my graphs aren't appearing in the
+37:17 | screen, and the TA will say, did you do show?
+37:21 | And you'll go -- but it happens to all of us.
+37:25 | All right, so let's try it.
+37:27 | See what we get.
+37:34 | So sure enough, it's plotted the values 1, 2, 3, 4, and 5,
+37:41 | 6, 7, 8, on the x- and y- axis.
+37:44 | Two things I want you to notice here.
+37:49 | One Is, that both plots showed up on the same figure.
+37:56 | Which is sometimes what you want, and sometimes
+37:58 | not what you want.
+37:59 | You'll notice that also happened with the random walk
+38:02 | we looked at, where when I plotted five different walks
+38:05 | for Homer they all showed up superimposed
+38:08 | on top of one another.
+38:12 | The other thing I want you to notice, is the x-axis runs
+38:16 | from 0 to 3.
+38:19 | So you might have kind of thought, that what we would
+38:22 | see is a 45 degree angle on these things.
+38:27 | But of course, Python, when not instructed otherwise,
+38:32 | always starts at zero.
+38:35 | Since when we called plot, I gave it only the y-values, it
+38:43 | used default values for x.
+38:48 | It was smart enough to say, since we have four y-values,
+38:53 | we should need four x-values, and I'll choose the integers
+38:57 | 0, 1, 2, 3 as those values.
+39:04 | Now you don't have to do that.
+39:08 | We could do this instead.
+39:18 | Let's try this one.
+39:20 | What did I just do?
+39:26 | Let's comment these two out, if we could only get there.
+39:31 | This is highly annoying.
+39:42 | Let's hope it doesn't tell me that I have to --
+39:45 | All right, so let's go here.
+39:50 | We'll get rid of those guys, and we'll try this one.
+39:58 | We'll plot 1, 2, 3, 4 against 1, 4, 9, 16.
+40:17 | OK?
+40:19 | So now, it's using 1, 2, 3, 4 as the x-axis, and the
+40:26 | y-axis I gave it.
+40:28 | First x then y.
+40:31 | Now it looks a little funny, right, you might have not
+40:34 | expected it to look like this.
+40:36 | You'll notice they're these little inflection points here.
+40:40 | Well, because what it's really doing is, I gave it a small
+40:43 | number of points, only four.
+40:46 | It's found those four points, and it's connected them, each
+40:51 | point by a straight line.
+40:55 | And since the points are kind of spread out, the line has
+40:59 | little bumps in it.
+41:03 | That makes sense to everyone?
+41:05 | Now, it's often deceptive to plot things this way, where
+41:09 | you think you have a continuous function when in
+41:11 | fact you just have a few miscellaneous points.
+41:17 | So let's look at another example.
+41:22 | Here, what I'm going to do, is I've called figure, and
+41:27 | remember, this is Pylab dot figure, which says, create a
+41:34 | new figure.
+41:36 | So instead of putting this new curve on the same figure as
+41:40 | the old curve, start a new one.
+41:44 | And furthermore, I've got this obscure little thing
+41:48 | at the end of it.
+41:50 | After you give it the x- and y- values, you can give it
+41:54 | some instructions about how you want to plot points, or
+41:59 | anything else.
+42:00 | In this case, what this little string says is, each point
+42:05 | should be represented as a red o. r for red, o for o.
+42:12 | I'm not asking you to remember this, what you will discover,
+42:16 | the good news is there's very good documentation on this.
+42:21 | And so you'll find in the reading of pointer to plots,
+42:27 | and it will tell you everything you need to know,
+42:29 | all of the wizardry and the magic you can put in these
+42:32 | strings that tell you how to do things.
+42:36 | These are basically the same strings borrowed from Matlab.
+42:41 | And now if we run it.
+42:48 | Figure one is the same figure we saw before.
+42:53 | But figure two has not connected the dots, not drawn
+42:58 | a line, it's actually planted each, or plotted, excuse me,
+43:05 | each point as a red circle.
+43:11 | Now when I look at this, there's something that's not
+43:15 | very pleasing about this.
+43:18 | That in particular, I know I plotted four points, but it a
+43:23 | quick glance it looks like they're only three.
+43:30 | And that's because it's taking this fourth point and stuck it
+43:36 | way up there in the corner where I missed it.
+43:38 | It's there.
+43:40 | But it's so close to the edge of the graph that it's kind of
+43:44 | hard to see.
+43:49 | So I can fix that by executing the command axis, which tells
+44:09 | it how far I want it to be.
+44:13 | And this says, I want 1 axis to go from 0 to 6, and the
+44:17 | other 0 to 20.
+44:22 | We'll do that, and also to avoid boring you, we'll do
+44:26 | more at the same time.
+44:29 | We'll put some labels on these things.
+44:36 | I'm going to put that the title of the graph is going to
+44:38 | be earnings, and that the x-axis will be labelled days,
+44:44 | and the y-axis will be labelled dollars.
+44:48 | So earnings dollars against days.
+44:55 | OK, now let's see what happens when we do this.
+45:03 | Well, we get the same ugly figure one as before, and now
+45:07 | you can see figure two I've moved the axes so that my
+45:12 | graph will show up in the middle rather than at the
+45:14 | edges, and therefore easier to read.
+45:17 | I put a title in the top, and I put labels on the axes.
+45:22 | Every graph that I ask you to do this course, I want you to
+45:26 | put a title on it and to label your axes so we know what
+45:29 | we're reading.
+45:32 | Again, nothing very deep here, this is really just syntax,
+45:36 | just to give you an idea of the sorts of
+45:38 | things you can do.
+45:45 | All right. now we get to something a little bit more
+45:47 | interesting.
+45:52 | Let's look at this code here.
+46:02 | So far, what I've been passing to the plot function for the
+46:07 | x- and y- values are lists.
+46:13 | In fact, what Pylab uses is something it gets from NumPy
+46:22 | which are not lists really, but what it calls arrays.
+46:33 | Now, truth be told, most programming languages use
+46:39 | array to mean something quite different.
+46:42 | But, in NumPy an array is basically a matrix.
+46:53 | On which we can do some interesting things.
+46:56 | So for example, when I say x-axes equals
+47:02 | array 1, 2, 3, 4.
+47:05 | Array is a type, so array applied to the list is just
+47:09 | like applying float to an int.
+47:11 | If I apply float to an int, it turns it into a
+47:14 | floating point number.
+47:15 | If I apply array to a list, it turns it into an array.
+47:22 | Once it's an array, as we'll see, we can do some very
+47:25 | interesting things with it.
+47:28 | Now, in addition to getting an array by coercing a the list,
+47:34 | which is probably the most common way to
+47:35 | get it, by the way.
+47:37 | Because you build up a list in simulations of the sort we
+47:40 | looked at, and then you might want to change it to an array
+47:43 | to perform some operations on it.
+47:46 | You can get an array directly with aRange.
+47:50 | This is just like the range function we've been using all
+47:52 | term, but whereas the range function gives you a list of
+47:56 | ints, this gives you an array of ints.
+48:04 | But the nice thing about an array is, I can perform
+48:08 | operations on it like this.
+48:13 | So if I say y-axis equals x-axis raised to the third
+48:17 | power, that's something I can't do with a list. I get an
+48:22 | error message if I try that with a list. What that will do
+48:25 | is, will point-wise, take each element in the
+48:29 | array and cube it.
+48:34 | So the nice thing about arrays is, you can use them to do the
+48:38 | kinds of things you, if you ever took a linear algebra
+48:41 | course, you learned about doing.
+48:43 | You can multiply an array times an array, You can
+48:46 | multiply an array times an integer.
+48:49 | And sometimes that's a very convenient thing to do.
+48:53 | It's not what this course is about, I don't want to
+48:55 | emphasize it.
+48:56 | I just want you to know it's there so if in some subsequent
+49:00 | life you want to do more complicated manipulations,
+49:06 | you'll know that that's possible.
+49:09 | So let's run this and see what we get.
+49:27 | So the first thing to look at, is we'll ignore the figure for
+49:32 | the moment.
+49:36 | And we've seen that when I printed test and I printed
+49:42 | x-axis, they look the same, they are the same.
+49:48 | And in fact, I can do this interesting thing now.
+49:51 | Print test double equals x-axis.
+49:54 | You might have thought that would return a
+49:56 | single value, true.
+50:00 | Instead it returns a list, where it's done a point-wise
+50:04 | comparison of each element.
+50:08 | So when we deal with arrays, they don't behave like lists.
+50:13 | And you can imagine that it might be very convenient to be
+50:15 | able to do this.
+50:17 | Answers the question, are all the elements the same?
+50:21 | Or which ones are the same?
+50:23 | So you can imagine doing some very clever things with these.
+50:27 | And certainly, if you can convert problems to vectors of
+50:32 | this sort, you can really perform what's almost magical.
+50:37 | And then when we look at the figure, which should be tucked
+50:44 | away somewhere here, what did I do with the figure?
+50:51 | Did I make it go away?
+50:57 | Well, I think I did one of those ugly things and made it
+51:05 | go away again.
+51:07 | Oh, no, there it is.
+51:08 | All right.
+51:10 | And sure enough here, we're plotting a cubic.
+51:14 | All right.
+51:16 | Nothing very important to observe about any of that,
+51:21 | other than that arrays are really quite interesting and
+51:23 | can be very valuable.
+51:26 | Finally, the thing I want to show you is that there are a
+51:31 | lot of things we can do that are more interesting than what
+51:39 | we've done.
+51:46 | So now I'm going to use that random, which I brought in
+51:49 | before, and show you that we can plot things other than
+51:58 | simply curves.
+52:01 | In this case, I'm going to plot a histogram.
+52:04 | And what this histogram is going to do is, I'm going to
+52:07 | throw a pair of dice a large number of times, and add up
+52:12 | the sum, and see what I get.
+52:16 | So, for die values equals 1 through 6, for i in range
+52:20 | 10,000, a lot of dice.
+52:22 | I'm just going to append random choice, we've seen this
+52:24 | before, of the two dice, and their sum.
+52:30 | And then I'm going to plot a histogram, Pylab dot hist
+52:33 | instead of plot, and we'll get something quite different.
+52:42 | A nice little histogram showing me the values I get,
+52:46 | and we will come back to this later and talk about why this
+52:50 | is called a normal distribution.

@@ -1,0 +1,755 @@
+0:00 | OPERATOR:: The following content is provided under a
+0:02 | Creative Commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:21 | PROFESSOR: I want to pick up exactly where I
+0:24 | left off last time.
+0:26 | When I was talking about various sins one can commit
+0:29 | with statistics.
+0:31 | And I had been talking about the sin of data enhancement,
+0:45 | where the basic idea there is, you take a piece of data, and
+0:49 | you read much more into it than it implies.
+0:51 | In particular, a very common thing people do with data is
+0:56 | they extrapolate.
+1:01 | I'd given you a couple of examples.
+1:08 | In the real world, it's often not desirable to say that I
+1:17 | have a point here, and a point here, therefore the next point
+1:21 | will surely be here.
+1:23 | And we can just extrapolate in a straight line.
+1:27 | We before saw some examples where I had an algorithm to
+1:30 | generate points, and we fit a curve to it, used the curve to
+1:34 | predict future points, and discovered
+1:36 | it was nowhere close.
+1:40 | Unfortunately, we often see people do this sort of thing.
+1:44 | One of my favorite stories is, William Ruckelshaus, who was
+1:49 | head of the Environmental Protection Agency
+1:52 | in the early 1970s.
+1:54 | And he had a press conference, spoke about the increased use
+1:58 | of cars, and the decreased amount of carpooling.
+2:03 | He was trying to get people to carpool, since at the time
+2:05 | carpooling was on the way down, and I now quote, "each
+2:10 | car entering the central city, sorry, in 1960," he said,
+2:15 | "each car entering the central city had 1.7 people in it.
+2:20 | By 1970. this had dropped to less than 1.2.
+2:25 | If present trends continue, by 1980, more than 1 out of every
+2:30 | 10 cars entering the city will have no driver." Amazingly
+2:36 | enough, the press reported this as a straight story, and
+2:40 | talked about how we would be dramatically dropping.
+2:45 | Of course, as it happened, it didn't occur.
+2:49 | But it's just an example of, how much trouble you can get
+2:53 | into by extrapolating.
+2:56 | The final sin I want to talk about is probably the most
+3:00 | common, and it's called the Texas sharpshooter fallacy.
+3:13 | Now before I get into that, are any of
+3:15 | you here from Texas?
+3:17 | All right, you're going to be offended.
+3:19 | Let me think, OK, anybody here from Oklahoma?
+3:23 | You'll like it.
+3:24 | I'll dump on Oklahoma, it will be much better then.
+3:26 | We'll talk about the Oklahoma sharpshooter fallacy.
+3:32 | We won't talk about the BCS rankings, though.
+3:37 | So the idea here is a pretty simple one.
+3:40 | This is a famous marksman who fires his gun randomly at the
+3:45 | side of a barn, has a bunch of holes in it, then goes and
+3:52 | takes a can of paint and draws bullseyes around all the
+3:59 | places his bullets happened to hit.
+4:02 | And people walk by the barn and say, God, he is good.
+4:07 | So obviously, not a good thing, but amazingly easy to
+4:13 | fall into this trap.
+4:16 | So here's another example.
+4:17 | In August of 2001, a paper which people took seriously
+4:24 | appeared in a moderately serious journal called The New
+4:27 | Scientist. And it announced that researchers in Scotland
+4:33 | had proven that anorexics are likely to have
+4:37 | been born in June.
+4:41 | I'm sure you all knew that.
+4:44 | How did how did they prove this?
+4:45 | Or demonstrate this?
+4:47 | They studied 446 women.
+4:59 | Each of whom had been diagnosed anorexic.
+5:04 | And they observed that about 30 percent more than average
+5:21 | were born in June.
+5:33 | Now, since the monthly average of births, if you divide this
+5:36 | by 12, it's about 37, that tells us that 48
+5:43 | were born in June.
+5:47 | So at first sight, this seems significant, and in fact if
+5:50 | you run tests, and ask what's the likelihood of that many
+5:55 | more being born in 1 month, you'll find
+5:58 | that it's quite unlikely.
+6:04 | In fact, you'll find the probability of this happening
+6:08 | is only about 3 percent, of it happening just by accident.
+6:16 | What's wrong with the logic here?
+6:19 | Yes?
+6:19 | STUDENT: They only studied diagnosed anorexics.
+6:24 | PROFESSOR: No, because they were only interested in the
+6:26 | question of when are anorexics born, so it made sense to only
+6:30 | study those.
+6:31 | Now maybe you're right, that we could study that, in fact,
+6:34 | more people are born in June period.
+6:37 | That could be true.
+6:38 | This would be one of the fallacies we
+6:40 | looked at before, right?
+6:42 | That there's a lurking variable which is just that
+6:44 | people are more likely to be born in June.
+6:47 | So that's certainly a possibility.
+6:50 | What else?
+6:52 | What else is the flaw?
+6:53 | Where's the flaw in this logic?
+7:04 | Well, what did they do?
+7:06 | They participated in the Oklahoma sharpshooter fallacy.
+7:12 | What they did is, they looked at 12 months, they took the
+7:17 | months with the most births in it, which happened to be June,
+7:23 | and calculated the probability of 3 percent.
+7:29 | They didn't start with the hypothesis that it was June.
+7:34 | They started with 12 months, and then they drew a bullseye
+7:36 | around June.
+7:39 | So the right question to ask is, what's the probability,
+7:43 | not that June had 48 babies, but that at least one of the
+7:49 | 12 months had 48 babies.
+7:55 | That probability is a lot to higher than 3 percent, right?
+8:04 | In fact, it's about 30 percent.
+8:10 | So what we see is, again perfectly reasonable
+8:17 | statistical techniques, but not looking at things
+8:21 | in the right way.
+8:23 | And answering the wrong question.
+8:26 | That make sense to everybody?
+8:29 | And you can see why people can fall into this trap, right?
+8:31 | It was a perfectly sensible, seemingly sensible argument.
+8:36 | So the moral of this particular thing is, be very
+8:41 | careful about looking at your data, drawing a conclusion,
+8:48 | and then saying how probable was that to have occurred?
+8:53 | Because again, you're probably, or maybe, drawing
+8:56 | the bullseye around something that's already there.
+8:59 | Now if they had taken another set of 446 anorexics, and
+9:05 | again June was the month, then there would be some
+9:09 | credibility in it.
+9:11 | Because they would have started with the hypothesis,
+9:13 | not that there existed a month, but that June was
+9:17 | particularly likely.
+9:19 | But then they would have to also check and make sure that
+9:22 | June isn't just a popular month to be born, as was
+9:25 | suggested earlier.
+9:27 | All right, I could go on and on with this sort of thing,
+9:30 | it's kind of fun.
+9:32 | But I won't.
+9:34 | Instead I'm going to torture you with yet one more
+9:36 | simulation.
+9:39 | You may be tempted at this point to just zone out.
+9:43 | Try not to.
+9:45 | And as an added incentive for you to pay attention, I'm
+9:48 | going to warn you that this particular simulation will
+9:52 | appear in the final, or a variant of it.
+9:58 | And what we'll be doing is, early next week we'll be
+10:02 | distributing code, which we'll ask you to study, about two or
+10:06 | three pages of code, and then on the final we'll be asking
+10:11 | you questions about the code.
+10:13 | Not that you have to memorize it, we'll give
+10:15 | you a copy of it.
+10:16 | But you should understand it before you walk
+10:20 | in to take the final.
+10:21 | Because there will not be time to look at that code for the
+10:24 | first time during the quiz, and figure
+10:26 | out what it's doing.
+10:30 | OK, so let's look at it.
+10:38 | I should also warn you that this code includes some Python
+10:41 | concepts, at least one, that you have not yet seen.
+10:46 | We'll see it briefly today.
+10:48 | This is on purpose, because one of the things I hope you
+10:51 | have learned to do this semester, is look up things
+10:55 | you don't know, and figure out what they do.
+10:57 | What they mean.
+10:59 | Because we obviously can't, in any course, or even any set of
+11:03 | courses, tell you everything you'll ever
+11:05 | want to know in life.
+11:07 | So intentionally, we've seeded some things in this program
+11:10 | that will be unfamiliar, so during the time you're
+11:13 | studying the program, get online, look it up, figure out
+11:16 | what they do.
+11:18 | If you have trouble, we will be having office hours, where
+11:21 | you can go and get some help.
+11:23 | But the TAs will expect you to have at least tried to figure
+11:26 | it out yourself.
+11:27 | Yeah?
+11:27 | STUDENT: Will the final be open note?
+11:30 | PROFESSOR: Final will be open book, open notes, just like
+11:33 | the quizzes.
+11:34 | It will be the first two hours of the allotted time, we won't
+11:37 | go the whole 3 hours, OK?
+11:44 | So it won't be hugely longer than the quizzes.
+11:48 | It would be a little bit longer.
+11:49 | And again, very much in the same style of the quizzes.
+11:56 | All right, let's look at this.
+11:59 | Let's assume that you've won the lottery, and have serious
+12:03 | money that you foolishly wish to invest in the stock market.
+12:09 | There are two basic strategies to choose from, in investing.
+12:15 | You can either have what's called an indexed portfolio,
+12:27 | or a managed portfolio.
+12:41 | Indexed portfolios, you basically say, I want to own
+12:45 | all of the stocks that there are, and if the stock market
+12:49 | goes up, I make money, if the stock market goes
+12:51 | down, I lose money.
+12:53 | I'm not going to be thinking I'm clever, and can pick
+12:55 | winners and losers, I'm just betting on
+12:57 | the market as a whole.
+13:00 | They're attractive, in that a, they don't
+13:03 | require a lot of thought.
+13:05 | And b, they have what's called a low expense ratio, since
+13:09 | they're easy to implement, you don't pay anyone to be
+13:11 | brilliant to implement if for you.
+13:13 | So they're very low fees.
+13:17 | A managed portfolio, you find somebody you think is really
+13:21 | smart, and you pay them a fair amount of money, and in return
+13:26 | they assert that they will pick winners for you, and in
+13:30 | fact, you will outperform the stock market.
+13:33 | And if it goes up 6 percent, well you'll go up 10 percent
+13:36 | or more, and if it goes down, don't worry, I'm so smart your
+13:40 | stocks won't go down.
+13:45 | There's a lot of debate about which is the
+13:47 | better of these two.
+13:52 | And so now we're going to try and see if we can write a
+13:55 | simulation that will give us some insight as to which of
+14:01 | these might be better or worse.
+14:06 | All right, so that's the basic problem.
+14:10 | Now, as we know, and by the way we're not going to write a
+14:16 | perfect simulation here, because we're going to try and
+14:18 | do it in 40 minutes, or 30 minutes.
+14:21 | And it would take at least an hour do a perfect simulation
+14:24 | of the stock market.
+14:26 | All right.
+14:29 | First thing we need to do is have some sort of a theory.
+14:33 | When we did the spring, we had this theory of Hooke's Law
+14:36 | that told us something, and we built a simulation, or built
+14:40 | some tools around that theory.
+14:42 | Now we need to think about a model of the stock market.
+14:47 | And the model we're going to use is based on what's called
+14:53 | the Efficient Market Hypothesis.
+15:00 | So the moral here, again, is whenever you're doing an
+15:05 | implementation of a simulation, you do need to
+15:07 | have some underlying theory about the model.
+15:12 | What this model asserts is that markets are
+15:14 | informationally efficient.
+15:31 | That is to say, current prices reflect all publicly known
+15:36 | information about each stock, and therefore are unbiased.
+15:43 | That if people thought that the stock was underpriced,
+15:46 | well people would buy more of it in the price would have
+15:49 | risen already.
+15:51 | If people thought the stock was overpriced, well, people
+15:53 | would have tried to sell it, and it would have come down.
+15:56 | So this is a very popular theory, believed by many
+16:01 | famous economists today, and in the past. And says, OK,
+16:06 | that effectively means that the market is memoryless.
+16:13 | OK, that it doesn't matter what the price of the stock
+16:16 | was yesterday.
+16:18 | Today, it's priced given the best-known information, and so
+16:23 | tomorrow it's equally likely to go up or down.
+16:29 | Relative to the whole market, right?
+16:32 | It's well known that over periods of multiple decades,
+16:36 | the market has a tendency to go up.
+16:39 | And so there's an upward bias to the stock market, contrary
+16:42 | to what you may have seen recently.
+16:46 | But that no particular stock is more or less likely to
+16:49 | outperform the market, because all the information is
+16:53 | incorporated in the price.
+16:56 | And that leads to a notion of being able to model the
+17:01 | market, how?
+17:04 | How would you model individual stocks if you believe this
+17:09 | hypothesis?
+17:14 | Somebody?
+17:15 | What's going to happen?
+17:16 | STUDENT: Random walk.
+17:18 | PROFESSOR: Yes, exactly right.
+17:20 | So we would model it as a random walk.
+17:23 | In fact, there's a very famous book called A Random Walk Down
+17:26 | Wall Street, that was one of the first to make this
+17:30 | hypothesis.
+17:34 | Now later, we may decide to abandon this model, but for
+17:38 | the moment let's accept that.
+17:43 | And let's think about how we're going to build the
+17:46 | simulation.
+17:53 | Whenever I think about how to build an interesting program,
+17:58 | and I hope whenever you think about it, the first thing I
+18:01 | think about is, what are the classes I might want to have,
+18:05 | what are the types?
+18:08 | And it seems pretty obvious that at least two of the
+18:12 | things I'm going to want are stock and market.
+18:18 | After all, I'm going to try and build a simulation of the
+18:22 | stock market, so I might as well have the notion of a
+18:26 | market, and probably the notion of a stock.
+18:31 | Which should I implement first?
+18:35 | Well, my usual style of programming would be to
+18:40 | implement the one that's lowest down in the hierarchy,
+18:45 | near the bottom.
+18:48 | I won't be able to show you what a market does unless I
+18:50 | have stocks, but I can look at what an individual stock does
+18:55 | without having a market.
+18:58 | So why do I implement this first?
+19:00 | Because it will be easier to unit test. I can build class
+19:06 | stock, and I can test class stock, before I
+19:10 | have a class market.
+19:16 | So now let's look at it.
+19:30 | Clean up the desktop a little bit.
+19:38 | This is similar to, but not identical to, what you have in
+19:42 | your handout.
+19:48 | All right, so there's class stock.
+19:53 | And I'm going to initialize it, create them, with an
+19:58 | opening price.
+19:59 | When a stock is first listed in the market, it comes with
+20:02 | some price.
+20:06 | I'm gonna keep as part of each stock, it's history of prices,
+20:10 | which we can initialize, well, I've initialized it as empty,
+20:13 | but that's probably the wrong thing, right?
+20:17 | I probably should have had it being the, starting here,
+20:26 | right, the opening price.
+20:32 | Now comes an interesting part.
+20:34 | Self dot distribution.
+20:38 | Well, I lied to you a little bit in my description of what
+20:46 | it meant to have the Efficient Market Hypothesis.
+20:53 | I said that no stock is likely to outperform the market or
+20:59 | underperform the market.
+21:02 | But it's not quite true, because typically what they
+21:06 | actually do that, is they say it's adjusted for risk.
+21:21 | It's clear that some stocks are more volatile than others.
+21:27 | If you will buy stock in an electrical utility which has a
+21:31 | guaranteed revenue stream, because no matter how bad the
+21:34 | economy gets, a lot of people still use electricity, you
+21:39 | don't expect it to fluctuate a lot.
+21:43 | If you buy stock in a high tech company, that sells
+21:49 | things on the internet, you might expect it to fluctuate
+21:53 | enormously.
+21:55 | Or if you buy stock in a retailer, you might expect it
+21:59 | to go up or down more dramatically with the economy,
+22:04 | and so in fact there is a notion of risk, and I'm not
+22:09 | going to do this in this simulation, but usually people
+22:12 | have to be paid to take risk.
+22:15 | And so it's usually the case that you can get a higher
+22:18 | return if you're willing to take more risk.
+22:20 | We might or might not have time to come back to that.
+22:27 | But more generally, the point is, that each stock actually
+22:32 | behaves a little bit differently.
+22:36 | There's a distribution of how it would move.
+22:39 | So even if, on average, the stock is expected to not move
+22:45 | at all from where it starts, some stocks will be expected
+22:50 | to just trundle along without much
+22:53 | change, not very volatile.
+22:56 | And other stocks might jump up and down a lot because they're
+23:02 | very volatile.
+23:03 | Even if the expected value is the same, they'd
+23:07 | move around a lot.
+23:10 | So how can we model this kind of thing?
+23:12 | Well, we've already looked at the basic notion.
+23:16 | Last time we looked at the notion, last lecture we looked
+23:19 | at the idea of a distribution.
+23:25 | And when we do a simulation, we're pulling the samples from
+23:29 | some distribution.
+23:33 | It could be normal, everything, that would be a
+23:37 | Gaussian, where if you recall there was a mean, and a
+23:41 | standard deviation, and most values were going to be close
+23:47 | to the mean.
+23:49 | Especially if there is a small standard deviation.
+23:52 | If there's a large standard deviation it would be spread.
+23:56 | Or it could be uniform, where every
+23:58 | value was equally probable.
+24:00 | We also looked at exponential.
+24:03 | So we're going to assign to each stock, when we create it,
+24:08 | a distribution.
+24:11 | Some way of visualizing, or thinking about, where we draw
+24:17 | the price changes from.
+24:20 | This gets us into a new linguistic concept, which
+24:26 | we'll see down here.
+24:29 | You don't have this particular code on your handout, you do
+24:33 | have a code that uses the same concept.
+24:36 | So here's my unit test procedure.
+24:39 | And here's where I'm going to create distributions.
+24:42 | And I'm going to look at two.
+24:45 | A random-- a uniform, and a Gaussian.
+24:49 | What lambda that does, it creates on the fly a function,
+24:56 | as the program runs.
+24:59 | That I can then pass around.
+25:03 | So here, I'm going to look at the thing random dot uniform,
+25:08 | for example, between minus volatility and plus
+25:11 | volatility.
+25:13 | So ignoring the lambda, what do we expect random dot
+25:16 | uniform to do?
+25:19 | It has equally likely, in the range from minus volatility to
+25:26 | plus volatility, it will return any value in here.
+25:35 | But notice the previous line, where I am computing
+25:39 | volatility.
+25:42 | If I wanted every stock to have the same volatility, I
+25:47 | could just do that, if you will, at the
+25:50 | time I wrote my program.
+25:52 | But here I want it to be determined,
+25:55 | chosen at run time.
+25:57 | So first, I choose a volatility randomly, from some
+26:03 | distribution of possible volatilities from 0 to, in
+26:06 | this case, 0.2.
+26:12 | Think of this as the percentage move per day.
+26:17 | So 2/10 of a percent, would be the move here.
+26:22 | And then I'll create this function, this distribution d
+26:28 | 1, which will, whenever I call it, give me a random, a
+26:33 | uniformly selected value between minus and plus
+26:37 | volatility.
+26:42 | Then when I create the stock, here, I can pass it
+26:48 | in, pass in d 1.
+26:54 | OK, it's a new concept.
+26:55 | I don't expect you'll all immediately grab it, but you
+26:58 | will need to understand it before the quiz comes along.
+27:05 | And then I could also do a Gaussian one here, with the
+27:08 | mean of 0 and the standard deviation of volatility
+27:11 | divided by 2.
+27:13 | Where do these parameters come from?
+27:15 | I made them up out of whole cloth.
+27:17 | Later we'll talk about how 1 could think about them more
+27:20 | intelligently.
+27:24 | Now what do I do with that?
+27:29 | All right, we'll see that in a minute.
+27:31 | But people understand what the basic idea here is.
+27:38 | Now, I can set the price of a stock.
+27:44 | And when I do that, I'll append it to history.
+27:47 | I can, oh, these have got some remnants which we
+27:50 | really don't need.
+27:52 | I'll get rid of this which is just an uninteresting thing.
+27:58 | And let's look at make move.
+28:05 | Because this is the interesting thing.
+28:06 | Make move is what we call to change the price of a stock,
+28:11 | at the beginning or end of a day if you will.
+28:14 | So the first thing it does, is it says, if self dot price is
+28:18 | 0, I'm just going to return.
+28:23 | This is not the right thing to do, by the way.
+28:26 | Again, there are some bugs in here.
+28:30 | You won't find these bugs in your handout, right?
+28:33 | Code is different in the handout.
+28:35 | But I wanted to show these to you so we could think about.
+28:39 | What I'm more interested in here than in the result of the
+28:41 | simulation, is the process of creating it.
+28:46 | So why did I put this here?
+28:48 | Why did I say if self dot price equals 0 return?
+28:53 | Because the first time I wrote the program, I didn't have
+28:57 | anything like that here, and a stock could go
+29:00 | to 0 and then recover.
+29:03 | Or even go to negative values.
+29:05 | Well we know stock prices are never negative.
+29:09 | And in fact we know if the price goes to 0, it's delisted
+29:12 | from the exchange.
+29:14 | So I said, all right, we better make a special case of
+29:16 | that. it turns out, that this will be a bug, and I want you
+29:24 | to think about why it's wrong for me to put this check here.
+29:29 | The check needs to be somewhere in the program, but
+29:32 | this is not the right place for it.
+29:36 | So think about why I didn't leave it here.
+29:40 | OK, then we'll get the old price, which we're going to
+29:44 | try and remember, and now comes the interesting part.
+29:49 | We're going to try and figure out how the
+29:51 | price should change.
+29:54 | So I'm first going to compute something
+29:56 | called the base move.
+29:59 | Think of this as kind of the basis from which we'll be
+30:02 | computing the actual move.
+30:05 | I'll draw something from the distribution, so this is
+30:12 | interesting, I'm now calling self dot distribution, and
+30:15 | remember this will be different for each stock.
+30:20 | It will return me some random value from either the Gaussian
+30:23 | or the normal distribution.
+30:28 | With a different volatility for the stocks because that
+30:30 | was also selected randomly, plus some market bias.
+30:35 | Saying, well, the market on average will go up a little
+30:37 | bit, or go down a little bit.
+30:42 | And then I'll set the new price, if you will, self dot
+30:46 | price, to self dot price times 1 plus the base move.
+30:52 | So notice what this says.
+30:53 | If the base move is 0, then the price doesn't change.
+31:00 | So that makes sense.
+31:02 | Interesting question.
+31:04 | Why do you think I said self dot price times 1 plus the
+31:12 | base move, rather than just adding the base move to the
+31:16 | stock, price of the stock?
+31:18 | Again, the first time I coded this, I had an addition there
+31:22 | instead of a multiplication.
+31:24 | What would the ramifications of an addition there be?
+31:31 | That would say, how much the stock changed is independent
+31:35 | of its current price.
+31:39 | And when I ran that it, I got weird results, because we know
+31:43 | that a Google priced at, say, 300, is much more likely to
+31:49 | move by 10 points in a day than a stock
+31:53 | that's priced at $0.50.
+31:58 | So in fact, it is the case, if you look at data, and by the
+32:02 | way, that's the way I ended up setting a lot of these
+32:04 | parameters and playing with it, was comparing what my
+32:07 | simulation said to historical stock data.
+32:11 | And indeed it is the case that the price of the stock, the
+32:14 | move, the amount of move, tends to be proportional to
+32:18 | the price of the stock.
+32:20 | Expensive stocks move more.
+32:22 | Interestingly enough, the percentage moves are not much
+32:25 | different between cheap stocks and expensive stocks.
+32:29 | And that's why, I ended up using a multiplicative factor,
+32:34 | rather than an additive factor.
+32:47 | This is again a general lesson.
+32:50 | As you build these kinds of simulations, or anything like
+32:53 | this, you need to think through whether things should
+32:57 | be multiplicative or additive.
+32:59 | Because you get very different results, typically.
+33:03 | Multiplicative is what you want to do if the amount of
+33:07 | change is proportional to the current size, whether it's
+33:12 | price or anything else, and additive if the change is
+33:16 | independent of the current value, typically, is I think
+33:21 | the general way to think about it.
+33:27 | Now, you'll see this other kind of peculiar thing.
+33:31 | So I've now set the price, and then I've got this test here.
+33:39 | If mo, mo stands for momentum.
+33:45 | I'm now exploring the question of whether or not stock prices
+33:53 | are indeed memoryless, or the stock changes.
+34:03 | And the fancy word for that is Poisson.
+34:09 | People often model things as Poisson processes, which is to
+34:14 | say, processes in which past behavior has no impact on
+34:20 | future behavior, it's memoryless.
+34:24 | And in fact, that's what the Efficient Market Hypothesis
+34:29 | purports to say.
+34:31 | It says that, since all the information is in the current
+34:35 | price, you don't have to worry about whether it went up or
+34:38 | down yesterday, to decide what it's going to do today.
+34:45 | There are people who don't believe that, and instead
+34:48 | argue that there is this notion called momentum.
+34:52 | These are called momentum investors.
+34:54 | And they say, what's most likely to happen today, is
+34:58 | what happened yesterday.
+35:00 | Or more likely.
+35:01 | If the stock went up yesterday, it's more likely to
+35:03 | go up today, than if it didn't go up yesterday.
+35:08 | So I wasn't sure which religion I was willing to
+35:12 | believe in, if either, so I added a parameter called, if
+35:16 | you believe in momentum, then you should change
+35:20 | the price by --
+35:23 | And here I just did something taking a Gaussian times the
+35:27 | last change, and, in fact, added it in.
+35:32 | So if it went up yesterday, it will more likely go up today,
+35:35 | because I'm throwing in a positive number, otherwise a
+35:39 | negative number.
+35:41 | Notice that this is additive.
+35:44 | Because it's dealing with yesterday's price.
+35:48 | Change, with the change.
+35:51 | OK, so that's why we're dealing with that.
+35:56 | Now, here's where I should've put in this test
+35:59 | that I had up here.
+36:03 | Get it out from there.
+36:05 | Because what I want to do is, say if self dot price is less
+36:08 | than 0.01, I'm going to set it to 0, just keep it there.
+36:14 | That doesn't solve the problem we had before though, right?
+36:19 | Then I'm going to append it, and keep the last change for
+36:26 | future use.
+36:28 | OK, people understand what's going on here?
+36:32 | And then show history is just going to produce a plot.
+36:35 | We've seen that a million times before.
+36:37 | Any questions about this?
+36:42 | Well, I have a question?
+36:45 | Does it make any sense?
+36:46 | Is it going to work at all?
+36:48 | So now let's test it.
+36:51 | So, I now have this unit test program
+36:57 | called unit test stock.
+37:01 | I originally did not make it a function, I had it in-line,
+37:04 | and I realized that was really stupid, because I wanted to do
+37:07 | it a lot of times.
+37:10 | So it's got an internal procedure, internal function,
+37:15 | local to the unit test, that runs the simulation.
+37:20 | And it takes the set of stocks to simulate, a fig, figure
+37:25 | number, this is going to print a bunch of graphs, and I want
+37:29 | to say what graph it is, and whether or not I
+37:32 | believe in big mo.
+37:35 | It sets the mean to 0, and then for s in the stocks, it
+37:41 | moves it, giving it the bias and the momentum, then it
+37:46 | shows the history.
+37:49 | And then computes the mean of, getting me the mean of all the
+37:53 | stocks in it.
+37:54 | We've seen this sort of thing many times before.
+37:57 | I've then got some constants.
+37:59 | By the way, I want to emphasize that I've named
+38:02 | these constants to make it easier to change.
+38:04 | Starting with 20 stocks, 100 days.
+38:10 | And then what I do is, I stock sub 1, stocks 1 will be the
+38:15 | empty list, stocks 2 is the empty list. Why do you think
+38:19 | I'm starting with bias of 0?
+38:27 | Because, what do you think the mean should be, if I simulate
+38:32 | various things that the bias of 0?
+38:35 | I start $100 as the average price of the stock, what
+38:39 | should the average price of the stock be?
+38:42 | If my code is correct, what should the average price be,
+38:45 | after say, 100 days, if there's no bias.
+38:50 | Pardon?
+38:51 | 100, exactly.
+38:53 | Since there's no upward or downward bias.
+38:56 | They may fluctuate wildly, but if I look at enough stocks,
+39:00 | the average should be right around 100.
+39:03 | I don't know what the average would be if I chose a
+39:05 | different bias.
+39:07 | It's a little bit complicated, so I chose the simplest bias.
+39:11 | Important lesson, so that there would be some
+39:14 | predictability in the results, and I would have some, if you
+39:18 | will, smoke test for knowing whether or not I was getting,
+39:22 | my code seemed to be working.
+39:27 | All right, and initially, well, maybe initially, just to
+39:31 | be simple I'm going to start momentum equal to false.
+39:39 | Because, again, it seems simpler have a model where
+39:41 | there's no momentum.
+39:43 | I'm looking for the simplest model possible for the first
+39:46 | time I run it.
+39:49 | And then we looked at this little loop before, for i in
+39:51 | range number of stocks, I'm going to create two different
+39:55 | lists of stocks, one where the moves, or distributions, are
+40:00 | chosen from a uniform, and the other where they're Gaussian.
+40:04 | Because I'm sort of curious as to, again, which is the right
+40:07 | way to think about this, all right?
+40:14 | And then, I'm going to just call it.
+40:18 | We'll see what we get.
+40:22 | So let's do it.
+40:22 | Let's hope that all the changes I mad have not
+40:24 | introduced a syntax error.
+40:29 | All right, well at least it did something.
+40:31 | Let's see what it did.
+40:39 | So the test on the left, you'll remember, was the one
+40:43 | with test one, I believe, was the uniform distribution, and
+40:47 | test two is the Gaussian.
+40:51 | So, but let's, what should we do first?
+40:55 | Well, let's do the smoke test number one: is the mean more
+41:00 | or less what we expected?
+41:02 | Well, it looks like it's dead on 100, which was our initial
+41:05 | price in test two.
+41:09 | And in test one it's a little bit above 100.
+41:12 | But, we didn't do that many stocks, or that many days, so
+41:16 | it's quite plausible that it's correct.
+41:24 | But, just to be sure, not to be sure, but just to increase
+41:28 | my confidence, I'm going to just run it again.
+41:46 | Well, here I'm a little bit below 100 and in two, and test
+41:51 | one a little bit below 100 as well.
+41:53 | You remember last time was a little bit above 100.
+41:56 | I feel pretty good about this, and in fact I ran it a lot of
+41:59 | times in my office.
+42:01 | And it just bounces around, hovering around 100.
+42:05 | Course, this is the wrong way to do it.
+42:06 | I should really just put it in a nice test harness, where I
+42:09 | run 100, 200, 1,000 trials, but I didn't want to bore you
+42:14 | with that here.
+42:15 | So we'll see that, OK, we passed the first smoke test.
+42:20 | We seem to be where we expect to be.
+42:25 | Well, let's try smoke test two.
+42:30 | What else might we want to see, to see if we got things
+42:32 | working properly?
+42:34 | Well, I kind of ignored the notion of bias by making it 0,
+42:39 | so let's give it a big bias here.
+42:49 | Assuming it will let me edit it.
+43:09 | We just gotta start it up again, it's the
+43:11 | safest thing to do.
+43:34 | You wouldn't think I would have, I don't have -- all
+43:38 | right, be that way about it.
+43:42 | Fortunately, we've been through this before.
+43:46 | We know if we relaunch the Finder.
+43:49 | Who says Mac OS is flawless?
+43:58 | All right, we were down here, and I was saying, let's try a
+44:07 | larger, introduce a bias.
+44:10 | Again, we're trying to see if it does what we
+44:12 | think it might do.
+44:13 | So what do you think it should do with a bias?
+44:17 | Where should the mean be now?
+44:21 | Still around 100?
+44:24 | Or higher, right?
+44:26 | Because we've now put in a bias suggesting that
+44:29 | it should go up.
+44:31 | Oops.
+44:33 | It wouldn't have hurt it.
+44:37 | All right.
+44:39 | So let's run it.
+44:49 | Sure enough, for one, we see, test two, it's a little bit
+44:54 | over 100, and for test one it's way over 100.
+45:02 | Well, let's make sure it's not a fluke.
+45:11 | Try it again.
+45:21 | So, sure enough, changing the bias changed the price, and
+45:26 | even changed it in the right direction.
+45:31 | So we can feel pretty comfortable that it's doing
+45:33 | something good with that.
+45:35 | We could also feel pretty comfortable that that's
+45:37 | probably way too high a bias, right?
+45:40 | We would not expect that the mean should be over 160, or in
+45:45 | one case, 150, after only 100 days trading, right?
+45:49 | Things don't typically go up 50% in 100 days.
+45:53 | They go down 50%, but --
+46:00 | All right, so that's good.
+46:03 | Oh, let's look at something else now.
+46:06 | Let's go back to where, a simpler bias here.
+46:10 | We'll run it again.
+46:13 | And think about, what's the difference between the
+46:16 | Gaussian and the normal?
+46:26 | Can we deduce anything about those?
+46:35 | Not, well, let me ask you.
+46:37 | What do you think, yes or no?
+46:45 | Anybody see anything interesting here?
+46:47 | Yeah?
+46:47 | STUDENT: The variance of the Gaussian seems to be less than
+46:52 | the variance of the uniform.
+46:54 | PROFESSOR: The variance of the Gaussian --
+46:55 | STUDENT: -- is less.
+46:59 | PROFESSOR: So all right, that appears to be the case here.
+47:02 | But let's run it again, as we've done with
+47:04 | all the other tests.
+47:06 | So we have a hypothesis.
+47:09 | Let's not fall victim to the Oklahoma sharpshooter.
+47:13 | We'll test our hypothesis, or at least examine it again, see
+47:19 | if it's, in some sense, repeatable.
+47:27 | Well, now what do we see?
+47:32 | Doesn't seem to be true this time, right?
+47:35 | Not obviously.
+47:37 | So, we're not sure about this.
+47:42 | So this is something that we would need
+47:43 | to investigate further.
+47:49 | And we would need, to have to look at it, and it's going to
+47:52 | be very tricky, by the way, as to what the right answer is.
+47:57 | But if you think about it, it would not be surprising if the
+48:04 | Gaussians, at least, gave us some surprising, more extreme,
+48:09 | results, than the uniform.
+48:12 | Because the uniform, as we've set it up here, is bounded.
+48:16 | The minimum and the maximum is bounded.
+48:22 | With the Gaussian, there's a tail.
+48:26 | And you might every once in a while get this, at least as
+48:29 | we've done it in this case, this large
+48:31 | move out at the end.
+48:34 | You might not.
+48:36 | There's nothing profound about this, other than the
+48:40 | understanding that the details of how you set these things up
+48:44 | can matter a lot.
+48:47 | Well, the final thing I want to look at is momentum.
+48:54 | So let's go back, and let's set mo to true here.
+49:07 | Well, doesn't want us to set mo to true here.
+49:10 | Ah, there it does.
+49:16 | So, and now let's run it and see what happens.
+49:19 | What do you think should happen?
+49:25 | Anybody?
+49:26 | STUDENT: [INAUDIBLE]
+49:31 | PROFESSOR: I think you're right.
+49:36 | These ones should curl, see if I can -- oh, not bad.
+49:41 | Let's run it.
+49:48 | Well, it's a little hard to see, but things
+49:53 | tend to take off.
+49:56 | Because once things started moving, it tends to move in
+49:59 | that direction.
+50:05 | All right.
+50:10 | How do we go about choosing these parameters?
+50:12 | How do we go about deciding what to do?
+50:14 | Well, we play with it, the way I've been playing with it, and
+50:18 | compare the results to some set of real data.
+50:22 | And then we try and get our simulation to match the past,
+50:26 | and hope that that will help it predict the future.
+50:31 | We're not enough time to go through all the,
+50:33 | to do that a lot.
+50:35 | I will be posting code that you can play with, and I
+50:38 | suggest you go through exactly this kind of exercise.
+50:42 | Because this is really the way that people do develop
+50:45 | simulations.
+50:46 | They don't, out of whole cloth, get it
+50:48 | right the first time.
+50:50 | They build them, they do what if games, they play with them,
+50:54 | and then they try and adjust them to get them right.
+50:57 | The nice thing here is, you can decide whether you believe
+51:00 | momentum and see what it would mean, or not mean, etc.
+51:04 | All right, one more lecture.
+51:06 | See you guys next week.

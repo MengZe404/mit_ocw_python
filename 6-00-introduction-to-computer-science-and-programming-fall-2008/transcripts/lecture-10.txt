@@ -1,0 +1,995 @@
+0:00 | The following content is provided
+0:01 | under a creative commons license.
+0:03 | Your support will help MIT OpenCourseWare
+0:06 | continue to offer high-quality educational resources for free.
+0:10 | To make a donation or view additional materials
+0:13 | from hundreds of MIT courses, visit MIT OpenCourseWare
+0:16 | at ocw.mit.edu.
+0:21 | PROFESSOR: Last time we were talking about binary search
+0:24 | and I sort of left a promise to you which I need to pick up.
+0:29 | I want to remind you, we were talking
+0:31 | about search, which is a very fundamental thing that we do
+0:35 | in a whole lot of applications.
+0:37 | We want to go find things in some data set.
+0:39 | And I'll remind you that we sort of a separated out two cases.
+0:42 | We said if we had an ordered list,
+0:48 | we could use binary search.
+0:50 | And we said that was log rhythmic, took log n time where
+0:54 | n is the size of the list.
+0:56 | If it was an unordered list, we were basically
+1:01 | stuck with linear search.
+1:03 | Got to walk through the whole list
+1:04 | to see if the thing is there.
+1:06 | So that was of order in.
+1:08 | And then one of the things that I suggested
+1:10 | was that if we could figure out some way to order it,
+1:13 | and in particular, if we could order it in n log n time,
+1:22 | and we still haven't done that, but if we
+1:24 | could do that, then we said the complexity changed
+1:26 | a little bit.
+1:27 | But it changed in a way that I want to remind you.
+1:30 | And the change was, that in this case,
+1:32 | if I'm doing a single search, I've got a choice.
+1:36 | I could still do the linear case, which is order n
+1:40 | or I could say, look, take the list, let's sort it
+1:44 | and then search it.
+1:45 | But in that case, we said well to sort
+1:47 | it was going to take n log n time, assuming I can do that.
+1:52 | Once I have it sorted I can search it in log n time,
+1:59 | but that's still isn't as good as just doing n.
+2:02 | And this led to this idea of amortization,
+2:08 | which is I need to not only factor in the cost,
+2:11 | but how am I going to use it?
+2:12 | And typically, I'm not going to just search once in a list,
+2:14 | I'm going to search multiple times.
+2:16 | So if I have to do k searches, then in the linear case,
+2:21 | I got to do order n things k times.
+2:23 | It's order k n.
+2:25 | Whereas in the ordered case, I need to get them sorted,
+2:30 | which is still n log n, but then the search is only log n.
+2:34 | I need to do k of those.
+2:38 | And we suggested well this is better than that.
+2:44 | This is certainly better than that.
+2:47 | m plus k all times log n is in general going to be
+2:50 | much better than k times n.
+2:51 | It depends on n and k but obviously
+2:53 | as n gets big, that one is going to be better.
+2:56 | And that's just a way of reminding you
+2:58 | that we want to think carefully, but what
+3:00 | are the things we're trying to measure when
+3:02 | we talk about complexity here?
+3:04 | It's both the size of the thing and how often
+3:06 | are we going to use it?
+3:07 | And there are some trade offs, but I still
+3:10 | haven't said how I'm going to get an n log
+3:11 | n sorting algorithm, and that's what I want to do today.
+3:14 | One of the two things I want to do today.
+3:17 | To set the stage for this, let's go back just
+3:19 | for a second to binary search.
+3:22 | At the end of the lecture I said binary search
+3:25 | was an example of a divide and conquer algorithm.
+3:39 | Sort of an Attila the Hun kind of approach
+3:41 | to doing things if you like.
+3:43 | So let me say -- boy, I could have made a really bad
+3:46 | political joke there, which I will forego, right.
+3:48 | Let's say what this actually means, divide and conquer.
+3:50 | Divide and conquer says basically do the following:
+3:53 | split the problem into several sub-problems of the same type.
+4:14 | I'll come back in a second to help
+4:15 | binary searches matches in that, but that's
+4:16 | what we're going to do.
+4:17 | For each of those sub-problems we're
+4:21 | going to solve them independently,
+4:26 | and then we're going to combine those solutions.
+4:34 | And it's called divide and conquer for the obvious reason.
+4:36 | I'm going to divide it up into sub-problems with the hope
+4:39 | that those sub-problems get easier.
+4:41 | It's going to be easier to conquer if you like,
+4:43 | and then I'm going to merge them back.
+4:45 | Now, in the binary search case, in some sense,
+4:47 | this is a little bit trivial.
+4:51 | What was the divide?
+4:52 | The divide was breaking a big search up into half a search.
+4:56 | We actually threw half of the list away
+4:58 | and we kept dividing it down, until ultimately we
+5:01 | got something of size one to search.
+5:03 | That's really easy.
+5:04 | The combination was also sort of trivial in this case
+5:07 | because the solution to the sub-problem
+5:09 | was, in fact, the solution to the larger problem.
+5:13 | But there's the idea of divide and conquer.
+5:15 | I'm going to use exactly that same ideas to tackle sort.
+5:18 | Again, I've got an unordered list of n elements.
+5:20 | I want to sort it into a obviously a sorted list.
+5:24 | And that particular algorithm is actually
+5:27 | a really nice algorithm called merge sort.
+5:29 | And it's actually a fairly old algorithm.
+5:37 | It was invented in 1945 by John von Neumann one of the pioneers
+5:43 | of computer science.
+5:46 | And here's the idea behind merge sort,
+5:50 | actually I'm going to back into it in a funny way.
+5:53 | Let's assume that I could somehow get to the stage
+5:56 | where I've got two sorted lists.
+5:59 | How much work do I have to do to actually merge them together?
+6:04 | So let me give you an example.
+6:05 | Suppose I want to merge two lists, and they're sorted.
+6:13 | Just to give you an example, here's one list,
+6:19 | 3121724 Here's another list, 12430.
+6:25 | I haven't said how I'm going to get those sorted lists,
+6:29 | but imagine I had two sorted lists like that.
+6:31 | How hard is it to merge them?
+6:34 | Well it's pretty easy, right?
+6:35 | I start at the beginning of each list,
+6:37 | and I say is one less than three?
+6:39 | Sure.
+6:41 | So that says one should be the first element in my merge list.
+6:45 | Now, compare the first element in each of these lists.
+6:49 | Two is less than three, so two ought
+6:52 | to be the next element of the list.
+6:54 | And you get the idea.
+6:55 | What am I going to do next?
+6:57 | I'm going to compare three against four.
+7:00 | Three is the smallest one, and I'm
+7:02 | going to compare four games twelve,
+7:05 | which is going to give me four.
+7:07 | And then what do?
+7:07 | I have to do twelve against thirty, twelve is smaller,
+7:13 | take that out.
+7:15 | Seventeen against thirty, twenty-four against thirty
+7:22 | And by this stage I've got nothing left in this element,
+7:27 | so I just add the rest of that list in.
+7:31 | Wow I can sort two lists, so I can merge two lists.
+7:33 | I said it poorly.
+7:35 | What's the point?
+7:37 | How many operations did it take me to do this?
+7:40 | Seven comparisons, right?
+7:41 | I've got eight elements.
+7:42 | It took me seven comparisons, because I
+7:47 | can take advantage of the fact I know
+7:49 | I only ever have to look at the first element of each sub-list.
+7:52 | Those are the only things I need to compare,
+7:54 | and when I run out of one list, I just add the rest of the list
+7:57 | in.
+7:58 | What's the order of complexity of merging?
+8:02 | I heard it somewhere very quietly.
+8:03 | STUDENT: n.
+8:05 | PROFESSOR: Sorry, and thank you.
+8:06 | Linear, absolutely right?
+8:08 | And what's n by the way here?
+8:10 | What's it measuring?
+8:11 | STUDENT: [UNINTELLIGIBLE]
+8:14 | PROFESSOR: In both lists, right.
+8:15 | So this is linear, order n and n is this sum of the element,
+8:21 | or sorry, the number of elements in each list.
+8:30 | I said I was going to back my way into this.
+8:32 | That gives me a way to merge things.
+8:37 | So here's what merge sort would do.
+8:40 | Merge sort takes this idea of divide and conquer,
+8:47 | and it does the following: it says
+8:49 | let's divide the list in half.
+8:58 | There's the divide and conquer.
+9:00 | And let's keep dividing each of those lists in half
+9:04 | until we get down to something that's really easy to sort.
+9:07 | What's the simplest thing to sort?
+9:08 | A list of size one, right?
+9:12 | So continue until we have singleton lists.
+9:26 | Once I got a list of size one they're
+9:28 | sorted, and then combine them.
+9:31 | Combine them by doing emerge the sub-lists.
+9:36 | And again, you see that flavor.
+9:42 | I'm going to just keep dividing it up
+9:44 | until I get something really easy,
+9:46 | and then I'm going to combine.
+9:47 | And this is different than binary search now,
+9:49 | the combine is going to have to do some work.
+9:50 | So, I'm giving you a piece of code that does this,
+9:54 | and I'm going to come back to it in the second,
+9:56 | but it's up there.
+9:57 | But what I'd like to do is to try
+9:58 | you sort sort of a little simulation of how
+10:01 | this would work.
+10:02 | And I was going to originally make the TAs come up here
+10:03 | and do it, but I don't have enough t a's
+10:05 | to do a full merge sort.
+10:06 | So I'm hoping, so I also have these really high-tech props.
+10:10 | I spent tons and tons of department money
+10:12 | on them as you can see.
+10:13 | I hope you can see this because I'm going to try
+10:15 | and simulate what a merge sort does.
+10:16 | I've got eight things I want to sort here,
+10:18 | and those initially start out here at top level.
+10:21 | The first step is divide them in half.
+10:23 | All right?
+10:27 | I'm not sure how to mark it here,
+10:29 | remember I need to come back there.
+10:31 | I'm not yet done.
+10:33 | What do I do?
+10:33 | Divide them in half again.
+10:40 | You know, if I had like shells and peas
+10:42 | here I could make some more money.
+10:44 | What do I do?
+10:44 | I divide them in half one more time.
+10:50 | Let me cluster them because really what I have,
+10:53 | sorry, separate them out.
+10:56 | I've gone from one problem size eight down
+10:58 | to eight problems of size one.
+11:01 | At this stage I'm at my singleton case.
+11:03 | So this is easy.
+11:04 | What do I do?
+11:04 | I merge.
+11:05 | And the merge is, put them in order.
+11:17 | What do I do next?
+11:18 | Obvious thing, I merge these.
+11:19 | And that as we saw was a nice linear operation.
+11:22 | It's fun to do it upside down, and then one more merge
+11:30 | which is I take the smallest elements of each one
+11:34 | until I get to where I want.
+11:40 | Wow aren't you impressed.
+11:42 | No, don't please don't clap, not for that one.
+11:45 | Now let me do it a second time to show you that --
+11:48 | I'm saying this poorly.
+11:49 | Let me say it again.
+11:50 | That's the general idea.
+11:52 | What should you see out of that?
+11:53 | I just kept sub-dividing down until I
+11:55 | got really easy problems, and then I combine them back.
+11:59 | I actually misled you slightly there or maybe a lot,
+12:02 | because I did it in parallel.
+12:03 | In fact, let me just shuffle these up a little bit.
+12:06 | Really what's going to happen here, because this
+12:08 | is a sequential computer, is that we're
+12:10 | going to start off up here, at top level,
+12:13 | we're going to divide into half, then
+12:19 | we're going to do the complete subdivision
+12:21 | and merge here before we ever come back and do this one.
+12:24 | We're going to do a division here and then a division there.
+12:30 | At that stage we can merge these, and then take this down,
+12:32 | do the division merge and bring them back up.
+12:35 | Let me show you an example by running that.
+12:41 | I've got a little list I've made here called test.
+12:44 | Let's run merge sort on it, and then we'll look at the code.
+12:53 | OK, what I would like you to see is I've been printing out,
+12:57 | as I went along, actually let's back up slightly
+12:59 | and look at the code.
+13:00 | There's merge sort.
+13:03 | Takes in a list.
+13:04 | What does it say to do?
+13:05 | It says check to see if I'm in that base case.
+13:07 | It's the list of length less than two.
+13:10 | Is it one basically?
+13:11 | In which case, just return a copy the list.
+13:16 | That's the simple case.
+13:17 | Otherwise, notice what it says to do.
+13:18 | It's says find the mid-point and split the list in half.
+13:24 | Copy of the back end, sorry, copy of the left side,
+13:27 | copy of the right side.
+13:28 | Run merge sort on those.
+13:30 | By induction, if it does the right thing,
+13:32 | I'm going to get back two lists, and I'm
+13:34 | going to then merge them together.
+13:36 | Notice what I'm going to do.
+13:37 | I'm going to print here the list if we go into it,
+13:40 | and print of the when we're done and then just return that.
+13:44 | Merge up here.
+13:45 | There's a little more code there.
+13:46 | I'll let you just grok it but you
+13:47 | can see it's basically doing what I did over there.
+13:51 | Setting up two indices for the two sub-list,
+13:53 | it's just walking down, finding the smallest element,
+13:56 | putting it into a new list.
+13:57 | When it gets to the end of one of the lists,
+14:00 | it skips to the next part, and only one of these two pieces
+14:03 | will get called because only one of them
+14:05 | is going to have things leftovers.
+14:06 | It's going to add the other pieces in.
+14:08 | OK, if you look at that then, let's
+14:09 | look at what happened when we ran this.
+14:11 | We started off with a call with that list.
+14:16 | Ah ha, split it in half.
+14:19 | It's going down the left side of this.
+14:21 | That got split in half, and that got split in half
+14:23 | until I got to a list of one.
+14:27 | Here's the first list of size one.
+14:28 | There's the second list of size one.
+14:30 | So I merged them.
+14:31 | It's now in the right order, and that's coming from right there.
+14:35 | Having done that, it goes back up
+14:37 | and picks the second sub-list, which came from there.
+14:42 | It's a down to base case, merges it.
+14:44 | When these two merges are done, we're
+14:46 | basically at a stage in that branch
+14:48 | where we can now merge those two together, which gives us that,
+14:52 | and it goes through the rest of it.
+14:56 | A really nice algorithm.
+15:00 | As I said, an example of divide and conquer.
+15:03 | Notice here that it's different than the binary search case.
+15:06 | We're certainly dividing down, but the combination now
+15:10 | actually takes some work.
+15:12 | I'll have to actually figure out how to put them back together.
+15:15 | And that's a general thing you want
+15:16 | to keep in mind when you're thinking
+15:18 | about designing a divide and conquer kind of algorithm.
+15:21 | You really want to get the power of dividing things up,
+15:23 | but if you end up doing a ton of work at the combination stage,
+15:26 | you may not have gained anything.
+15:28 | So you really want to think about that trade off.
+15:31 | All right, having said that, what's the complexity here?
+15:37 | Boy, there's a dumb question, because I've been telling you
+15:40 | for the last two lectures the complexity is n log n,
+15:42 | but let's see if it really is.
+15:43 | What's the complexity here?
+15:46 | If we think about it, we start off with the problem of size n.
+16:01 | What do we do?
+16:02 | We split it into two problems of size n over 2.
+16:05 | Those get split each into two problems of size n over 4,
+16:08 | and we keep doing that until we get down to a level
+16:14 | in this tree where we have only singletons left over.
+16:20 | Once we're there, we have to do the merge.
+16:23 | Notice what happens here.
+16:24 | We said each of the merge operations was of order n.
+16:30 | But n is different.
+16:31 | Right?
+16:31 | Down here, I've just got two things to merge,
+16:33 | and then I've got things of size two
+16:34 | to merge and then things of size four to merge.
+16:37 | But notice a trade off.
+16:38 | I have n operations if you like down there of size one.
+16:43 | Up here I have n over two operations of size two.
+16:47 | Up here I've got n over four operations of size four.
+16:50 | So I always have to do a merge of n elements.
+16:54 | How much time does that take?
+16:57 | Well, we said it, right?
+17:01 | Where did I put it?
+17:02 | Right there, order n.
+17:04 | So I have order n operations at each level in the tree.
+17:16 | And then how many levels deep am I?
+17:17 | Well, that's the divide, right?
+17:20 | So how many levels do I have?
+17:26 | Log n, because at each stage I'm cutting the problem in half.
+17:30 | So I start off with n then it's n
+17:31 | over two n over four n over eight.
+17:33 | So I have n operations log n times, there we go, n log n.
+17:40 | Took us a long time to get there,
+17:42 | but it's a nice algorithm to have.
+17:45 | Let me generalize this slightly.
+17:51 | When we get a problem, a standard tool
+17:55 | to try and attack it with is to say,
+17:56 | is there some way to break this problem down into simpler,
+18:00 | I shouldn't say simpler, smaller versions of the same problem.
+18:05 | If I can do that, it's a good candidate
+18:07 | for divide and conquer.
+18:08 | And then the things I have to ask is how much of a division
+18:10 | do I want to do?
+18:12 | The obvious one is to divide it in half,
+18:13 | but there may be cases where there are different divisions
+18:16 | you want to have take place.
+18:18 | The second question I want to ask is what's the base case?
+18:21 | When do I get down to a problem that's
+18:23 | small enough that it's basically trivial to solve?
+18:26 | Here it was lists of size one.
+18:28 | I could have stopped at lists of size two right.
+18:30 | That's an easy comparison.
+18:31 | Do one comparison and return one of two possible orders on it,
+18:34 | but I need to decide that.
+18:36 | And the third thing I need to decide is how do I combine?
+18:39 | You know, point out to you in the binary search case,
+18:42 | combination was trivial.
+18:44 | The answer to the final search was just the answer
+18:46 | all the way up.
+18:47 | Here, a little more work, and that's
+18:49 | why I'll come back to that idea.
+18:50 | If I'm basically just squeezing jello,
+18:53 | that is, I'm trying to make the problem simpler,
+18:55 | but the combination turns out to be really complex,
+18:57 | I've not gained anything.
+18:59 | So things that are good candidates for divide
+19:02 | and conquer are problems where it's
+19:04 | easy to figure out how to divide down,
+19:06 | and the combination is of little complexity.
+19:09 | It would be nice if it was less than linear,
+19:11 | but linear is nice because then I'm
+19:13 | going to get that n log in kind of behavior.
+19:15 | And if you ask the TAs in recitation tomorrow,
+19:17 | they'll tell you that you see a lot of n log n algorithms
+19:20 | in computer science.
+19:21 | It's a very common class of algorithms,
+19:23 | and it's very useful one to have.
+19:28 | Now, one of the questions we could still ask
+19:31 | is, right, we've got binary search, which
+19:34 | has got this nice log behavior.
+19:36 | If we can sort things, you know, we get this n log n behavior,
+19:41 | and we got a n log n behavior overall.
+19:43 | But can we actually do better in terms of searching.
+19:47 | I'm going to show you one last technique.
+19:49 | And in fact, we're going to put quotes around the word better,
+19:53 | but it does better than even this kind of binary search,
+19:58 | and that's a method called hashing.
+20:04 | You've actually seen hashing, you just don't know it.
+20:08 | Hashing is the the technique that's
+20:09 | used in Python to represent dictionaries.
+20:12 | Hashing is used when you actually
+20:14 | come in to Logan Airport and Immigration or Homeland
+20:17 | Security checks your picture against a database.
+20:20 | Hashing is used every time you enter a password into a system.
+20:24 | So what in the world is hashing?
+20:26 | Well, let me start with a simple little example.
+20:29 | Suppose I want to represent a collection of integers.
+20:35 | This is an easy little example.
+20:38 | And I promise you that the integers are never
+20:41 | going to be anything other than between the range of zero
+20:44 | to nine.
+20:45 | OK, so it might be the collection of one and five.
+20:47 | It might be two, three, four, eight.
+20:48 | I mean some collection of integers,
+20:50 | but I guarantee you it's between zero and nine.
+20:52 | Here's the trick I can play.
+20:55 | I can build -- I can't count -- I could build a list with spots
+21:11 | for all of those elements, zero, one, two, three, four, five,
+21:14 | six, seven, eight, nine.
+21:16 | And then when I want to create my set,
+21:18 | I could simply put a one everywhere
+21:24 | that that integer falls.
+21:26 | So if I wanted to represent, for example,
+21:27 | this is the set two, six and eight,
+21:32 | I put a one in those slots.
+21:35 | This seems a little weird, but bear with me for second,
+21:37 | in fact, I've given you a little piece a code to do it,
+21:40 | which is the next piece of code on the hand out.
+21:45 | So let's take a look at it for second.
+21:48 | This little set of code here from create insert and number.
+21:53 | What's create do?
+21:53 | It says, given a low and a high range,
+21:55 | in this case it would be zero to nine.
+21:57 | I'm going to build a list.
+22:00 | Right, you can see that little loop going through there.
+22:02 | What am I doing?
+22:03 | I'm creating a list with just that special symbol none in it.
+22:07 | So I'm building the list.
+22:08 | I'm returning that as my set.
+22:09 | And then to create the object, I'll
+22:11 | simply do a set of inserts.
+22:13 | If I want the values two, six and eight in there,
+22:15 | I would do an insert of two into that set, an insert of six
+22:18 | into that set, and an insert of eight into the set.
+22:20 | And what does it do?
+22:21 | It marks a one in each of those spots.
+22:24 | Now, what did I want to do?
+22:26 | I wanted to check membership.
+22:27 | I want to do search.
+22:28 | Well that's simple.
+22:30 | Given that representation and some value,
+22:32 | I just say gee is it there?
+22:36 | What's the order complexity here?
+22:43 | I know I drive you nuts asking questions?
+22:45 | What's the order complexity here?
+22:48 | Quadratic, linear, log, constant?
+22:57 | Any takers?
+22:58 | I know I have the wrong glasses on the see hands up too, but...
+23:01 | STUDENT: [UNINTELLIGIBLE]
+23:04 | PROFESSOR: Who said it?
+23:05 | STUDENT: Constant.
+23:06 | PROFESSOR: Constant, why?
+23:08 | STUDENT: [UNINTELLIGIBLE]
+23:09 | PROFESSOR: Yes, thank you.
+23:10 | All right, it is constant.
+23:11 | You keep sitting back there where I can't get to you.
+23:14 | Thank you very much.
+23:15 | It has a constant.
+23:17 | Remember we said we design lists so
+23:20 | that the access, no matter where it was on the list
+23:22 | was of constant time.
+23:24 | That is another way of saying that looking up this thing here
+23:28 | is constant.
+23:29 | So this is constant time, order one.
+23:35 | Come on, you know, representing sets of integers,
+23:37 | this is pretty dumb.
+23:38 | Suppose I want to have a set of characters.
+23:41 | How could I do that?
+23:42 | Well the idea of a hash, in fact,
+23:44 | what's called a hash function is to have some way of mapping
+23:47 | any kind of data into integers.
+23:50 | So let's look at the second example, all right, --
+23:55 | I keep doing that -- this piece of code from here to here gives
+24:01 | me a way of now creating a hash table of size 256.
+24:06 | Ord as a built in python representation.
+24:09 | There is lots of them around that takes any character
+24:11 | and gives you back an integer.
+24:13 | In fact, just to show that to you, if I go down here
+24:16 | and I type ord, sorry, I did that wrong.
+24:32 | Let me try again.
+24:33 | We'll get to exceptions in a second.
+24:38 | I give it some character.
+24:39 | It gives me back an integer representing.
+24:42 | It looks weird.
+24:43 | Why is three come back to some other thing?
+24:44 | That's the internal representation
+24:46 | that python uses for this.
+24:47 | If I give it some other character, yeah,
+24:51 | it would help if I could type, give it some other character.
+24:54 | It gives me back a representation.
+24:57 | So now here's the idea.
+24:59 | I build a list 256 elements long,
+25:03 | and I fill it up with those special characters none.
+25:06 | That's what create is going to do right here.
+25:09 | And then hash character takes in any string or character,
+25:14 | single character, gives me back a number.
+25:16 | Notice what I do.
+25:17 | If I want to create a set or a sequence
+25:20 | representing these things, I simply insert into that list.
+25:24 | It goes through and puts ones in the right place.
+25:26 | And then, if I want to find out if something's there,
+25:29 | I do the same thing.
+25:30 | But notice now, hash is converting the input
+25:33 | into an integer.
+25:38 | So, what's the idea?
+25:40 | If I know what my hash function does,
+25:42 | it maps, in this case characters into a range zero
+25:46 | to 256, which is zero to 255, I create a list that long,
+25:50 | and I simply mark things.
+25:52 | And my look up is still constant.
+25:55 | Characters are simple.
+25:56 | Suppose you want to represent sets of strings,
+25:58 | well you basically just generalize the hash function.
+26:01 | I think one of the classic ones for strings
+26:03 | is called the Rabin-Karp algorithm.
+26:06 | And it's simply the same idea that you
+26:07 | have a mapping from your import into a set of integers.
+26:13 | Wow, OK, maybe not so wow, but this is now constant.
+26:17 | This is constant time access.
+26:19 | So I can do searching in constant time which is great.
+26:24 | Where's the penalty?
+26:26 | What did I trade off here?
+26:28 | Well I'm going to suggest that what I did
+26:30 | was I really traded space for time.
+26:40 | It makes me sound like an astro physicist somehow right?
+26:44 | What do I mean by that?
+26:45 | I have constant time access which is great,
+26:49 | but I paid a price, which is I had to use up some space.
+26:52 | In the case of integers it was easy.
+26:55 | In the case of characters, so I have to give up a list of 256,
+26:58 | no big deal.
+26:59 | Imagine now you want to do faces.
+27:01 | You've got a picture of somebody's face,
+27:03 | it's a million pixels.
+27:04 | Each pixel has a range of values from zero to 256.
+27:07 | I want to hash a face with some function into an integer.
+27:11 | I may not want to do the full range of this,
+27:13 | but I may decide I have to use a lot of gigabytes of space
+27:16 | in order to do a trade off.
+27:18 | The reason I'm showing you this is it
+27:19 | that this is a gain, a common trade off in computer science.
+27:22 | That in many cases, I can gain efficiency
+27:25 | if I'm willing to give up space.
+27:28 | Having said that though, there may still be a problem,
+27:30 | or there ought to be a problem that may be bugging you
+27:32 | slightly, which is how do I guarantee
+27:36 | that my hash function takes any input into exactly one
+27:39 | spot in the storage space?
+27:43 | The answer is I can't.
+27:45 | OK, in the simple case of integers
+27:46 | I can, but in the case of something more complex
+27:49 | like faces or fingerprints or passwords for that matter,
+27:52 | it's hard to design a hash function that
+27:54 | has completely even distribution, meaning
+27:56 | that it takes any input into exactly one output spot.
+28:00 | So what you typically do and a hash case is you
+28:03 | design your code to deal with that.
+28:05 | You try to design -- actually I'm going to come back to that
+28:07 | in a second.
+28:07 | It's like you're trying to use a hash function that spread
+28:09 | things out pretty evenly.
+28:11 | But the places you store into in those lists
+28:13 | may have to themselves have a small list in there,
+28:16 | and when you go to check something,
+28:17 | you may have to do a linear search through the elements
+28:19 | in that list.
+28:20 | The good news is the elements in any one spot
+28:23 | in a hash table are likely to be a small number, three, four,
+28:26 | five.
+28:26 | So the search is really easy.
+28:27 | You're not searching a million things.
+28:29 | You're searching three or four things,
+28:30 | but nonetheless, you have to do that trade off.
+28:34 | The last thing I want to say about hashes
+28:36 | are that they're actually really hard to create.
+28:46 | There's been a lot of work done on these over the years,
+28:48 | but in fact, it's pretty hard to invent a good hash function.
+28:51 | So my advice to you is, if you want
+28:53 | to use something was a hash, go to a library.
+28:56 | Look up a good hash function.
+28:57 | For strings, there's a classic set of them
+29:00 | that work pretty well.
+29:01 | For integers, there are some real simple ones.
+29:02 | If there's something more complex,
+29:04 | find a good hash function, but designing a really good hash
+29:07 | function takes a lot of effort because you want it
+29:10 | to have that even distribution.
+29:11 | You'd like it to have as few duplicates
+29:15 | if you like in each spot in the hash table for each one
+29:17 | of the things that you use.
+29:22 | Let me pull back for a second then.
+29:25 | What have we done over the last three or four lectures?
+29:28 | We've started introducing you to classes of algorithms.
+29:31 | Things that I'd like you to be able to see
+29:34 | are how to do some simple complexity analysis.
+29:37 | Perhaps more importantly, how to recognize a kind of algorithm
+29:40 | based on its properties and know what class it belongs to.
+29:43 | This is a hint.
+29:44 | If you like, leaning towards the next quiz,
+29:46 | that you oughta be able to say that
+29:48 | looks like a logarithmic algorithm
+29:50 | because it's got a particular property.
+29:51 | That looks like an n log n algorithm
+29:53 | because it has a particular property.
+29:54 | And the third thing we've done is
+29:56 | we've given you now a set of sort of standard algorithms
+30:00 | if you like.
+30:01 | Brute force, just walk through every possible case.
+30:05 | It works well if the problem sizes are small.
+30:08 | We've had, there are a number of variants of guess and check
+30:11 | or hypothesize and test, where you try to guess the solution
+30:14 | and then check it and use that to refine your search.
+30:17 | Successive approximation, Newton-Raphson
+30:19 | was one nice example, but there's
+30:21 | a whole class of things that get closer and closer, reducing
+30:24 | your errors as you go along.
+30:26 | Divide and conquer and actually I
+30:29 | guess in between there bi-section, which is really
+30:31 | just a very difficult of successive approximation,
+30:34 | but divide and conquer is a class of algorithm.
+30:37 | These are tools that you want in your tool box.
+30:39 | These are the kinds of algorithms that you
+30:41 | should be able to recognize.
+30:42 | And what I'd like you to begin to do is to look at a problem
+30:45 | and say, gee, which kind of algorithm
+30:48 | is most likely to be successful on this problem,
+30:51 | and map it into that case.
+30:54 | OK, starting next -- don't worry I'm not going to quit 36
+30:56 | minutes after -- I got one more topic for today.
+30:58 | But jumping ahead, I'm going to skip in a second
+31:01 | now to talk about one last linguistic thing from Python,
+31:04 | but I want to preface Professor Guttag is going to pick up
+31:07 | next week, and what we're going to start doing then is taking
+31:09 | these classes of algorithms and start looking at much more
+31:12 | complex algorithms.
+31:13 | Things you're more likely to use in problems.
+31:16 | Things like knapsack problems as we move ahead.
+31:19 | But the tools you've seen so far are really
+31:21 | the things that were going to see
+31:23 | as we build those algorithms.
+31:24 | OK, I want to spend the last portion
+31:26 | of this lecture doing one last piece of linguistics stuff.
+31:29 | One last little thing from Python, and that's
+31:32 | to talk about exceptions.
+31:44 | OK, you've actually seen exceptions a lot,
+31:48 | you just didn't know that's what they were, because exceptions
+31:51 | show up everywhere in Python.
+31:52 | Let me give you a couple of examples.
+31:54 | I'm going to clear some space here.
+31:58 | Before I type in that expression,
+32:00 | I get an error, right?
+32:02 | So it's not defined.
+32:03 | But in fact, what this did was it threw an exception.
+32:06 | An exception is called a name error exception.
+32:10 | It says you gave me something I didn't know how to deal.
+32:13 | I'm going to throw it, or raise it,
+32:15 | to use the right term to somebody
+32:16 | in case they can handle it, but it's
+32:18 | a particular kind of exception.
+32:21 | I might do something like, remind you I have test.
+32:24 | If I do this, try and get the 10th element of a list that's
+32:31 | only eight long.
+32:32 | I get what looks like an error, but it's actually
+32:34 | throwing an exception.
+32:35 | The exception is right there.
+32:37 | It's an index error, that is it's
+32:39 | trying to do something going beyond the range of what
+32:42 | this thing could deal with.
+32:45 | OK, you say, come on, I've seen these all the time.
+32:47 | Every time I type something into my program,
+32:49 | it does one of these things, right?
+32:50 | When we're just interacting with idol, with the interactive
+32:54 | editor or sorry, interactive environment if you like,
+32:57 | that's what you expect.
+32:58 | What's happening is that we're typing
+33:00 | in something, an expression it doesn't know how to deal.
+33:02 | It's raising the exception, but is this simply
+33:04 | bubbling up at the top level saying you've got a problem.
+33:07 | Suppose instead you're in the middle
+33:11 | of some deep piece of code and you get one of these cases.
+33:15 | It's kind of annoying if it throws it all the way
+33:18 | back up to top level for you to fix.
+33:21 | If it's truly a bug, that's the right thing to do.
+33:23 | You want to catch it.
+33:25 | But in many cases exceptions or things that, in fact,
+33:27 | you as a program designer could have handled.
+33:30 | So I'm going to distinguish in fact
+33:31 | between un-handled exceptions, which
+33:36 | are the things that we saw there, and handled exceptions.
+33:43 | I'm going to show you in a second how to handle them,
+33:45 | but let's look at an example.
+33:46 | What do I mean by a handled exception?
+33:50 | Well let's look at the next piece of code.
+33:54 | OK, it's right here.
+33:55 | It's called read float.
+33:56 | We'll look at it in a second.
+33:58 | Let me sort of set the stage up for this --
+33:59 | suppose I want to input -- I'm sorry I want you as a user
+34:03 | to input a floating point number.
+34:05 | We talked about things you could do
+34:08 | to try make sure that happens.
+34:09 | You could run through a little loop
+34:10 | to say keep trying until you get one.
+34:12 | But one of the ways I could deal with it is what's shown here.
+34:15 | And what's this little loop say to do?
+34:17 | This little loop says I'm going to write
+34:20 | a function or procedures that takes in two messages.
+34:23 | I'm going to run through a loop, and I'm
+34:25 | going to request some input, which I'm going
+34:26 | to read in with raw input.
+34:28 | I'm going to store that into val.
+34:30 | And as you might expect, I'm going
+34:31 | to then try and see if I can convert that into a float.
+34:35 | Oh wait a minute, that's a little different than what
+34:37 | we did last time, right?
+34:38 | Last time we checked the type and said
+34:40 | if it is a float you're okay.
+34:41 | If not, carry on.
+34:42 | In this case what would happen?
+34:43 | Well float is going to try and do the cohersion.
+34:46 | It's going to try and turn it into a floating point number.
+34:50 | If it does, I'm great, right.
+34:52 | And I like just to return val.
+34:55 | If it doesn't, floats going to throw or raise,
+34:58 | to use the right term, an exception.
+35:00 | It's going to say something like a type error.
+35:03 | In fact, let's try it over here.
+35:04 | I if I go over here, and I say float of three,
+35:09 | it's going to do the conversion.
+35:10 | But if I say turn this into a float,
+35:14 | ah it throws a value error exception.
+35:16 | It says it's a wrong kind of value that I've got.
+35:19 | So I'm going to write a little piece of code that
+35:21 | says if it gives me a float, I'm set, But if not,
+35:25 | I'd like to have the code handle the exception.
+35:29 | And that's what this funky try/except thing does.
+35:33 | This is a try/except block and here's the flow of control
+35:43 | that takes place in there.
+35:45 | When I hit a try-block.
+35:47 | It's going to literally do that.
+35:48 | It's going to try and execute the instructions.
+35:51 | If it can successfully execute the instructions,
+35:54 | it's going to skip past the except block
+35:56 | and just carry on with the rest of the code.
+35:59 | If, however, it raises an exception, that exception,
+36:03 | at least in this case where it's a pure accept with no tags
+36:06 | on it, is going to get, be like thrown directly
+36:10 | to the except block, and it's going to try and execute that.
+36:12 | So notice what's going to happen here, then.
+36:14 | If I give it something that can be turned into a float,
+36:16 | I come in here, I read the input,
+36:18 | if it can be turned into a float,
+36:20 | I'm going to just return the value and I'm set.
+36:22 | If not, it's basically going to throw it
+36:25 | to this point, in which case I'm going to print out an error
+36:27 | message and oh yeah, I'm still in that while loop,
+36:30 | so it's going to go around.
+36:31 | So in fact, if I go here and, let me
+36:35 | un-comment this and run the code.
+36:39 | It says enter a float.
+36:41 | And if I give it something that can be -- sorry, I've got, yes,
+36:48 | never mind the grades crap.
+36:51 | Where did I have that?
+36:54 | Let me comment that out.
+36:58 | Somehow it's appropriate in the middle of my lecture
+37:00 | for it to say whoops at me but that wasn't what I intended.
+37:04 | And we will try this again.
+37:08 | OK, says it says enter a float.
+37:10 | I give it something that can be converted into a float,
+37:12 | it says fine.
+37:13 | I'm going to go back and run it again though.
+37:15 | If I run it again, it says enter a float.
+37:21 | Ah ha, it goes into that accept portion, prints out a message,
+37:24 | and goes back around the while loop to say try again.
+37:27 | And it's going to keep doing this
+37:28 | until I give it something that does serve as a float.
+37:33 | Right, so an exception then has this format
+37:36 | that I can control as a programmer.
+37:39 | Why would I want to use this?
+37:40 | Well some things I can actually expect may happen
+37:44 | and I want to handle them.
+37:45 | The float example is a simple one.
+37:46 | I'm going to generalize in a second.
+37:47 | Here's a better example.
+37:48 | I'm writing a piece of code that wants to input a file.
+37:52 | I can certainly imagine something
+37:53 | that says give me the file name, I'm
+37:54 | going to do something with it.
+37:56 | I can't guarantee that the file may exist under that name,
+37:59 | but I know that's something that might occur.
+38:01 | So a nice way to handle it is to write it
+38:03 | as an exception that says, here's
+38:04 | what I want to do if I get the file.
+38:06 | But just in case the file name is not there,
+38:09 | here's what I want to do in that case to handle it.
+38:11 | Let me specify what the exception should do.
+38:15 | In the example I just wrote here,
+38:16 | this is pretty trivial, right.
+38:17 | OK, I'm trying to input floats.
+38:19 | I could generalize this pretty nicely.
+38:21 | Imagine the same kind of idea where
+38:23 | I want to simply say I want to take input of anything
+38:25 | and try and see how to make sure I get the right kind of thing.
+38:28 | I want to make it polymorphic.
+38:35 | Well that's pretty easy to do.
+38:38 | That is basically the next example, right here.
+38:43 | In fact, let me comment this one out.
+38:49 | I can do exactly the same kind of thing.
+38:50 | Now what I'm going to try and do is read in a set of values,
+38:55 | but I'm going to give a type of value as well as the messages.
+38:59 | The format is the same.
+39:00 | I'm going to ask for some input, and then I
+39:02 | am going to use that procedure to check,
+39:05 | is this the right type of value.
+39:07 | And I'm trying to use that to do the coercion if you like.
+39:10 | Same thing if it works, I'm going to skip that, if it not,
+39:12 | it's going to throw the exception.
+39:14 | Why is this much nice?
+39:16 | Well, that's a handy piece of code.
+39:18 | Because imagine I've got that now,
+39:19 | and I can now store that away in some file name, input dot p y,
+39:23 | and import into every one of my procedure functions,
+39:27 | pardon me, my files of procedures,
+39:29 | because it's a standard way of now giving me the input.
+39:33 | OK, so far though, I've just shown you what
+39:35 | happens inside a peace a code.
+39:36 | It raises an exception.
+39:37 | It goes to that accept clause.
+39:39 | We don't have to use it just inside of one place.
+39:42 | We can actually use it more generally.
+39:44 | And that gets me to the last example I wanted to show you.
+39:47 | Let me uncomment this.
+39:55 | Let's take a look at this code.
+39:56 | This looks like a handy piece of code
+40:00 | to have given what we just recently did to you.
+40:02 | All right, get grades.
+40:03 | It's a little function that's going to say give me a file
+40:06 | name, and I'm going to go off and open that up
+40:09 | and bind it to a local variable.
+40:11 | And if it's successful, then I'd just
+40:13 | like to go off and do some things like turn it into a list
+40:16 | so I can compute average score or distributions or something
+40:18 | else.
+40:19 | I don't really care what's going on here.
+40:21 | Notice though what I've done.
+40:24 | Open, it doesn't succeed is going
+40:27 | to raise a particular kind of exception called I O error.
+40:31 | And so I've done a little bit different things here
+40:33 | which is I put the accept part of the block with I O error.
+40:39 | What does that say?
+40:40 | It says if in the code up here I get an exception of that sort,
+40:43 | I'm going to go to this place to handle it.
+40:46 | On the other hand, if I'm inside this procedure
+40:48 | and some other exception is raised,
+40:51 | it's not tagged by that one, it's
+40:53 | going to raise it up the chain.
+40:55 | If that procedure was called by some other procedure it's
+40:57 | going to say is there an exception block in there
+41:00 | that can handle that.
+41:00 | If not, I am going to keep going up the chain
+41:02 | until eventually I get to the top level.
+41:04 | And you can see that down here.
+41:06 | I'm going to run this in a second.
+41:07 | This is just a piece of code where
+41:08 | I'm going to say, gee, if I can get the grades,
+41:10 | do something, if not carry on.
+41:15 | And if I go ahead and run this -- now it's going to say woops,
+41:19 | at me.
+41:19 | What happened?
+41:25 | I'm down here and try, I'm trying
+41:27 | do get grades, which is a call to that function, which is not
+41:30 | bound in my computer.
+41:33 | That says it's in here.
+41:34 | It's in this try-block.
+41:36 | It raised an exception, but it wasn't and I O error.
+41:41 | So it passes it back, past this exception, up to this level,
+41:45 | which gets to that exception.
+41:48 | Let me say this a little bit better then.
+41:51 | I can write exceptions inside a piece of code.
+41:54 | Try this, if it doesn't work I can
+41:56 | have an exception that catches any error at that level.
+41:59 | Or I can say catch only these kinds of errors at that level,
+42:02 | otherwise pass them up the chain.
+42:05 | And that exception will keep getting passed up
+42:07 | the chain of calls until it either
+42:08 | gets to the top level, in which case
+42:10 | it looks like what you see all the time.
+42:11 | It looks like an error, but it tells you what the error came
+42:14 | from, or it gets an exception , it can deal with it.
+42:18 | OK, so the last thing to say about this
+42:20 | is what's the difference between an exception and an assert?
+42:37 | We introduced asserts earlier on.
+42:39 | You've actually seen them in some pieces of code,
+42:42 | so what's the difference between the two of them?
+42:47 | Well here's my way of describing it.
+42:49 | The goal of an assert, or an assert statement,
+42:53 | is basically to say, look, you can make sure
+42:55 | that my function is going to give this kind of result
+42:59 | if you give me inputs of a particular type.
+43:02 | Sorry, wrong way of saying it.
+43:03 | If you give me inputs that satisfy
+43:05 | some particular constraints.
+43:07 | That was the kind of thing you saw.
+43:08 | Asserts said here are some conditions to test.
+43:11 | If they're true, I'm going to let the rest of the code run.
+43:13 | If not, I'm going to throw an error.
+43:16 | So the assertion is basically saying
+43:19 | we got some pre-conditions, those
+43:24 | are the clauses inside the assert that have to be true,
+43:27 | and there's a post condition. and in essence,
+43:34 | what the assert is saying is, or rather the programmer is saying
+43:37 | using the assert is, if you give me input that satisfies
+43:40 | the preconditions, I'm guaranteeing
+43:41 | to you that my code is going to give you something
+43:43 | that meets the post condition.
+43:45 | It's going to do the right thing.
+43:46 | And as a consequence, as you saw with the asserts,
+43:48 | if the preconditions aren't true, it throws an error.
+43:52 | It goes back up the top level saying stop operation
+43:55 | immediately and goes back up the top level.
+43:59 | Asserts in fact are nice in the sense
+44:00 | that they let you check conditions
+44:02 | at debugging time or testing time.
+44:03 | So you can actually use them to see where your code is going.
+44:07 | An exception, when you use an exception, basically what
+44:10 | you're saying is, look, you can do anything
+44:12 | you want with my function, and you
+44:13 | can be sure that I'm going to tell you
+44:15 | if something is going wrong.
+44:16 | And in many cases I'm going to handle it myself.
+44:19 | So as much as possible, the exceptions
+44:22 | are going to try to handle unexpected things,
+44:26 | actually wrong term, you expected them,
+44:27 | but not what the user did.
+44:29 | It's going to try to handle conditions
+44:30 | other than the normal ones itself.
+44:33 | So you can use the thing in anyway.
+44:36 | If it can't, it's going to try and throw it to somebody else
+44:39 | to handle, and only if there is no handler
+44:41 | for that unexpected condition, will it come up to top level.
+44:45 | So, summarizing better, assert is
+44:47 | something you put in to say to the user,
+44:49 | make sure you're giving me input of this type,
+44:51 | but I'm going to guarantee you the rest of the code works
+44:54 | correctly.
+44:54 | Exceptions and exception handlers are saying,
+44:56 | here are the odd cases that I might see
+44:59 | and here's what I'd like to do in those cases
+45:01 | in order to try and be able to deal with them.
+45:04 | Last thing to say is why would you want to have exceptions?
+45:10 | Well, let's go back to that case of inputting
+45:14 | a simple little floating point.
+45:16 | If I'm expecting mostly numbers in,
+45:18 | I can certainly try and do the coercion.
+45:19 | I could have done that just doing the coercion.
+45:22 | The problem is, I want to know if, in fact, I've
+45:25 | got something that's not of the form I expect.
+45:28 | I'm much better having an exception get handled
+45:30 | at the time of input than to let that prop --
+45:33 | that value rather propagate through a whole bunch of code
+45:35 | until eventually it hits an error 17 calls later,
+45:38 | and you have no clue where it came from.
+45:41 | So the exceptions are useful when
+45:43 | you want to have the ability to say,
+45:45 | I expect in general this kind of behavior,
+45:48 | but I do know there are some other things that might happen
+45:50 | and here's what I'd like to do in each one of those cases.
+45:53 | But I do want to make sure that I don't let a value that I'm
+45:56 | not expecting pass through.
+45:58 | That goes back to that idea of sort of discipline coding.
+46:01 | It's easy to have assumptions about what
+46:03 | you think are going to come into the program when you writ it.
+46:06 | If you really know what they are use them as search,
+46:09 | but if you think there's going to be some flexibility,
+46:11 | you want to prevent the user getting trapped in a bad spot,
+46:14 | and exceptions as a consequence are a good thing to use.

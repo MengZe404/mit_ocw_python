@@ -1,0 +1,996 @@
+0:00 | OPERATOR: The following content is provided under a
+0:01 | Creative Commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:19 | PROFESSOR: Last lecture we were talking about classes,
+0:24 | and object-oriented programming, and we're going
+0:27 | to come back to it today.
+0:29 | I'm going to remind you, we were talking about it because
+0:31 | we suggested it is a really powerful way of structuring
+0:34 | systems, and that's really why we want to use it, It's a very
+0:36 | common way of structuring systems. So today I'm going to
+0:39 | pick up on a bunch of more nuanced, or more complex if
+0:42 | you like, ways of leveraging the power of classes.
+0:46 | But we're going to see a bunch of examples that are going to
+0:48 | give us a sense.
+0:48 | I'm going to talk about inheritance, we're going to
+0:50 | talk about shadowing, we're going to talk about iterators.
+0:53 | But before get to it, I want to start by just highlighting,
+0:56 | sort of, what was the point of classes?
+0:58 | So I'll remind you.
+0:59 | A class, I said, was basically a template for an
+1:06 | abstract data type.
+1:11 | And this was really to drive home this idea of modularity.
+1:13 | I want the ability to say, I've got a set of things that
+1:15 | naturally belong together, I'm going to cluster them
+1:18 | together, I want to treat it like it's a primitive, I want
+1:20 | to treat it like it's a float or an int or a string.
+1:23 | Is this going to be a point or a segment or something
+1:25 | different like that.
+1:26 | So it's really a way, as I said, of just trying to
+1:28 | cluster data together.
+1:30 | And this is a notion of modularity slash abstraction
+1:39 | where I'm treating them as primitives.
+1:40 | But the second thing we talked about is that we also have a
+1:45 | set of methods, using the special name method because
+1:47 | we're talking classes.
+1:48 | But basically functions that are designed to deal with this
+1:52 | data structure.
+1:53 | We're trying to group those together as well.
+1:55 | So we cluster data and methods.
+2:00 | Second key thing we said was, in the ideal case, which
+2:04 | unfortunately Python isn't, but we'll come back to that,
+2:06 | in the ideal case, we would have data hiding, and by data
+2:10 | hiding, which is sort of a version of encapsulation, what
+2:16 | we meant was that you could only get to the internal
+2:19 | pieces of that data structure through a proscribed method.
+2:24 | Proscribed meaning it's something I set up.
+2:26 | So data hiding saying, you would only access the parts
+2:35 | through a method.
+2:39 | And as we said, unfortunately Python does not enforce this.
+2:47 | Meaning that I could create one of these data structures,
+2:50 | ideally I'd have a method, that I'm going to see some
+2:52 | examples of that I used to get the parts out, unfortunately
+2:55 | in Python you could take the name the instance dot some
+3:00 | internal variable you'll get it back.
+3:01 | It is exposed.
+3:02 | And this is actually just not a good idea.
+3:03 | So I suggested in my very bad humor, that you practice
+3:06 | computational hygiene and you only use appropriate methods
+3:09 | to get the parts out.
+3:11 | OK didn't laugh the joke last time, you're not going to
+3:12 | laugh at it this time, I don't blame you.
+3:14 | All right, and then the last piece of this is that we said
+3:18 | the class is a template.
+3:20 | When we call that class, it makes an instance.
+3:23 | So class is used to make instances, meaning particular
+3:31 | versions, of that structure, and we said inside the
+3:36 | instances we have a set of attributes.
+3:39 | Internal variables, methods, that are going to belong to
+3:42 | that structure.
+3:44 | OK, so with that in mind, here's what I want to do.
+3:48 | I'm going to show you a set of examples, and I want to warn
+3:51 | you ahead of time, the code handout today is a little
+3:53 | longer than normal because we want to build essentially an
+3:55 | extended example of a sequence of examples of classes.
+3:58 | We're going to see the idea, of which we're gonna talk
+4:00 | about, of inheritance or hierarchy, in which we can
+4:03 | have classes that are
+4:04 | specializations of other classes.
+4:06 | We're gonna see how we can inherit methods, how we can
+4:08 | shadow methods, how we can use methods in a variety of ways.
+4:11 | So this is a way of suggesting you may find it more
+4:13 | convenient to put notes on the code handout rather than in
+4:16 | your own notes.
+4:17 | Do whatever you like, but I just wanted to alert you,
+4:19 | we're going to go through a little more code than normal.
+4:22 | So, the little environment I'm going to build is an
+4:26 | environment of people.
+4:27 | I'll build a simple little simulation of people.
+4:30 | So I'm going to start off with the first class, which I've
+4:33 | got up on the screen, and it's on your handout as well, which
+4:35 | is I'm going to build an instance, or a class rather,
+4:38 | of persons.
+4:42 | I'm going to draw a diagram, which I'm gonna try and see if
+4:44 | I can do well, over here, of the different objects we're
+4:48 | going to have. So I've got, a class, and by the way a class
+4:55 | is an object.
+4:57 | Instances are also objects, but classes are objects.
+4:59 | We're gonna see why we want that in a second.
+5:01 | Because I'm gonna build an object, sorry a
+5:02 | class, called a person.
+5:04 | Now, let's walk through some of the pieces here.
+5:07 | The first one is, there's something a little different.
+5:10 | Remember last time we had that keyword class and then a name,
+5:14 | that name, in this case, person says this is the name
+5:16 | for the class, and then we would have just had the
+5:18 | semicolon and a bunch of internal things.
+5:21 | Here I've got something in parens, and I want to stress
+5:23 | this is not a variable.
+5:26 | All right, this is not a def, this is a class.
+5:29 | I'm going to come back to it, but what this is basically
+5:31 | saying is that the person class is going to inherit from
+5:36 | another class, which in this case is just the built-in
+5:39 | Python object class.
+5:42 | Hold on to that thought, it's going to make more sense when
+5:44 | we look at a little more interesting example, but I
+5:45 | want to highlight that.
+5:46 | All right now, if we do this, as I said before, we can
+5:51 | create a version of a person, let me just
+5:52 | call it per, person.
+6:00 | OK?
+6:00 | And what we said last time is, when we wanted to create an
+6:03 | instance inside of this class definition, we've got one of
+6:06 | those built-in things called init.
+6:08 | I'm gonna again remind you, some of the methods we have,
+6:14 | Underbar underbar init is going to be the thing that
+6:19 | creates the instance.
+6:23 | Actually slightly misspeaking, actually Python creates the
+6:26 | instance, but it's one thing that fills it in.
+6:28 | So in this case, I'm going to give it 2 arguments: Frank
+6:34 | Foobar Now, you might have said, wait a minute, init here
+6:41 | has 3 arguments: self, family name, and first name.
+6:44 | So again, just to remind you, what we said happens here is
+6:48 | that when I call this class, person,
+6:53 | I'm creating an instance.
+6:54 | We'll draw a little instance diagram down here.
+6:57 | I'm going to give it the name per.
+6:59 | And I should have said inside of person, we've
+7:01 | got a set of things.
+7:02 | We've got our underbar underbar init, we've got, what
+7:07 | else do I have up there?
+7:08 | Family name.
+7:13 | And a bunch of other methods, down to say.
+7:17 | What happens inside of Python is, when we called the class
+7:20 | definition, person, it creates an instance, there it is.
+7:25 | Think of it as a pointer to a spot in memory, and then what
+7:28 | we do is, we call, or find, that init method, up here, and
+7:35 | we apply it.
+7:36 | And the first argument self, points to the instance.
+7:40 | So this object here is what self looks at.
+7:46 | Now you can see what init's going to do.
+7:48 | It says, oh, inside of self, which is pointing to here, let
+7:51 | me bind a variable, which was, can read that very carefully,
+7:59 | it's family underbar name, to the value I passed
+8:04 | in, which was 4.
+8:08 | Same thing with first name.
+8:11 | OK, so the reason I'm stressing this is, self we do
+8:14 | not supply explicitly, it is supplied as pointing to the
+8:17 | instance, it's giving us that piece of memory.
+8:19 | And that is what then gets created.
+8:20 | So here's, now, the instance for per.
+8:26 | OK, and I put a little label on there, I'm going to call
+8:28 | that an isALink, because it is an instance of that class.
+8:33 | God bless you.
+8:33 | All right, so once we got this, let's look at what we
+8:36 | can do with person.
+8:38 | That's why I built person here.
+8:41 | And as I said, I've already bound
+8:43 | basically, those two pieces.
+8:45 | If I want to get a value out, I can give person, or per,
+8:53 | rather, this instance, a messaging.
+8:56 | In this case I want to get family, what did I say, family
+8:59 | name out, now, again I want to stress, what is happening
+9:05 | here? per is an instance, it's this thing here.
+9:09 | When I say per dot family name, I'm sending it a
+9:12 | message, in essence what that does is, it says, from here
+9:14 | it's going to go up the chain to this class object and find
+9:19 | the appropriate method, which was family name.
+9:23 | It is then going to apply that to self, which
+9:25 | points to this instance.
+9:27 | And that allows it, therefore, is you can see on the code, to
+9:30 | look up under self, what's the binding for family name, and
+9:33 | print it back up.
+9:35 | So self is always going to point to the instance I want
+9:37 | and I can use it.
+9:39 | OK what else do we have in here?
+9:41 | We can get the first name, that's not particularly
+9:42 | interesting.
+9:43 | We've got 2 other special methods: that's cmp and str.
+9:51 | All right, cmp is our comparison method.
+9:57 | And since I, I was about to say I blew it last time, I
+10:01 | misspoke last time, a wonderful phrase that
+10:03 | politicians like to use, I misspoke last time.
+10:05 | Let me clarify again what cmp will do.
+10:07 | Underbar underbar cmp is going to be the method you're going
+10:11 | to use to compare two instances of an object.
+10:16 | Now, let's back up for second.
+10:17 | If I wanted to test equality, in fact I could use underbar
+10:20 | underbar eq, under under.
+10:23 | It's natural to think about an equality tester as returning a
+10:26 | Boolean, it's either gonna be true or false, because
+10:28 | something's either equal to or not.
+10:31 | In many languages, comparisons also return Booleans, which is
+10:34 | why I went down this slippery slope.
+10:37 | For many languages, either it's greater than or it's not.
+10:39 | But Python is different.
+10:41 | Python use cmp, in fact it has a built in cmp, which is what
+10:44 | we're relying on here.
+10:47 | Where am I, right there.
+10:48 | And what cmp returns is 1 of 3 values.
+10:52 | Given 2 objects, it says if the first one is less than the
+10:56 | second one, it returns -1, if it's equal it returns 0, if
+11:00 | it's greater than, it returns 1.
+11:01 | So it allows you this broader range of comparisons.
+11:05 | And if you think about it, cmp, you could apply on
+11:07 | integers, you could apply it on
+11:08 | floats, apply it on strings.
+11:10 | So it's overloaded, it has the ability to do all of those.
+11:13 | And in this case what we're saying is, given 2 objects,
+11:16 | let's create a tuple of the first, sorry, family and first
+11:20 | name of ourselves, and other is another object, family and
+11:24 | first name of that, and then just use cmp to compare them.
+11:27 | All right, so it's going to use the base pieces.
+11:30 | OK, so it gives me a way of doing comparisons.
+11:33 | And str we saw last time as well, this is cmp does
+11:37 | comparison, and str is our printed representation.
+11:47 | OK.
+11:49 | So what we've got now, is a simple little class.
+11:54 | We've also got two methods there.
+11:55 | I want to look at them, we're gonna come back to them, but
+11:57 | they start to highlight things we can do with our classes.
+12:02 | So I've built one simple version of it
+12:03 | here, which is per.
+12:04 | And notice I've got another method, right up
+12:07 | here, called say.
+12:08 | And say takes two arguments, for the moment the second
+12:12 | argument, or the first argument's, not going to make
+12:14 | a lot of sense, but say takes two arguments besides itself.
+12:17 | It's going to take another object to which it's saying
+12:19 | something and the thing to say.
+12:22 | Since I only have one object here, I'm going to have person
+12:24 | talk to himself.
+12:25 | You may have met a few other undergraduates
+12:27 | who have this behavior.
+12:28 | I'll have him talk to himself and say, just some random
+12:37 | message the faculty members occasionally worry about.
+12:40 | OK, what does this thing do?
+12:43 | Now you're going to see some of the power of this.
+12:45 | Again, remember, I'm down here, I'm sending this the
+12:47 | message say, it's going to go up the chain to find the say
+12:50 | message in person.
+12:51 | And what does say do, it says given another object and some
+12:54 | string, it's going to return, oh, and interesting things,
+12:58 | part of which you can't see on the screen.
+13:00 | First what it does, is it gets first name of self.
+13:04 | Remember self is pointing to this instance, so it's simply
+13:07 | looks up that binding, which is Frank.
+13:10 | It's going to create a string in which it adds to that the
+13:12 | family name of self, and then another thing that says to,
+13:16 | and then ah, I'm now going to send a message to the other
+13:21 | object, saying give me your first name.
+13:25 | Going to add that to the second piece, and you can see
+13:26 | in this case it happens to be the same
+13:28 | first and family name.
+13:29 | And then at the end of it, which you can't see here but
+13:31 | you can see in your handout, I just append the whole string,
+13:33 | so it spits it out.
+13:35 | What's the point of this, other than I can
+13:37 | get it to say things?
+13:38 | Notice, I can now reference values of the instance.
+13:41 | But I can also get values of other instances, by
+13:45 | sending in a message.
+13:46 | And that's why we have that form right there.
+13:51 | And then it glued all together.
+13:54 | If you think about this for a second, you might say, wait a
+13:56 | minute, actually you might have said wait a minute a
+13:58 | while ago, why am I just using the variable name there in the
+14:02 | function over here?
+14:04 | Well in fact, I could've used the function here, first name
+14:07 | open close, right?
+14:09 | It would have done the same thing.
+14:10 | But because I know I'm inside the instance, it's perfectly
+14:15 | reasonable to just look up the value.
+14:18 | OK, I could have, although I don't want you to do it, have
+14:21 | done the same thing there and used underbar, sorry, first
+14:24 | name underbar, sorry, first underbar name, but that's
+14:28 | really breaking this contract that I want to happen.
+14:30 | I should send the message to get the method back out.
+14:33 | So again the standard practices is if you know
+14:35 | you're inside the object, you can just access the values.
+14:38 | If you're doing it with any other objects, send it a
+14:40 | message to get it out.
+14:42 | OK, now, that gives you an ability to say, let's look at
+14:47 | one more example here, and then we're going to start
+14:48 | building our hierarchy, which is, that this
+14:50 | person can also sing.
+14:53 | And we've got a little sing method here.
+14:54 | And notice what it does, it's going to sing to somebody, I
+14:57 | guess you're part of the Chorallaries.
+14:59 | You're going to sing something, and notice what it
+15:01 | does, it's simply going to use its say method, but add at the
+15:06 | end of whatever's being said, just tra la la at the end.
+15:09 | So this is now an example of a method using another method.
+15:14 | Why would you want that?
+15:16 | It's nice modularly.
+15:17 | I have one method that's doing saying, I have another method
+15:20 | that's just building on it.
+15:21 | So if I have is person sing to themselves, not a highly
+15:27 | recommended activity, it would help if I had it sing to
+15:36 | itself, not sing to sing, sorry about that.
+15:45 | Notice what it does.
+15:47 | Looks like exactly like a say method, except it's got tra la
+15:50 | la at the end.
+15:51 | Don't worry I'm not going to sing to you.
+15:53 | I'll simply say the words.
+15:56 | Power of this, other than the silly examples.
+15:58 | You see how I can access variables of the instance, how
+16:01 | I can access variables of other instances, going to come
+16:04 | back to that, and how I can use versions of my own methods
+16:10 | to implement other methods.
+16:11 | In this case sing is using say as part of what it
+16:14 | wants to get out.
+16:17 | OK, so we got a simple little example.
+16:20 | Now, let's start adding some other pieces to this.
+16:25 | OK, and what do I want to add.
+16:28 | Find my spot here.
+16:29 | OK, we're going to add an MIT person.
+16:37 | Sorry, machine is -- do this, let's go down.
+16:46 | OK so I'm going to add an MIT person.
+16:49 | Look at the code for second.
+16:51 | Aha!
+16:52 | Notice what this says.
+16:53 | MIT person says it inherits from person.
+17:09 | That is, that's the first thing in parens up there.
+17:10 | It says, you know, class of MIT person is person.
+17:13 | What that is saying is, that this is a specialization of
+17:18 | the person class.
+17:18 | Or another way of saying it is, we have a super class, in
+17:25 | this case it's person.
+17:27 | And we have a subclass, in this case its MIT person.
+17:35 | And we're going to walk through some examples, but
+17:37 | what it says is that that subclass of MIT person can
+17:40 | inherit the attributes of the person class.
+17:44 | Can inherit the methods, it can inherit variables.
+17:47 | OK, what does MIT person do?
+17:49 | Well, here's 1 of the new things it does.
+17:50 | It has a local variable called next id num, which is
+17:58 | initially set to 0.
+18:00 | See that up there.
+18:01 | And then it's got some methods, it's got an init
+18:03 | method, a get id method, a few other things.
+18:08 | OK, let's run this.
+18:11 | In particular, I go back down to this one.
+18:19 | Let me just uncomment this and do it here.
+18:23 | Assuming my machine will do what I want it to do, which it
+18:26 | really doesn't seem to want to do today.
+18:31 | Try one more time.
+18:37 | Thank you, yep.
+18:40 | Still not doing it for me, John.
+18:44 | OK, we type it.
+18:45 | No idea what Python doesn't like me today, but it doesn't.
+18:47 | So we're gonna define p 1, I've lost my keyboard, indeed
+18:56 | I have. Try one more time. p 1 MIT person, see how fast I can
+19:00 | type here --
+19:12 | OK, now, let's look at what the code does, because again
+19:15 | it's going to highlight some things.
+19:18 | I called MIT person, push this up slightly, it's going to
+19:22 | create an instance down here, I called p 1.
+19:27 | And when I would do that, I'm gonna initialize it.
+19:29 | So I've got, right up here, an initializer, init for MIT
+19:36 | person, takes in the family name and the first name.
+19:40 | Notice what it does.
+19:42 | Huh.
+19:43 | It says, if I'm sitting here at MIT person, I'm going to go
+19:46 | up and inherit from person its init function and call it.
+19:52 | And what am I calling it on?
+19:53 | I'm calling it on self, which is pointing to this object, so
+19:56 | I've still got it, and then I'm then going to apply the
+19:59 | base initialization.
+20:01 | And that does exactly what you'd expect, which is just
+20:03 | going to create a binding for family name down here.
+20:08 | As well as some other things.
+20:10 | So this is an example of inheritance.
+20:18 | MIT person inherits the init method from person, can get
+20:23 | access to by simply referring to it, and I
+20:25 | refer to it right there.
+20:26 | And it's take the person class, get its init and apply
+20:29 | it to my instance plus those things.
+20:32 | So I'm just using the same piece of code
+20:34 | Notice the second thing it does.
+20:35 | It says inside of self, I'm going to bind the local
+20:39 | variable id name to the value of next id name in MIT person.
+20:43 | Self is down here, id num, sorry, not id name.
+20:47 | I'm going to bind that to the value that I find my going up
+20:51 | to here, which is 0, and having done that, I simply
+20:56 | increment that value.
+21:03 | OK?
+21:05 | So what has this done?
+21:06 | It says I now have captured in the class, a local variable
+21:10 | that I can keep track of.
+21:11 | And when I use it, every time I generate an example, let me
+21:14 | build another one.
+21:16 | I make p 2 another MIT person.
+21:33 | OK, I can do things like saying, what is the id number
+21:37 | for each of these.
+21:43 | First one is 0, second one is 1, which makes sense, right?
+21:52 | I'm just incrementing a global variable.
+21:54 | Now, things I want you to see about this.
+21:57 | Now that I've got a beginning of a hierarchy, I have this
+22:00 | notion of inheritance.
+22:02 | I can ask a function inside one class to use a function
+22:07 | from a class that it can reach by going up the chain.
+22:09 | I just did it there.
+22:10 | I can ask it to go get values of variables, right, so that
+22:14 | looks good.
+22:15 | What else do we have in person or MIT person?
+22:17 | Well, we can get the id number, we just did.
+22:18 | We have a thing to do with this string.
+22:20 | Notice it's going to print out something a little different.
+22:22 | In fact, there's a kind of funky form there.
+22:24 | Which just says, if I want to print it out, I'm gonna
+22:26 | create, what this says to do is, I'm gonna create an output
+22:29 | template that has that structure to it, but where I
+22:32 | see that percent s I'm going to substitute this value for
+22:36 | the first one, that value for the second.
+22:39 | So if I say, what is p 1?
+22:41 | It says ok, MIT person Fred Smith.
+22:49 | On the other hand, if I said, what is per, which is that
+22:53 | thing I build earlier, it had a different string method,
+22:55 | which is just print out person, those pieces.
+23:00 | All right, one last piece to this and we're
+23:02 | going to add to it.
+23:04 | Suppose I want Fred to say something.
+23:08 | Say something to Jane.
+23:20 | OK, he said it.
+23:23 | Where's the say method?
+23:27 | OK, Fred is an instance of an MIT person.
+23:32 | where's the say method?
+23:34 | Well, there isn't one there, but again, that's where the
+23:36 | hierarchy comes in.
+23:37 | Fred is this object here, I'm sending it the message say.
+23:41 | That turns into going up the chain to this object, which is
+23:44 | the class object, and saying find a say method and apply it
+23:48 | to that instance.
+23:49 | Fudge-knuckle, it ain't here.
+23:51 | Don't worry about it, because it says if I can't find one
+23:53 | there, I'm going to go up the chain to this method, sorry to
+23:57 | this class, and look for a method there.
+23:59 | Which there was one, I have a say method.
+24:01 | It's going to use that say method.
+24:03 | Apply to it.
+24:05 | Well, you might say, OK, what happens if it isn't there?
+24:07 | Well, that's where, remember I defined person to be an
+24:10 | instance of an object, it will go up the chain one last time
+24:12 | to the base object in Python to see is there a
+24:15 | method there or not.
+24:16 | Probably isn't a say method for an object, so at that
+24:18 | point it's going to raise an exception or throw an error.
+24:21 | But now you again see this idea that the inheritance lets
+24:24 | you capture methods.
+24:27 | Now you might say, why not just put a say method inside
+24:30 | of MIT person?
+24:31 | Well, if you wanted it to do something different, that
+24:34 | would be the right thing to do.
+24:35 | But the whole notion here's that I'm capturing modularity,
+24:37 | I've got base methods up in my base class.
+24:40 | If I just want to use them I'm just going to inherit them by
+24:43 | following that chain, if you like, basically up the track.
+24:48 | OK, so we've got an MIT person, we can use that.
+24:54 | Let's add a little bit more to our hierarchy here.
+24:58 | I'm going to create, if I can do this right, a
+25:02 | specialization of an MIT person, which is an
+25:10 | undergraduate.
+25:12 | A special kind of MIT person.
+25:14 | All right, so if I go back up here, even though my thing is
+25:19 | not going to let me do it, let's build an undergraduate.
+25:23 | OK, there's the class definition for an undergrad.
+25:26 | We're just starting to see some of the pieces, right, so
+25:28 | in an undergraduate, where am I here, an undergraduate.
+25:31 | OK, it's also got an initialization function.
+25:34 | So if I call undergrad, I'm gonna make an undergrad here,
+25:38 | again let me go back down here, line ug 2 it's making
+25:44 | undergrad, Jane Doe.
+25:54 | Now, what happens when I do the initialization here?
+25:58 | Notice what goes on.
+25:59 | It simply calls the person initialization method.
+26:03 | All right, so I'm down here.
+26:05 | I'm going to call the person initialization
+26:06 | method, what did do?
+26:07 | Sorry, the MIT person method, it calls the person method.
+26:11 | Just walking up the chain, that's going to do exactly
+26:13 | what I did with all the other ones, so I now have a family
+26:15 | name and a first name.
+26:17 | So I can, for example, say family name
+26:22 | and get it back out.
+26:24 | All right?
+26:25 | And then, other things that I can do, well I can set what
+26:28 | year the person's in, I can figure out what year they're
+26:29 | in, there's this unfortunate overflow error if you've hung
+26:32 | around too long, but that's not going to happen to you.
+26:35 | And I've now got a say method here, so let's look what
+26:38 | happens if I ask the
+26:39 | undergraduate to say something.
+26:52 | OK, it's not a realistic dialogue I know, but, what did
+26:57 | this method do?
+27:00 | I asked this object to do a say.
+27:02 | And notice what it does.
+27:05 | It simply passes it back up to MIT person.
+27:08 | There's that inheritance again.
+27:09 | It's saying, I'm going to have my base
+27:11 | say method say something.
+27:13 | I'm going to say it to a person, but all I'm going to
+27:15 | do because undergraduates in my experience, at least, are
+27:17 | always very polite, I'm going to put "Excuse me but" at the
+27:20 | front of it.
+27:22 | OK, what am I trying to show you here?
+27:24 | I know the jokes are awful, but what am I
+27:26 | trying to show you here?
+27:28 | That I can simply pass up the chain to get it.
+27:31 | In fact, what method does the final say here?
+27:33 | What class does it come from?
+27:36 | Person class, yes, thank you.
+27:37 | It goes all the way up to person, right, because MIT
+27:39 | person didn't have a say.
+27:40 | So I can simply walk up the chain until I find the method
+27:44 | I want to have.
+27:45 | Now this is an example of shadowing.
+27:52 | Not a great example, but it's a beginning example of
+27:54 | shadowing, in that this same method for an undergraduate,
+27:58 | shadows the base say method, it happens to call it, but it
+28:02 | changes it.
+28:02 | It puts "Excuse me but" at the front, before it
+28:04 | goes on to do something.
+28:06 | Now again, I could have decided here to actually copy
+28:10 | what the original say method did, stitch all the other
+28:12 | things together.
+28:14 | But again, that loses my modularity.
+28:16 | I'd really to only have to change it in one place.
+28:19 | So by putting my say method up in person, I can add these
+28:22 | nuances to it, and it lets me have something
+28:24 | that has that variation.
+28:25 | If I decide I want to change what say does, I only have to
+28:29 | change it in one place.
+28:30 | It is in the person class definition, and everything
+28:33 | else will follow through for free.
+28:36 | OK, so now I've got an undergrad, right?
+28:40 | Let's look at a couple of variations of
+28:42 | what happens here.
+28:42 | So first of all, I can -- yes?
+28:50 | PROFESSOR 2: Shadowing here is often sometimes called
+28:54 | overriding.
+28:55 | PROFESSOR: Yes, thank you, because I'm going to do a pure
+28:57 | example of shadowing in a second, John right.
+29:00 | Also called overriding.
+29:04 | Part of the reason I like the phrase shadow is, if you think
+29:06 | about it as looking at it from this direction, you see this
+29:09 | version of init before you see the other ones, or you see
+29:11 | that version of say, but it is overriding
+29:13 | the base say example.
+29:15 | OK, so I can say, what does p 1, sorry, yes, what does
+29:19 | undergrad look like?
+29:19 | And I said wait a minute, MIT person, not
+29:23 | undergrad, is that right?
+29:26 | Well, where's the str method?
+29:28 | I didn't define one in undergrad, so it again tracks
+29:31 | up the chain and finds the str method here, so it's OK
+29:34 | undergrads are MIT people most the time, so
+29:37 | it's perfectly fine.
+29:39 | OK, now, I have built into this also these cmp methods.
+29:43 | So I've got two examples.
+29:44 | I've got undergrad, or ug.
+29:47 | And then I've got poor old Frank Foobar
+29:50 | back there, per person.
+29:53 | So suppose I want to compare them?
+29:58 | What do you think happens here?
+30:01 | Compare sounds weird, right, I compare an
+30:03 | undergraduate to a person.
+30:04 | I don't know what that's doing, some kind of weird
+30:05 | psychological thing, but what do you think happens in terms
+30:08 | of the code here if I run this.
+30:12 | I know it's a little hard because you got a lot of code
+30:14 | to look at.
+30:15 | Do I have a cmp method defined somewhere?
+30:18 | Yeah.
+30:19 | So, it's hard to know what it's going to do, but let's
+30:22 | look at it.
+30:25 | Hmm.
+30:27 | Now sometimes I type things and I got errors I don't
+30:29 | expect, this one I did expect.
+30:30 | So what happened here?
+30:31 | Well let's talk about what happens if I do that
+30:34 | comparison I was doing, what was I doing?
+30:39 | Ug greater than per?
+30:42 | What unwinds into is, I'm going to send to ug, that
+30:46 | instance, a cmp method.
+30:49 | This is really going to become something like ug dot under
+30:52 | under cmp under under applied to per.
+30:57 | I think that's close.
+30:59 | What does that do?
+31:00 | It says starting in ug, I'm going to look for the first
+31:03 | cmp method I could find, which is actually sitting here.
+31:07 | I had a cmp method in MIT person.
+31:10 | If you look at your code, what does it do?
+31:11 | It looks up the id numbers to compare them.
+31:14 | Well the, ug has an id number because it was created along
+31:17 | this chamber.
+31:18 | Remember per over here was just created as a person.
+31:20 | It doesn't have an id number, so that's why it complaints.
+31:24 | Ok, happens if I do that?
+31:29 | Compare per to ug.
+31:30 | How many people think I get an error?
+31:36 | Wow.
+31:37 | How many people think I'm going to get either true or
+31:38 | false out of this?
+31:41 | A few brave hands.
+31:43 | Why?
+31:44 | Can I ask you, please?
+31:45 | Why do you think I'm going to get a, doesn't matter whether
+31:47 | it's true or false, why am I going to have something work
+31:48 | this time that didn't work last time?
+31:50 | STUDENT: [INAUDIBLE]
+32:00 | PROFESSOR: Yeah, exactly.
+32:01 | And in case you didn't hear it, thank you, great answer,
+32:02 | sorry, terrible throw.
+32:04 | In this case I'm using per, that's the first part, so it's
+32:09 | not symmetric.
+32:10 | It's gonna use per to do the look up.
+32:12 | And as it was said there, per over here goes up and finds a
+32:15 | cmp method here which it can apply.
+32:17 | In that case, it simply looked at, remember, it took the
+32:21 | tuples of first and last name which are both defined here,
+32:24 | and did some comparison on that.
+32:27 | So this is a way of again pointing out to you that the
+32:29 | things are not always symmetric, and I have to be
+32:31 | careful about where do I find the methods as
+32:33 | I want to use them.
+32:34 | Ok?
+32:36 | All right.
+32:38 | Let's add, I'm gonna do two more classes here.
+32:41 | Let's add one more class, some people debate whether these
+32:44 | are really people or not, but we're going to add a class
+32:46 | called a professor.
+32:49 | OK.
+32:51 | Now what am I doing?
+32:52 | I'm creating another version of class down here.
+32:59 | Which again is an instance, or a subclass, sorry, not an
+33:02 | instance, a subclass of an MIT person.
+33:04 | I see that because I built it to be there.
+33:08 | Again I've got an initialization that's going to
+33:10 | call the person initialization, which we know
+33:13 | is going to go up --
+33:13 | I keep saying that -- going to call the MIT person
+33:16 | initialization, which is going to go up and call this one.
+33:18 | So again I'm going to be able to find names.
+33:21 | And I do a couple of other different things here.
+33:22 | I'm gonna pass in a rank, full professor, associate
+33:26 | professor, assistant professor, which I'm just
+33:28 | going to bind locally.
+33:30 | But I'm gonna add one other piece here, which is I'm gonna
+33:32 | add a little dictionary on teaching.
+33:35 | So when I create a professor, I'm gonna associate with it a
+33:38 | dictionary that says, what have you been teaching?
+33:41 | And then notice the methods I create.
+33:43 | I've got a method here called add teaching, takes, obviously
+33:47 | a pointer to the instance.
+33:49 | A term, which will just be a string, and a subject.
+33:52 | And let's look at what it does right here.
+33:54 | OK.
+33:56 | In fact the call I'm going to make, I'm not certain I'm
+33:58 | going to be able to get away with it, my machine is still
+34:02 | wonderfully broken, all right, it is, let me just show you
+34:06 | what the calls would look like.
+34:07 | As you can see here I'm not going to be able to do them.
+34:11 | But I'm going to add teaching, as a method call with this
+34:15 | with a string for term, and a subject number.
+34:20 | What is this going to do?
+34:26 | Yeah, I know I'm just worried if I restart Python, I may not
+34:28 | be able to pull the thing back in, so I'm going to try and
+34:30 | wing it, John, and see if I can make it happen.
+34:32 | Right, what does that teaching do?
+34:34 | It's got one of those try except methods.
+34:36 | So what does it say it's going to do?
+34:38 | It's going to go into the dictionary associated with
+34:41 | teaching, under the value of term, and get out a list. And
+34:45 | it's going to append to the end of the
+34:47 | list the new subject.
+34:48 | So it's going to be stored in there, is then going to be
+34:50 | term, and a list of what I taught, in case I teach more
+34:53 | than one thing each term.
+34:55 | It's going to do that, but notice it's a try.
+34:57 | If in fact there is no term currently in the dictionary,
+35:00 | started out empty, it's going to throw an error, sorry, not
+35:03 | throw an error, it's going to raise an exception.
+35:04 | Which is a key error, in which case notice what I'm going to
+35:07 | do, I'm not going to treat it as an error.
+35:09 | I'm simply going to say, in that case, just start off with
+35:13 | an empty, with an initial list with just that subject in and
+35:16 | put it in the dictionary.
+35:18 | As I add more things in, I'll just keep adding things to
+35:21 | this dictionary under that term.
+35:23 | And if I want to find out what I'm doing, well I can use get
+35:25 | teaching, which says given the term, find the thing in the
+35:28 | dictionary under that term and return it.
+35:31 | If I get an error, I'm going to raise it, which says there
+35:34 | is nothing for that term, and in that case I guess I'm just
+35:35 | going to return none.
+35:37 | OK?
+35:39 | And then the other two pieces we're going to have here, and
+35:41 | we want to look at a little more carefully, I just wanted
+35:43 | to show you that example, is a professor can lecture, and a
+35:51 | professor can say something.
+35:54 | Look at the say method, because this now add one more
+35:56 | nuance to what we want to do here.
+35:59 | And I think in interest of making this go, let me
+36:00 | actually, since I'm not going to get my machine to do this
+36:03 | right, let me create a couple of professors.
+36:14 | If I look at what that is, it's an MIT person because I
+36:17 | didn't have any separate string thing there, and we
+36:20 | will create a more important professor.
+36:29 | What rank do you want, John?
+36:30 | Do you want to stay full?
+36:31 | PROFESSOR 2: Undergraduate.
+36:33 | PROFESSOR: Undergraduate, right, a lot more fun I agree.
+36:37 | Sorry about that, and we can again just see
+36:38 | what that looks like.
+36:40 | And that of course, we'll print out,
+36:42 | he's also an MIT person.
+36:44 | But now here's what I want to do.
+36:46 | I want to say something to my good
+36:48 | colleague Professor Guttag.
+36:50 | Actually I'm going to start a separate --
+36:51 | I'm going to say something to a smart undergraduate.
+36:53 | So if I say, remember we have ug defined as an
+36:59 | undergraduate, let me do something a
+37:09 | little different here.
+37:11 | Well let, me do it that way.
+37:20 | It says, I don't understand why you say you
+37:22 | were enjoying 6.00.
+37:24 | Not a good thing to say, right, but if I say to my good
+37:29 | colleague Professor Guttag.
+37:33 | I have to spell say right, I know, I need help with this,
+37:35 | what can I say?
+37:44 | We flatter each other all the time.
+37:45 | It's part of what makes us feel good about ourselves.
+37:47 | Why is the sky blue?
+37:48 | I enjoyed your paper, but why is the sky blue?
+37:51 | OK, terrible examples, but what's going on here?
+37:55 | One more piece that I want to add.
+37:56 | Here's my say method for professor, and now I'm
+38:00 | actually taking advantage of to whom I am saying something.
+38:03 | Notice again, what does it do?
+38:04 | There's the self argument, that's just pointing to the
+38:06 | instance of me.
+38:08 | I'm passing in another argument, going to call it to
+38:11 | who, in one case it was ug, in one case it was Guttag.
+38:14 | And then the thing I want to say, ah, look what it does, it
+38:16 | says, check the type.
+38:19 | And the type is going to take that instance, I had an
+38:22 | instance, for example, of a professor down here, and it's
+38:25 | going to pick up what type of object it is.
+38:28 | So if the type of the person I'm speaking to is undergrad,
+38:34 | let's pause for second.
+38:35 | Remember I started away back saying we're building abstract
+38:38 | data types.
+38:39 | Well, here's a great example of how I'm using
+38:41 | exactly that, right?
+38:42 | I've got int, I've got float, I now have ug, it's a type.
+38:45 | So it's says if the object to whom I'm speaking is an
+38:49 | undergrad, then use the same method from person where I'm
+38:53 | going to put this on the front.
+38:55 | On the other hand, if the object to whom I'm speaking is
+38:57 | a professor, then I'm going to tag this on the front and use
+39:00 | the underlying say method.
+39:01 | On the other hand, if I'm speaking to somebody else, I'm
+39:05 | just going to go lecture.
+39:06 | All right, and when a professor lectures, they just
+39:08 | put it's obvious on the end of things, as
+39:10 | you may have noticed.
+39:13 | What's the point I want you to see here?
+39:14 | I'm now using the instances to help me to find what
+39:18 | the code should do.
+39:20 | I'm looking at the type.
+39:21 | If the type is this, do that.
+39:22 | If the type is this, do something different, ok?
+39:24 | And I can now sort of build those pieces up.
+39:28 | OK, I said one more class.
+39:31 | Notice what we're doing.
+39:32 | I know they're silly examples, but, sorry, they are cleverly
+39:35 | designed examples to highlight key points.
+39:37 | What I'm trying to do is show you how we have methods
+39:40 | inherit methods, how have message shadow methods, how we
+39:43 | have methods override methods, how we can use instances as
+39:46 | types to define what the method should do.
+39:49 | Let me show you one last class, because I'm gonna have
+39:51 | one more piece that we want to use.
+39:53 | And the last class is, sort of, once you've got a set of
+39:57 | professors, you can have an aggregate of them.
+40:00 | And I don't know, if a group of geese are gaggle, I don't
+40:02 | know what a set of professors are, John.
+40:05 | Flamers?
+40:05 | I, you know, we've got to figure out what the right
+40:07 | collective noun here is.
+40:08 | We're going to call them a faculty for lack of a better
+40:11 | term, right?
+40:12 | Now the reason I want to show you this example is, this
+40:14 | class, notice, it only is going to inherit from object.
+40:18 | It actually makes sense.
+40:19 | This is going to be a collection of things, but it's
+40:21 | not a subclass of a particular kind of person.
+40:24 | And what I want the faculty to do, is to be able to gather
+40:28 | together a set of faculty.
+40:31 | So if I go down here, grab this for second, and pull it
+40:35 | down so you can see it.
+40:38 | It looks like I'm not going to be able to run this because my
+40:39 | machine is broken, but basically I'm gonna define a
+40:42 | set of professors, and then I'm gonna create a new class
+40:45 | called faculty.
+40:47 | There's the definition of it.
+40:48 | It's got an init.
+40:50 | You can kind of see what it does.
+40:51 | It's going to set up an internal variable called
+40:53 | names, which is initially an empty list, internal variable
+40:56 | called ids, which is empty, an internal variable called
+40:59 | members, which is empty, and another special variable
+41:01 | called place, which we're going to come back to in a
+41:03 | second, initially bound to none.
+41:06 | OK, I've got a method called add which I'm going to use
+41:09 | down here to add professors to the course 6 faculty.
+41:13 | Here's what I want to add to do.
+41:16 | First of all, notice I'm going to check the type.
+41:19 | If this is not a professor, I'm gonna raise an error, a
+41:23 | type error, it's the wrong type of object to pass in.
+41:26 | The second thing I'm gonna do is say, if that's okay, then
+41:30 | let me go off and get the id number.
+41:32 | Now remember, that's right up here, so I'm asking the
+41:36 | instance of the professor to go up and get the id number.
+41:39 | And I want to make sure I only have one instance of each
+41:42 | professor in my faculty, so if the id number is in the list
+41:46 | of ids already, I'm going to raise an error, sorry, raise
+41:51 | an exception as well, saying I've got a duplicate id.
+41:54 | OK?
+41:54 | And the reason that's going to come up is,
+41:56 | notice what I do now.
+41:57 | Inside of the instant self, I take the variable names and I
+42:01 | add to it the family name of the person I just added.
+42:06 | OK, notice the form.
+42:07 | I'm using the method, there's the parens to get the family
+42:10 | name of the person.
+42:11 | I'm just adding it to the list. I've got the id number,
+42:13 | I've added the ids, and I add the
+42:15 | object itself into members.
+42:18 | So as I do this, what am I doing?
+42:20 | I'm creating a list, actually several lists: a list of ids,
+42:24 | a list of the actual instances, and a list of the
+42:27 | family names.
+42:28 | And as a cost I want to add, that's why I can check and
+42:31 | see, is this in here already or not?
+42:33 | Now, the last reason I want to do this is, I want to be able
+42:36 | to support things like that.
+42:58 | This is now different, right, this instance is a collection.
+43:03 | I want to be able to do things like, for all the things in
+43:05 | that collection, do something, like print
+43:07 | out the family names.
+43:08 | And to do that, I need two special forms: iter and next.
+43:18 | OK, now let me see if I can say this cleanly.
+43:23 | Whenever I use a for, in structure, even if it was on
+43:27 | just a normal list you built, what Python is doing is
+43:30 | returning an, what is called an iterator.
+43:32 | Which is something that we talked earlier.
+43:34 | It's keeping track of where are you in the list, and how
+43:37 | do I get to the next thing in the list?
+43:40 | I'm going to do the same thing here, and I'm going to create
+43:42 | it for this particular structure.
+43:43 | So this little thing iter, when I call a for something
+43:49 | in, one of these instances, it calls iter, and
+43:52 | notice what it does.
+43:53 | It initializes place to 0.
+43:55 | That was that variable I had up there.
+43:56 | That's basically saying I'm at the beginning of the list.
+43:59 | It's a pointer to the beginning of the list, and it
+44:01 | returns self.
+44:04 | Just gives me back a pointer to the instance.
+44:07 | That now allows me at each step in that
+44:09 | loop to call next.
+44:11 | And what does next do?
+44:13 | Next says, check to see if that value is too long, if
+44:17 | it's longer than, for example, the list of names, raise an
+44:21 | exception called stop iteration, which the for loop
+44:24 | will use to say OK, I'm done.
+44:25 | I'm going to break out of the for loop.
+44:28 | Otherwise, what am I going to do?
+44:30 | I'll increment place by 1, that's going to move me to the
+44:33 | next place in the list, and then in this case I'll just
+44:35 | return the instance itself, right?
+44:38 | Members is a list of instances, place I've
+44:40 | incremented by 1, I take 1 off of it, I get to it.
+44:43 | So iter and next work together.
+44:45 | Iter creates this method, that's going to give you a
+44:49 | pointer to the place in the structure, and then next
+44:52 | literally walks along the structure giving you the next
+44:54 | element and returning elements in turn so you can do
+44:57 | something with it.
+44:59 | Right, so now what that says is, I can have classes that
+45:01 | just have local variables.
+45:03 | I can have classes that get methods from other variables,
+45:06 | and I can also have classes that are collections.
+45:09 | And I've supported that by adding in this last piece.
+45:12 | OK once you have all of that, in principle we could start
+45:17 | doing some fun things.
+45:19 | So let's see what happens if we try and
+45:21 | make all of this go.
+45:22 | And let me, since I'm not going to be able to run it,
+45:23 | let me simply do it this way.
+45:29 | If I have my undergraduate, ug.
+45:35 | I can -- sorry, let's not do it that way --
+45:37 | I can have undergraduate say things like -- all right, what
+45:53 | did I just do wrong here?
+45:54 | Do I not have undergrad defined?
+45:55 | I do.
+46:00 | Oh, I didn't have Grimson, sorry, it's me, isn't it?
+46:02 | Thank you.
+46:03 | The undergraduate very politely asks why he didn't
+46:13 | understand, you can have the professor respond.
+46:32 | Again, it simply puts a different thing into there.
+46:35 | On the other hand, if Professor Guttag asks me
+46:41 | something about understanding, I say I really like this paper
+46:50 | on, you do not understand, it's a deep paper on
+46:52 | programming languages 5, I think, John, isn't it?
+46:55 | What else can you do with this thing, right?
+46:56 | You can have an undergraduate talk to an undergraduate, in
+46:59 | which case they're still polite.
+47:01 | Or you could have -- sorry, let me do that the other way
+47:03 | -- you could also have an undergraduate simply talk to a
+47:05 | normal person.
+47:16 | All right, but the good news is you know eventually you get
+47:18 | it done, and when you're really done you can have the
+47:20 | undergraduate be really happy about this, and so she sings
+47:25 | to herself.
+47:36 | OK it's a little silly, but notice what we've just
+47:39 | illustrated.
+47:39 | And this is where I want to pull it together.
+47:43 | With a simple set of classes, and the following abilities,
+47:48 | an ability to inherit methods from subclasses, sorry from
+47:51 | superclasses, that is having this hierarchy of things.
+47:54 | I can create a fairly complex kind of interaction.
+47:58 | I can take advantage of the types of the objects to help
+48:02 | me decide what to do.
+48:04 | And if you think about that, I know it sounds very
+48:06 | straightforward, but you would do exactly that if you were
+48:08 | writing earlier code to deal with some numerical problem.
+48:11 | All right, if the thing is an integer, do this, if it's a
+48:13 | float, do that, if it's a string, do something else.
+48:16 | I'm now giving you exactly the same ability, but the types
+48:19 | now can be things that you could create.
+48:21 | And what I've also got is now the ability to inherit those
+48:25 | methods as they go up the chain.
+48:26 | So another way of saying it is, things that you want to
+48:28 | come away from here, are, in terms of these classes.
+48:39 | We now have this idea of encapsulation.
+48:41 | I'm gathering together data that naturally belongs as a
+48:44 | unit, and I'm gathering together with it methods that
+48:47 | apply to that unit.
+48:48 | Just like we would have done with float or int.
+48:51 | Ideally, we data hide, we don't happen to do it here,
+48:54 | which is too bad.
+48:55 | Basically we've got the idea of encapsulation.
+48:58 | The second thing we've got is this idea of inheritance.
+49:06 | Inheritance both meaning I can inherit
+49:08 | attributes or field values.
+49:10 | I can inherit methods by moving up the chain.
+49:13 | I can also the shadow or override methods, so that I
+49:22 | can specialise.
+49:24 | And I do all of that with this nice hierarchy of classes.
+49:35 | So what hopefully you've seen, between these two lectures,
+49:38 | and we're going to come back to it in some subsequent
+49:39 | lectures, is that this is now a different way of just
+49:42 | structuring a computational system.
+49:45 | Now, you'll also get arguments, polite arguments
+49:47 | from faculty members or other experts about which is a
+49:50 | better way of doing it.
+49:51 | So I'll give you my bias, Professor Guttag will give you
+49:54 | his bias next time around.
+49:55 | My view, object-oriented system are great when you're
+49:58 | trying to model systems that consist of a large number of
+50:01 | units that interact in very specific ways.
+50:05 | So, modeling a system of people's a great idea.
+50:07 | Modeling a system of molecules is probably a great idea.
+50:09 | Modeling a system where it is natural to associate things
+50:13 | together and where the number of interactions between them
+50:15 | is very controlled.
+50:17 | These systems work really well.
+50:18 | And we'll see some examples of that next week.
+50:21 | Thanks.

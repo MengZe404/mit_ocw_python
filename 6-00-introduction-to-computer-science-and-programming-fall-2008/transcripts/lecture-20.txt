@@ -1,0 +1,687 @@
+0:00 | OPERATOR: The following content is provided under a
+0:02 | Creative Commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation, or view additional material from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:19 | PROFESSOR: All right, so today we're returning to
+0:23 | simulations.
+0:25 | And I'm going to do at first, a little bit more abstractly,
+0:29 | and then come back to some details.
+0:32 | So they're different ways to classify simulation models.
+0:38 | The first is whether it's stochastic or deterministic.
+0:53 | And the difference here is in a deterministic simulation,
+0:57 | you should get the same result every time you run it.
+1:04 | And there's a lot of uses we'll see for deterministic
+1:06 | simulations.
+1:08 | And then there's stochastic simulations, where the answer
+1:14 | will differ from run to run because there's an element of
+1:17 | randomness in it.
+1:20 | So here if you run it again and again you get the same
+1:23 | outcome every time, here you may not.
+1:29 | So, for example, the problem set that's due today -- is
+1:35 | that a stochastic or deterministic simulation?
+1:40 | Somebody?
+1:42 | Stochastic, exactly.
+1:45 | And that's what we're going to focus on in this class,
+1:49 | because one of the interesting questions we'll see about
+1:51 | stochastic simulations is, how often do have to run them
+1:58 | before you believe the answer?
+2:00 | And that turns out to be a very important issue.
+2:03 | You run it once, you get an answer, you can't
+2:05 | take it to the bank.
+2:07 | Because the next time you run it, you may get a completely
+2:09 | different answer.
+2:11 | So that will get us a little bit into the whole issue of
+2:15 | statistical analysis.
+2:19 | Another interesting dichotomy is static vs dynamic.
+2:31 | We'll look at both, but will spend more
+2:33 | time on dynamic models.
+2:37 | So the issue -- it's not my phone.
+2:43 | If it's your mother, you could feel free to take it,
+2:45 | otherwise --
+2:48 | OK, no problem.
+2:50 | Inevitable.
+2:54 | In a dynamic situation, time plays a role.
+2:57 | And you look at how things evolve over time.
+3:00 | In a static simulation, there is no issue with time.
+3:07 | We'll be looking at both, but most of the time we'll be
+3:11 | focusing on dynamic ones.
+3:15 | So an example of this kind of thing would be a queuing
+3:20 | network model.
+3:24 | This is one of the most popular and important kinds of
+3:27 | dynamic simulations.
+3:31 | Where you try and look at how queues, a fancy word for
+3:36 | lines, evolve over time.
+3:40 | So for example, people who are trying to decide how many
+3:44 | lanes should be in a highway, or how far apart the exits
+3:47 | should be, or what should the ratio of Fast Lane tolls to
+3:52 | manually staffed tolls should be.
+3:54 | All use queuing networks to try and answer that question.
+4:00 | And we'll look at some examples of these later
+4:02 | because they are very important.
+4:04 | Particularly for things related to
+4:06 | scheduling and planning.
+4:10 | A third dichotomy is discrete vs continuous.
+4:26 | Imagine, for example, trying to analyze the flow of traffic
+4:32 | along the highway.
+4:35 | One way to do it, is to try and have a simulation which
+4:40 | models each vehicle.
+4:43 | That would be a discrete simulation, because you've got
+4:46 | different parts.
+4:47 | Alternatively, you might decide to treat traffic as a
+4:52 | flow, kind of like water flowing through things, where
+4:56 | changes in the flow can be described by
+4:59 | differential equations.
+5:01 | That would lead to a continuous model.
+5:08 | Another example is, a lot of effort has gone into analyzing
+5:13 | the way blood flows through the human body.
+5:18 | You can try and model it discretely, where you take
+5:22 | each red blood cell, each white blood cell, and look at
+5:27 | how they move, or simulate how they move.
+5:30 | Or you could treat it continuously and say, well,
+5:33 | we're just going to treat blood as a fluid, not made up
+5:36 | of discrete components, and write some equations to model
+5:41 | how that fluid goes through and then simulate that.
+5:45 | In this course, we're going to be focusing mostly on discrete
+5:51 | simulations.
+5:56 | Now if we think about the random walk we looked at,
+5:59 | indeed it was stochastic, dynamic, and discrete.
+6:10 | The random walk was an example of what's called a Monte Carlo
+6:15 | simulation.
+6:21 | This term was coined there.
+6:28 | Anyone know what that is?
+6:32 | Anyone want to guess?
+6:34 | It's the casino, in Monaco, in Monte Carlo.
+6:39 | It was at one time, before there was even a Las Vegas,
+6:43 | the most famous casino in the world certainly.
+6:47 | Still one of the more opulent ones as you can see.
+6:50 | And unlike Las Vegas, it's real opulence, as opposed to
+6:53 | faux opulence.
+6:57 | And this term Monte Carlo simulation, was coined by Ulam
+7:01 | and Metropolis, two mathematicians, back in 1949,
+7:07 | in reference to the fact that at Monte Carlos, people bet on
+7:10 | roulette wheels, and cards on a table, games of chance,
+7:15 | where there was randomness, and things are discrete, in
+7:19 | some sense.
+7:20 | And they decided, well, this is just like gambling, and so
+7:23 | they called them Monte Carlos simulations.
+7:28 | What Is it that makes this approach work?
+7:33 | And, in some sense, I won't go into a lot of the math, but I
+7:40 | would like to get some concepts across.
+7:44 | This is an application of what are called inferential
+7:47 | statistics.
+7:50 | You have some sample size, some number of points, and
+7:55 | from that you try to infer something more general.
+8:00 | We always depend upon one property when we do this.
+8:06 | And that property is that, a randomly chosen sample tends
+8:18 | to exhibit the same properties as the population from which
+8:44 | it is drawn.
+8:55 | So you take a population of anything, red balls and black
+8:59 | balls, or students, or steps, and at random draw some
+9:06 | sample, and you assume that that sample has properties
+9:11 | similar to the entire population.
+9:17 | So if I were to go around this room and choose some random
+9:23 | sample of you guys and write down your hair color, we would
+9:32 | be assuming that the fraction of you with blonde hair in
+9:35 | that sample would be the same as the fraction of you with
+9:39 | blonde hair in the whole class.
+9:42 | That's kind of what this means.
+9:44 | And the same would be true of black hair, auburn hair, etc.
+9:50 | So consider, for example, flipping a coin.
+9:57 | And if I were to flip it some number of times, say 100
+10:03 | times, you might be able to, from the proportion of heads
+10:09 | and tails, be able to infer whether or not
+10:13 | the coin was fair.
+10:15 | That is to say, half the times it would be heads, in half the
+10:17 | times it would be that tails, or whether it was unfair, that
+10:21 | it was somehow weighted, so that heads would come up more
+10:24 | than tails.
+10:26 | And you might say if we did this 100 times and looked at
+10:28 | the results, then we could make a decision about what
+10:33 | would happen in general when we looked at the coin.
+10:37 | So let's look in an example of doing that.
+10:45 | So I wrote a little program, it's on your
+10:48 | handout, to flip a coin.
+10:54 | So this looks like the simulations
+10:56 | we looked at before.
+10:58 | I've got flip trials, which says that the number of heads
+11:02 | and tails is 0 for i in x range.
+11:07 | What is x range?
+11:09 | So normally you would have written, for i in range zero
+11:13 | to num flips.
+11:16 | What range does, is it creates a list, in this case from 0 to
+11:21 | 99 and goes through the list of one at a time.
+11:27 | That's fine, but supposed num flips were a billion.
+11:34 | Well, range would create a list with a
+11:36 | billion numbers in it.
+11:39 | Which would take a lot of space in the computer.
+11:42 | And it's kind of wasted.
+11:44 | What x range says is, don't bother creating the list just
+11:50 | go through the, in this case, the numbers one at a time.
+11:54 | So it's much more efficient than range.
+11:58 | It will behave the same way as far as the answers you get,
+12:03 | but it doesn't use as much space.
+12:06 | And since some of the simulations we'll be doing
+12:09 | will have lots of trials, or lots of flips, it's worth the
+12:13 | trouble to use x range instead of range.
+12:15 | Yeah?
+12:19 | Pardon?
+12:23 | STUDENT: Like, why would we ever use range
+12:25 | instead of x range?
+12:26 | PROFESSOR: No good reason, when dealing with numbers,
+12:28 | unless you wanted to do something different with the
+12:31 | list. But, there's no good reason.
+12:39 | The right answer for the purposes of
+12:40 | today is, no good reason.
+12:43 | I typically use x range all the time if I'm
+12:45 | thinking about it.
+12:47 | It was just something that didn't seem worth introducing
+12:51 | earlier in this semester.
+12:53 | But good question.
+12:55 | Certainly deserving of a piece of candy.
+13:03 | All right, so for i in x range, coin is equal some
+13:06 | random integer 0 or 1.
+13:08 | If coin is equal to 0 then heads, else tails.
+13:13 | Well, that's pretty easy.
+13:16 | And then all I'm going to do here is go through and flip it
+13:19 | a bunch of times, and we'll get some
+13:23 | answer, and do some plots.
+13:27 | So let's look at an example.
+13:31 | We'll try -- we'll flip 100 coins, we'll do 100 trials and
+13:55 | see what we get.
+13:59 | Error in multi-line statement.
+14:01 | All right, what have I done wrong here?
+14:05 | Obviously did something by accident, edited something I
+14:08 | did not intend edit.
+14:12 | Anyone spot what I did wrong?
+14:15 | Pardon?
+14:18 | The parentheses.
+14:21 | I typed where I didn't intend.
+14:22 | Which line?
+14:24 | Down at the bottom?
+14:29 | Obviously my, here, yes, I deleted that.
+14:35 | Thank you.
+14:46 | All right, so we have a couple of figures here.
+14:52 | Figure one, I'm showing a histogram.
+14:59 | The number of trials on the y-axis and the difference
+15:05 | between heads and tails , do I have more of one than the
+15:08 | other on the x-axis.
+15:10 | And so we what we could see out of my 100 trials,
+15:14 | somewhere around 22 of them came out the same,
+15:20 | close to the same.
+15:21 | But way over here we've got some funny ones.
+15:25 | 100 and there was a difference of 25.
+15:28 | Pretty big difference.
+15:31 | Another way to look at the same data, and I'm doing this
+15:34 | just to show that there are different ways of looking at
+15:37 | data, is here, what I've plotted is each trial, the
+15:46 | percent difference.
+15:49 | So out of 100 flips.
+15:51 | And this is normalizing it, because if I flip a million
+15:54 | coins, I might expect the difference to be pretty big in
+15:59 | absolute terms, but maybe very small as a
+16:01 | percentage of a million.
+16:04 | And so here, we can again see that as these stochastic kinds
+16:08 | of things, there's a pretty big difference, right?
+16:12 | We've got one where it was over 25 percent, and several
+16:17 | where it's zero.
+16:20 | So the point here, we can see from this graph, that if I'd
+16:24 | done only one trial and just assumed that was the answer as
+16:28 | to whether my coin was weighted or not, I could
+16:31 | really have fooled myself.
+16:35 | So the the main point is that you need to be careful when
+16:40 | you're doing these kinds of things.
+16:44 | And this green line here is the mean.
+16:48 | So it says on average, the difference was seven precent.
+16:54 | Well suppose, maybe, instead of, flipping 100, I were to
+17:14 | flip 1,000.
+17:42 | Well, doesn't seem to want to notice it.
+17:44 | One more try and then I'll just restart it, which is
+17:48 | always the safest thing as we've discussed before.
+18:07 | Well, we won't panic.
+18:14 | Sometimes this helps.
+18:20 | If not, here we go.
+18:26 | So let's say we wanted to flip 1,000 coins.
+18:29 | So now what do we think?
+18:33 | Is the difference going to be bigger or smaller than when we
+18:36 | flipped 100?
+18:37 | Is the average difference between heads and tails bigger
+18:42 | or smaller with 1,000 flips than with 100 flips?
+18:48 | Well, the percentage will be smaller, but in absolute
+18:51 | terms, it's probably going to be bigger, right?
+18:55 | Because I've got more chances to stray.
+19:01 | But we'll find out.
+19:17 | So here we see that the mean difference is somewhere in the
+19:22 | twenties, which was much higher than the mean
+19:25 | difference for 100 flips.
+19:28 | On the other hand, if we look at the percentage, we see it's
+19:31 | much lower.
+19:32 | Instead of seven percent, it's around two and a half percent
+19:34 | in the main.
+19:37 | There's something else interesting to observe in
+19:40 | figure two, relative to when we looked at with 100 flips.
+19:44 | What else is pretty interesting about the
+19:46 | difference between these two figures, if you can remember
+19:49 | the other one?
+19:52 | Yeah?
+19:52 | STUDENT: There are no zeros?
+19:54 | PROFESSOR: There are no zeros.
+19:57 | That's right, as it happens there were no zeros.
+20:04 | Not so surprising that it didn't ever come out
+20:07 | exactly 500, 500.
+20:10 | What else?
+20:14 | What was the biggest difference, percentage-wise,
+20:16 | we saw last time?
+20:19 | Over 25.
+20:20 | So notice how much narrower the range is here.
+20:24 | Instead of ranging from 2 to 25 or something like that, it
+20:29 | ranges from 0 to 7, or maybe 7 and a little.
+20:35 | So, by flipping more coins, the experiment becomes more
+20:41 | reproduce-able.
+20:43 | I'm looks like the same because of scaling, but in
+20:49 | fact the range is much narrower.
+20:52 | Each experiment tends to give an answer closer to all the
+20:57 | other experiments.
+21:01 | That's a good thing.
+21:03 | It should give you confidence that the answers are getting
+21:08 | pretty close to right.
+21:10 | That they're not bouncing all over the place.
+21:13 | And if I were to flip a million coins, we would find
+21:17 | the range would get very tight.
+21:22 | So notice that even though there's similar information in
+21:24 | the histogram and the plot, different things leap out at
+21:30 | you, as you look at it.
+21:36 | All right, we could ask a lot of other interesting questions
+21:41 | about coins here.
+21:46 | But, we'll come back to this in a minute and look at some
+21:49 | other questions.
+21:52 | I want to talk again a little bit more generally.
+21:56 | It's kind of easy to think about running a simulation to
+21:59 | predict the future.
+22:01 | So in some sense, we look at this, and this predicts what
+22:06 | might happen if I flipped 1,000 coins.
+22:10 | That the most likely event would be that I'd have
+22:16 | something under 10 in the difference between heads and
+22:24 | tails, but that it's not terribly unlikely that I might
+22:28 | have close to 70 as a difference.
+22:34 | And if I ran more than 100 trials I'd see more, but this
+22:38 | helps me predict what might happen.
+22:42 | Now we don't always use simulations to predict what
+22:47 | might happen.
+22:47 | We sometimes actually use simulations to understand the
+22:52 | current state of the world.
+22:54 | So for example, if I told you that we are going to flip
+22:59 | three coins, and I wanted you to predict the probability
+23:06 | that all three would be either heads, or all
+23:09 | three would be tails.
+23:12 | Well, if you'd studied any probability, you could know
+23:14 | how to do that.
+23:15 | If you hadn't studied probability, you would say,
+23:18 | well, that's OK, we have a simulation right here.
+23:22 | Let's just do it.
+23:27 | Here we go again.
+23:45 | And so let's try it.
+23:46 | Let's flip three coins, and let's do it 4,000 times here.
+24:06 | Well, that's kind of hard to read.
+24:07 | It's pretty dense.
+24:09 | But we can see that the mean here is 50.
+24:19 | And, this is a little easier to read.
+24:24 | This tells us that, how many times will the difference,
+24:31 | right, be zero 3,000 out of 4,000.
+24:38 | Is that right?
+24:39 | What do you think?
+24:41 | Do you believe this?
+24:42 | Have I done the right thing? three coins, 4,000 flips, how
+24:47 | often should they all be heads, or how often should
+24:49 | they all be tails?
+24:54 | What does this tell us?
+24:54 | It tells us one-fourth of the time they'll all be-- the
+25:01 | difference between, wait a minute, how can the difference
+25:03 | between -- something's wrong with my code, right?
+25:09 | Because I only have two possible values.
+25:11 | I hadn't expected this.
+25:17 | I obviously messed something up.
+25:20 | Pardon?
+25:21 | STUDENT: It's right.
+25:22 | PROFESSOR: It's right, because?
+25:24 | STUDENT: Because you had an odd number of flips, and when
+25:28 | you split them --
+25:29 | PROFESSOR: Pardon?
+25:29 | STUDENT: When you split an odd number --
+25:32 | PROFESSOR: Exactly.
+25:35 | So it is correct.
+25:36 | And it gives us what we want.
+25:37 | But now, let's think about a different situation.
+25:41 | Anybody got a coin here?
+25:42 | Anyone give me three coins?
+25:46 | I can trust somebody, I hope.
+25:55 | What a cheap -- anybody got silver dollars, would be
+25:57 | preferable?
+25:59 | All right, look at this.
+26:01 | She's very carefully given me three pennies.
+26:06 | She had big, big money in that purse, too, but she didn't
+26:09 | want me to have it.
+26:11 | All right, so I'm going to take these three pennies,
+26:15 | jiggle them up, and now ask you, what's the probability
+26:19 | that all three of them are heads?
+26:24 | Anyone want to tell me?
+26:26 | It's either 0 or 1, right?
+26:30 | And I can actually look at you and tell you
+26:32 | exactly which it is.
+26:33 | And you can't see which it is.
+26:38 | So, how should you think about what the probability it?
+26:43 | Well, you might as well assume that it's whatever this graph
+26:48 | tells you it is.
+26:52 | Because the fact that you don't have access to the
+26:55 | information, means that you really might as well treat the
+26:59 | present as if it's the future.
+27:02 | That it's unknown.
+27:04 | And so in fact we frequently, when there's data out there
+27:08 | that we don't have access to, we use simulations and
+27:13 | probabilities to estimate, make our best guess, about the
+27:17 | current state of the world.
+27:20 | And so, in fact, guessing the value of the current state, is
+27:24 | really no different from predicting the value of a
+27:27 | future state when you don't have the information.
+27:34 | In general, all right, now, just to show that your
+27:40 | precautions were unnecessary.
+27:52 | Where was I?
+27:55 | Right.
+27:57 | In general, when we're trying to predict the future, or in
+28:05 | this case, guess the present, we have to use information we
+28:09 | already have to make our prediction or our best guess.
+28:17 | So to do that, we have to always ask the question, is
+28:21 | past behavior a good prediction of future behavior?
+28:28 | So if I flip a coin 1,000 times and count up the heads
+28:32 | and tails, is that a good prediction what will happen
+28:35 | the next time?
+28:39 | This is a step people often omit, in doing these
+28:44 | predictions.
+28:46 | See the recent meltdown of the financial system.
+28:49 | Where people had lots of stochastic simulations
+28:52 | predicting what the market would do, and they were all
+28:55 | wrong, because they were all based upon assuming samples
+28:58 | drawn from the past would predict the future.
+29:02 | So, as we build these models, that's the question you always
+29:06 | have to ask yourself.
+29:08 | Is, in some sense, this true?
+29:14 | Because usually what we're doing is, we're choosing a
+29:17 | random sample from the past and hoping it
+29:21 | predicts the future.
+29:24 | And that is to say, is the population we have available
+29:27 | the same has the one in the future.
+29:31 | So it's easy to see how one might use these kinds of
+29:34 | simulations to figure out things that are inherently
+29:39 | stochastic.
+29:41 | So for example, to predict a poker hand.
+29:47 | What's the probability of my getting a full house when I
+29:49 | draw this card from the deck?
+29:53 | To predict the probability of coming up with a particular
+29:55 | kind of poker hand.
+29:57 | Is a full house more probable than a straight?
+30:02 | Or not?
+30:03 | Well, you can deal out lots of cards, and count them up, just
+30:06 | as Ulam suggested for Solitaire.
+30:12 | And that's often what we do.
+30:14 | Interestingly enough though, we can use randomized
+30:18 | techniques to get solutions to problems that are not
+30:25 | inherently stochastic.
+30:29 | And that's what I want to do now.
+30:31 | So, consider for example, pi.
+30:37 | Many of you have probably heard of this.
+30:41 | For thousands of years, literally, people have known
+30:45 | that there is a constant, pi, associated with circles such
+30:51 | that pi times the radius squared equals the area.
+30:59 | And they've known that pi times the diameter is equal to
+31:03 | the circumference.
+31:08 | So, back in the days of the Egyptian pharaohs, it was
+31:13 | known that such a constant existed.
+31:15 | In fact, it didn't acquire the name pi
+31:17 | until the 18th century.
+31:20 | And so they called it other things, but
+31:22 | they knew it existed.
+31:26 | And for thousands of years, people have speculated on what
+31:30 | it's value was.
+31:32 | Sometime around 1650 BC, the Egyptians said that pi was
+31:42 | 3.16, something called the Rhind Papyrus,
+31:46 | something they found.
+31:52 | Many years later, about 1,000 years later, the
+31:56 | Bible said pi was three.
+32:04 | And I quote, this is describing the specifications
+32:11 | for the Great Temple of Solomon. "He made a molten sea
+32:15 | of 10 cubits from brim to brim, round in compass, and 5
+32:19 | cubit the height thereof, and a line of 30 cubits did
+32:23 | compass it round about." So, all right, so what we've got
+32:29 | here is, we've got everything we need to plug into these
+32:32 | equations and solve for pi, and it comes out three.
+32:37 | And it does this in more than one place in the Bible.
+32:42 | I will not comment on the theological implications of
+32:46 | this assertion.
+32:49 | Sarah Palin might.
+32:52 | And Mike Huckabee certainly would.
+32:55 | The first theoretical calculation of pi was carried
+33:00 | out by Archimedes, a great Greek mathematician from
+33:05 | Syracuse, that was about somewhere around 250 BC.
+33:11 | And he said that pi was somewhere between 223 divided
+33:19 | by 71, and 22 divided by 7.
+33:31 | This was amazingly profound.
+33:34 | He knew he didn't know what the answer was, but he had a
+33:39 | way to give an upper and a lower bound, and say it was
+33:42 | somewhere between these two values.
+33:45 | And in fact if you calculate it, the average of those two
+33:50 | values is 3.1418.
+33:56 | Not bad for the time.
+33:58 | This was not by measurement, he actually had a very
+34:00 | interesting way of calculating it.
+34:04 | All right, so this is where it stood, for years and years,
+34:09 | because of course people forgot the Rhind Papyrus, and
+34:12 | they forgot Archimedes, and they believed the Bible, and
+34:15 | so three was used for a long time.
+34:19 | People sort of knew it wasn't right, but still.
+34:23 | Then quite interestingly, Buffon and Laplace, two great
+34:33 | French mathematicians, actually people had better
+34:36 | estimates using Archimedes' methods long before they came
+34:39 | along, proposed a way to do it using a simulation.
+34:45 | Now, since Laplace lived between 1749 and 1827, it was
+34:52 | not a computer simulation.
+34:56 | So I'm going to show you, basically, the way that he
+34:59 | proposed to do it. the basic idea was you take a square,
+35:08 | assume that's a square, and you inscribe in it a quarter
+35:12 | of a circle.
+35:16 | So here, you have the radius of the square r.
+35:23 | And then you get some person to, he used needles, but I'm
+35:31 | going to use darts, to throw darts at the shape.
+35:37 | And some number of the darts will land in the circle part,
+35:44 | and some number of the darts will land out here, in the
+35:48 | part of the square that's not inscribed by the circle.
+35:55 | And then we can look at the ratio of the darts in the
+36:02 | shaded area divided by the total number of
+36:10 | darts in the square.
+36:16 | And that's equal to the shaded area divided by the area of
+36:27 | the square.
+36:31 | The notion being, if they're landing at random in these
+36:34 | places, the proportion here and not here will depend upon
+36:41 | the relative areas.
+36:44 | And that certainly makes sense.
+36:45 | If this were half the area of the square, then you'd expect
+36:49 | half the darts to land in here.
+36:55 | And then as you can see in your handout, a little simple
+36:58 | algebra can take this, plus pi r squared equals the area, you
+37:09 | can solve for pi, and you can get that pi is equal to 4, and
+37:16 | I'll write it, h, where h is the hit ratio, the number
+37:20 | falling in here.
+37:22 | So people sort of see why that should work intuitively?
+37:27 | And that it's a very clever idea to use randomness to find
+37:31 | a value that there's nothing random about.
+37:34 | So we can now do the experiment.
+37:36 | I need volunteers to throw darts.
+37:42 | Come on.
+37:44 | Come on up.
+37:48 | I need more volunteers.
+37:50 | I have a lot of darts.
+37:51 | Anybody else?
+37:56 | Anybody?
+37:58 | All right, then since you're all in the front
+38:00 | row, you get stuck.
+38:07 | So now we'll try it.
+38:11 | And you guys, we'll see how many of you hit in the circle,
+38:14 | and how many of you hit there.
+38:20 | Go ahead, on the count of 3, everybody throw.
+38:24 | 1, 2, 3.
+38:28 | Ohh!
+38:30 | He did that on purpose.
+38:34 | You'll notice Professor Grimson isn't here today, and
+38:36 | that's because I told him he was going to have to hold the
+38:38 | dart board.
+38:41 | Well, what we see here is, we ignore the ones that missed
+38:47 | all together.
+38:49 | And we'll see that, truly, I'm assuming
+38:52 | these are random throws.
+38:54 | We have one here and two here.
+38:55 | Well, your eyes will tell you that's the wrong ratio.
+39:01 | Which suggests that having students throw darts is not
+39:04 | the best way to solve this problem.
+39:07 | And so you will see in your handout a computer
+39:09 | simulation of it.
+39:14 | So let's look at that.
+39:20 | So this is find pi.
+39:23 | So at the beginning of this code, by the way, it's not on
+39:26 | your handout, is some magic.
+39:29 | I got tired of looking at big numbers without commas
+39:32 | separating the thousands places.
+39:34 | You've see me in other lectures counting
+39:36 | the number of zeros.
+39:38 | What we have here is, that just tells it I have to have
+39:43 | two versions, one for the Mac, and one for the PC.
+39:47 | To set some variables that had to write integers, things in
+39:51 | general, and I'm saying here, do it the way you would do it
+39:54 | in the United States in English.
+39:57 | And UTF8 is just an extended character code.
+40:00 | Anyway, you don't need to learn anything about this
+40:02 | magic, but it's just a handy little way to make the numbers
+40:05 | easier to read.
+40:09 | All right, so let's let's try and look at it.
+40:14 | There's not much interesting to see here.
+40:18 | I've done this little thing, format ints, that uses this
+40:21 | magic to say grouping equals true, that means put a comma
+40:25 | in the thousand places.
+40:27 | But again, you can ignore all that.
+40:29 | The interesting part, is that from Pylab I import star,
+40:37 | import random in math.
+40:39 | As some of you observed, the order these imports matters.
+40:42 | I think I sent out an email yesterday explaining what was
+40:45 | going on here.
+40:47 | This was one of the things that I knew, and probably
+40:49 | should've mentioned.
+40:51 | But since I knew it, I thought everyone knew.
+40:54 | Silly me.
+40:55 | It was of course a dumb thing to think.
+40:58 | And then I'm going to throw a bunch of darts.
+41:00 | The other thing you'll notice is, throw darts has a
+41:03 | parameter called should plot.
+41:05 | And that's because when I throw a billion darts, I
+41:09 | really don't want to try and take the time to plot a
+41:11 | billion points.
+41:13 | So let's first look at a little example.
+41:18 | We'll try throwing 10,000 darts.
+41:32 | And it gives me an estimated value of pi of 3.16.
+41:38 | And what we'll see here, is that the number of darts
+41:44 | thrown, the estimate changes, right?
+41:46 | When I threw one dart, the estimate of pi was 4.
+41:52 | I threw my second dart, it dropped all the way to 3.
+41:56 | And then it bounced around a while, and then at the end, it
+41:59 | starts to really stabilize around the true value.
+42:03 | You'll notice, by the way, that what I've got here is a
+42:06 | logarithmic x-axis.
+42:08 | If you look at the code, you'll see I've told it to be
+42:11 | semi log x.
+42:13 | And that's because I wanted you to be able to see what was
+42:16 | happening early on, where it was fluctuating.
+42:19 | But out here it's kind of boring, because the
+42:21 | fluctuations are so small.
+42:23 | So that was a good way to do it.
+42:34 | All right now.
+42:37 | Do I think I have enough samples here?
+42:38 | Well, I don't want you to cheat and look at the estimate
+42:43 | and say no, you don't, because you know that's
+42:45 | not the right answer.
+42:46 | And, it's not even as good as Archimedes did.
+42:51 | But how could you sort of look at the data, and get a sense
+42:55 | that maybe this is not the right answer?
+42:58 | Well, even at the end, if we look at it, it's still
+43:01 | wiggling around a fair amount.
+43:03 | We can zoom in.
+43:12 | And it's bouncing up and down here.
+43:14 | I'm in a region, but it's sort of makes us think that maybe
+43:20 | it hasn't stabilized, right?
+43:22 | You'd like it to not be moving very much.
+43:27 | Now, by the way, the other thing we could've looked at,
+43:31 | when we ran it, let's run it again, probably get a
+43:38 | different answer by the way.
+43:43 | Yeah, notice the different answer here.
+43:47 | Turns out to be a better answer, but it's just an
+43:49 | accident, right?
+43:55 | Notice in the beginning it fluctuates wildly, and it
+43:59 | fluctuates less wildly at the end.
+44:01 | Why is that?
+44:04 | And don't just say because it's close to right
+44:06 | and it knows it.
+44:09 | Why do the mathematics of this, in some sense, tell us
+44:13 | it has to fluctuate less wildly at the end?
+44:16 | Yes?
+44:17 | STUDENT: [INAUDIBLE]
+44:22 | PROFESSOR: Exactly, exactly right.
+44:27 | If I've only thrown two darts, the third dart can have a big
+44:30 | difference in the average value.
+44:33 | But if I've thrown a million darts, the million and first
+44:35 | can't matter very much.
+44:38 | And what this tells me is, as I want ever more digits of
+44:41 | precision, I have to run a lot more trials to get there.
+44:47 | And that's often true, that simulations can get you in the
+44:50 | neighborhood quickly, but the more precision you want, the
+44:55 | number of steps grows quite quickly.
+45:00 | Now, the fact that I got such different answers the two
+45:03 | times I ran this suggests strongly that I shouldn't
+45:08 | believe either answer.
+45:10 | Right?
+45:13 | So we need to do something else.
+45:17 | So let's try something else.
+45:30 | Let's try throwing a lot more darts here,
+45:32 | and see what we get.
+45:42 | Now if you look at my code, you'll see I'm printing
+45:44 | intermediate values.
+45:47 | Every million darts, I'm printing the value.
+45:50 | And I did that because the first time I ran this on a big
+45:53 | number, I was afraid I had an infinite loop and my program
+45:56 | was not working.
+45:58 | So I just said, all right, let's put a print statement in
+46:01 | the loop, so I could see that it's making progress.
+46:06 | And then I decided it was just kind of nice to look at it, to
+46:08 | see what was going on here.
+46:11 | So now you see that if I throw 10 million darts, I'm starting
+46:15 | to get a much better estimate.
+46:18 | You'll also see, as predicted, that as I get further out, the
+46:22 | value of the estimate changes less and less with each
+46:26 | million new darts, because it's a smaller fraction of the
+46:29 | total darts.
+46:31 | But it's getting a lot better.
+46:36 | Still not quite there.
+46:40 | Let's just see what happens, I can throw in another one.
+46:47 | This is going to take a little while.
+46:51 | So I can talk while it's running.
+46:53 | Oops, what did I do here?
+47:06 | So, it's going to keep on going and going and going.
+47:12 | And then if we were to run it with this number of darts
+47:15 | several times over, we would discover that we got answers
+47:18 | that were very, very similar.
+47:22 | From that we can take comfort, statistically, that we're
+47:27 | really getting close to the same answer every time, so
+47:30 | we've probably thrown enough darts to feel comfortable that
+47:34 | we're doing what's statistically the right thing.
+47:39 | And that there maybe isn't a lot of point in
+47:41 | throwing more darts.
+47:43 | Does that mean that we have the right answer?
+47:48 | No, not necessarily, and that's what we're going to
+47:51 | look at next week.

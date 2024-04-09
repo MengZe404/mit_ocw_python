@@ -1,0 +1,1144 @@
+0:00 | The following content is provided under a Creative
+0:02 | Commons license.
+0:03 | Your support will help MIT OpenCourseware continue to
+0:06 | offer high-quality educational resources for free.
+0:10 | To make a donation, or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseware, at
+0:17 | ocw.mit.edu.
+0:19 | PROFESSOR JIM ERICSON: OK, to work.
+0:24 | A word of warning: fasten your seat belts.
+0:27 | Or, another way of saying it is, I'm going to open up the
+0:29 | fire hose a little bit today.
+0:31 | Last lecture, you might have thought this was a SHASS
+0:33 | class, it's not like a philosophy class, and it was
+0:35 | important to set the stage for what we're going to talk
+0:38 | about, but we talked about very high level things.
+0:41 | The notion of recipes, the notion of computation, why you
+0:43 | want to do this, what you're going to learn.
+0:45 | Today we're going to dive into the nitty-gritty, the nuts and
+0:48 | bolts of the basics of computation, and in
+0:51 | particular, what I'm going to do today is, I'm going to talk
+0:53 | about operators and operands, which we did a little bit real
+0:56 | last time, in particular how to create expressions, I'm
+0:58 | going to talk about statements as the key building blocks for
+1:02 | writing code, and I'm going to introduce simple sets of
+1:06 | programs, in particular I'm going to talk about branching,
+1:09 | conditionals, and iteration.
+1:11 | So, a lot to do.
+1:12 | OK?
+1:13 | So, let me jump straight to it.
+1:16 | At the end of last lecture, we started introducing some of
+1:18 | the pieces you want to do.
+1:19 | And I want to remind you of our goal.
+1:20 | We're trying to describe processes.
+1:22 | We want to have things that deduce new kinds of
+1:24 | information.
+1:25 | So we want to write programs to do that.
+1:28 | If we're going to write programs, we need at least two
+1:30 | things: we need some representation
+1:32 | for fundamental data.
+1:34 | And we saw last time two examples of that.
+1:37 | And the second thing we're going to need, is we're going
+1:39 | to need a way to give instructions to the computer
+1:43 | to manipulate that data.
+1:44 | We need to give it a description of the recipe.
+1:47 | In terms of primitive data, what we saw
+1:52 | were two kinds: Right?
+1:56 | Numbers and strings.
+2:00 | A little later on in the lecture we're going to
+2:04 | introduce a third kind of value, but what we're going to
+2:08 | see throughout the term is, no matter how complex a data
+2:11 | structure we create, and we're going to create a variety of
+2:13 | data structures, fundamentally all of them have their basis,
+2:16 | their atomic level if you like, are going to be some
+2:19 | combinations of numbers, of strings, and the third type,
+2:22 | which are booleans, which I'm going to introduce a little
+2:23 | later on in this lecture.
+2:25 | And that kind of makes sense right?
+2:27 | Numbers are there to do numeric things, strings are
+2:29 | our fundamental way of representing textual
+2:31 | information.
+2:31 | And so we're going to see how to combine those
+2:33 | things as we go along.
+2:35 | Second thing we saw was, we saw that associated with every
+2:38 | primitive value was a type.
+2:41 | And these are kind of obvious, right?
+2:42 | Strings are strings.
+2:44 | For numbers, we had some variations; we had integers,
+2:47 | we had floats.
+2:48 | We'll introduce a few more as we go along.
+2:49 | But those types are important, because they tell us something
+2:52 | about what we want to do when we want to put them together.
+2:55 | OK, but nonetheless, I want to stress we have both a value,
+3:00 | yeah, and a type.
+3:05 | All right.
+3:05 | Once we have them, we want to start making
+3:07 | combinations out of them.
+3:08 | We want to put pieces together.
+3:10 | And for that, we combine things in expressions.
+3:19 | And what we saw as expressions are formed of
+3:21 | operands and operators.
+3:30 | And the simple things we did were the sort of things you'd
+3:34 | expect from numerical things.
+3:36 | Now I want to stress one other nuance here.
+3:39 | Which is, and we're going to do some examples of this,
+3:41 | initially we just typed in expressions into the
+3:43 | interpreter; that is, directly into Python.
+3:46 | And as I suggested last time, the interpreter is actually a
+3:48 | program inside of the machine that is basically following
+3:52 | the rules we're describing here to deduce the value and
+3:54 | print it up.
+3:55 | And if we type directly into the interpreter, it
+3:58 | essentially does an eval and a print.
+3:59 | It evaluates, and it prints.
+4:07 | Most of the time, we're going to be doing expressions inside
+4:10 | of some piece of code, inside of a script, which is the
+4:13 | Python word for program.
+4:15 | In there, I want to make this distinction, this nuance: the
+4:17 | evaluator is still going to be taking those expressions and
+4:20 | using its rules to get a value, but it's not going to
+4:23 | print them back out.
+4:24 | Why?
+4:25 | Because typically, you're doing that to use it somewhere
+4:27 | else in the program.
+4:28 | It's going to be stored away in a variable.
+4:30 | It's going to be stuck in a data structure.
+4:31 | It's going to be used for a side effect.
+4:34 | So, inside of code, or inside of a script, there's no print,
+4:40 | unless we make it explicit.
+4:45 | And that's a little bit down in the weeds, it's a detail,
+4:47 | but one I want to stress.
+4:48 | You need to, if you want something to be printed out
+4:50 | inside your code, you need to tell the machine to do that.
+4:54 | OK.
+4:56 | So let's do some simple examples.
+4:57 | We've already seen somebody's.
+4:58 | I just want to remind you, if I wanted to, for example, type
+5:02 | in an expression like that, notice the syntactical form,
+5:04 | it's an expression, a number, followed by an operand,
+5:07 | followed by another expression.
+5:09 | And of course I get out the value I'd like there.
+5:12 | Yes sir.
+5:15 | Oh, you don't like leaning that far to the left?
+5:17 | OK, if you're a Republican I'll be happy to shift this
+5:20 | over a little bit.
+5:22 | Wow, John, I got a laugh for a political
+5:23 | joke, I'm in big trouble.
+5:24 | That better?
+5:26 | Oh damn, all right, I'll have to do it even more.
+5:32 | OK, here we go, here we go, you see, I'm doing it down
+5:35 | here, I can't see it, does that-- ah, I hear his sighs of
+5:37 | relief, OK, good.
+5:38 | There we go.
+5:39 | Better.
+5:40 | All right.
+5:41 | One of the other things we showed last time is that
+5:42 | operators are overloaded.
+5:44 | And this is where you heard John and I disagree.
+5:46 | I don't happen to like this, but he
+5:47 | thinks it's an ok thing.
+5:49 | In a particular-- if we, whoa, we don't do that, we do this--
+5:54 | that is, give a combination of a number multiplication in a
+5:57 | string, this will in fact give us back a new string with that
+6:01 | many replicas, if you like, of the string
+6:03 | concatenated together.
+6:05 | All right?
+6:05 | And if you want to do other things, for example, we can
+6:08 | take two strings and add-- whoops, sorry-- and add them
+6:10 | together, we will get out, again, a
+6:15 | concatenation of that string.
+6:17 | And these will, we'll let you work through the variations,
+6:19 | but these are the simple expressions we can use.
+6:21 | Now, sometimes things get a little interesting.
+6:25 | All right?
+6:27 | What's the value of that expression?
+6:33 | What do you think should happen if I evaluate that
+6:35 | expression?
+6:38 | Somebody with a hand up, so I can see it.
+6:38 | What's going to happen?
+6:39 | STUDENT: [UNINTELLIGIBLE]
+6:41 | PROFESSOR JIM ERICSON: An error?
+6:43 | Why?
+6:43 | STUDENT: [UNINTELLIGIBLE]
+6:48 | PROFESSOR JIM ERICSON: Great.
+6:50 | OK.
+6:50 | That means, let's check it.
+6:51 | It certainly is.
+6:52 | We bribe people.
+6:53 | So I, ah, by the way, John's a Yankees fan, he throws like
+6:57 | Johnny Damon, I'm a Red Sox fan, so we'll see if I, how
+7:00 | about that?
+7:00 | And I almost hit John along the way, great.
+7:03 | My third right, exactly, what can I say?
+7:05 | All right, so we're into bribing you as we go along
+7:07 | here, and all right?
+7:08 | You'll be badly overweight by the end of the term.
+7:11 | Right, it's a syntactic error, because it doesn't know how to
+7:13 | deal with this.
+7:14 | But there's an important thing going on here, if I in fact
+7:16 | wanted to combine those into a string, I should have told the
+7:19 | machine to do that, and I can do that, by explicitly saying,
+7:23 | take that, which is a number, and convert it into a string,
+7:27 | and then-- bleah, I keep doing that-- then
+7:29 | add it to that string.
+7:33 | OK, so there's an important point here.
+7:35 | We've got what's called type conversion.
+7:44 | That is, if I want to combine two things together in a
+7:48 | particular way, I need to make sure that I give it the kind
+7:52 | of operand it expects.
+7:53 | So STR, which I just typed up there, takes in parens, some
+7:57 | input, and it converts it into a string, so that now I can
+8:01 | use that where I was expecting a string.
+8:02 | John.
+8:03 | PROFESSOR JOHN GUTTAG: You've got a static semantic error in
+8:07 | your syntax.
+8:07 | PROFESSOR JIM ERICSON: Thank you.
+8:08 | And I was going to come to that in a second, but thank
+8:10 | you, John, for pointing it out.
+8:11 | All right.
+8:12 | Why is it a static semantic error?
+8:15 | The syntax is OK in the sense of, it is an operand, an
+8:18 | operator, an operand, so syntactically it's OK.
+8:23 | The semantics was what caused the problem, because the
+8:26 | operator was expecting a particular kind
+8:28 | of structure there.
+8:30 | There's a second thing going on here that I want to
+8:32 | highlight, because it's really important.
+8:36 | Yes indeed.
+8:37 | OK, there we go.
+8:38 | The second thing I want to highlight is, that what's
+8:41 | going on, is that Python is doing some type checking.
+8:48 | It caught the error, because it checked the types of the
+8:51 | operands before it applied things, and it says,
+8:54 | I'm going to stop.
+8:55 | Now, you might have said, gee, why didn't it just assume that
+8:57 | I wanted to in fact treat these as strings, and combine
+9:00 | them together?
+9:01 | Sounds like a reasonable thing to do.
+9:03 | But it's a dangerous thing.
+9:05 | Because in doing that, Python would then have a value that
+9:08 | it could pass on into some other part of a computation,
+9:10 | and if it wasn't what I wanted, I might be a long ways
+9:13 | downstream in the computation before I actually hit some
+9:16 | result that makes no sense.
+9:18 | And tracing back where it came from can be really hard.
+9:21 | So I actually want to have type checking as much
+9:23 | as I can early on.
+9:26 | And in fact, under type checking, different languages
+9:28 | sometimes fall on a spectrum from weak to strong typing.
+9:36 | Which basically says, how much type checking do they do?
+9:39 | Now, you're going to hear John and I go back and forth a lot,
+9:42 | as I said I'm an old time-- well I'm certainly old time,
+9:44 | but I'm also an old time Lisp programmer.
+9:46 | I love Lisp, but Lisp is certainly in the category of a
+9:49 | very weakly typed language.
+9:50 | It does not check the types of its arguments at all.
+9:53 | Python is, I wouldn't say completely strong, but it's
+9:55 | much closer to the strong end of the spectrum.
+9:58 | It's going to do a lot of type checking for you before it
+10:00 | actually passes things back.
+10:03 | Nonetheless, I'm also going to argue that it's probably not
+10:06 | as strongly typed as we might like.
+10:08 | So, for example, there's an expression.
+10:13 | Now, less than is just, if you haven't used it before, it's
+10:15 | just the operator you'd expect, it's comparing two
+10:17 | things and it's going to return either true or false
+10:19 | depending on whether the first argument is less than the
+10:21 | second argument.
+10:23 | What's going to happen here?
+10:24 | Again, I need a hand so I can know where to throw candy.
+10:28 | I've also got on my reading glasses
+10:29 | on, I can't see anything.
+10:31 | Anybody.
+10:33 | TAs don't count, they get their own candy.
+10:36 | When it, yep.
+10:37 | STUDENT: [INAUDIBLE]
+10:39 | PROFESSOR JIM ERICSON: Good question.
+10:40 | Sounds like a reasonable guess, right?
+10:41 | How in the world am I going to compare a string to a number?
+10:44 | So, see how good my aim is, ah, not bad.
+10:46 | All right.
+10:47 | A good quest-- sorry, a good thought, but in
+10:51 | fact, son of a gun.
+10:53 | Or as my younger son would say, fudge knuckle.
+10:58 | Yeah.
+10:58 | All right?
+10:59 | So, what in the world's going on here?
+11:01 | This is a place--
+11:02 | I don't know about you, John, I think this is actually
+11:04 | really not good, because right, what this is doing is,
+11:07 | it's allowing-- sorry, let me back up and say it-- it's got
+11:12 | an overload on the less-than that allows you to compare
+11:14 | basically the lexicographic ordering, or this sequence of
+11:18 | ordering of symbols, including numbers inside of the machine.
+11:22 | And this, in my mind, should have been an error.
+11:24 | Why in the world would you want to compare that?
+11:26 | Just to give you an example of that, for instance, I can do
+11:29 | the following: all right, the number four is less than the
+11:35 | string three, whereas the string four, oops, is not less
+11:42 | than the string three.
+11:43 | And this is a place where it's comparing strings and numbers
+11:46 | in a strange way.
+11:47 | So why am I showing you this?
+11:48 | Partly to show you that it's kind of weird, but also to
+11:51 | tell you that one of the things you want to do is
+11:56 | exercise what I'm going to call some type discipline.
+12:00 | Meaning, when you write code, you want to get into the habit
+12:05 | of A, checking out operators or procedures to see what they
+12:08 | do under different circumstances, either check
+12:10 | them out or read the specifications of it, and two,
+12:13 | when you write your own code, you want to be disciplined
+12:15 | about what types of arguments or operands
+12:18 | you apply to operators.
+12:20 | Because this is something that could certainly have screwed
+12:22 | you up if you didn't realize it did it, and you need to
+12:25 | have that discipline to make sure it's
+12:26 | doing the right thing.
+12:29 | OK.
+12:30 | One of the other things you're going to see is that some of
+12:33 | the operators have odd meanings.
+12:36 | And again, I think we looked--
+12:37 | Yup?
+12:37 | STUDENT: So, the string A is less than three, is false
+12:40 | because they're comparing like ASCII values?
+12:40 | PROFESSOR JIM ERICSON: Yes.
+12:45 | I mean, I'm sorry.
+12:46 | The answer is, I don't know if it's ASCII.
+12:47 | John, do you know, are they doing ASCII
+12:48 | encoding inside of here?
+12:49 | I'm assuming so.
+12:51 | Right.
+12:51 | So, in case you didn't understand what the the
+12:53 | question was, basically every symbol gets translated into a
+12:57 | particular encoding, a string of bit, if you like, inside
+13:00 | the machine, there's a particular one called ASCII,
+13:02 | which is, if you like, an ordering of that, and that's
+13:05 | what the machine's actually comparing inside of here,
+13:07 | which is why in under ASCII encoding the numbers are going
+13:09 | to appear after the characters, and you get the
+13:12 | strange kind of thing going on.
+13:14 | All right.
+13:15 | I want a couple of other things, just to quickly remind
+13:16 | you, and one of them is, remember, the operators do
+13:19 | look at the types, so division, for example nine
+13:21 | divided by five is one, because this is integer
+13:25 | division, that is, it's the largest number of integer
+13:27 | multiples of five to go into nine, and there would be a
+13:30 | remainder associated with it, which is in fact four.
+13:36 | And again, you've got to be careful about
+13:37 | how you use the operators.
+13:40 | Right, having done that, we can certainly get to more
+13:41 | complicated things, so for example, suppose I look at
+13:46 | that expression.
+13:47 | Three plus four times five.
+13:50 | All right.
+13:51 | Now.
+13:52 | There are two possible values here, I think.
+13:55 | One is 23, the other's 35.
+13:57 | Because this could be three plus four, times five, or it
+14:03 | could be three, plus four times five.
+14:07 | And of course, you know, when you look at code it doesn't
+14:08 | pause in between them.
+14:09 | But what I do?
+14:10 | I just separated, do I do the addition first or do the
+14:12 | multiplication first?
+14:14 | Anybody know what happens In this case?
+14:15 | Yeah, way up, oh God I'm going to have a hell of time
+14:17 | throwing up there, way up at the back.
+14:18 | STUDENT: Standard order of operations, I guess take the
+14:25 | multiplication first, and add the three.
+14:26 | PROFESSOR JIM ERICSON: Right.
+14:26 | I'm going to try, if I don't make it, you know, just get
+14:27 | somebody to pass back, whoa!
+14:29 | I just hit somebody in the head.
+14:30 | Thank you.
+14:30 | Please pass it back to that guy.
+14:32 | If you want candy, sit much closer down, and that way we
+14:34 | can film you as well as we go along.
+14:36 | Right.
+14:36 | So the point is, there is something here called operator
+14:39 | precedence, which is what the gentleman said.
+14:45 | I'm not going to say much more about it, but basically what
+14:48 | it says is, with all other things being equal, things
+14:52 | like exponentiation are done before you do multiplication
+14:56 | or division, which are done before you do things like
+15:00 | addition and subtraction.
+15:02 | And so, in fact, if I wanted the other version of it, in
+15:04 | fact, if I do this right, it's going to give me 23 because it
+15:06 | does the multiplication first, if I wanted the other version
+15:09 | of it, I need to tell it that, by using, excuse me,
+15:13 | parentheses.
+15:14 | And in general, what I would say is, when
+15:16 | in doubt, use parens.
+15:26 | OK.
+15:29 | Now, that just gives us expressions.
+15:32 | We can start having complex expressions, you can imagine
+15:35 | we can have things are lots of parens, and all sorts of
+15:36 | things in it.
+15:37 | Yes, question.
+15:38 | STUDENT: What does it mean, the operator used, when you
+15:46 | were calculating the remainder between nine and five?
+15:46 | PROFESSOR JIM ERICSON: It's the percent sign.
+15:46 | If you can't read it, I guess I'm going to have to blow that
+15:47 | font up, aren't I, next time around.
+15:47 | Yeah, it's a percent, so this percent sign will
+15:49 | give you the remainder.
+15:52 | OK.
+15:53 | Second thing I need to do, though, is I need to, when I
+15:55 | get those values, I want to hang on to them.
+15:57 | I'd like to give them a name, so I can refer to them in
+15:59 | other places.
+16:00 | And so we saw that as well, the last piece we had here is
+16:05 | the ability to create variables, which have their
+16:12 | own values, and that's done using an assignment statement.
+16:20 | So in particular, that is an assignment statement.
+16:24 | It says, take the name x and create a binding for that name
+16:29 | to the value of the sub-expression and in fact to
+16:31 | do this, to stress a point, let's do that.
+16:35 | It's not just a number, it's any expression.
+16:39 | What Python will do, is it will evaluate that expression
+16:41 | using the kinds of rules we talked about, and then it
+16:43 | creates a binding for x to that value.
+16:45 | And I want to stress this, we're going to come back to it
+16:47 | later on in the term, so the way I'd like you to think
+16:50 | about it for now, is that somewhere in the machine,
+16:53 | there's a big space that contains all possible values.
+16:57 | Right.
+16:57 | It's a slight lie, it doesn't have all possible values, but
+16:59 | you get the idea.
+17:00 | It has, if you like, intellectually,
+17:01 | all possible values.
+17:03 | And when I create a binding, I'm taking a variable name, in
+17:07 | this case x, stored somewhere in a table, and I'm creating a
+17:11 | link or a pointer from that name to that value.
+17:20 | This is a nuance.
+17:21 | It's going to make a lot more sense later on when we
+17:23 | introduce mutation into our language, but I want you to
+17:26 | start thinking of it that way.
+17:26 | Don't think of it as a specific box into which we're
+17:29 | putting things; think of it as a link to a value.
+17:32 | I could have, for example, another assignment statement,
+17:37 | and that creates a binding from y into that same value,
+17:45 | and one of the things as a conservist I can do is, I
+17:47 | could have a statement like, let z be bound to
+17:53 | the value of x.
+17:54 | And I said it deliberately that way.
+17:55 | That statement says, get the value of x, which is this
+17:58 | link, and give z a pointer to the same place.
+18:05 | To the value, not to x.
+18:08 | OK, and we'll just plant that idea, we're going to come back
+18:10 | to later on, as we carry on.
+18:13 | OK.
+18:14 | So if we have variables, one of the questions we can ask
+18:17 | is, what's the type of the variable.
+18:25 | And the answer is, it inherits it from its value.
+18:28 | OK.
+18:30 | Yes.
+18:35 | So if somewhere in my code, I have that statement, that
+18:39 | assignment statement, x now is a variable
+18:41 | whose value is an integer.
+18:44 | Unfortunately, at least in my mind, in Python, these
+18:47 | variable bindings are dynamic, or the
+18:51 | type, rather, is dynamic.
+18:55 | Meaning, it changes depending on what the current value is.
+19:00 | Or said a different way, if somewhere later on in the
+19:03 | program I do this, x now has changed its
+19:10 | type from INT to string.
+19:14 | Now why should you care?
+19:16 | OK, my view is, I don't like it.
+19:21 | Especially in the presence of operator overload.
+19:24 | Because I might have written some code in which I'm
+19:26 | expecting that particular variable to
+19:28 | have an integer value.
+19:29 | If somewhere later on in the code it shifts to string, I
+19:32 | might not be manipulating that and getting actual values out,
+19:35 | but not what I wanted, and it's going to be really hard
+19:37 | for me to chase it back.
+19:39 | So one of the things I would like to suggest is that you
+19:41 | develop some good style here, and in particular, don't
+19:46 | change types arbitrarily.
+19:52 | I can't spell today.
+19:59 | Meaning, sometimes you need to do this, but in general
+20:01 | there's-- at least in my view and I don't, John, would you
+20:03 | agree?-- you just don't want to do this.
+20:04 | You don't want to make those changes.
+20:05 | It just leads to trouble down the road.
+20:08 | OK.
+20:10 | Now, last thing about variables, and then we're
+20:12 | going to start pushing on this, is
+20:13 | where can you use them?
+20:14 | And the answer is, you can use a variable anywhere you can
+20:19 | use the value.
+20:20 | So, any place it's legal to use the value.
+20:32 | OK.
+20:35 | Now.
+20:36 | This is just sort of bringing us back up to speed and adding
+20:39 | a few more details in.
+20:40 | What we really want to do now though is
+20:42 | start using this stuff.
+20:44 | So, operands.
+20:46 | Let us take expressions, get values out, we can store them
+20:49 | away in places, but ultimately we want to do something with
+20:52 | them, so we need to now start talking about what are the
+20:54 | things we can do inside of Python, or any programming
+20:56 | language, to manipulate them.
+20:58 | And for that, we're going to have statements.
+21:08 | Statements are basically, if you want to think about it,
+21:13 | legal, and I was about to use the word expression except
+21:15 | I've misused that elsewhere, so legal commands that Python
+21:24 | can interpret.
+21:30 | You've already seen a couple of them.
+21:32 | Print, assignment, certainly two obvious statements,
+21:39 | they're commands to do something.
+21:41 | Assignment is binding a name to a value, print is saying
+21:43 | put it back out in the screen.
+21:45 | Obviously if you have print as a way of putting things out,
+21:47 | we expect to have ways of getting input in, we're going
+21:48 | to see an example that in the second.
+21:50 | And as we go through the next few lectures, we're going to
+21:52 | add in more and more of these statements.
+21:54 | But let's look at what we could do with this, OK?
+21:56 | And to do this, I'm going to use some code that I've
+21:59 | already typed in.
+22:00 | So I'm hoping you can read that, and it's
+22:01 | also in your handout.
+22:03 | This is a little file I created, all right, and I'm
+22:06 | going to start with a sequence of these things and walk them
+22:09 | along, again I invite you to put comments on that handout
+22:12 | so that you can follow what we're going to do.
+22:14 | All right?
+22:15 | So let's look at the first part of this.
+22:16 | Right now, this is just a text file.
+22:19 | OK.
+22:19 | And I've highlighted in blue up there one of the pieces I'm
+22:21 | going to start with.
+22:22 | And what do I have?
+22:23 | I have a sequence of commands; I've got an assignment
+22:25 | statement, I've got another assignment statement, I've got
+22:27 | a print statement, I've got an input statement, which we'll
+22:29 | come back to in a second.
+22:31 | And I want to basically try and use these things to do
+22:34 | something with them.
+22:35 | Second thing I want to note is, the little hash mark or
+22:38 | the pound sign, that's identifying a comment.
+22:41 | So what's a comment?
+22:42 | It's words to you, or to the reader of the code, that are
+22:46 | telling you what's going on inside of this code.
+22:47 | OK?
+22:49 | Now, these comments, frankly, are brain-damaged, or
+22:54 | computationally challenged if you prefer.
+22:57 | Meaning, why in the world do I have to tell the reader that
+23:00 | I'm binding x to the value three?
+23:02 | All right?
+23:02 | I'm putting them in there to make a point.
+23:04 | In general, good programming style says you put in comments
+23:08 | that are going to be valuable in helping you as a reader
+23:11 | understand what's going on inside of the code.
+23:14 | It could be, what's the intuition behind
+23:16 | this piece of code.
+23:17 | It could be, preconditions I want to have on input.
+23:19 | It could be, explanations of specific things you're doing.
+23:22 | But you need to have those comments there.
+23:25 | Now, this becomes a little bit of one of those motherhood and
+23:27 | apple pie kinds of lectures.
+23:28 | You know, your mother always told you to eat brussels
+23:30 | sprouts because it was good for you.
+23:32 | Well this is a brussels sprouts comment. everybody
+23:34 | goes yeah, yeah, yeah, comments, of course.
+23:35 | Of course we're going to do comments.
+23:36 | And they never do.
+23:38 | So my challenge to you, and I know Professor Guttag can do
+23:40 | this, my challenge to you is, a year from now, come back and
+23:44 | look at code you wrote here.
+23:46 | Can you still understand what it was you were trying to do?
+23:50 | I don't know, John, if you'd agree, right?
+23:52 | If you can read the code a year later, even code you
+23:54 | wrote yourself, it's a good sign that you put good
+23:56 | comments in, right?
+23:59 | Second good piece of style here is
+24:01 | choice of variable names.
+24:03 | These are lousy.
+24:05 | Deliberately.
+24:06 | OK?
+24:06 | I'm just using simple things like x and y and z because I
+24:09 | want to make it, just get through the
+24:10 | lecture if you like.
+24:11 | But in general, the choice of variable name is a great way
+24:14 | of commenting your code.
+24:15 | Use variable names that make sense.
+24:19 | That little problem set zero that you did.
+24:21 | You read in a couple of values, you
+24:22 | probably stored them away.
+24:23 | My bet is, you used simple names like x and y.
+24:27 | A much better name would have been firstname, lastname, as
+24:29 | the name of the variable to tell you what you were trying
+24:31 | to capture there.
+24:33 | OK.
+24:34 | The other piece I want to say about variable names is, once
+24:38 | I have that choice of variable name, I can use it, but in
+24:41 | fact there are a few things that I can't use in terms of
+24:44 | variable names.
+24:45 | So, these are an important way of documenting, but there're
+24:58 | some things excluded.
+24:59 | And in particular, there are some key words that Python is
+25:04 | going to use that have to be excluded.
+25:07 | Let me highlight that.
+25:09 | As I said, right now that's just text file.
+25:10 | I'm going to save this away-- yeah, not that way, I'm going
+25:15 | to save this away-- with the subscript, or the suffix
+25:22 | rather, py to make it a Python file.
+25:25 | Yeah, and I know it's already there but I'm going to do it,
+25:28 | and I get some wonderful colors.
+25:30 | But these are important, OK?
+25:33 | So notice what I have up there now.
+25:34 | Comments appear in red.
+25:35 | I can see those.
+25:37 | There's a keyword, which I'm going to highlight right up
+25:39 | here, print, which is in, I don't know what
+25:41 | that color is, orange?
+25:44 | There's a function in purple, there's a string in green, and
+25:48 | in black I have the assignment statements.
+25:51 | That print is a keyword.
+25:53 | It's a command to Python to do something.
+25:56 | As a consequence, I can't use it as a variable name.
+26:00 | All right, think about it for a second.
+26:01 | If I wanted to use print as a variable name, how do I get
+26:04 | the system to decide gee, do I want print as a value for
+26:08 | something, or do I want print as a command?
+26:11 | So there's a sequence of these that are blocked out, and I--
+26:13 | John, I think there are what, twenty-eight?
+26:16 | Something like that, TAs, is that right?
+26:18 | Twenty-eight keywords that are blocked?
+26:20 | We'll find them as we go along--
+26:23 | OK.
+26:24 | Having done this now, I can simply go ahead and run this,
+26:26 | and in fact if I go up here to run, you'll see I've got both
+26:29 | an option to check the module, though in this case I'm just
+26:31 | going to run it.
+26:33 | Oh, notice what happened.
+26:35 | It ran through that sequence of instructions, in particular
+26:37 | it bound x to the value three, and then it took x times x,
+26:41 | got the value of x multipied by x, which of course is nine,
+26:43 | bound that to the value of x, and then it printed out the
+26:46 | value, and now it's sitting here waiting for an input.
+26:49 | You notice what it did, it printed out that little, right
+26:52 | up here I'd said enter a number and that's what it's
+26:53 | printed out, so I can enter a number and it prints it out.
+26:58 | Great.
+27:00 | Let's run it again.
+27:01 | Actually for that, I can just use, if I'm lucky, function
+27:04 | F5, which didn't work, so let me try it again., here we go.
+27:09 | We're going to run that module.
+27:11 | OK.
+27:14 | Whoa.
+27:17 | What happened?
+27:20 | I said enter a number.
+27:20 | I didn't.
+27:21 | I gave it a string.
+27:21 | And it still took it.
+27:23 | And printed it up.
+27:25 | Well, this is one of the places where I want to come
+27:26 | back to that highlighting of what do things do?
+27:29 | Even though my statement said enter a number, in particular,
+27:33 | raw input here simply takes in a set of characters and treats
+27:37 | it as a string.
+27:38 | And then prints it back out.
+27:39 | So if in fact I wanted to make sure this was a number, I
+27:42 | should have done something like either try and convert it
+27:44 | to a number, which of course failed here, or put in a check
+27:47 | to say where it is.
+27:48 | So it's a way of reminding you, I've got to be careful
+27:50 | about the types of things that I put in.
+27:53 | OK.
+27:56 | This is still boring, so let's step on the accelerator.
+28:01 | What I have now is the following: I can write
+28:04 | expressions, do combinations of things to get out values, I
+28:07 | can store them away, I can print them up.
+28:11 | But literally all I can do at this stage is write what we
+28:13 | would call a straight-line program, that is, a program in
+28:18 | which we execute in which we execute the sequence of
+28:28 | instructions one by one.
+28:31 | Simply walk down that list. That's what we
+28:34 | just did there, right?
+28:34 | We just walked through that list. This is boring.
+28:36 | In fact, you can do some nice things to prove what is the
+28:39 | class of functions you can compute with straight-line
+28:42 | programs, and what you'd see if you did that is, it's not
+28:44 | particularly interesting.
+28:46 | OK.
+28:48 | Let's go back and think about our recipes.
+28:49 | What we use as our motivation here.
+28:52 | Even in real recipes, you have things like,
+28:54 | if needed, add sugar.
+28:59 | That's a decision.
+29:00 | That's a conditional.
+29:01 | That's a branch.
+29:02 | That says, if something is true, do something.
+29:04 | Otherwise, do something different.
+29:06 | So to really add to this, we need to have branching
+29:09 | programs. What I mean by that is, a branching program is
+29:19 | something that can change the order of instructions based on
+29:32 | some test. And that test is usually a value of a variable.
+29:46 | OK.
+29:47 | And these get a whole lot more interesting.
+29:49 | So let's look at a little example, and this is going to,
+29:52 | excuse me, both allow us introduce the syntax as well
+29:54 | as what we want to have as the flow of
+29:56 | control inside of here.
+29:57 | So let me go back up here, and I'm going to comment out that
+30:02 | region, and let's uncomment this region.
+30:10 | I want to write a little piece of code.
+30:12 | It's going to print out even or odd, depending on whether
+30:14 | the value I put in, which is x in this case, is even or odd.
+30:19 | Think about that.
+30:20 | That says, if this thing has some particular value, I want
+30:24 | to do one thing; otherwise, I want to
+30:26 | do something different.
+30:28 | And let's look at the syntax of this.
+30:29 | This is the first of the conditionals that
+30:31 | we're going to see.
+30:36 | Notice the format.
+30:38 | I'm going to go up there.
+30:39 | The first statement right here, that's just an
+30:41 | assignment statement, I'm giving some value to x.
+30:43 | We could make it something different.
+30:45 | And then, notice the structure here.
+30:47 | The next three statements.
+30:48 | First of all, IF is a keyword. which makes sense.
+30:50 | It is followed, as you can see there, by some expression,
+30:55 | followed by a colon.
+30:56 | And in fact, that colon is important, so let me stress
+30:59 | this over here.
+31:00 | The colon is important It's defining the beginning of a
+31:11 | block of instructions.
+31:12 | Yes sir.
+31:13 | STUDENT: [UNINTELLIGIBLE]
+31:17 | PROFESSOR JIM ERICSON: Based on a test. Usually the value
+31:19 | of a variable.
+31:21 | OK, so let me go back to where I am.
+31:22 | I'm looking at that piece of code.
+31:23 | What that colon is saying is, I'm about to begin a sequence
+31:27 | of instructions that I want to treat as a block.
+31:29 | So it identifies a block of instructions.
+31:38 | It's, and in particular, the colon is the start, and the
+31:43 | carriage return is the end.
+31:48 | Now what in the world does that mean?
+31:49 | I'm doing a lot of words here, let me try and say this a
+31:50 | little bit better.
+31:51 | That code says the following: the IF says, I've got an
+31:54 | expression, I'm going to evaluate it.
+31:56 | If that value is true, I want to do a set of things.
+32:01 | And that set of things is identified by the sequence of
+32:04 | commands that are indented in, this one right here, following
+32:09 | the colon but before I get back to the same place in
+32:12 | terms of the indentation.
+32:14 | If that test is not true, I want to skip this instruction,
+32:19 | and there's a second keyword else, followed by a colon, and
+32:23 | that tells me the thing I want to do in the
+32:24 | case that it's false.
+32:26 | So in fact if I run this, ah, and save it, and
+32:36 | it prints out odd.
+32:37 | So, what happened here?
+32:39 | Well, let's look at the code.
+32:41 | Right? x is initially bound to fifteen.
+32:43 | I get to the IF.
+32:44 | The IF says, evaluate that next expression.
+32:46 | In that next expression, I'm actually taking advantage of
+32:49 | the fact that I'm doing integer multiplication and
+32:51 | division here.
+32:52 | Right, that divide is, if x is an integer and two is an
+32:55 | integer, what's it going to do?
+32:56 | If x was even, x divided by two is going to be actually
+32:59 | the half of x, right?
+33:02 | If x is odd, that integer division is going to give me
+33:04 | the number of multiples of two, that go into x, plus a
+33:08 | remainder, which I'm going to throw away.
+33:11 | In either case, I take that value and multiply back by
+33:13 | two, if it was even I get back the original number, if it was
+33:17 | odd, I'm not going to get back the original number, so I can
+33:20 | just check to see if they're the same.
+33:22 | OK, so a little nuance that I'm using there.
+33:24 | So, the first thing that IF does, bleah that IF says is,
+33:26 | evaluate that expression and if it's true, do the next
+33:30 | thing, the thing after the colon.
+33:31 | In this case it's not true, so it's going to skip down and
+33:34 | evaluate the thing printed up the odd.
+33:38 | OK.
+33:38 | What-- yes.
+33:38 | STUDENT: [INAUDIBLE]
+33:41 | PROFESSOR JIM ERICSON: Thank you.
+33:42 | I was hoping somebody would ask that question.
+33:44 | The question was, if you didn't hear, why do I have two
+33:47 | equal signs?
+33:49 | It's like I'm doing this, right?
+33:51 | Anybody have a se--%uFFFD why don't I just
+33:52 | use an equal sign?
+33:53 | I want to know if something's equal to something.
+33:54 | Yeah.
+33:55 | STUDENT: [INAUDIBLE]
+33:55 | PROFESSOR JIM ERICSON: Absolutely.
+33:58 | The equal sign is going to bind--
+34:02 | Nice catch.
+34:05 | John, this is so much fun, throwing candy.
+34:06 | I've got to say, we've got to do this more often--
+34:07 | Right.
+34:08 | Let me, let me get to the point.
+34:09 | What does an equal sign do?
+34:10 | It is an assignment.
+34:11 | It says, take this thing on the left and use it as a name
+34:14 | to bind to the value on the right.
+34:17 | It's not what I want here.
+34:17 | Having already chosen to use equal as an assignment, I need
+34:20 | something else to do comparison.
+34:23 | And that's why I use double equals.
+34:24 | Those two equal signs are saying, is this thing equal
+34:27 | to, in value, the thing on the other side?
+34:31 | OK.
+34:32 | Now, having done that, again I want to stress this idea and
+34:36 | I'm going to write it out one more time, that there's a
+34:38 | particular format here.
+34:42 | So we have if, and that is followed by, I'm going to use
+34:47 | angle braces here just to indicates something goes in
+34:49 | here, some test followed by a colon.
+34:54 | That is followed by a block of instructions.
+35:02 | And we have an ELSE, followed by a colon in some other block
+35:08 | of instructions.
+35:17 | And I want you to get used to this, that colon is important,
+35:20 | it identifies the start, and then the set of indented
+35:23 | things identify all the things at the same level, and when we
+35:26 | reset back to the previous level, that's when we go back
+35:29 | to where we were.
+35:31 | OK.
+35:32 | Now, that's a nice simple little test, let's look at a
+35:35 | couple of other examples to get a sense of
+35:37 | what this will do.
+35:39 | OK, let me comment this out, and let's look at this next
+35:48 | little piece of code.
+35:50 | All right.
+35:51 | I'm binding a z to be some value, and then I'm
+35:53 | going to run this.
+35:55 | Well, let's just run it and see what it does.
+36:02 | Nothing.
+36:03 | OK, so why?
+36:04 | Well, let's look at it.
+36:05 | I'm doing a test there to say, if the string x is less than
+36:08 | the value of b, and x does not appear before b as strings,
+36:12 | then I was going to do, oh, a couple of things, because
+36:16 | they're at the same block level.
+36:18 | Given that that wasn't true, it did nothing.
+36:22 | Now, wait a minute, you say, where's the ELSE clause?
+36:25 | And the answer is, I don't need one.
+36:26 | All right, if this is purely a test of, if this is true do
+36:29 | this otherwise I don't care, I don't need the ELSE clause in
+36:32 | there to identify it.
+36:33 | All right?
+36:35 | Second thing I want to look at is, suppose I compare that the
+36:39 | one below it.
+36:39 | Oops, that I don't want to do.
+36:45 | Comment that out, and let's uncomment this.
+36:53 | Yeah, I've still got a binding for z and I'm giving it the
+36:56 | same test, but notice now I've got the two same commands but
+36:59 | they have different indentation.
+37:01 | In this case, in fact I do get a different behavior.
+37:08 | Why?
+37:10 | Because that block identifies a set of things that I'm going
+37:14 | to do if the test is true.
+37:16 | If the test was not true, notice that that last command
+37:18 | for print Mon is now back at the same level as the IF, so
+37:21 | what this says is the IF does the test, having done the
+37:25 | test, it decides I'm not going to do anything in the block
+37:27 | below it, I'm going to skip down therefore to the next
+37:29 | instruction at the same level as the IF, which gets me to
+37:32 | the second print statement.
+37:35 | OK.
+37:36 | So now we're seeing some of these variations, let's see
+37:38 | what else can we do here.
+37:39 | So let me just to try something a little more
+37:41 | interesting, and then we'll get to writing some simple
+37:43 | programs. So I'm going to comment those out, and let's
+37:47 | go down to this piece of code, and uncomment it.
+37:53 | Ooh yes, that was brilliant.
+37:55 | Let's try this again.
+37:59 | And uncomment that, and uncomment it again.
+38:04 | Right, so here's a little piece of code that's going to
+38:06 | print out the smallest value of three.
+38:09 | And notice what this is showing is that
+38:12 | the IFs can be nested.
+38:13 | All right, it's so if I looked at it, it's going to say that
+38:15 | IF x is y-- sorry, IF x is less than y, THEN check to see
+38:18 | IF x is less than z, and if that's true, print out x is
+38:22 | the smallest. And notice the structure of it, if it's not
+38:26 | true I'm going to go to that next ELSE, and print out that
+38:28 | z is smallest. If the first test wasn't true, I'm going to
+38:31 | skip that whole block and just go down and print out that y
+38:33 | was smallest. So notice the nesting, I can flow my way
+38:37 | through how those tests are actually going to take place.
+38:40 | All right, so let's run this and see what happens.
+38:46 | Great. y is smallest. OK.
+38:50 | Is that code correct?
+38:55 | Is that a tentative hand back there?
+38:56 | Yeah.
+38:57 | STUDENT: Let me compare y to [INAUDIBLE]
+39:00 | PROFESSOR JIM ERICSON: Yeah, it's not doing all of the
+39:02 | comparisons.
+39:03 | All right, and let's just check this out, because I want
+39:05 | to make a point of this, let's go back and do the following.
+39:08 | Let's take y, change it to thirteen, let's run it, hmm.
+39:18 | So what did I miss here?
+39:20 | Two important points.
+39:22 | First one, when I write a piece of code, especially code
+39:24 | that has branches in it, when I design test cases for that
+39:28 | piece of code, I should try and have a specific test case
+39:32 | for each possible path through the code.
+39:35 | And by just doing that, I just spotted, there's a bug here.
+39:38 | And the bug was in my thinking, I did not look for
+39:40 | all of the tests.
+39:41 | So the way I can fix that, is, let me comment that out, and
+39:49 | keep doing that, comment that out, let's uncomment this,
+40:03 | notice the structure here.
+40:04 | I now have multiple tests.
+40:06 | So actually, let's just run it and then we'll talk
+40:08 | about what it does.
+40:09 | I run this, yeah, I have a syntax error, yes indeed,
+40:16 | because I forgot to comment that one out, all right, and
+40:20 | cue, we'll try it again.
+40:27 | Ah-ha!
+40:29 | And let's quickly look at the structure of this.
+40:31 | This now has, gee, a funny thing, it says IF x is less
+40:34 | than y AND x is less than z, then do something.
+40:39 | And then it has a strange thing called ELIF, which is
+40:42 | simply short for else/if in a second test. So the way to
+40:46 | think about this in terms of flow is, it starts with that
+40:48 | if and it says, check both of those things.
+40:51 | And that fact that both of those things is the fact that
+40:54 | we're using Boolean combination here.
+41:06 | It is to say, we can take any logical expressions, combine
+41:11 | them together with AND, OR, or NOT to make a complex
+41:14 | expression, and use the value of that expression as my test.
+41:17 | And that's literally what I've done there, right, I've got x
+41:19 | less than y, that's a test, it returns a Boolean, which by
+41:22 | the way is the other type, at least I would include here, it
+41:25 | has only two values, which are true and false, and what that
+41:32 | code says, if x is less than y, AND, logically, whatever I
+41:37 | put up there, x is less than z, then the combination is
+41:42 | true, and therefore I'm going to do something.
+41:44 | So AND is if both arguments are true it's true, OR is if
+41:47 | either argument it's true it's true, NOT is if the argument
+41:50 | is not true it's true, and then the last piece, as I said
+41:53 | is, I can now have a sequence of things I want to do.
+41:56 | So if this is true do something else, otherwise test
+41:58 | and see if this is true, do something else, as many as I
+42:00 | like followed by the end.
+42:02 | And ELSE, it says, here's what I want to do.
+42:05 | OK.
+42:07 | Now.
+42:09 | Having added this in, I have branching instructions.
+42:12 | I have simple branching programs. These are still
+42:15 | awfully simple.
+42:16 | OK?
+42:16 | And they're awfully simple because, all I can do now, is
+42:20 | decide whether to execute some piece of code or another.
+42:24 | Said a different way, in the case of the straight-line
+42:26 | programs, how long would it take to run a program?
+42:29 | Well, basically, however many instructions I have, because
+42:31 | I've got to do each one in order.
+42:33 | With simple branching, how long is it going to take to
+42:36 | run a piece of code?
+42:38 | Well at most, I'm going to execute each instruction once.
+42:42 | All right?
+42:42 | Because the IFs are saying, if it's true do this, otherwise
+42:44 | skip on it.
+42:46 | Therefore, for simple branching programs, the length
+42:48 | of time, the complexity the code, is what
+42:52 | we would call constant.
+42:53 | That is, it's at most the length of the actual number of
+42:56 | instructions.
+42:57 | It doesn't depend on the input.
+42:59 | Real simple programs.
+43:00 | Let's take another simple example.
+43:02 | Suppose I want to compute the average age
+43:03 | of all the MIT faculty.
+43:05 | There's about a thousand of us.
+43:07 | However I do that, I know that should inherently take more
+43:10 | time than it takes to compute the average age of all the
+43:12 | EECS faculty.
+43:14 | There's only 125 of us.
+43:16 | And that should take more time than what it takes to compute
+43:19 | the average of John's and my ages, instructors in 600,
+43:21 | because there's only two of us.
+43:23 | All right, those pieces of code inherently involved
+43:27 | something that does depend on the size of the input, or on
+43:30 | the particular input.
+43:32 | And that is a preface to an idea of computational
+43:35 | complexity we're going to come back to.
+43:36 | One of the things we want to help you do is identify the
+43:38 | different classes of algorithms, what their costs
+43:41 | are, and how you can map problems into the most
+43:43 | efficient class to do the computation.
+43:47 | OK.
+43:47 | Now.
+43:48 | Think for a second about computing the average age of
+43:52 | the faculty.
+43:53 | You can already kind of see what I want to do.
+43:55 | I, somehow if, I want to walk through some sequence of data
+43:57 | structures, gathering up or doing the same thing, adding
+44:01 | ages in until I get a total age and then divide by the
+44:03 | number faculty.
+44:04 | How do I write a piece of code for that?
+44:07 | Well, let's go back up to our original
+44:09 | starting point of recipes.
+44:10 | And I'm sure you don't remember, but one of the
+44:13 | things I had in my recipe, is beat egg whites until stiff.
+44:18 | OK.
+44:19 | That until is an important word.
+44:21 | It's actually defining a test. Let me rephrase it into
+44:24 | garbled English that'll lead more naturally into what I
+44:26 | want to do.
+44:27 | While the egg whites are not stiff, beat them.
+44:31 | That is a different kind of structure.
+44:33 | It has a test in it, which is that while, while something is
+44:36 | true, do something, but I want to keep doing it.
+44:40 | And so for that, we need to add one last thing.
+44:45 | Which is iteration.
+44:49 | Or loops.
+44:50 | We're going to see variations of this, we're going to see a
+44:52 | variation of it called recursion, a little later on,
+44:54 | but for now we're just going to talk about how do we do
+44:56 | iterations.
+44:57 | And I want to show you an example of this, to lead to
+45:00 | both the syntax, and to the semantics.
+45:04 | And let me comment that out, and let's go to this one.
+45:15 | All right.
+45:15 | What does this piece of code say?
+45:17 | Not, what does it do, but what does it say.
+45:19 | Well, the first three statements are just assignment
+45:21 | statements.
+45:21 | I'm binding x, y, and iters left to some values.
+45:25 | And then notice the structure, I got a keyword WHILE, there's
+45:27 | that color identifying it, and in parentheses I have a test.
+45:32 | I'm expecting the value that test to be a Boolean.
+45:34 | Followed by a colon.
+45:36 | The colon's identifying a block of code.
+45:38 | And what this is saying is, gee.
+45:41 | Check to see if the variable iters left has a value
+45:43 | greater than zero.
+45:45 | If it does, then execute each of the
+45:47 | instructions in that block.
+45:50 | So I'm going to have an assignment of y, I'm going to
+45:52 | have an assignment of iters left, I've got a comment that
+45:53 | I had borrowed in order to do some debugging, and then what
+45:57 | do I want it to do?
+45:57 | I want it to go back around to the test. Once again, say, is
+46:02 | that test true?
+46:03 | If it is true, execute the sequence of instructions.
+46:07 | So in fact we can block this out and see what it does.
+46:10 | If I make a little chart here, I've got x, y, and iters left.
+46:16 | x starts off as I think I set it up as, here I can't even
+46:19 | read it, is x is three, y is zero, iters left is three.
+46:24 | I can hand-simulate it.
+46:25 | It says, is the value of iters left greater than zero?
+46:28 | Yes it is.
+46:28 | So, execute those two instructions.
+46:30 | It says, take value of y and value of x, add them together,
+46:34 | and create that as the new value of y.
+46:36 | All right.
+46:36 | That's the assigned statement.
+46:38 | It says, take iters left, subtract one from it, and bind
+46:41 | that as the new value of iters left.
+46:44 | Having reached the end of the block, go back up and check
+46:47 | the test. Is iters left greater than zero?
+46:49 | Yes it is.
+46:50 | So, evaluate the same sequence of instructions again. y plus
+46:54 | x is six, that's my new value of y, two minus one is one,
+46:57 | that's my new value of iters left, go back up.
+47:00 | Is iters left greater than zero?
+47:01 | Yes it is.
+47:02 | So once more, thank God I didn't take 47 as an example,
+47:07 | x plus y, subtract one from iters left, go back up to the
+47:12 | test. Is iters left's value greater than zero?
+47:14 | No, it is not.
+47:16 | Therefore, skip the rest of that block of code and go to
+47:20 | the next instruction, which is, ah, print out y.
+47:24 | In fact, if we test this, son of a gun.
+47:29 | Got a simple square procedure,.
+47:32 | Right, It's just squaring an integer, is what it's doing.
+47:34 | But notice the structure.
+47:36 | Now I have the ability to create a loop, that is, to
+47:39 | reuse the same pieces of code over and over
+47:41 | again as I go around.
+47:43 | And this adds, now, a lot of power to the kinds
+47:47 | of code I can write.
+47:49 | Notice some other things I want to highlight on this.
+47:51 | All right?
+47:52 | The first one is, that test has to involve-- shouldn't
+47:57 | have to, but almost always is going to involve-- the value
+47:59 | of some variable.
+48:01 | What if I don't change the value of that variable inside
+48:05 | of the code?
+48:05 | Or, another way of saying it is, what if I did this?
+48:11 | Comment it up.
+48:13 | What happens if I run this sucker?
+48:15 | STUDENT: [INAUDIBLE]
+48:17 | PROFESSOR JIM ERICSON: Yeah.
+48:19 | It'll go forever.
+48:20 | Absolutely, right?
+48:21 | It's going to loop into an infinite loop--
+48:23 | I think I can hit this close, ah, no I can't, boy what a
+48:26 | terrible aim--
+48:27 | All right, what has [UNINTELLIGIBLE PHRASE] try
+48:30 | again, the point I'm trying to make here-- thank God we're at
+48:32 | the end of this lecture, my tongue is falling apart-- the
+48:34 | point I'm trying to make is, that test needs to involve
+48:37 | some loop variable that is changing.
+48:40 | Otherwise the test is always going to be true, we're going
+48:42 | to go off here, but this would loop forever if I did that.
+48:45 | All right.
+48:45 | Second question: or maybe a better way of saying this, and
+48:49 | the general format you're likely to see here is, a test
+48:51 | involving a variable name, which must be initialized
+48:54 | outside of the loop, and which interior to the loop gets
+48:57 | changed, so that the test is going to change.
+49:00 | Here's the second question.
+49:02 | What value of inputs, what values of x will this run
+49:05 | correctly for?
+49:08 | Probably should be integers, right?
+49:10 | Otherwise, this is going to be doing something strange, but
+49:13 | all integers?
+49:16 | All right, suppose I do this.
+49:18 | It's my last example.
+49:24 | Yeah, how about that, right?
+49:26 | We knew this was trying to do squaring, so intellectually we
+49:29 | know we can square -4, it ought to be 16, but what
+49:31 | happens here?
+49:33 | Double fudge knuckle.
+49:34 | All right?
+49:35 | It's going to run through the loop, accumulating the
+49:39 | answers, but because I'm subtracting, it's just going
+49:41 | to keep making x more and more negative as it goes along,
+49:44 | again it's off into an infinite loop.
+49:46 | Which is a way of reminding you that I need to think as I
+49:49 | write the code about what are my expectations from the
+49:52 | input, and how might I enforce them.
+49:54 | In this case, I probably want to make sure I use absolute
+49:56 | value of x before I carry it on.
+49:57 | Yes ma'am.
+50:03 | STUDENT: [UNINTELLIGIBLE]
+50:11 | PROFESSOR JIM ERICSON: You're absolutely right, because I
+50:13 | bind iters left to, um, yeah.
+50:16 | Yes.
+50:16 | Thank you.
+50:16 | Boy, two candy for you.
+50:19 | You caught me making an error.
+50:20 | Yes.
+50:21 | The point is, it's not going to work, and she caught both
+50:24 | of them, impressive, it's not going to work because iters
+50:26 | left is already negative, it's just going to skip the whole
+50:27 | loop, and I'm in trouble, so thank you for catching that.
+50:31 | All right.
+50:31 | I was going to do one more example, but I've run you up
+50:33 | to the end of the time.
+50:34 | I'll leave the example on the handout, it shows you another
+50:36 | version that we'll come back to next time.
+50:38 | The key thing to notice is, I now have the ability to create
+50:41 | iterations, which extends well I can do.
+50:44 | And we'll see you next time.

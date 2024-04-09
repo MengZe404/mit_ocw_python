@@ -1,0 +1,674 @@
+0:00 | The following content is provided under a Creative
+0:02 | Commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:21 | PROFESSOR: OK.
+0:22 | I want to start where we left off.
+0:24 | You remember last time we were looking at Fibonacci.
+0:30 | And so we've got it up here, a nice little recursive
+0:32 | implementation of it.
+0:34 | And the thing I wanted to point out is, we've got this
+0:40 | global variable number of calls.
+0:43 | Which is there not because Fibonacci needs it but just
+0:47 | for pedagogical reasons, so that we can keep track of how
+0:50 | much work this thing is doing.
+0:53 | And I've turned on a print statement which
+0:55 | was off last time.
+0:57 | So we can see what it's doing is it runs.
+1:01 | So let's try it here with Fib of 6.
+1:18 | So, as we would hope, Fib of 6 happens to be 8.
+1:25 | That right?
+1:28 | That right, everybody?
+1:30 | Should Fib of 6 be 8?
+1:34 | I don't think so.
+1:38 | So first thing we should do is scratch our heads and see
+1:42 | what's going on here.
+1:48 | Alright, let's look at it.
+1:52 | What's happening here?
+1:57 | This is your morning wake-up call.
+2:04 | What is happening?
+2:13 | Yes.
+2:13 | STUDENT: [INAUDIBLE]
+2:22 | PROFESSOR: See if I can get it all the way to the back.
+2:25 | No I can't.
+2:26 | That's embarrassing.
+2:28 | Alright.
+2:29 | So if n is less than or equal to 1, return n.
+2:34 | Well that's not right, right?
+2:39 | What should I be doing there?
+2:44 | Because Fib of 0 is?
+2:48 | What?
+2:49 | 1.
+2:50 | So let's fix it.
+3:12 | How about that, right?
+3:14 | Or maybe, what would be even simpler than that?
+3:20 | Maybe I should just do that.
+3:23 | Now let's try it.
+3:31 | We feel better about this?
+3:36 | We like that answer?
+3:39 | Yes, no?
+3:46 | What's the answer, guys?
+3:47 | What should Fibonacci of 6 be?
+3:51 | I think that's the right answer, right?
+3:55 | OK.
+3:58 | So what do I want you to notice about this?
+4:03 | I've computed a value which is 13.
+4:07 | And it's taken me 25 calls.
+4:10 | 25 recursive calls to get there.
+4:14 | Why is it taking so many?
+4:17 | Well, what we can see here is that I'm computing the same
+4:22 | value over and over again.
+4:26 | Because if we look at the recursive structure of the
+4:28 | program, what we'll see that's going on here is, I call Fib
+4:40 | of 5 and 4, but then Fib of 5 is also going
+4:47 | to call Fib of 4.
+4:49 | So I'm going to be computing it on those branches.
+4:54 | And then it gets worse and worse as I go down.
+4:59 | So if I think about computing Fib of 0 I'm going to be
+5:02 | computing that a lot of times.
+5:04 | Now, fortunately, Fib of 0 is short.
+5:07 | But the other ones are not so short.
+5:10 | And so what I see is that as I run this, I'm doing a lot of
+5:15 | redundant computation.
+5:18 | Computing values whose answer I should already know.
+5:28 | That's, you'll remember last time, I talked about the
+5:32 | notion of overlapping sub-problems. And that's what
+5:36 | we have here.
+5:40 | As with many recursive algorithms, I solve a bigger
+5:45 | problem by solving a smaller instance of
+5:48 | the original problem.
+5:50 | But here there's overlap.
+5:52 | The instant unlike binary search, where each instance
+5:56 | was separate, here the instances overlap.
+6:01 | They share something in common.
+6:03 | In fact, they share quite a lot in common.
+6:07 | That's not unusual.
+6:12 | That will lead me to use a technique I mentioned again
+6:16 | last time, called memoization.
+6:24 | Effectively, what that says is, we record a value the
+6:35 | first time it's computed, then look it up the subsequent
+6:50 | times we need it.
+6:56 | So it makes sense.
+6:57 | If I know I'm going to need something over and over again,
+6:59 | I squirrel it away somewhere and then get it
+7:03 | back when I need it.
+7:06 | So let's look at an example of that.
+7:25 | So I'm going to have something called fast Fib.
+7:34 | But first I'm going to have, let's look at what fast Fib
+7:38 | does and then we'll come back to the next question.
+7:41 | It takes the number whose Fibonacci I want plus a memo.
+7:50 | And the memo will be a dictionary that maps me from a
+7:56 | number to Fib of that number.
+8:05 | So what I'm going to do, well, let's get rid of this print
+8:09 | statement for now.
+8:13 | I'm going to say, if n is not in memo.
+8:19 | Remember the way dictionary works, this is the key.
+8:22 | Is the key of a value.
+8:25 | Then I'll call fast Fib recursively, with n minus 1 in
+8:31 | memo, and n minus 2 in memo.
+8:38 | Otherwise I'll return the memo.
+8:42 | Well, let's look at it for a second.
+8:44 | This is the basic idea.
+8:47 | But do we actually believe this is going to work?
+8:51 | And, again, I want you to look at this and think about what's
+8:53 | going to happen here.
+8:56 | Before we do that, or as you do that, let's look at Fib 1.
+9:02 | The key thing to notice about Fib 1 is that it has the same
+9:07 | specification as Fib.
+9:12 | Because when somebody calls Fibonacci, they shouldn't
+9:16 | worry about memos.
+9:19 | And how I'd implemented it.
+9:21 | That has to be under the covers.
+9:23 | So I don't want them to have to call
+9:25 | something with two arguments.
+9:27 | The integer and the memo.
+9:30 | So I'll create Fib 1, which has the same arguments as Fib.
+9:37 | The first thing it does is it initializes the memo.
+9:43 | And initializes it by saying, if I get 0 I -- whoops.
+9:47 | Aha.
+9:50 | Let's be careful here.
+9:56 | If I get 0 I return 1.
+9:58 | I get 1, I return 1.
+10:00 | So I put two things in the memo already.
+10:06 | And then I'll call fast Fib and it returns
+10:10 | the result it has.
+10:15 | So you see the basic idea.
+10:18 | I take something with the same parameters as the original.
+10:22 | Add this memo.
+10:23 | Give it some initial values.
+10:26 | And then call.
+10:30 | So now what do we think?
+10:32 | Is this going to work?
+10:38 | Or is there an issue here?
+10:42 | What do you think?
+10:43 | Think it through.
+10:45 | If it's not in the memo, I'll compute its value and put it
+10:51 | in the memo.
+10:53 | And then I'll return it.
+10:55 | OK?
+10:56 | If it was already there, I just look it up.
+11:01 | That make sense to everybody?
+11:04 | Let's see what happens if we run it.
+11:20 | Well, actually, let's turn the print statement on, since
+11:23 | we're doing it with a small value here.
+11:32 | So what we've seen is I've run it twice here.
+11:38 | When I ran it up here, with the old Fib, and we printed
+11:43 | the result, and I ran it with Fib 1 down here.
+11:47 | The good news is we got 13 both times.
+11:52 | The even better news is that instead of 25 calls, it was
+11:58 | only 11 calls.
+12:05 | So it's a big improvement.
+12:10 | Let's see what happens, just to get an idea of how big the
+12:13 | improvement is.
+12:15 | I'm going to take out the two print statements.
+12:23 | And let's try it with a bigger number.
+12:39 | It's going to take a little bit.
+12:42 | Well, look at this difference.
+12:46 | It's 2,692,537 versus 59.
+12:54 | That's a pretty darn big difference.
+13:00 | And I won't ask you to check whether it
+13:03 | got the right answer.
+13:05 | At least, not in your heads.
+13:07 | So you can see, and this is an important thing we look at, is
+13:11 | that as we look at growth, it didn't look like it mattered a
+13:14 | lot with 6.
+13:15 | Because it was one small number to one
+13:17 | slightly smaller number.
+13:19 | But this thing grows exponentially.
+13:24 | It's a little bit complicated exactly how.
+13:26 | But you can see as I go up to 30 I get a pretty big number.
+13:31 | And 59 is a pretty small number.
+13:35 | So we see that the memoization here is buying me
+13:39 | a tremendous advantage.
+13:43 | And this is what lies at the heart of this very general
+13:46 | technique called dynamic programming.
+13:50 | And in fact, it lies at the heart of a lot of useful
+13:54 | computational techniques where we save results.
+14:00 | So if you think about the way something like, say, Mapquest
+14:03 | works, and last week in recitation you looked at the
+14:07 | fact that shortest path is exponential.
+14:11 | Well, what it does is it saves a lot of paths.
+14:16 | It kind of knows people are going to ask how do you get
+14:18 | from Boston to New York City.
+14:21 | And it may have saved that.
+14:24 | And if you're going from Boston to someplace else where
+14:26 | New York just happens to be on the way, it doesn't have to
+14:30 | recompute that part of it.
+14:32 | So it's saved a lot of things and squirreled them away.
+14:36 | And that's essentially what we're doing here.
+14:38 | Here we're doing it as part of one algorithm.
+14:41 | There, they're just storing a database of previously solved
+14:44 | problems. And relying on something called table lookup,
+14:51 | Of which memoization is a special case.
+14:57 | But table lookup is very common.
+14:59 | When you do something complicated you save the
+15:01 | answers and then you go get it later.
+15:06 | I should add that in some sense this is a phony
+15:13 | straw-man Fibonacci.
+15:15 | Nobody in their right mind actually implements a
+15:18 | recursive Fibonacci the way I did it originally.
+15:22 | Because the right way to do it is iteratively.
+15:24 | And the right way to do it is not starting at the top, it's
+15:27 | starting at the bottom.
+15:29 | And so you can piece it together that way.
+15:31 | But don't worry about it, it's not, I'm just using it because
+15:34 | it's a simpler example than the one I really want to get
+15:38 | to, which is knapsack.
+15:41 | OK, people get this?
+15:44 | And see the basic idea and why it's wonderful?
+15:50 | Alright.
+15:52 | Now, when we talked about optimization problems in
+15:55 | dynamic programming, I said there were two
+15:59 | things to look for.
+16:02 | One was overlapping sub-problems. And the other
+16:06 | one was optimal substructure.
+16:17 | The notion here is that you can get a globally optimal
+16:22 | solution from locally optimal solutions to sub-problems.
+16:56 | This is not true of all problems. But as we'll see,
+17:04 | it's true of a lot of problems. And when you have an
+17:08 | optimal substructure and the local solutions overlap,
+17:15 | that's when you can bring dynamic programming to bear.
+17:19 | So when you're trying to think about is this a problem that I
+17:21 | can solve with dynamic programming, these are the two
+17:24 | questions you ask.
+17:29 | Let's now go back and instantiate these ideas for
+17:33 | the knapsack problem we looked at last time.
+17:35 | In particular, for the 0-1 knapsack problem.
+17:42 | So, we have a collection of objects.
+17:47 | We'll call it a.
+17:50 | And for each object in 0, we have a value.
+17:54 | In a, we have a value.
+17:57 | And now we want to find the subset of a that has the
+18:02 | maximum value, subject to the weight constraint.
+18:06 | I'm just repeating the problem.
+18:09 | Now, what we saw last time is there's
+18:11 | a brute force solution.
+18:15 | As you have discovered in recent problem set, it is
+18:18 | possible to construct all subsets of a set.
+18:23 | And so you could construct all subsets, check that the weight
+18:28 | is less than the weight of the knapsack, and then choose the
+18:31 | subset with the maximum value.
+18:33 | Or a subset with the maximum value, there may be more than
+18:36 | one, and you're done.
+18:40 | On the other hand, we've seen that if the size of a is n,
+18:49 | that's to say, we have n elements to choose from, then
+18:54 | the number of possible subsets is 2 to the n.
+18:58 | Remember, we saw that last time looking
+19:00 | at the binary numbers.
+19:03 | 2 to the n is a big number.
+19:07 | And maybe we don't have to consider them all, because we
+19:09 | can say, oh this one is going to be way too big.
+19:12 | It's going to weigh too much, we don't need to look at it.
+19:15 | But it'll still be order 2 to the n.
+19:19 | If n is something like 50, not a big number, 2 to the 50 is a
+19:25 | huge number.
+19:31 | So let's ask, is there an optimal
+19:34 | substructure to this problem.
+19:36 | That would let us tackle it with dynamic programming.
+19:43 | And we're going to do this initially by looking at a
+19:47 | straightforward implementation based upon what's called the
+19:52 | decision tree.
+20:01 | This is a very important concept, and we'll see a lot
+20:05 | of algorithms essentially implement decision trees.
+20:10 | Let's look at an example.
+20:12 | Let's assume that the weights, and I'll try a really small
+20:16 | example to start with, are 5, 3 and 2, and the values,
+20:24 | corresponding values, are 9, 7 and 8.
+20:31 | And the maximum, we'll say, is 5.
+20:39 | So what we do is, we start by considering for each item
+20:45 | whether to take it or not.
+20:47 | For reasons that will become apparent when we implement it
+20:50 | in code, I'm going to start at the back.
+20:55 | The last element in the list. And what I'm going to use is
+21:01 | the index of that element to keep track of where I am.
+21:05 | So I'm not going to worry whether this item is a vase or
+21:08 | a watch or painting.
+21:10 | I'm just going to say it's the n'th element.
+21:13 | Where n'th is somewhere between 0 and 2 in this case.
+21:19 | And then we'll construct our tree as follows: each node,
+21:26 | well, let me put an example here.
+21:28 | The first node will be the to-pull 2, 5 and 0.
+21:40 | Standing for, let me make sure I get this in the right order,
+21:46 | well, the index which is 2, the last element in this case,
+21:59 | so that's the index.
+22:03 | This is the weight still available.
+22:09 | If you see that in the shadow.
+22:11 | And this is the value currently obtained.
+22:17 | So I haven't included anything.
+22:21 | Means I have all 5 pounds left.
+22:23 | But I don't have anything of value.
+22:27 | Now, the decision tree, if I branch left,
+22:32 | it's a binary tree.
+22:34 | This is going to be don't take.
+22:42 | So I'm not going to take the item with an index of 2.
+22:48 | So that means this node will have an index of 1.
+22:58 | Next item to be considered, I still have 5 pounds available.
+23:05 | And I have 0 value.
+23:14 | To be systematic, I'm going to build this tree depth-first
+23:25 | left-first. At each node, I'm going to go left until I can't
+23:36 | go any further.
+23:41 | So we'll take another don't-take branch here.
+23:46 | And what is this node going to look like?
+23:50 | Pardon?
+23:50 | STUDENT: [INAUDIBLE]
+23:53 | PROFESSOR: 0, 5, 0.
+23:57 | And then we'll go one more.
+23:59 | And I'll just put a minus indicating I'm done.
+24:03 | I can't look below that.
+24:07 | I still have five pounds left, and I still have zero value.
+24:13 | The next thing I'm going to do is backtrack.
+24:34 | That is to say, I'm going to go back to a node
+24:36 | I've already visited.
+24:38 | Go up the tree 1.
+24:43 | And now, of course, the only place to go is right.
+24:48 | And now I get to include something.
+24:50 | Yeah.
+24:54 | And what does this node look like?
+24:57 | Well, I'll give you a hint, it starts with a minus.
+25:04 | What next?
+25:05 | STUDENT: [INAUDIBLE]
+25:08 | PROFESSOR: Pardon.
+25:09 | 0.
+25:10 | And?
+25:11 | STUDENT: [INAUDIBLE]
+25:12 | PROFESSOR: Pardon?
+25:14 | 5.
+25:17 | Alright.
+25:18 | So far, this looks like the winner.
+25:24 | But, we'd better keep going.
+25:26 | We backtrack to here again.
+25:28 | There's nothing useful to do.
+25:32 | We backtrack to here.
+25:35 | And we ask, what do we get with this node?
+25:42 | 0, 3.
+25:47 | Somebody?
+25:47 | STUDENT: [INAUDIBLE]
+25:49 | PROFESSOR: Louder.
+25:52 | 2.
+25:54 | And then?
+25:55 | STUDENT: [INAUDIBLE]
+26:01 | PROFESSOR: There's a value here, what's this value?
+26:04 | I've included item number 1, which has a value of 7.
+26:09 | Right?
+26:17 | So now this looks like the winner.
+26:23 | Pardon?
+26:23 | STUDENT: [INAUDIBLE]
+26:27 | PROFESSOR: This one?
+26:28 | STUDENT: Yeah.
+26:31 | [INAUDIBLE]
+26:31 | PROFESSOR: Remember, I'm working from the back.
+26:36 | So it shouldn't be 9.
+26:38 | Should be what?
+26:40 | Item 0, oh, you're right, items 0 is 9.
+26:42 | Thank you.
+26:45 | Right you are.
+26:48 | Still looks like the winner.
+26:52 | I can't hear you.
+26:53 | STUDENT: [INAUDIBLE]
+27:03 | PROFESSOR: Let's be careful about this.
+27:06 | I'm glad people are watching.
+27:10 | So we're here.
+27:11 | And now we've got 5 pounds available.
+27:17 | That's good.
+27:18 | And we're considering item number 0.
+27:22 | Which happens to weigh 5 pounds.
+27:26 | So that's a good thing.
+27:29 | So, it's the last item to consider.
+27:35 | If we include it, we'll have nothing left.
+27:40 | Because we had 5 and we're using all 5.
+27:43 | So that will be 0.
+27:46 | And its value is 9.
+27:53 | So we put one item in the backpack and we've
+27:55 | got a value of 9.
+27:58 | Anyone have a problem with that?
+28:01 | So far, so good?
+28:07 | Now we've backed up to here.
+28:09 | We're considering item 1 and we're trying to ask whether we
+28:13 | can put it in.
+28:14 | Item 1 has a weight of 3.
+28:17 | So it would fit.
+28:22 | And if we use it, we have 2 pounds left.
+28:26 | And item 1 has a value of 7.
+28:29 | So if we did this, we'd have a value of 7.
+28:33 | But we're not done yet, right?
+28:36 | We still have some things to consider.
+28:40 | Well, we could consider not putting in item 0.
+28:46 | That makes perfect sense.
+28:48 | And we're back to where we're there, minus 2 and 7.
+28:56 | And now let's ask the question how, about putting in item 0.
+29:02 | Well, we can't.
+29:05 | Because it would weigh 5 pounds, I only have 2 left.
+29:09 | So there is no right branch to this one.
+29:17 | So I'm making whatever decisions I can
+29:20 | make along the way.
+29:24 | Let's back up to here.
+29:26 | And now we're going to ask about taking item 2.
+29:31 | If we take item 2, then, well, the index after that will of
+29:37 | course be 1.
+29:39 | And the available weight will be 3.
+29:45 | And the value will be 8, right?
+29:53 | Alright, now we say, can I take item 1.
+29:59 | Yeah.
+29:59 | I can.
+30:01 | It only weighs 3 and I happen to have 3 left.
+30:03 | So that's good.
+30:07 | Don't take it, right.
+30:08 | Sorry.
+30:08 | This is the don't take branch.
+30:10 | So I go to 0, 3, 8.
+30:17 | And then I can do another don't take branch.
+30:20 | And this gets me to what, minus 3, 8.
+30:28 | I'll now back up.
+30:33 | And I'll say, alright, suppose I do take item 0, well I can't
+30:37 | take item 0, right?
+30:39 | Weighs too much.
+30:41 | So, don't have that branch.
+30:46 | Back up to here.
+30:49 | Alright, can I take item 1?
+30:51 | Yes, I can.
+30:55 | And that gives me what?
+30:57 | STUDENT: [INAUDIBLE]
+31:03 | PROFESSOR: We have a winner.
+31:07 | So it's kind of tedious, but it's important
+31:10 | to see that it works.
+31:13 | It's systematic.
+31:15 | I have a way of exploring the possible solutions.
+31:21 | And at the end I choose the winner.
+31:29 | What's the complexity of this decision tree solution?
+31:34 | Well, in the worst case, we're enumerating every possibility
+31:39 | of in and out.
+31:41 | Now I've shortened it a little bit by saying, ah, we've run
+31:44 | out of weight, we're OK.
+31:46 | But effectively it is, as we saw before, exponential.
+31:51 | 2 to the n, every value in the bit vector we looked at last
+31:55 | time is either 0 or 1.
+31:57 | So it's a binary number of n bits, 2 to the n.
+32:04 | Let's look at a straightforward
+32:06 | implementation of this.
+32:11 | I'll get rid of Fibonacci here, we don't want to bother
+32:15 | looking at that again.
+32:19 | Hold on a second until I comment this out, yes.
+32:22 | STUDENT: [INAUDIBLE]
+32:28 | PROFESSOR: Yeah.
+32:29 | There's a branch we could finish here, but since we're
+32:31 | out of weight we sort of know we're going to be done.
+32:35 | So we could complete it.
+32:38 | But it's not very interesting.
+32:44 | But yes, we probably should have done that.
+32:54 | So let's look at an implementation here.
+33:05 | Whoops.
+33:06 | You had these in the handout, by the way.
+33:16 | So here's max val.
+33:20 | It takes four arguments.
+33:24 | The weight, w, and v, these are the two
+33:27 | vectors we've seen here.
+33:30 | Of the weights and the values.
+33:33 | It takes i, which is in some sense the length of those
+33:39 | vectors, minus 1, because of the way Python works.
+33:45 | So that gives me my index.
+33:47 | And the amount of weight available, a w,
+33:51 | for available weight.
+33:57 | So again, I put in this num calls, which you can ignore.
+34:03 | First line says, if i is 0, that means I'm looking at the
+34:09 | very last element.
+34:13 | Then if the weight of i is less than the available
+34:16 | weight, I can return the value of i.
+34:24 | Otherwise it's 0.
+34:27 | I've got one element to look at.
+34:29 | I either put it in if I can.
+34:31 | If I can't, I don't.
+34:34 | Alright, so if I'm at the end of the chain, that's my value.
+34:42 | In either event, if I'm looking at the
+34:44 | last element, I return.
+34:47 | The next line says alright, suppose I don't, I'm not at
+34:52 | the last element.
+34:54 | Suppose I don't include it.
+34:58 | Then the maximum value I can get is the maximum value of
+35:04 | what I had.
+35:05 | But with index i minus 1.
+35:09 | So that's the don't-take branch.
+35:16 | As we've seen systematically in the don't-takes, the only
+35:20 | thing that gets changed is the index.
+35:28 | The next line says if the weight of i is greater than a
+35:34 | w, well then I know I can't put it in.
+35:39 | So I might as well return the without i
+35:41 | value I just computed.
+35:46 | Otherwise, let's see what I get with i.
+35:51 | And so the value of with i will be the value of i plus
+35:58 | whatever I can get using the remaining items and
+36:05 | decrementing the weight by the weight of i.
+36:08 | So that's exactly what we see as we go
+36:10 | down the right branches.
+36:13 | I look at the rest of the list, but
+36:17 | I've changed the value.
+36:19 | And I've changed the available weight.
+36:25 | And then when I get to the very end, I'm going to return
+36:29 | the bigger of with i and without i.
+36:35 | I've computed the value if I include i.
+36:37 | I computed the value if I don't include i.
+36:40 | And then I'm going to just return the bigger of the two.
+36:47 | Little bit complicated, but it's basically just
+36:50 | implementing this decision tree.
+36:58 | Let's see what happens if we run it.
+37:02 | Well, what I always do in anything like this is, the
+37:05 | first thing I do is, I run it on something where I can
+37:08 | actually compute the answer in my head.
+37:13 | So I get a sense of whether or not I'm doing the right thing.
+37:18 | So here's a little example.
+37:26 | And I'm going to pause for a minute, before I run it, and
+37:30 | ask each of you to compute in your head what you think the
+37:33 | answer should be.
+37:38 | In line with what I said about debugging.
+37:40 | Always guess before you run your program what you think
+37:42 | it's going to do.
+37:43 | And I'm going to wait until somebody raises their hand and
+37:50 | gives me an answer.
+37:59 | Yes.
+37:59 | STUDENT: 29?
+38:01 | PROFESSOR: So we have a hypothesis that the answer
+38:04 | should be 29.
+38:10 | Ooh.
+38:11 | That's bad.
+38:14 | So as people in the back are answering these questions
+38:16 | because they want to test my arm.
+38:23 | The camera probably didn't catch that, but it was a
+38:25 | perfect throw.
+38:29 | Anyone else think it's 29?
+38:32 | Anyone think it's not 29?
+38:35 | What do you think it is?
+38:37 | Pardon
+38:38 | STUDENT: 62?
+38:39 | PROFESSOR: 62.
+38:40 | That would be impressive.
+38:42 | 62.
+38:44 | Alright, well, we have a guess of 62.
+38:46 | Well, let's run it and see.
+38:54 | 29 it is.
+38:58 | And it made a total of 13 calls.
+39:02 | It didn't do this little optimization I did over here.
+39:08 | But it gives us our answer.
+39:11 | So that's pretty good.
+39:16 | Let's try a slightly larger example.
+39:23 | So here I'm going to use the example we had
+39:25 | in class last time.
+39:28 | This was the burglar example where they had two copies of
+39:31 | everything.
+39:39 | Here, it gets a maximum value of 48 and 85 calls.
+39:47 | So we see that I've doubled the size of the vector but
+39:51 | I've much more than doubled the number of calls.
+39:56 | This is one of these properties of this kind of
+39:59 | exponential growth.
+40:01 | Well, let's be really brave here.
+40:05 | And let's try a really big vector.
+40:09 | So this particular vector, you probably can't even see the
+40:17 | whole thing on your screen.
+40:20 | Well, it's got 40 items in it.
+40:32 | Let's see what happens here.
+40:40 | Alright, who wants to tell me what the answer is while this
+40:42 | computes away?
+40:45 | Nobody in their right mind.
+40:47 | I can tell you the answer, but that's because I've cheated,
+40:50 | run the program before.
+40:52 | Alright, this is going to take a while.
+40:56 | And why is it going to take a while?
+41:01 | Actually it's not 40, I think these are, alright.
+41:04 | So the answer is 75 and the number of
+41:07 | calls is 1.7 million.
+41:14 | Pardon?
+41:15 | 17 million.
+41:17 | Computers are fast, fortunately.
+41:20 | Well, that's a lot of calls.
+41:29 | Let's try and figure out what's going on.
+41:32 | But let's not try and figure out what's going on with this
+41:35 | big, big example because we'll get really tired.
+41:51 | Oh.
+41:52 | Actually, before we do that, just for fun, what I want to
+41:56 | do is write down for future reference, as we look at a
+42:01 | fast one, that the answer is 75 and Eric, how many calls?
+42:09 | 240,000.
+42:15 | Alright.
+42:16 | We'll come back to those numbers.
+42:22 | Let's look at it with a smaller example.
+42:25 | We'll look at our example of 8.
+42:32 | That we looked at before.
+42:34 | And we'll turn on this print statement.
+42:37 | Ooh, what was that?
+42:51 | Notice that I'm only printing i and a w.
+42:54 | Why is that?
+42:56 | Because w and v are constant.
+42:59 | I don't want you to print them over and over again.
+43:10 | No, I'd better call it.
+43:12 | That would be a good thing to do, right?
+43:17 | So let's see.
+43:22 | We'll call it with this one.
+43:41 | So it's printing a lot.
+43:42 | It'll print, I think, 85 calls.
+43:46 | And the thing you should notice here is that it's doing
+43:49 | a lot of the same things over and over again.
+43:52 | So, for example, we'll see 2, 1 here.
+43:56 | And 2, 1 here.
+43:58 | And 2, 1 here.
+44:03 | Just like Fibonacci, it's doing the same work over and
+44:06 | over again.
+44:11 | So what's the solution?
+44:15 | Well, you won't be surprised to hear
+44:17 | it's the same solution.
+44:20 | So let's look at that code.
+44:26 | So I'm going to do exactly the same trick we did before.
+44:45 | I don't want b to the Fibonacci.
+44:56 | I'm going to introduce a max val 0, which has exactly the
+45:01 | same arguments as max val.
+45:03 | Here I'll initiate the memo to be 0, or to be empty, rather,
+45:09 | the dictionary.
+45:10 | And then I'll call fast max val passing at this extra
+45:14 | argument of the memo.
+45:20 | So the first thing I'm going to do is, I'm going to try and
+45:24 | return the value in the memo.
+45:28 | This is a good thing to do, right?
+45:30 | If it's not already there, what will happen?
+45:34 | It will raise an exception.
+45:36 | And I'll go to the except clause.
+45:39 | So I'm using the Python try except to check whether or not
+45:44 | the thing is in the memo or not.
+45:47 | I try and return the value.
+45:50 | If it's there, I return it.
+45:52 | If not I'll get a key error.
+45:57 | And what do I do if I get a key error?
+46:00 | Well, now I go through code very much like what I did for
+46:05 | max val in the first place.
+46:09 | I check whether it's 0, et cetera, et cetera.
+46:12 | It's exactly, really, the same, except before I return
+46:18 | the value I would have returned I squirrel it away in
+46:22 | my memo for future use.
+46:28 | So it's the same structure as before.
+46:32 | Except, before I return the value, I save it.
+46:36 | So the next time I need it, I can look it up.
+46:47 | Let's see if it works.
+46:54 | Well, let's do a small example first. It's
+47:28 | calling the old max val.
+47:29 | With all those print statements.
+47:30 | Sorry about that.
+47:31 | But we'll let it run.
+47:35 | Well, it's a little bit better.
+47:39 | It got 85.
+47:43 | Same answer, but 50 calls instead of 85.
+47:46 | But let's try the big one.
+47:50 | Because we're really brave. So here's where we have 30
+47:57 | elements, and a maximum weight of 40.
+48:06 | I'm not going to call the other max val here, because we
+48:08 | know what happens when I do that.
+48:11 | I've created my own little memo over there.
+48:15 | And let's let it rip.
+48:18 | Wow.
+48:20 | Well, I got the same answer.
+48:23 | That's a good thing.
+48:24 | And instead of 17 million calls, I have 1800 calls.
+48:31 | That's a huge improvement.
+48:34 | And that's sort of the magic of dynamic programming.
+48:38 | On Thursday we'll do a more careful analysis and try and
+48:43 | understand how I could have accomplished this seemingly
+48:47 | magical task of solving an exponential
+48:51 | problem so really quickly.

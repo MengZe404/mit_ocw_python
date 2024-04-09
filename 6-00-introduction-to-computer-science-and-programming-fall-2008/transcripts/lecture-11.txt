@@ -1,0 +1,727 @@
+0:00 | The following content is provided under a creative
+0:02 | commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:21 | PROFESSOR: One of the things that you should probably have
+0:24 | noticed is as we're moving in the terms, the problem sets
+0:29 | are getting less well defined. line And I've seen a lot of
+0:35 | email traffic of the nature of what should we do with this,
+0:39 | what should we do with that?
+0:41 | For example, suppose the computer
+0:44 | player runs out of time.
+0:45 | Or the person runs out of time playing the game.
+0:49 | Should it stop right away?
+0:51 | Should it just give them zero score?
+0:55 | That's left out of the problem set.
+0:57 | In part because one of the things were trying to
+1:00 | accomplish is to have you folks start noticing
+1:05 | ambiguities in problem statements.
+1:07 | Because that's life in computing.
+1:12 | And so this is not like a math problem set or a physics
+1:15 | problem set.
+1:17 | Or, like a high school physics lab, where we all know what
+1:19 | the answer should be, and you could fake
+1:21 | your lab results anyway.
+1:25 | These are things where you're going to have to kind of
+1:27 | figure it out.
+1:29 | And for most of these things, all we ask is that you do
+1:32 | something reasonable, and that you describe what
+1:36 | it is you're doing.
+1:38 | So I don't much care, for example, whether you give the
+1:41 | human players zero points for playing after
+1:44 | the time runs out.
+1:46 | Or you say you're done when the time runs out.
+1:50 | Any of that -- thank you, Sheila -- is ok with me.
+1:54 | Whatever.
+1:57 | What I don't want your program to do is
+1:59 | crash when that happens.
+2:01 | Or run forever.
+2:02 | Figure out something reasonable and do it.
+2:05 | And again, we'll see this as an increasing trend as we work
+2:08 | our way through the term.
+2:11 | The exception will be the next problem set, which will come
+2:15 | out Friday.
+2:17 | Because that's not a programming problem.
+2:20 | It's a problem, as you'll see, designed to give you some
+2:23 | practice at dealing with some of the, dare I say, more
+2:28 | theoretical concepts we've covered in class.
+2:31 | Like algorithmic complexity.
+2:34 | That are not readily dealt with in a prograing problem.
+2:39 | It also deals with issues of some of the subtleties of
+2:43 | things like aliasing.
+2:46 | So there's no programming.
+2:48 | And in fact, we're not even going to ask
+2:50 | you to hand it in.
+2:52 | It's a problem set where we've worked pretty hard to write
+2:55 | some problems that we think will provide you with a good
+2:58 | learning experience.
+3:00 | And you should just do it to learn the material.
+3:03 | We'll help you, if you need -- to see the TAs because you
+3:07 | can't do them, by all means make sure you get some help.
+3:10 | So I'm not suggesting that it's an optional problem set
+3:13 | that you shouldn't do.
+3:15 | Because you will come to regret it if you don't do it.
+3:19 | But we're not going to grade it.
+3:20 | And since we're not going to grade it, it seems kind of
+3:23 | unfair to ask you to hand it in.
+3:25 | So it's a short problem set, but make sure you know how to
+3:29 | do
+3:29 | those problems. OK.
+3:33 | Today, for the rest of the lecture, we're going to take a
+3:36 | break from the topic of algorithms, and computation,
+3:41 | and things of the sort.
+3:43 | And do something pretty pragmatic.
+3:47 | And we're going to talk briefly about testing.
+3:52 | And at considerable length about debugging.
+4:01 | I have tried to give this lecture at the beginning of
+4:04 | the term, at the end of the term.
+4:06 | Now I'm trying it kind of a third of the way, or
+4:08 | middle of the term.
+4:10 | I never know the right time to give it.
+4:13 | These are sort of pragmatic hints that are useful.
+4:17 | I suspect all of you have found that debugging can be a
+4:20 | frustrating activity.
+4:24 | My hope is that at this point, you've experienced enough
+4:27 | frustration that the kind of pragmatic hints I'm going to
+4:30 | talk about will not be, "yeah sure, of course." But they'll
+4:35 | actually make sense to you.
+4:37 | We'll see.
+4:40 | OK.
+4:41 | In a perfect world, the weather would always be like
+4:45 | it's been this week.
+4:48 | The M in MIT would stand for Maui, instead of
+4:51 | Massachusetts.
+4:54 | Quantum physics would be easier to understand.
+4:57 | All the supreme court justices would share our social values.
+5:03 | And most importantly, our programs would work the first
+5:06 | time we typed them.
+5:09 | By now you may have noticed that we do not live in an
+5:13 | ideal world.
+5:14 | At least one of those things I mentioned is not true.
+5:20 | I'm only going to address the last one.
+5:22 | Why our programs don't work.
+5:24 | And I will leave the supreme court up to the rest of you.
+5:27 | There is an election coming up.
+5:29 | Alright, First a few definitions.
+5:33 | Things I want to make sure we all understand what they mean.
+5:42 | Validation is a process.
+5:46 | And I want to emphasize the word process.
+5:52 | Designed to uncover problems and increase confidence that
+6:09 | our program does what we think it's intended to do.
+6:16 | I want to emphasize that it will increase our confidence,
+6:23 | but we can never really be sure we've got it nailed.
+6:29 | And so it's a process that goes on and on.
+6:33 | And I also want to emphasize that a big piece of it is to
+6:37 | uncover problems. So we need to have a method not designed
+6:43 | to give us unwarranted confidence.
+6:45 | But in fact warranted confidence in our programs.
+6:50 | It's typically a combination of two things.
+6:55 | Testing and reasoning.
+7:05 | Testing, we run our program on some set of inputs.
+7:09 | And check the answers, and say yeah, that's what we expected.
+7:13 | But it also involves reasoning.
+7:16 | About why that's an appropriate set of inputs to
+7:19 | test it on it.
+7:20 | Have we tested it on enough inputs?
+7:23 | Maybe just reading the code and studying it and convincing
+7:26 | ourselves that works.
+7:29 | So we do both of those as part of the validation process.
+7:37 | And we'll talk about all of this as we go along.
+7:42 | Debugging is a different process.
+7:58 | And that's basically the process of ascertaining why
+8:11 | the program is not working.
+8:18 | Why it's failing to work properly.
+8:24 | So validation says whoops, it's not working.
+8:29 | And now we try and figure out why not.
+8:35 | And then of course, once we figure out why not, we try and
+8:37 | fix it. but today I'm going to emphasize not how do you fix
+8:43 | it, but how do you find out what's wrong.
+8:45 | Usually when you know why it's not working, it's obvious what
+8:48 | you have to do to make it work.
+8:51 | There are two aspects of it.
+8:56 | Thus far, the problem sets have
+8:59 | mostly focused on function.
+9:02 | Does it exhibit the functional behavior?
+9:06 | Does it give you the answer that you expected it to give?
+9:12 | Often, in practical problems, you'll spend just as much time
+9:17 | doing performance debugging.
+9:21 | Why is it slow?
+9:23 | Why is it not getting the answer as fast
+9:26 | as I want it to?
+9:28 | And in fact, in a lot of industry -- for example, if
+9:31 | you're working on building a computer game, you'll discover
+9:36 | that in fact the people working the game will spend
+9:38 | more time on performance debugging than on getting it
+9:42 | to do the right thing.
+9:43 | Trying to make it do it fast enough.
+9:45 | Or get to run on the right processor.
+9:51 | Some other terms we've talked about is defensive
+9:56 | programming.
+10:02 | And we've been weaving that pretty consistently
+10:05 | throughout the term.
+10:08 | And that's basically writing your programs in such a way
+10:13 | that it will facilitate both validation and debugging.
+10:31 | And we've talked about a lot of ways we do that.
+10:34 | One of the most important things we do is we use assert
+10:39 | statements so that we catch problems early.
+10:44 | We write specifications of our functions.
+10:46 | We modularize things.
+10:48 | And we'll come back to this.
+10:49 | As every time we introduce a new programming concept, we'll
+10:53 | relate it back, as we have been doing consistently, to
+10:57 | defensive programming.
+11:00 | So one of the things I want you to notice here is that
+11:03 | testing and debugging are not the same thing.
+11:08 | When we test, we compare an input output pair to a
+11:13 | specification.
+11:16 | When we debug, we study the events that led to an error.
+11:44 | I'll return to testing later in the term.
+11:47 | But I do want to make a couple of quick remarks with very
+11:51 | broad strokes.
+11:55 | There are basically two classes of testing.
+11:58 | There's unit testing, where we validate each piece of the
+12:05 | program independently.
+12:08 | Thus far, for us it's been testing individual functions.
+12:14 | Later in the term, we'll talk about unit testing of classes.
+12:28 | The other kind of testing is integration testing.
+12:33 | Where we put our whole program together, and we say does the
+12:37 | whole thing work?
+12:46 | People tend to want to rush in and do this right away.
+12:52 | That's usually a big mistake.
+12:54 | Because usually it doesn't work.
+12:59 | And so one of the things that I think is very important is
+13:05 | to always begin by testing each unit.
+13:08 | So before I try and run my program, I test each part of
+13:12 | it independently.
+13:16 | And that's because it's easier to test small
+13:19 | things than big things.
+13:21 | And it's easier to debug small things than big things.
+13:25 | Eventually, it's a big program, I run it.
+13:27 | It never works the first time if it's a big program.
+13:31 | And I end up going back and doing unit testing anyway, to
+13:34 | try and figure out why it doesn't work.
+13:36 | So over the years, I've just convinced myself I might as
+13:39 | well start where I'm going to end up.
+13:44 | What's so hard about testing?
+13:47 | Why is testing always a challenge?
+13:56 | Well, you could just try it and see if it works, right?
+13:59 | That's what testing is all about.
+14:02 | So we could look at something small.
+14:07 | Just write a program to find the max of x and y.
+14:13 | Where x and y are floats.
+14:24 | However many quotes I need.
+14:28 | Well, just see if it works.
+14:31 | Let's test it in all possible combinations of x and y and
+14:34 | see if we get the right answer.
+14:37 | Well, as Carl Sagan would have said, there are billions and
+14:40 | billions of tests we would have to do.
+14:43 | Or maybe it's billions and billions and billions.
+14:47 | Pretty impractical.
+14:49 | And it's hard to imagine a simpler program than this.
+14:53 | So we very quickly realize that exhaustive testing is
+14:57 | just never feasible for an interesting program.
+15:01 | So as we look at testing, what we have to find is what's
+15:05 | called a test suite.
+15:12 | A test suite is small enough so that we can test it in a
+15:21 | reasonable amount of time.
+15:27 | But also large enough to give us some confidence.
+15:47 | Later in the term, we'll spend part of a lecture talking
+15:51 | about, how do we find such a test suite?
+15:54 | A test suite that will make us feel good about things.
+15:58 | For now, I just want you to be aware that you're always doing
+16:02 | this balancing act.
+16:06 | So let's assume we've run our test suite.
+16:09 | And, sad to say, at least one of our tests produced an
+16:14 | output that we were unhappy with.
+16:19 | It took it too long to generate the output.
+16:21 | Or more likely, it was just the wrong output.
+16:26 | That gets us to debugging.
+16:29 | So a word about debugging.
+16:36 | Where did the name come from?
+16:38 | Well here's a fun story, at least. This was one of the
+16:43 | very first recorded bugs in the history of computation.
+16:48 | Recorded September 9th, 1947, in case you're interested.
+16:54 | This was the lab book of Grace Murray Hopper.
+16:58 | Later Admiral Grace Murray Hopper.
+17:00 | The first female admiral in the U.S. navy.
+17:04 | Who was also one of the word's first programmers.
+17:10 | So she was trying to write this program,
+17:13 | and it didn't work.
+17:14 | It was a complicated program.
+17:16 | It was computing the arctan.
+17:18 | So you can imagine, right?
+17:20 | You had a whole team of people trying to figure
+17:23 | out how to do arctans.
+17:25 | Times were different in those days.
+17:27 | And they tried to run it, and it ran a long time.
+17:30 | Then it basically stopped.
+17:32 | Then they started the cosine tape.
+17:35 | That didn't work.
+17:39 | Well they couldn't figure out what was wrong.
+17:41 | And they spent a long time trying to debug the program.
+17:45 | They didn't apparently call it debugging.
+17:47 | And then they found the problem.
+17:51 | In relay number 70, a moth had been trapped.
+17:56 | And the relay had closed on the poor creature,
+17:59 | crushing it to death.
+18:02 | The defense department didn't care about the loss of a moth.
+18:06 | But they did care about the fact that the
+18:08 | relay was now stuck.
+18:09 | It didn't work.
+18:11 | They removed the moth, and the program worked.
+18:14 | And you'll see at the bottom, it says the first actual case
+18:19 | of a bug being found.
+18:21 | And they were very proud of themselves.
+18:23 | Now it's a wonderful story, and it is true.
+18:25 | After all, Grace wouldn't have lied.
+18:28 | But it's not the first use of the term "bug." And as you'll
+18:31 | see by your handout, I've attempted tend to trace it.
+18:34 | And the first one I could find was in 1896.
+18:38 | In a handbook on electricity.
+18:44 | Alright.
+18:44 | Now debugging is a learned skill.
+18:48 | Nobody does it well instinctively.
+18:51 | And a large part of being a good programmer, or learning
+18:55 | to be a good programmer, is learning how to debug.
+18:59 | And it's one of these things where it's harder.
+19:02 | It's slow, slow, and you suddenly have an epiphany.
+19:05 | And you now get the hang of it.
+19:08 | And I'm hoping that today's lecture will
+19:09 | help you learn faster.
+19:13 | The nice thing, is once you learn to debug programs, you
+19:17 | will discover it's a transferable skill.
+19:20 | And you can use it to debug other complex systems. So for
+19:26 | example, a laboratory experience.
+19:28 | Why isn't this experiment working?
+19:31 | There's a lecture I've given several times at hospitals, to
+19:35 | doctors, on doing diagnosis of complex multi illnesses.
+19:41 | And I go through it, and almost the same kind of stuff
+19:44 | I'm going to talk to you about, about debugging.
+19:46 | Explaining that it's really a process of engineering.
+19:50 | So I want to start by disabusing you of a couple of
+19:54 | myths about bugs.
+19:56 | So myth one is that bugs crawl into programs. Well it may
+20:08 | have been true in the old days, when bugs flew or
+20:12 | crawled into relays.
+20:15 | It's not true now.
+20:17 | If there is a bug in the program, it's there for only
+20:20 | one reason.
+20:22 | You put it there. i.e. you made a mistake.
+20:27 | So we like to call them bugs, because it doesn't make us
+20:30 | feel stupid.
+20:31 | But in fact, a better word would be mistake.
+20:37 | Another myth is that the bugs breed.
+20:45 | They do not.
+20:47 | If there are multiple bugs in the program, it's because you
+20:50 | made multiple mistakes.
+20:53 | Not because you made one or two and they mated and
+20:56 | produced many more bugs.
+20:59 | It doesn't work that way.
+21:00 | That's a good thing.
+21:02 | Typically, even though they don't breed,
+21:05 | there are many bugs.
+21:09 | And keep in mind that the goal of debugging is not to
+21:19 | eliminate one bug.
+21:29 | The goal is to move towards a bug free program.
+21:39 | I emphasize this because it often leads to a different
+21:42 | debugging strategy.
+21:44 | People can get hung up on sort of hunting these things down,
+21:47 | and stamping them out, one at a time.
+21:49 | And it's a little bit like playing Whack-a-Mole.
+21:52 | Right?
+21:52 | They keep jumping up at you.
+21:55 | So the goal is to figure out a way to stamp them all out.
+22:00 | Now, should you be proud when you find a bug?
+22:04 | I've had graduate students come to me and say I found a
+22:07 | bug in my program.
+22:08 | And they're really proud of themselves.
+22:11 | And depending on the mood I'm in, I either congratulate
+22:14 | them, or I say ah, you screwed up, huh?
+22:18 | Then you had to fix it.
+22:23 | If you find a bug, it probably means there are more of them.
+22:28 | So you ought to be a little bit careful.
+22:31 | The story I've heard told is you're at somebody's house for
+22:34 | dinner, and you're sitting at the dining room table, then
+22:36 | you hear a [BANG].
+22:39 | And then your hostess walks in with the turkey in a tray, and
+22:42 | says, "I killed the last cockroach." Well it wouldn't
+22:49 | increase my appetite, at least. So be worried about it.
+22:57 | For at least four decades, people have been building
+23:00 | tools called debuggers.
+23:02 | Things to help you find bugs.
+23:04 | And there are some built into Idol.
+23:07 | My personal view is most of them are
+23:09 | not worth the trouble.
+23:12 | The two best debugging tools are the same now that they
+23:17 | have almost always been.
+23:20 | And they are the print statement, and reading.
+23:41 | There is no substitute for reading your code.
+23:47 | Getting good at this is probably the single most
+23:50 | important skill for debugging.
+23:53 | And people are often resistant to that.
+23:57 | They'd rather single step it through using Idol or
+24:00 | something, than just read it and try and figure things out.
+24:06 | The most important thing to remember when you're doing all
+24:09 | of this is to be systematic.
+24:17 | That's what distinguishes good debuggers from bad debuggers.
+24:21 | Good debuggers have evolved a way of systematically hunting
+24:26 | for the bugs.
+24:29 | And what they're doing as they hunt, is they're reducing the
+24:33 | search space.
+24:42 | And they do that to localize the source of the problem.
+24:52 | We've already spent a fair amount of time this semester
+24:55 | talking about searches.
+24:58 | Algorithms for searching.
+25:00 | Debugging is simply a search process.
+25:07 | When you are searching a list to see whether it has an
+25:09 | element, you don't randomly probe the list, hoping to find
+25:14 | whether or not it's there.
+25:15 | You find some way of systematically going through
+25:18 | the list. Yet, I often see people, when they're
+25:22 | debugging, proceeding at what, to me, looks almost like a
+25:26 | random fashion of looking for the bug.
+25:32 | That is a problem that may not terminate.
+25:35 | So you need to be careful.
+25:39 | So let's talk about how we go about being
+25:42 | systematic, as we do this.
+25:57 | So debugging starts when we find out that
+26:00 | there exists a problem.
+26:06 | So the first thing to do is to study the program text, and
+26:14 | ask how could it have produced this result?
+26:32 | So there's something subtle about the
+26:34 | way I've worded this.
+26:38 | I didn't ask, why didn't it produce the result I wanted it
+26:41 | to produce?
+26:43 | Which is sort of the question we'd immediately like to ask.
+26:47 | Instead, I asked why did it produce the result it did.
+26:53 | So I'm not asking myself what's wrong?
+26:58 | Or how could I make it right?
+26:59 | I'm asking how could have done this?
+27:01 | I didn't expect it to do this.
+27:04 | If you understand why it did what it did,
+27:07 | you're half way there.
+27:10 | The next big question you ask, is it part of a family?
+27:22 | This gets back to the question of trying to get the program
+27:26 | to be bug free.
+27:28 | So for example, oh, it did this because it was aliasing,
+27:33 | where I hadn't expected it.
+27:35 | Or some side effect of some mutation with lists.
+27:39 | And then I say, oh you know I've used lists
+27:42 | all over this program.
+27:44 | I'll bet this isn't the only place where
+27:46 | I've made this mistake.
+27:50 | So you say well, rather than rushing off and fixing this
+27:53 | one bug, let me pull back and ask, is this a systematic
+27:57 | mistake that I've made throughout the program?
+28:01 | And if so, let's fix them all at once, rather
+28:03 | than one at a time.
+28:06 | And that gets me to the final question.
+28:11 | How to fix it.
+28:21 | When I think about debugging, I think about it in terms of
+28:27 | what you learned in high school as
+28:29 | the scientific method.
+28:35 | Actually, I should ask the question.
+28:36 | Maybe I'm dating myself.
+28:38 | Do they still teach the scientific
+28:39 | method in high school?
+28:41 | Yes, alright good.
+28:43 | All is not lost with the American educational system.
+28:47 | So what does the scientific method tell us to do?
+28:51 | Well it says you first start by studying
+28:55 | the available data.
+29:05 | In this case, the available data are the test results.
+29:12 | And by the way, I mean all the test results.
+29:17 | Not just the one where it didn't work, but also the ones
+29:20 | where it did.
+29:23 | Because maybe the program worked on some
+29:24 | inputs and not on others.
+29:27 | And maybe by understanding why it worked on a and not on b,
+29:30 | you'll get a lot of insight that you won't if you just
+29:33 | focus on the bug.
+29:35 | You'll also feel a little bit better knowing your program
+29:37 | works on at least something.
+29:42 | The other big piece of available data we have is, of
+29:44 | course, the program text.
+29:49 | As you the study the program text, keep in mind that you
+29:52 | don't understand it.
+29:55 | Because if you really did, you wouldn't have the bug.
+29:59 | So read it with sort of a skeptical eye.
+30:06 | You then form a hypothesis consistent with all the data.
+30:17 | Not just some of the data, but all of the data.
+30:22 | And then you design and run a repeatable experiment.
+30:42 | Now what is the thing we learned in high school about
+30:46 | how to design these experiments?
+30:48 | What must this experiment have the potential to do, to be a
+30:53 | valid scientific experiment?
+31:01 | Somebody?
+31:03 | What's the key thing?
+31:05 | It must have the potential to refute the hypothesis.
+31:14 | It's not a valid experiment if it has no chance of showing
+31:20 | that my hypothesis is flawed.
+31:23 | Otherwise why bother running it?
+31:28 | So it has to have that.
+31:31 | Typically it's nice if it can have useful
+31:34 | intermediate results.
+31:38 | Not just one answer at the end.
+31:42 | So we can sort of check the progress of the code.
+31:45 | And we must know what the result is supposed to be.
+31:56 | Typically when you run an experiment, you say, and I
+31:58 | think the answer will be x.
+32:01 | If it's not x, you've refuted the hypothesis.
+32:08 | This is the place where people
+32:10 | typically slip up in debugging.
+32:14 | They don't think in advance what they expect
+32:18 | the result to be.
+32:20 | And therefore, they are not systematic about interpreting
+32:24 | the results.
+32:27 | So when someone comes to me, and they're about to do a
+32:31 | test, I ask them, what do you expect your program to do?
+32:36 | And if they can't answer that question, I say well, before
+32:38 | you even run it, have an answer to that.
+32:43 | Why might repeatability be an issue?
+32:47 | Well as we'll see later in the term, we're going to use a lot
+32:51 | of randomness in a lot of our programs. Where we essentially
+32:54 | do the equivalent of flipping coins or rolling dice.
+32:58 | And so the program may do different things
+33:00 | on different runs.
+33:03 | We'll see a lot of that, because it's used a lot in
+33:05 | modern computing.
+33:07 | And so you have to figure out how to take that randomness
+33:10 | out of the experiment.
+33:12 | And yet get a valid test. Sometimes it can be timing.
+33:17 | If you're running multiple processes.
+33:18 | That's why your operating systems and your personal
+33:22 | computers often crash for no apparent reason.
+33:25 | Just because two things happen to, once in a while, occur at
+33:28 | the same time.
+33:31 | And often there's human input.
+33:34 | And people have to type things out of it.
+33:37 | So you want to get rid of that.
+33:41 | And we'll talk more about this later.
+33:43 | Particularly when we get to using randomness.
+33:46 | About how to debug programs where random
+33:49 | choices are being made.
+33:52 | Now let's think about designing
+33:54 | the experiment itself.
+33:58 | The goal here, there are two goals.
+34:01 | Or more than two.
+34:02 | One is to find the simplest input that
+34:11 | will provoke the bug.
+34:17 | So it's often the case that a program will run a long time,
+34:20 | and then suddenly a bug will show up.
+34:22 | But you don't want to have to run it a long time, every time
+34:26 | you have a hypothesis.
+34:27 | So you try and find a smaller input that
+34:30 | will produce the problem.
+34:32 | So if your word game doesn't work when the words are 12
+34:35 | letters long, instead of continuing to debug 12 letter
+34:41 | hands, see if you can make it fail on a three letter hand.
+34:47 | If you can figure out why fails on three letters instead
+34:50 | of 12, you'll be more than half way
+34:53 | to solving the problem.
+34:58 | What I typically do is I start with the input that provoked
+35:01 | the problem, and I keep making it smaller and smaller.
+35:05 | And see if I can't get it to show up.
+35:12 | The other thing you want to do is find the part of the
+35:15 | program that is most likely at fault.
+35:18 | In both of these cases, I strongly
+35:22 | recommend binary search.
+35:29 | We've talked about this binary search a lot already.
+35:35 | Again, the trick is, if you can get rid of half of the
+35:40 | data at each shot, or half of the code at each shot., you'll
+35:44 | quickly converge on where the problem is.
+35:48 | So I now want to work through an example where we can see
+35:52 | this happening.
+35:53 | So this is the example on the handout.
+35:57 | I've got a little program called Silly.
+36:07 | And it's called Silly because it's really
+36:09 | a rather ugly program.
+36:12 | It's certainly not the right way to write a
+36:14 | program to do this.
+36:20 | But it will let us illustrate a few points.
+36:25 | So the trick, what we're going to go through here, is this
+36:31 | whole scientific process.
+36:34 | And see what's going on.
+36:37 | So let's try running Silly.
+36:47 | So this is to test whether a list is a palindrome.
+36:50 | So we'll put one as the first element, maybe a
+36:54 | is the second element.
+36:56 | And one is the third element.
+37:01 | And just return, it's done.
+37:02 | It is a palindrome.
+37:04 | That make sense.
+37:04 | The list one a one reads the same from the
+37:08 | front or from the back.
+37:10 | So that's good.
+37:11 | Making some progress.
+37:14 | Let's try it again.
+37:19 | And now let's do one, a, two.
+37:28 | Whoops.
+37:31 | It tells me it is a palindrome.
+37:33 | Well, it isn't really.
+37:37 | I have a bug.
+37:40 | Alright.
+37:43 | Now what do I do?
+37:44 | Well I'm going to use binary search to see if I
+37:46 | can't find this bug.
+37:50 | As I go through, I'm going to try and eliminate half of the
+37:54 | code at each step.
+37:59 | And the way I'm going to do that is by printing
+38:02 | intermediate values, as I go part way through the code.
+38:09 | I'm going to try and predict what the value is going to be.
+38:14 | And then see if, indeed, I get what I predicted.
+38:20 | Now, as I do this, I'm going to use binary search.
+38:24 | I'm going to start somewhere near the middle of the code.
+38:28 | Again, a lot of times, people don't do that.
+38:32 | And they'll test an intermediate value near the
+38:35 | end or near the beginning.
+38:38 | Kind of in the hope of getting there in one shot.
+38:42 | And that's like kind of hoping that the element you're
+38:45 | searching for is the first in the list and the last in the
+38:47 | list. Maybe.
+38:50 | But part of the process of being systematic is not
+38:54 | assuming that I'm going to get a lucky guess.
+38:57 | But not even thinking really hard at this point.
+39:00 | But just pruning the search space.
+39:03 | Getting rid of half at each step.
+39:08 | Alright.
+39:09 | So let's start with the bisection.
+39:12 | So we're going to choose a point about in the middle of
+39:14 | my program.
+39:16 | That's close to the middle.
+39:19 | It might even be the middle.
+39:21 | And we're going to see, well all right.
+39:24 | The only thing I've done in this part of the program, now
+39:26 | I'm going to go and read the code, is I've gotten the user
+39:31 | to input a bunch of data.
+39:34 | And built up the list corresponding to the three
+39:38 | items that the user entered.
+39:41 | So the only intermediate value I have here is really res.
+39:51 | So I'm going to, just so when I'm finished I know what it is
+39:53 | that I think I've printed.
+39:59 | But in fact maybe I'll do even more than that here.
+40:04 | Let me say what I think it should be.
+40:12 | And then we'll see if it is.
+40:14 | So I think I put in one a two, right?
+40:20 | Or one a two?
+40:22 | So it should be something like one, a, two.
+40:32 | So I predicted what answer I'm expecting to get.
+40:35 | And I've put it in my debugging code.
+40:38 | And now I'll run it and see what we get.
+40:45 | We'll save it.
+40:49 | Well all right, a syntax error.
+40:51 | This happens.
+40:53 | And there's a syntax error.
+40:55 | I see.
+40:56 | Because I've got a quote in a quote.
+40:57 | Alright I'm just going to do that.
+41:22 | What I expected.
+41:24 | So what have I learned?
+41:27 | I've learned that with high probability, the error is not
+41:34 | in the first part of the program.
+41:37 | So I can now ignore that.
+41:41 | So now I have these six lines.
+41:46 | So we'll try and go in the middle of that.
+41:52 | See if we can find it here.
+41:55 | And notice, by the way, that I commented out the previous
+42:02 | debugging line, rather than got rid of it.
+42:05 | Since I'm not sure I won't need to go back to it.
+42:08 | So what should I look at here?
+42:14 | Well there are a couple of interesting intermediate
+42:16 | values here, right?
+42:20 | There's tmp.
+42:29 | And there's res.
+42:35 | Never type kneeling.
+42:40 | Right?
+42:40 | I find something to tmp.
+42:44 | And I need to make sure maybe I haven't messed up res.
+42:48 | Now it would be easy to assume, don't bother looking
+42:51 | at [UNINTELLIGIBLE].
+42:53 | Because the code doesn't change res.
+42:55 | Well remember, that I started this with a bug.
+42:59 | That means it was something I didn't understand.
+43:02 | So I'm going to be cautious and systematic.
+43:05 | And say let's just print them both.
+43:08 | And see whether they're okay.
+43:17 | Now, let's do this.
+43:31 | So it says tmp is two a one, and res is two a one.
+43:39 | Well let's think it.
+43:42 | Is this what we wanted, here?
+43:44 | What's the basic idea behind this program?
+43:49 | How is it attempting to work?
+43:51 | Well what it's attempting to do, and now is when I have to
+43:55 | stand back and form a hypothesis and think about
+43:57 | what's going on, is it gets in the list, it reverses the
+44:01 | list, and then sees whether the list and the
+44:04 | reverse were identical.
+44:05 | If so it was a palindrome, otherwise it wasn't.
+44:10 | So I've now done this, and what do you think?
+44:18 | Is this good or bad?
+44:25 | Is this what I should be getting?
+44:28 | No.
+44:29 | What's wrong?
+44:30 | Somebody? yeah.
+44:32 | STUDENT: [UNINTELLIGIBLE]
+44:35 | PROFESSOR: Yeah.
+44:37 | Somehow I wanted to --
+44:42 | Got to work on those hands.
+44:47 | I didn't want to change res.
+44:50 | So, I now know that the bug has got to be between these
+44:57 | two print statements.
+45:00 | I'm narrowing it down.
+45:03 | It's getting a little silly, but you know I'm going to
+45:05 | really be persistent and just follow the rules here of
+45:08 | binary search, rather than jumping to conclusions.
+45:14 | Well clearly what I probably want to do here is what?
+45:21 | Print these same two things.
+45:31 | See what I get.
+45:40 | Whoops.
+45:41 | I have to, of course, do that.
+45:43 | Otherwise it just tells me that Silly
+45:46 | happens to be a function.
+45:55 | Alright.
+45:57 | How do I feel about this result?
+45:58 | I feel pretty good here.
+46:02 | Right?
+46:02 | The idea was to make a copy of res and temp.
+46:06 | And sure enough, they're both the same.
+46:08 | What I expected them to be.
+46:12 | So I know the bug is not above.
+46:14 | Now I'm really honing in.
+46:17 | I now know it's got to be between these two statements.
+46:25 | So let's put it there.
+46:50 | Aha.
+46:50 | It's gone wrong.
+46:52 | So now I've narrowed the bug down to one place.
+46:55 | I know exactly which statement it's in.
+47:03 | So something has happened there that
+47:05 | wasn't what I expected.
+47:09 | Who wants to tell me what that bug is?
+47:13 | Yeah?
+47:13 | STUDENT: [UNINTELLIGIBLE].
+47:25 | PROFESSOR: Right.
+47:29 | Bad throw, good catch.
+47:33 | So this is a classic error.
+47:37 | I've not made a copy of the list. I've got an alias of the
+47:40 | list. This was the thing that tripped up many
+47:42 | of you on the quiz.
+47:44 | And really what I should have done is this.
+47:58 | Now we'll try it.
+48:09 | Ha.
+48:10 | It's not a palindrome.
+48:16 | So small silly little exercise, but I'm hoping that
+48:21 | you've sort of seen how by being patient.
+48:23 | Patience is an important part of the debugging process.
+48:26 | I have not rushed.
+48:28 | I've calmly and slowly narrowed the search.
+48:31 | Found where the statement is, and then fixed it.
+48:35 | And now I'm going to go hunt through the rest of my code to
+48:38 | look for places where I used assignment, when I should have
+48:42 | use cloning as part of the assignment.
+48:45 | The bug, the family here, is failure to clone when I should
+48:48 | have cloned.
+48:50 | Thursday we'll talk a little bit more about what to do once
+48:54 | we've found the bug, and then back to algorithms.

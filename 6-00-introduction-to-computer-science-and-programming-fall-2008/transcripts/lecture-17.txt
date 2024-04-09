@@ -1,0 +1,746 @@
+0:00 | OPERATOR: The following content is provided under a
+0:01 | Creative Commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation, or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:21 | PROFESSOR: OK, we're now, kind of on the home stretch, and
+0:25 | we're entering the part of the course, that's actually my
+0:28 | favorite part of the course.
+0:30 | I can't promise it will be your favorite part of the
+0:32 | course, but I hope so, at least for many of you.
+0:37 | Throughout the term, we've been talking about ways to
+0:40 | solve problems using computation.
+0:45 | And one of the key lessons that I hope you're beginning
+0:49 | to absorb is that we might use a completely different way to
+0:53 | solve a problem with the computer than we would have
+0:57 | used if we didn't have a computer handy.
+1:02 | In particular, we might often use brute force, which you've
+1:07 | never use with a pencil and paper, we might not do the
+1:11 | mental gyrations required to try and formulate a closed
+1:15 | form solution, but just guess a bunch of answers using
+1:18 | successive approximation until we got there.
+1:22 | A number of different techniques.
+1:25 | And that's really what we're going to be doing for the rest
+1:28 | of the term now.
+1:30 | Except we won't be talking about algorithms per se, or
+1:34 | not very much.
+1:36 | Instead we'll be talking about more general techniques for
+1:41 | using computers to solve problems that
+1:45 | are actually hard.
+1:46 | They don't just look hard, they in many
+1:48 | cases really are hard.
+1:51 | The plan of the next set of lectures is, I want to start
+1:55 | with a simple example to give you a flavor of
+1:58 | some of these issues.
+2:02 | In the course of going through that example, I'll illustrate
+2:07 | some both thinking tools and some software tools that can
+2:11 | be used for tackling the example.
+2:14 | Then abstract from the example to try and put in a more
+2:20 | general framework.
+2:23 | And then, dive back down and use that framework to tackle a
+2:27 | series of other interesting problems.
+2:31 | Some things I would like you do think about learning along
+2:35 | the way, is moving from an informal problem description
+2:54 | to a more formal problem statement.
+3:06 | So that's, in part, what we did with the optimization
+3:09 | problems, right?
+3:10 | We looked at an informal description about optimizing
+3:13 | your way through the MIT curriculum, and then could
+3:16 | formulate it using sigmas and other bizarre notation to try
+3:21 | and formalize what we were really trying to do.
+3:25 | And we did that as a preamble to writing any code.
+3:29 | First understand the problem, formally, and then
+3:32 | move on to the code.
+3:34 | And we won't always be totally formal.
+3:36 | I often like to use the word rigorous instead of formal.
+3:44 | Implying that it won't look like math, per se, but it'll
+3:48 | be precise and relatively unambiguous.
+3:53 | So that will be one thing that I want you to think about as
+3:56 | we go through these problems.
+4:02 | Another thing is inventing computational models.
+4:19 | Almost every meaningful program we write is in some
+4:22 | sense modeling the actual world.
+4:26 | For writing a program to figure out how to keep a
+4:29 | bridge from falling down, we're modeling the physics of
+4:32 | bridges and wind and things like that.
+4:34 | If we're writing a program to try and help us decide what
+4:39 | stocks to buy or sell, we're trying to model the stock
+4:43 | market in some sense.
+4:45 | If we're trying to figure out who's going to win the Super
+4:48 | Bowl, we're modeling football teams. But almost every
+4:53 | problem, you build a piece of software, and you hope that it
+4:58 | has some ability to mimic the actual
+5:02 | situation you care about.
+5:05 | And it's not the program we care about, per se, it's the
+5:09 | world, and the program is merely a mechanism to help us
+5:14 | understand the world better.
+5:16 | And so we're going to ask the question, have we built a good
+5:19 | model, in the computation, that gives us
+5:23 | insight into the world?
+5:27 | As we do this, we'll see that we'll be dealing with and
+5:35 | exploiting randomness.
+5:51 | Depending upon your outlook of life, one of the sad things in
+5:54 | the world or one of the happy things in the world, is that
+5:57 | it's unpredictable.
+6:00 | And things happen either at random or seemingly at random.
+6:07 | It may be that if we had a deep enough understanding at
+6:12 | the level of single atoms of the way the world works, we
+6:17 | could model the weather and discover that, in fact, the
+6:20 | weather patterns are not random but entirely
+6:24 | predictable.
+6:25 | Since we can't do that, we have to assume that they
+6:29 | really are random, and we build models of the weather
+6:33 | that assume a certain amount of randomness in it.
+6:37 | Maybe if we understood the stock market well enough, we
+6:39 | could have predicted the collapse in October.
+6:44 | But since nobody does understand it well enough,
+6:48 | when people model the stock market they assume that
+6:50 | there's a certain amount of randomness, certain amount of
+6:53 | stochastic things.
+6:55 | So, as far as we can observe the world, almost every
+7:00 | interesting part of the world has randomness in it.
+7:05 | And so when we build models, we will have to build models
+7:09 | that are, if we want to be formal, we'll talk about a
+7:13 | stochastic, which is just a fancy way of saying they
+7:18 | incorporate randomness.
+7:22 | So we haven't yet done that this semester, but almost
+7:25 | everything we do from here on in, we will deal with a
+7:28 | certain amount of randomness.
+7:32 | What else are we going to be looking at?
+7:36 | We'll be looking at the notion of making sense of data.
+7:44 | As we look at, again, modeling the world, what we discover,
+7:49 | there's a lot of data out there.
+7:51 | If you work at Walmart and you're trying to decide what
+7:55 | to stock on the shelves, you're building a model of
+7:59 | what the customers might buy under certain circumstances,
+8:03 | and that model is going to take account the entire
+8:06 | history of what customer's have bought in the past. And
+8:10 | that's, if you're Walmart, a lot of data.
+8:13 | And so given that you have a lot of data about what's
+8:17 | happened in the past, how can we interpret that, for
+8:20 | example, to get insight into the future?
+8:25 | And we do a lot of that.
+8:27 | And so we will, for example, look at how can we draw
+8:30 | pictures that help us visualize what's going on with
+8:34 | the data, rather than trying to read say, a million numbers
+8:37 | and inferring something from them.
+8:40 | This is a big part of what people do with computers, is
+8:43 | try and figure out how to understand
+8:46 | large amounts of data.
+8:48 | And then finally, as we go through this last third of the
+8:53 | course, I want to spend time in evaluating
+9:00 | the quality of answers.
+9:09 | It's easy to write a program that spits out a number, or
+9:13 | string, or anything else.
+9:15 | What's hard is to convince yourself that what it's
+9:18 | spitting out is actually telling you the truth.
+9:23 | And so we're going to look at the question about, you've
+9:27 | written a program to do something relatively
+9:29 | complicated, you get an answer out.
+9:33 | You wouldn't have written the program if you knew what the
+9:35 | answer was in advance, right?
+9:37 | This is not like a high school physics experiment where you
+9:40 | know what the answer should be.
+9:43 | Here you went to the trouble of writing the program because
+9:45 | you didn't know what the answer was.
+9:48 | Now the program gives you an answer, should you believe it,
+9:51 | or shouldn't you believe it?
+9:54 | There are people who say, well, that's what the computer
+9:56 | said, it must be true.
+9:58 | By now you all have enough experience with programs that
+10:01 | lie to know that's not the case.
+10:05 | And so we'll be talking about how do you go about looking at
+10:08 | the results, and deciding whether to
+10:11 | believe them or not.
+10:13 | This is a lot of stuff, and we'll be coming back to this.
+10:17 | I'll be skipping around from topic this topic.
+10:22 | It may seem a little bit random, but there's actually a
+10:26 | method to my madness.
+10:29 | Part of it is, I believe that repeated exposure to some of
+10:32 | these things is a good way to learn it.
+10:35 | And so I'll be revisiting the same topic in more and more
+10:38 | depth as we go, rather than taking a topic
+10:41 | and exhausting it.
+10:42 | So if you think about searches, this is more of a
+10:45 | breadth first search than a depth first search.
+10:49 | All right.
+10:51 | Think about these things as we now go through
+10:54 | the next set of lectures.
+10:56 | So, on for the first example.
+10:59 | Consider the following situation: a seriously drunken
+11:07 | university student, and I emphasize university as
+11:10 | opposed to institute here, is standing in
+11:13 | the middle of a field.
+11:15 | Every second, he takes a step in some direction or another,
+11:18 | but, you know, just sort of pretty random, because he's
+11:23 | really out of it.
+11:27 | But the field is constrained that for the moment we'll
+11:30 | assume that, well, we'll come back to that.
+11:32 | Now I'm going to ask you just a question.
+11:34 | So you've got this student who, every second or so, takes
+11:37 | a step in some direction or another.
+11:40 | If the student did this for 500 seconds or 1000 seconds,
+11:45 | how far do you expect the student would be
+11:48 | from where he started?
+11:50 | And I say he because most of the drunks
+11:52 | are, of course, males.
+11:56 | Anybody want to, what do you think?
+11:57 | STUDENT: Back where he started.
+11:59 | PROFESSOR: So we have a thing that, on average, and of
+12:01 | course since there's randomness it won't be the
+12:04 | same every time.
+12:06 | Pretty much where he started.
+12:09 | Let me ask a question.
+12:10 | So if you believe that, you believe he'd be probably the
+12:13 | same distance in 1000 seconds as in 500 seconds.
+12:19 | Anyone want to posit the counterposition?
+12:22 | That in fact, the longer the clock runs, the further the
+12:24 | student will be from where he started?
+12:29 | Nobody?
+12:31 | All right, what do you think?
+12:32 | STUDENT: [INAUDIBLE]
+12:49 | PROFESSOR: All right, that's a good answer.
+12:52 | So the answer there was, well, if you asked for your best
+12:57 | guess of where the student was, the best guess is where
+13:00 | the student started.
+13:03 | On the other hand, if you ask how far was the student from
+13:07 | where he started, the best guess wouldn't be zero.
+13:11 | That's a great answer, because it addresses the fact that you
+13:15 | have to be very careful what question you're asking.
+13:18 | And there are subtle differences between those two
+13:20 | questions, and they might have very different answers.
+13:24 | So that's part of that first step, going from an informal
+13:29 | description, to trying to formalize it or be more
+13:33 | rigorous about what is exactly the problem
+13:36 | you're trying to solve.
+13:40 | All right, we'll take a vote.
+13:43 | And everyone has to vote here, because it's not a democracy
+13:47 | where you're allowed to not vote.
+13:51 | And the question I'm asking is, is the expected
+13:56 | difference, does the expected distance from the origin grow
+14:03 | over time, or remain constant, roughly?
+14:10 | Who thinks it grows over time?
+14:14 | Who thinks it remains constant?
+14:18 | Well, the constants have it.
+14:21 | But just because that's the way most people vote, it
+14:23 | doesn't make it true.
+14:26 | Now let's find out what the actual truth is.
+14:30 | All right.
+14:33 | So let's start by sketching a simple model of the situation.
+14:38 | And, one of the things I want to stress as we do these
+14:43 | things, in developing anything of this nature, start simple.
+14:55 | So start with some simple
+14:57 | approximation to the real problem.
+15:00 | Check that out, and then, if it turns out not to be a good
+15:05 | enough model of the world, add some complications, but don't
+15:09 | start with the complicated model.
+15:11 | Always start with the simple model.
+15:14 | So I'm going to start with the simple model.
+15:16 | And I'm going to assume, as we've seen before, that we
+15:20 | have Cartesian coordinates and that the player is, or the
+15:30 | drunk is, standing on a field that has been cut to resemble
+15:33 | a piece of graph paper.
+15:36 | They got the groundskeeper from Fenway Park or something,
+15:38 | there, and it looks like a beautiful piece of paper.
+15:41 | Furthermore, I'm going to assume for simplicity, that
+15:46 | the student can only go in one of four directions: north,
+15:50 | south, east, or west. OK, we could certainly generalize
+15:57 | that, and we will, to something more complicated,
+16:00 | but for now we'll keep it simple.
+16:03 | And we'll try and go to the board and
+16:05 | draw what might happen.
+16:08 | So the student starts here and takes a step in one direction
+16:14 | or another.
+16:15 | So as the mathematicians say, without loss of generality,
+16:19 | let's just assume that the first step is here.
+16:25 | Well what we know for sure, is after one step the student is
+16:31 | further from the origin than at the start.
+16:35 | But, that doesn't tell us a lot.
+16:38 | What happens after the second step?
+16:41 | Well, the student could come back to the origin and be
+16:44 | closer, that's one possibility, the student could
+16:49 | go up here, in which case the student is a little further,
+16:54 | the student could go down here, in which case the
+16:58 | student is a little further, or the student could go over
+17:02 | here, in which case the student is twice as far.
+17:06 | So we see for the second step, three times out of four you
+17:09 | get further away.
+17:12 | What happens in the third step?
+17:15 | So let's look at this one.
+17:17 | Well, the student could come here, which is closer, could
+17:22 | come here, which is closer, could go there, which is
+17:27 | further, or could go there, which is further.
+17:29 | So the third step, with equal probability, the student is
+17:33 | further or closer if the student is here.
+17:38 | And we could continue.
+17:40 | So as you can see, it gets pretty complicated, as you
+17:46 | project how far out it could always get.
+17:49 | All right, and this is symmetric to this, but this is
+17:52 | yet a different case.
+17:55 | So, this sort of says, OK, I'm going to get tired of drawing
+18:00 | things on the board.
+18:02 | So, being who I am, I say, let's write a
+18:05 | program to do this.
+18:07 | And in fact, what I'm going to write a program to do, is
+18:11 | simulate what is called a random walk.
+18:28 | And these will be two themes we're going to spend
+18:30 | a lot of time on.
+18:31 | Simulation, where we try and build the model that pretends
+18:37 | it's the real world and simulates what goes on, and a
+18:41 | random walk.
+18:43 | Now, I'm giving you the classic story about a random
+18:46 | walk which you can visualize, at least I hope, but as we'll
+18:50 | see, random walks are very general, and are used to
+18:55 | address a lot of real problems. So we'll write this
+18:59 | program, and I want to start by thinking about designing
+19:04 | the structure of the solution.
+19:07 | Because one of the things I'm trying to do in this next set
+19:11 | of lectures is bring together a lot of the things we have
+19:16 | talked about over the course of the semester, about how we
+19:19 | go about designing and building programs. Trying to
+19:23 | give you a case study, if you will.
+19:26 | So let's begin in line with what Professor Grimson talked
+19:30 | about, about thinking about what might be the appropriate
+19:32 | data abstractions.
+19:36 | Well, so, I think it would be good to have a location, since
+19:41 | after all the whole problem talks about
+19:44 | where the drunk is.
+19:49 | I decided I also wanted to introduce an abstraction
+19:52 | called compass point to capture the notion that the
+19:57 | student is going north, south, east, or west. And later,
+20:03 | maybe I'll decide that needs to be more complicated and
+20:06 | that the student can go north by northwest, or maybe all
+20:11 | sorts of things.
+20:12 | But that it would probably pay to separate the notion of
+20:17 | direction, which is what this is, from location.
+20:21 | Maybe I should have called this direction instead of
+20:23 | compass point, but I didn't.
+20:26 | But, I thought about the problem and said, well, these
+20:29 | things really are separate locations.
+20:31 | Where you are and where you might head from there are not
+20:35 | the same, so let's separate them.
+20:39 | Then I said, well of course, there is this notion that the
+20:43 | person is in the field, so maybe I want to have field as
+20:48 | a separate thing.
+20:49 | So think of that as the whole Cartesian plain, as opposed to
+20:54 | a point in the plane, which is what the location is.
+20:58 | And finally, I better have a drunk, because after all this
+21:03 | problem is all about drunks.
+21:07 | All right, so we're now going to look at some code.
+21:10 | I made this code as simple as I could to illustrate the
+21:14 | points I wanted to illustrate.
+21:17 | This means I left out a lot of things that ought to be
+21:22 | included in a good program.
+21:23 | So I want to just warn you.
+21:25 | So for example, I've already told you that when I build
+21:27 | data abstractions, I always put in an underbar underbar
+21:31 | str function so that I can print them when I'm debugging.
+21:35 | Well, you won't see that in this code, because I felt it
+21:38 | just cluttered the code up to make the points.
+21:41 | You'll see less defensive programming than I would
+21:43 | normally use.
+21:45 | But again I wanted to sort of pare things down to the
+21:47 | essence, since the essence is, all by itself, probably
+21:51 | confusing enough.
+21:58 | All right.
+22:00 | So let's look at it.
+22:00 | You have this on your double-sided handout.
+22:04 | This is on side 1one So at the top, you'll see that I'm
+22:09 | importing three things.
+22:11 | Well, math you've heard about.
+22:14 | And I'm importing that because I'm going to
+22:16 | need a square root.
+22:18 | Random, you haven't heard about.
+22:22 | This is a package that lets me choose things at random, and
+22:27 | I'll show you some of the ways we can use it, but it actually
+22:31 | provides something that technically is pseudo-random.
+22:43 | Which means that as far as we can tell, it's behaving
+22:46 | randomly, but since the computer is in itself a
+22:51 | deterministic machine, it's not really random.
+22:56 | But it's so close to random that we might as well pretend
+22:59 | it is, you can't tell that it isn't.
+23:04 | So we'll import random.
+23:05 | That will let us make random guesses of things like, give
+23:08 | me a random number between 0 and 1.
+23:11 | And it will give you a random number.
+23:13 | And finally something called Pylab.
+23:16 | Anyone here use Matlab?
+23:19 | All right, well then, you'll find Pylab kind of comforting.
+23:23 | Pylab brings into Python a lot of the features of Matlab And
+23:32 | if you haven't used Matlab, don't worry, because we'll
+23:34 | explain everything.
+23:36 | For the purposes of this set of lectures, the next few
+23:39 | lectures, at least, the only thing we're going to get out
+23:42 | of this is a bunch of tools for drawing pretty graphs.
+23:46 | And we won't get to those today, probably, so don't
+23:48 | worry about it.
+23:50 | But it's a nice package, which you'll be glad to learn.
+23:55 | OK, now let's move on to the code, which has got things
+23:59 | that should look familiar to you.
+24:01 | And I know there used to be a laser -- ah,
+24:03 | here's the laser pointer.
+24:05 | So we'll see at the top location, it is a class.
+24:12 | By now you've gotten as familiar as you want to be in
+24:16 | many senses, with classes.
+24:18 | It's got an underbar underbar init that gives me,
+24:22 | essentially, a point with an x-coordinate and a
+24:24 | y-coordinate.
+24:28 | It's got get coords, the third function, or method, and what
+24:32 | you can see what that does is it's returning a
+24:34 | tuple of two values.
+24:36 | I could have had it get x and get y, but it turned out, in
+24:41 | fact, my first iteration of this it did have a get x and
+24:43 | get y, and when I looked at the code that was using it, I
+24:48 | realized whenever I got one, I wanted both, and it just
+24:51 | seemed kind of silly, so I did something that made the using
+24:54 | code a little bit better.
+24:59 | It's got get distance, the last method.
+25:02 | You saw this in Professor Grimson's lecture, where he
+25:05 | used the Pythagorean theorem to basically compute the
+25:09 | distance on a hypotenuse, to tell you how far a point was
+25:13 | from the origin.
+25:15 | That's why I wanted math.
+25:17 | And then the one thing it has that it's unlike the example
+25:20 | you saw from Professor Grimson, was
+25:22 | up here, this move.
+25:25 | And this basically takes a point, a location, and an x-
+25:29 | and a y- coordinate, and returns another location, in
+25:34 | which I've incremented the x and the y, perhaps
+25:40 | incrementing by 0.
+25:43 | And so now you can see how I'm going to be able to mimic 1
+25:47 | step or any number of steps by using this move.
+25:53 | Any questions about this?
+25:59 | Great, all right.
+26:01 | The next one you'll see is compass point.
+26:06 | Remember, this was the abstraction that was going to
+26:08 | let me conveniently deal with directions.
+26:12 | The first thing you'll see is, there's a global variable in
+26:18 | the sense that it's external to any of the methods, and
+26:22 | you'll note it's not self dot possibles, but just possibles.
+26:28 | Because I don't want a new copy of
+26:30 | this for every instance.
+26:34 | And this tells me the possible directions, which I've
+26:37 | abbreviated as n, s, e, and w.
+26:40 | And I leave it to you to figure out what those
+26:43 | abbreviations stand for.
+26:47 | Then I've got init, which takes a point and it first
+26:52 | checks to see if the point is in self dot possibles.
+26:59 | Should I have bothered saying self?
+27:01 | Do I need to write self there?
+27:03 | This is a test of classes.
+27:05 | It'll work.
+27:09 | What do you think?
+27:11 | Who thinks I need to write self, and who thinks I don't?
+27:16 | Who thinks I need to write self, raise your hand?
+27:19 | Who thinks I don't need to write self?
+27:22 | The don't needs have it.
+27:24 | So in an act of intense bravery, since I have not run
+27:27 | it without this, we'll see what happens when it comes
+27:33 | time to run the program.
+27:38 | So if point is in possibles, it will take self dot p t will
+27:42 | be assigned p t.
+27:45 | Otherwise, I'll raise a value error.
+27:49 | And this is a little piece of programming, and what I
+27:52 | typically do at a minimum, when I raise these exceptions,
+27:56 | is make sure that it says where it's coming from.
+28:00 | So this says it's gonna raise this value error in the method
+28:04 | compass point dot underbar underbar
+28:06 | init, underbar underbar.
+28:09 | This is so when I run the program, and I see a message,
+28:13 | I don't have to scratch my head figuring out where did
+28:15 | things go wrong?
+28:17 | So just a convention I follow a lot.
+28:21 | And then I've got move here.
+28:25 | And I'll move self some distance, and you can
+28:30 | see what I'm doing.
+28:31 | If self is north, I'm going to return 0 in distance.
+28:41 | So I'm now getting a tuple, which will basically be used
+28:45 | to say, all right, we're going to implement x by 0 and y by
+28:49 | distance, which is what you think of
+28:51 | about moving due north.
+28:54 | And if it's south, we'll increment x by 0, and
+28:59 | increment y by minus distance, heading down the graph.
+29:05 | And similarly for east and west. And in the sad event I
+29:11 | call this with something that's not north, south, east,
+29:13 | or west, again I'll raise an exception.
+29:20 | OK, little bit at a time.
+29:22 | So I hope that nothing here looks complicated.
+29:25 | In fact, it should all look kind of boring.
+29:29 | Now we'll get to field, which should look
+29:34 | a little less boring.
+29:38 | So now I've got a field.
+29:43 | And, well, before I get to field, I want to go back to
+29:53 | something about the first 2 abstractions: compass point
+29:56 | and location.
+29:58 | Whenever we design one of these abstractions, we're
+30:02 | making some things possible and some things impossible.
+30:06 | We're making decisions, and so what decisions are
+30:10 | encapsulated in these first two classes?
+30:16 | Well, one decision is that it's a 2-dimensional space.
+30:22 | I basically said we've got x and y and
+30:24 | that's all we've got.
+30:26 | This student cannot fly.
+30:29 | The student cannot dig a hole and go into the ground, we're
+30:33 | only moving in 2 dimensions, so that's fixed.
+30:37 | The other decision I made is that this student can only
+30:41 | move in 1 of 4 directions.
+30:45 | So, couple of good things here.
+30:48 | One, I've simplified the world, which will make it
+30:50 | easier for us to see what's going on.
+30:53 | But two, I know where I've made those decisions, and
+30:57 | later if I want to go back and say, you know it'd be fun if
+31:01 | the student could fly, let's say we're a drunken pigeon
+31:04 | instead of a drunken student.
+31:07 | Or it would be a good idea to realize that, in fact, they
+31:11 | might head off at any weird angle.
+31:13 | I know what code I have to change.
+31:16 | It's encapsulated in a single place.
+31:20 | So that's why possibles is part of compass point, rather
+31:26 | than scattered throughout the program.
+31:31 | So this is nice way to think about it.
+31:33 | All right, let's move on and look at field.
+31:37 | So field, it's got an init, it takes a self, a drunk, and a
+31:41 | location, and puts the drunk in the field at that location.
+31:52 | It can move.
+31:54 | So let's look at what happens when we try and move self in
+31:59 | some direction, in some distance.
+32:02 | We say the old location is the current location, and then x c
+32:10 | and y c, think of that as x-change and y-change, get c p
+32:16 | dot move of dist. Where is it gonna find c p dot move?
+32:28 | It's going to use compass point dot move, because as
+32:32 | we'll see, c p is an object of type, of class, compass point.
+32:38 | So this is a normal and typical way we structure
+32:42 | things with classes.
+32:44 | The move of one class is defined using the move of
+32:47 | another class.
+32:51 | This gives us the modularity we so prize.
+32:56 | And then I'll say self dot location is old loc dot move
+33:02 | of x c and x c.
+33:05 | Now this is oldloc dot move is going to get the move from
+33:10 | class location.
+33:14 | And you'll remember, that was the thing that just added
+33:17 | appropriate values to x and y.
+33:22 | So I'll use compass point to get those values, and then
+33:26 | oldloc to get the new location.
+33:30 | Then I'll be able to get the loc and I'll be
+33:32 | able to get the drunk.
+33:35 | So, let me ask the same question about field I've
+33:38 | asked about the others?
+33:41 | What interesting decisions, if any, have I embodied in the
+33:47 | way I've designed and implemented this abstraction?
+33:52 | There's at least one pretty interesting decision here.
+34:00 | Just interesting to me because my first version was far more
+34:03 | complicated.
+34:06 | Well, how many drunks can I have in a field at a time?
+34:12 | We have an answer which will not be recorded, because it
+34:15 | was merely raising a finger, but it happened to be the
+34:18 | correct number of fingers: one.
+34:23 | And it was this finger that got pointed at me.
+34:29 | We've embodied the fact that you can have one drunk,
+34:33 | exactly one drunk in the field.
+34:35 | This is a solitary alcoholic.
+34:41 | Later we might say, well, it would be fun to put a whole
+34:43 | bunch of drunken students in and watch what happens when
+34:45 | they bump into each other.
+34:48 | And we'll actually later give you a problem set, not with
+34:50 | students, but with other things where there might be
+34:53 | more than one in a field.
+34:55 | But here, I've made that decision.
+34:57 | But again, I know where I've made it, and if later I go
+35:00 | back and say let's put a bunch of them in, I don't have to
+35:04 | change compass point, I don't have to change location, I
+35:07 | only have to change field.
+35:10 | And we'll also see, I don't have to change drunk.
+35:13 | So again, it's very nice that the class structure, the
+35:18 | modularity let's us have decisions in exactly one place
+35:22 | in our code.
+35:24 | Usually important.
+35:26 | All right, now let's look at drunk.
+35:31 | So the drunk has a name.
+35:37 | And, like everything else, a move operation.
+35:41 | This is the most complicated and interesting move.
+35:44 | Because here is where I'm encapsulating the decisions
+35:48 | about what the drunk actually does.
+35:52 | That the drunk, for example, doesn't head north and just
+35:54 | keep on going.
+35:57 | So, let's look at what happens here.
+36:02 | It's got three parameters: self, the field the drunk is
+36:09 | moving in, and time.
+36:11 | How long the drunk is going to move.
+36:13 | And you may notice something that you haven't seen before,
+36:16 | at least some of you, time equals one
+36:20 | is sitting up there.
+36:26 | There.
+36:32 | Python allows us to have what are called default values for
+36:45 | parameters.
+36:48 | What this says is that if I call this method without that
+36:54 | last argument, rather than getting an error message
+36:57 | saying it expects three arguments it only got two, it
+37:02 | chooses the default value, in this case one
+37:04 | for the third argument.
+37:08 | This is actually a pretty useful programming paradigm,
+37:13 | because there's often a very sensible default.
+37:18 | And it can simplify things.
+37:21 | It's not an intrinsically interesting or important part
+37:24 | of what I'm showing you here.
+37:26 | The reason I'm showing it is, you'll be getting a problem
+37:28 | set in which default values are there because we're using
+37:33 | some other things.
+37:35 | And as you bring in libraries and modules from elsewhere,
+37:39 | you'll find that there are a lot of these things.
+37:42 | And in fact a lot of the functions you've already been
+37:44 | using for the built-in types happen to have default values.
+37:49 | For example, when you look at things in the init part of a
+37:54 | range, it's actually choosing, say, 0 as a start.
+38:01 | But don't worry about it.
+38:02 | This just says if you don't pass it a time, use 1.
+38:06 | And then what it does, is it says, if field dot get drunk
+38:16 | is not equal to self, raise an exception.
+38:25 | OK, you've asked me to move a drunk, it doesn't happen to be
+38:28 | in the field.
+38:31 | That's not very interesting.
+38:33 | But now we come to the interesting part.
+38:35 | For i in range time, here by the way range does have a
+38:40 | default value of 0, and since I didn't
+38:44 | supply it, it used it.
+38:48 | Point equals compass point, and here's the most
+38:51 | interesting thing, random dot choice of
+38:55 | compass point dot possibles.
+38:58 | Random dot choice is a function in the random module
+39:03 | which we've imported and it takes as an argument a
+39:08 | sequence, a list of some sort, a container, and it picks a
+39:12 | random element out of that.
+39:15 | So here we're passing it in, four possible values, and it's
+39:21 | just going to pick one of them at random.
+39:25 | So you can see by my having encapsulated the possibles
+39:31 | array in compass point, I don't have to worry in drunk
+39:37 | about how many possible directions this person could
+39:41 | head off in.
+39:44 | And then it calls field dot move, with the resultant
+39:49 | point, and in this case one.
+39:54 | All right?
+39:57 | We've now finished all of this sort of groundwork that we
+40:02 | need to go and actually build the simulation that will model
+40:06 | our problem.
+40:09 | So let's look at how we use all of this.
+40:13 | I've now got a function perform trial, which will take
+40:20 | a time in a field.
+40:26 | So I'll get a starting point of f dot getloc, wherever the
+40:31 | drunk happens to be at this point in time in the field.
+40:35 | And then for t in range 1 to time plus 1, I'm going to call
+40:42 | field dot get drunk, that will give me the drunk that's in
+40:46 | the field, and then I'll get the move
+40:54 | function for that drunk.
+40:56 | So what you see here is I can actually, in this dot
+41:00 | notation, take advantage of the fact, where are we, we're
+41:08 | down here, I've got to get far enough away that
+41:12 | I can see it --
+41:16 | Where was I?
+41:17 | STUDENT: You were in the right place
+41:19 | right there, down slightly.
+41:21 | PROFESSOR: -- down slightly, here, right.
+41:24 | I've called the function, which has returned an object,
+41:29 | f dot get drunk returns an object of class drunk.
+41:35 | And then I can select the method associated with that
+41:39 | object, the move method, and move the drunk.
+41:44 | This gets back to a point that we've emphasized before, that
+41:49 | these objects are first class citizens in Python.
+41:53 | You can use functions and methods to generate them, and
+41:56 | use them just as if you'd typed them.
+42:01 | So that will get me that, and then I'll call the move of
+42:07 | that drunk with the field.
+42:11 | Then I'll get the location, the new location, and then
+42:18 | I'll say, distance equals new loc dot get distance of start,
+42:24 | how far is the new location from wherever the starting
+42:28 | location was?
+42:30 | I'll append it to a list, and then I'll return it.
+42:35 | So now I have a list, and in the list I have how far away
+42:43 | the drunk is after each time step.
+42:46 | I'm just collecting the list of distances.
+42:49 | So I don't have a list of locations, I don't know where,
+42:51 | I can't plot the trajectory, but I can plot the distances.
+43:00 | OK, now, let's put it all together.
+43:10 | So I'll say the drunk is equal to, is drunk of Homer Simpson.
+43:15 | I had thought about using the name of someone on campus and
+43:18 | decided that, since it was going to be taped for
+43:21 | OpenCourseWare, I didn't want to go there.
+43:26 | Sometimes I lack courage.
+43:29 | Then for i in range 3, and all this says is I'm going to
+43:33 | test, I'm going to run the simulation three different
+43:36 | times, f is equal to field of drunk and location 0, 0,
+43:44 | starting in the middle of the field.
+43:47 | Distances equal perform trial 500, 500 steps on that field,
+43:55 | and the rest of it is magic you don't need to understand
+43:58 | because we'll come back to next lecture, which is, how do
+44:01 | I put all this in a pretty picture?
+44:04 | So ignore all of that for now, and that's just the Pylab
+44:08 | stuff for plotting the pictures.
+44:11 | All right, we're there, let's run it.
+44:22 | Huh.
+44:24 | Remember the change we made?
+44:27 | Guess what?
+44:31 | Well, we know how to fix that.
+44:40 | And we'll come back to it and ask what's
+44:42 | really going on here.
+44:46 | What does self refer to here?
+44:52 | It refers to the class compass point, rather than an instance
+44:58 | of the class.
+45:00 | Again, driving home the point that classes are objects just
+45:05 | like everything else.
+45:05 | STUDENT: [INAUDIBLE]
+45:13 | PROFESSOR: Oh, sorry.
+45:15 | Thank you.
+45:16 | It did it have in here, right.
+45:23 | All right, now let's run it, see what we get.
+45:28 | We get a picture.
+45:32 | Well, so we see that, at least for these three tests, the
+45:37 | majority of the public was wrong.
+45:43 | It seems that the longer we run it, the further from the
+45:47 | origin Homer seems to be getting.
+45:52 | Well, let's try it again.
+45:53 | Maybe we just got unlucky three times.
+45:56 | You can see from the divergence here, that, of
+45:59 | course, a lot of things go on.
+46:01 | I hope you can also see the advantage of being able to
+46:10 | plot it rather than having to look at those arrays.
+46:17 | Well, we get different answers, but you know what?
+46:19 | The trend still seems pretty clear.
+46:25 | It does seem over time, that we wander further away.
+46:30 | I know, further away.
+46:33 | So, looks at least for the moment, that
+46:40 | perhaps we were wrong.
+46:43 | Well, this is rather silly for me to keep running it over and
+46:46 | over again.
+46:47 | So clearly what I ought to do is, do it in a
+46:54 | more organized way.
+46:56 | So now if we go back, and see the, kind of the right way to
+47:26 | do it, I'm going to get rid of this stuff here, which was
+47:29 | used just to stop the previous computation.
+47:34 | I'm going to write a function called perform sim.
+47:40 | And what that does, is it takes the time and the number
+47:44 | of trials that we wanted to do.
+47:49 | It takes distlist equals the empty list in this case, to
+47:54 | start with, and then it is basically going to call
+48:00 | perform trial, the function we already looked at over and
+48:02 | over again.
+48:04 | And get a whole bunch of lists back, a list each
+48:07 | time it calls it.
+48:10 | And then, compute an average.
+48:18 | Well, not yet, so it says, it says d equals drunk, field
+48:21 | start in zero, distances equals perform trial, append
+48:26 | the new list, and what it does, is it
+48:28 | returns a list of lists.
+48:32 | Where each list is what we had for the previous trials.
+48:37 | Make sense?
+48:49 | And then I'm going to have 1 more function
+48:51 | call, answer a question.
+48:53 | Which takes the maximum time and the number of trials, and
+48:58 | it's going to do some statistics
+49:00 | on all of the lists.
+49:03 | We'll come back to this a week from today.
+49:08 | If you are, have absolutely nothing to do for the next
+49:11 | week, I'll give you a hint.
+49:14 | I have salted a bug here in this latest code, and you
+49:19 | might have some fun looking at what that bug is.

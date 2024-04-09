@@ -1,0 +1,763 @@
+0:00 | The following content is provided under a Creative
+0:02 | Commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:21 | PROFESSOR: I want to take a few minutes at the start of
+0:23 | today's lecture to wrap up a few more
+0:25 | things about debugging.
+0:27 | And then I'll move on to the main event.
+0:33 | Just a few small points.
+0:34 | First of all, keep in mind that the bug is probably not
+0:39 | where you think it is.
+0:40 | Because if a bug were there, you'd have already found it.
+0:45 | There are some simple things that you should always look at
+0:49 | when you're looking for bugs.
+0:54 | Reversed order of arguments.
+0:59 | You might have a function that takes to floats and you just
+1:03 | passed them in the wrong order.
+1:06 | You may have noticed that when Professor Grimson and I used
+1:09 | examples in class, we were pretty careful how we name our
+1:12 | parameters.
+1:14 | And I often end up using the same names for the actuals and
+1:17 | the formals.
+1:19 | And this just helps me not get confused about what order to
+1:22 | do things in.
+1:25 | Spelling.
+1:30 | These are just dumb little things to look for.
+1:32 | Did you spell all the identifiers the way
+1:34 | you think you did.
+1:35 | The problem is, when you read code you see what
+1:38 | you expect to see.
+1:41 | And if you've typed in l when you should've typed a 1, or a
+1:43 | 1 when you should've typed an l, you're likely to miss it.
+1:48 | If you've made a mistake with upper and lower case.
+1:50 | Things like that.
+1:52 | So just be very careful looking at that.
+1:57 | Initialization.
+2:04 | A very common bug is to initialize a variable.
+2:09 | Go through a loop, and then forget to reinitialize it when
+2:12 | it needs to be reinitialized again.
+2:15 | So it's initialized outside the loop when it should be
+2:17 | initialized inside the loop.
+2:20 | Or conversely, inside the loop when it should
+2:22 | be outside the loop.
+2:24 | So look carefully at when variables are being
+2:28 | initialized.
+2:35 | Object versus value equality.
+2:43 | Particularly when you use double equals, are you asking
+2:47 | whether you've got the same object or the same value?
+2:51 | They mean very different things, as we have seen.
+2:54 | Keep track of that.
+2:58 | Related to that is aliasing.
+3:05 | And you'll see that, by the way, on the problem set that
+3:08 | we're posting tomorrow.
+3:10 | Where we're going to ask you to just look at some code,
+3:13 | that there's some issues there with the fact that you alias
+3:17 | things, maybe on purpose, maybe on accident.
+3:20 | And by that I mean two different ways to get to the
+3:24 | same value, the same object.
+3:27 | Frequently that introduces bugs into the program.
+3:33 | A particular instance of that is deep versus shallow copy.
+3:42 | When you decide to make a copy of something like a list, you
+3:46 | have to think hard about are you only copying the top level
+3:50 | of the list, but if it's, say, a list that contains a list,
+3:55 | are you also getting a new copy of
+3:56 | everything it contains?
+4:00 | It doesn't matter if it's a list of integers or a list of
+4:02 | strings or a list of tuples, but it matters a lot if it's a
+4:06 | list of lists.
+4:08 | Or a list of anything that could be mutable.
+4:11 | So when you copy, what are you getting?
+4:14 | When you copy a dictionary, for example.
+4:17 | Think through all of that.
+4:20 | And again, a related problem that people run into is
+4:23 | side-effects.
+4:29 | You call a function and it returns a value, but maybe it,
+4:33 | on purpose or on accident, modifies one of the actual
+4:37 | parameters.
+4:40 | So you could each make a list of things.
+4:45 | Every experienced programmer over time develops a personal
+4:51 | model of the mistakes they make.
+4:54 | I know the kinds of things I get wrong.
+4:57 | And so when I'm looking for a bug, I always say, oh, have
+5:00 | you done this dumb thing you always do.
+5:04 | So be a little bit introspective.
+5:06 | Keep track of the mistakes you make.
+5:09 | And if your program doesn't work, that should be your
+5:12 | first guess.
+5:15 | Couple of other hints.
+5:18 | Keep a record of what you've tried.
+5:30 | People will look at things and they'll come in and that'll
+5:33 | talk to a TA, and the TA will say, did you try this?
+5:37 | And the person will say, I don't know.
+5:40 | That leads you to end up doing the same thing
+5:42 | over and over again.
+5:44 | This gets back to my main theme of Tuesday, which is be
+5:47 | systematic.
+5:49 | Know what you've already tried, don't waste your time
+5:51 | trying it again.
+5:57 | Think about reconsidering your assumptions.
+6:08 | A huge one is, are you actually running the code
+6:13 | you're looking at in your editor.
+6:16 | This is a mistake I make all the time in Python.
+6:21 | I sit there in idle, and I edit some code.
+6:25 | I then click on the shell, rather than hitting F5, try
+6:31 | and run it and say, it's not doing what I
+6:33 | thought I should do.
+6:35 | And I'll sit there staring at the output, staring at the
+6:37 | code, not realizing that that output was not
+6:40 | produced by that code.
+6:45 | It's a mistake I've learned that I make.
+6:48 | It's an easy one to make in Python.
+6:52 | Lots of assumptions like that.
+6:54 | You thought you knew what the built-in function sort did,
+6:59 | method sort did.
+7:00 | Well, does it do what you think it does?
+7:02 | Does append do what you think it does?
+7:05 | Go back and say, alright, I've obviously, some
+7:07 | assumption is not right.
+7:13 | When you're debugging somebody else's code, debug the code,
+7:21 | not the comments.
+7:27 | I've often made the mistake of believing the comments
+7:30 | somebody wrote in your code about what some function does.
+7:34 | Sometimes it's good to believe it.
+7:36 | But sometimes you have to read it.
+7:41 | Important thing.
+7:43 | When it gets really tough, get help.
+7:49 | Swallow your pride.
+7:52 | Any one of my graduate students will tell you that
+7:55 | from time to time I walk into their office and say, do you
+7:58 | have a minute?
+8:00 | And if they foolishly say yes, I drag them back to my office
+8:04 | and say I'm stuck on this bug, what am I doing wrong?
+8:10 | And it's amazing what -- well, a, they're smarter than I am
+8:14 | which helps.
+8:15 | But even if they weren't smarter than I am, just a
+8:18 | fresh set of eyes.
+8:20 | I've read through the same thing twenty times and I've
+8:22 | missed something obvious.
+8:24 | Someone who's never seen it before looks at and says, did
+8:27 | you really mean to do this?
+8:31 | Are you sure you didn't want to do for i in range of list,
+8:35 | rather than for i in list?
+8:38 | That sort of thing.
+8:41 | Makes a big difference to just get that set of eyes.
+8:45 | And in particular, try and explain to somebody else what
+8:52 | you think the program is doing.
+8:54 | So I'll sit there with the student and I'll say, I'm
+8:57 | going to try and explain to you why what I think this
+9:00 | program is doing.
+9:02 | And probably 80% of the time, halfway through my
+9:06 | explanation, I say, oh, never mind.
+9:10 | I'm embarrassed.
+9:11 | And I send them away.
+9:12 | Because just the act of explaining it to him or her
+9:15 | has helped me understand it.
+9:17 | So when you're really stuck, just get somebody.
+9:21 | And try and explain to them why you think your program is
+9:24 | doing what it's doing.
+9:28 | Another good thing to do when you're really
+9:29 | stuck is walk away.
+9:36 | Take a break.
+9:37 | Come back and look at it with fresh eyes of your own.
+9:41 | Effectively, what you're doing here is perhaps trading
+9:45 | latency for efficiency.
+9:49 | It may, if you go back, come back and two hours later,
+9:54 | maybe you'll, it'll take you at least two hours to have
+9:57 | found the bugs, because you've been away for two hours.
+10:00 | And maybe if you'd stayed there and worked really hard
+10:02 | you'd have found it an hour and fifty eight minutes.
+10:05 | But is it really worth the two minutes?
+10:07 | This is another reason, by the way, to start it
+10:09 | long before it's due.
+10:11 | That you actually have the leisure to walk away.
+10:15 | All right.
+10:16 | What do you do when you've found the bug and
+10:18 | you need to fix it?
+10:22 | Remember the old saw, haste makes waste.
+10:30 | I don't know this but I'll bet Benjamin Franklin said this.
+10:36 | Don't rush into anything.
+10:38 | Think about the fix, don't make the first change that
+10:42 | comes to mind and see if it works.
+10:45 | Ask yourself, will it fix all of the symptoms you've seen?
+10:49 | Or if not, are the symptoms independent, will at least fix
+10:52 | some of them?
+10:54 | What are the ramifications of the proposed change.
+10:59 | Will it break other things?
+11:03 | That's a big issue.
+11:03 | You can fix one thing, you break something else.
+11:06 | So think through what this change might break.
+11:10 | Does it allow you to tidy up other things?
+11:15 | This is important, I think, that code
+11:22 | should not always grow.
+11:31 | We all have a tendency to fix code by adding code.
+11:36 | And the program just gets bigger and bigger and bigger.
+11:40 | The more code you have, the harder it is to get it right.
+11:45 | So, sometimes, what you need to, so you just pull back.
+11:48 | And say, well, let me just tidy things up.
+11:53 | That, by the way, is also a good debugging tool.
+11:55 | Sometimes when I'm really stuck, I say, alright let me
+11:58 | stop looking for the bug.
+11:59 | Let me just clean up the code a little bit.
+12:01 | Make my program prettier.
+12:04 | And in the process of tidying it up and making it prettier,
+12:07 | I'll often by accident find the bug.
+12:10 | So it's a good trick to remember.
+12:14 | Finally, and this is very important, make sure that you
+12:26 | can revert.
+12:31 | There's nothing more frustrating then spending four
+12:37 | hours debugging, and realizing at the end of four hours your
+12:41 | program is worse than it was when you started.
+12:44 | And you can't get back to where it was when you started.
+12:49 | So if you look at one of my directories, you'll find that
+12:55 | I've been pretty anal about saving old versions.
+13:02 | I can always pretty much get back to some place I've been.
+13:06 | So if I've made a set of changes and I realize I've
+13:09 | broken something that used to work, I can find a version of
+13:12 | the code in which it used to work, and figure out what was
+13:16 | going on there.
+13:18 | Disk space is cheap.
+13:22 | Don't hesitate to save your old versions.
+13:25 | It's a good thing.
+13:28 | Alright, that's the end of my, maybe sermon is the right word
+13:33 | on debugging.
+13:34 | Polemic, I don't know.
+13:36 | I hope it will be helpful.
+13:38 | And I hope you'll remember some of these things as you
+13:41 | try and get your programs to work.
+13:44 | I now want to get back to algorithms. And where we've
+13:48 | sort of been for a while, and where we
+13:49 | will stay for a while.
+13:52 | More fundamentally, I want to get back to what I think of as
+13:56 | the main theme of 6.00, which is taking a problem and
+14:03 | finding some way to formulate the problem so that we can use
+14:08 | computing to help us get an answer.
+14:13 | And in particular, we're going to spend the next few lectures
+14:17 | looking at a class of problems known as optimization
+14:20 | problems. In general, every optimization
+14:36 | problem is the same.
+14:38 | It has two parts.
+14:41 | Some function that you're either attempting to maximize
+14:50 | or minimize the value of.
+14:57 | And these are duals.
+15:00 | And some set of constraints that must be honored.
+15:14 | Possibly an empty set of constraints.
+15:17 | So what are some of the classic optimization problems?
+15:22 | Well one of the most well-known is the so-called
+15:26 | shortest path problem.
+15:33 | Probably almost every one of you has used a
+15:35 | shortest path algorithm.
+15:37 | For example, if you go to Mapquest, or Google Maps and
+15:41 | ask how do I get from here to there.
+15:45 | You give it the function, probably in this case to
+15:48 | minimize, and it gives you a choice of functions.
+15:51 | Minimize time, minimize distance.
+15:56 | And maybe you give it a set of constraints.
+15:58 | I don't want to drive on highways.
+16:01 | And it tries to find the shortest way, subject to those
+16:04 | constraints, to get from Point A to Point B. And there are
+16:10 | many, many other instances of this kind of thing.
+16:13 | And tomorrow it's recitation, we'll spend quite a bit of
+16:16 | time on shortest path problems.
+16:20 | Another classic optimization problem is
+16:25 | the traveling salesman.
+16:27 | Actually, I should probably, be modern, call it the
+16:34 | traveling salesperson, the traveling salesperson problem.
+16:44 | So the problem here, roughly, is given, a number of cities,
+16:49 | and say the cost of traveling from city to city by airplane,
+16:53 | what's the least cost round trip that you can find?
+16:59 | So you start at one place, you have to go to a number of
+17:01 | other places.
+17:02 | End up where you started.
+17:05 | It's not quite the same as the shortest path, and figure out
+17:09 | the way to do that that involves
+17:11 | spending the least money.
+17:12 | Or the least time, or something else.
+17:19 | What are some of the other classic optimization problems?
+17:27 | There's bin packing.
+17:36 | Filling up some container with objects of varying size and,
+17:41 | perhaps, shape.
+17:43 | So you've got the trunk of your car and you've got a
+17:45 | bunch of luggage.
+17:47 | More luggage than can actually fit in.
+17:49 | And you're trying to figure out what order
+17:51 | to put things in.
+17:52 | And which ones you can put in.
+17:54 | How to fill up that bin.
+17:57 | Very important in shipping.
+17:59 | People use bin packing algorithms to figure out, for
+18:01 | example, how to load up container ships.
+18:04 | Things of that nature.
+18:05 | Moving vans, all sorts of things of that nature.
+18:11 | In biology and in natural language processing and many
+18:15 | other things, we see a lot of sequence alignment problems.
+18:23 | For example, aligning DNA sequences, or RNA sequences.
+18:31 | And, one we'll spend a fair amount of time on today and
+18:37 | Tuesday is the knapsack problem.
+18:43 | In the old days people used to call backpacks knapsacks.
+18:47 | So we old folks sometimes even still make that mistake.
+18:52 | And the problem there is, you've got a bunch of things.
+18:55 | More than will fit into the knapsack, and you're trying to
+18:58 | figure out which things to take and which things to
+19:00 | leave. As you plan your hiking trip.
+19:03 | How much water should you take.
+19:05 | How many blankets?
+19:06 | How much food?
+19:08 | And you're trying to optimize the value of the objects you
+19:12 | can take subject to the constraint that the backpack
+19:15 | is of finite size.
+19:20 | Now, why am I telling you all of this at
+19:24 | this lightning speed?
+19:27 | It's because I want you to think about it, going forward,
+19:33 | about the issue of problem reduction.
+19:39 | We'll come back to this.
+19:47 | What this basically means is, you're given some problem to
+19:51 | solve, that you've never seen before.
+19:54 | And the first thing you do is ask is it an instance of some
+20:00 | problem that other people have already solved?
+20:06 | So when the folks at Mapquest sat down to do their program,
+20:10 | I guarantee you somebody opened an algorithms book and
+20:14 | said, what have other people done to solve
+20:17 | shortest path problems?
+20:20 | I'll rely on fifty years of clever people rather than
+20:23 | trying to invent my own.
+20:26 | And so frequently what we try and do is, we take a new
+20:29 | problem and map it onto an old problem so that we can use an
+20:34 | old solution.
+20:37 | In order to be able to do that, it's nice to have in our
+20:41 | heads an inventory of previously solved problems. To
+20:47 | which we can reduce the current problem.
+20:50 | So as we go through this semester, we'll look at,
+20:54 | briefly or not so briefly, different previously solved
+20:57 | problems in the hope that at some time in your future, when
+21:01 | you have a problem to deal with, you'll say, I know
+21:05 | that's really like shortest path, or
+21:07 | really like graph coloring.
+21:09 | Let me just take my problem and turn it into that problem,
+21:14 | and use an existing solution.
+21:18 | So we'll start looking in detail at one problem, and
+21:22 | that's the knapsack problem.
+21:30 | Let's see.
+21:30 | Where do I want to start?
+21:31 | Oh yes, OK.
+21:33 | So far, we've been looking at problems that
+21:36 | have pretty fast solutions.
+21:41 | Most optimization problems do not have fast solutions.
+21:46 | That is to say, when you're dealing with a large set of
+21:49 | things, it takes a while to get the right answer.
+21:54 | Consequently, you have to be clever about it.
+21:58 | Typically up till now, we've looked at things that can be
+22:00 | done in sublinear time.
+22:03 | Or, at worst, polynomial time.
+22:09 | We'll now look at a problem that does not fall into that.
+22:12 | And we'll start with what's called the
+22:14 | continuous knapsack problem.
+22:22 | So here's the classic formulation.
+22:26 | Assume that you are a burglar.
+22:30 | And you have a backpack that holds, say, eight pounds'
+22:34 | worth of stuff.
+22:35 | And you've now broken into a house and you're trying to
+22:38 | decide what to take.
+22:41 | Well, let's assume in the continuous world, what you is
+22:44 | you walk into the house and you see something like four
+22:48 | pounds of gold dust. And you see three pounds of silver
+22:59 | dust, and maybe ten pounds of raisins.
+23:06 | And I don't actually know the periodic
+23:08 | table entry for raisins.
+23:11 | So I'll have to write it out.
+23:16 | Well, how would you solve this problem?
+23:21 | First, let's say, what is the problem?
+23:24 | How can we formulate it?
+23:27 | Well, let's assume that what we want to do is, we have
+23:33 | something we want to optimize.
+23:35 | So we're looking for a function to
+23:38 | maximize, in this case.
+23:41 | What might that function be?
+23:44 | Well, let's say it's some number of, some amount of, the
+23:51 | cost of the value of gold.
+23:56 | Times however many pounds of gold.
+24:00 | Plus the cost of silver times however many - no, gold, is a
+24:08 | g, isn't it.
+24:10 | Pounds of silver, plus the cost of raisins times the
+24:18 | number of pounds of raisins.
+24:21 | So that's the function I want to optimize.
+24:24 | I want to maximize that function.
+24:30 | And the constraint is what?
+24:40 | It's that the pounds of gold plus the pounds of silver plus
+24:45 | the pounds of raisins is no greater than eight.
+24:52 | So I've got a function to maximize and a constraint that
+24:54 | must be obeyed.
+24:58 | Now, the strategy here is pretty clear.
+25:01 | As often is for the continuous problem.
+25:04 | What's the strategy?
+25:06 | I pour in the gold till I run out of gold.
+25:09 | I pour in the silver until I run out of silver.
+25:12 | And then I take as many raisins as will fit in and I
+25:14 | leave. Right?
+25:18 | I hope almost every one of you could figure out that was the
+25:21 | right strategy.
+25:22 | If not, you're not well suited to a life of crime.
+25:29 | What I just described is an
+25:32 | instance of a greedy algorithm.
+25:43 | In a greedy algorithm, at every step you do what
+25:48 | maximizes your value at that step.
+25:52 | So there's no planning ahead.
+25:55 | You just do what's ever best. It's like when someone gets
+25:58 | their food and they start by eating dessert.
+26:01 | Just to make sure they get to the best part
+26:03 | before they're full.
+26:07 | In this case, a greedy algorithm actually gives us
+26:12 | the best possible solution.
+26:18 | That's not always so.
+26:21 | Now, you've actually all
+26:22 | implemented a greedy algorithm.
+26:25 | Or are in the process thereof.
+26:28 | Where have we implemented a greedy algorithm, or have been
+26:31 | asked to do a greedy algorithm?
+26:36 | Well, there are not that many things you guys have been
+26:37 | working on this semester.
+26:41 | Yeah?
+26:41 | STUDENT: [INAUDIBLE]
+26:48 | PROFESSOR: Exactly right.
+26:50 | So what you were doing there, it was a really good throw.
+27:01 | But it was a really good answer you gave. So I'll
+27:03 | forgive you the bad hands.
+27:09 | You were asked to choose the word that gave
+27:11 | you the maximum value.
+27:14 | And then do it again with whatever letters you had left.
+27:20 | Was that guaranteed to win?
+27:23 | To give you the best possible scores?
+27:27 | No.
+27:28 | Suppose, for example, you had the letters this, doglets.
+27:37 | Well, the highest scoring word might have been something like
+27:41 | Doges, these guys used to rule Venice, but if you did that
+27:50 | you'd been left with the letters l and t, which are
+27:55 | kind of hard to use.
+27:58 | So you've optimized the first step.
+28:00 | But now you're stuck with something
+28:02 | that's not very useful.
+28:04 | Whereas in fact, maybe you would have been better to go
+28:10 | with dog, dogs, and let.
+28:19 | So what we see here is an example of something very
+28:24 | important and quite general.
+28:27 | Which was that locally optimal decisions do not always lead
+28:51 | to a global optimums. So you can't just repeatedly do the
+29:05 | apparently local thing and expect to
+29:07 | necessarily get to it.
+29:11 | Now, as it happens with the continuous knapsack problem as
+29:14 | we've formulated it, greedy is good.
+29:21 | But let's look for a slight variant of it, where greedy is
+29:27 | not so good.
+29:30 | And that's what's called the zero-one knapsack problem.
+29:56 | This is basically a discrete version of
+29:59 | the knapsack problem.
+30:02 | The formulation is that we have n items and at every step
+30:12 | we have to either take the whole item
+30:15 | or none of the item.
+30:18 | In the continuous problem, the gold dust was assumed to be
+30:21 | infinitely small.
+30:23 | And so you could take as much of it as you wanted.
+30:27 | Here it's as if you had gold bricks.
+30:30 | You get to take the whole brick or no brick at all.
+30:36 | Each item has a weight and a value, and we're trying to
+30:41 | optimize it as before.
+30:43 | So let's look at an example of a zero-one knapsack problem.
+30:47 | Again we'll go back to our burglar.
+30:51 | So the burglar breaks into the house and finds the following
+31:01 | items available.
+31:02 | And you'll see in your handout a list of items and their
+31:05 | value and how much, what they weight.
+31:08 | Finds a watch, a nice Bose radio, a beautiful Tiffany
+31:13 | vase, and a large velvet Elvis.
+31:19 | And now this burglar finds, in fact, two of each of those.
+31:23 | Person is a real velvet Elvis fan and needed two
+31:26 | copies of this one.
+31:28 | Alright, and now he's trying to decide what to take.
+31:35 | Well if the knapsack were large enough the thief would
+31:37 | take it all and run, but let's assume that it can only hold
+31:40 | eight pounds, as before.
+31:43 | And therefore the thief has choices to make.
+31:46 | Well, there are three types of thieves I want to consider:
+31:49 | the greedy thief, the slow thief, and you.
+31:57 | We'll start with the greedy thief.
+32:00 | Well, the greedy thief follows the greedy algorithm.
+32:03 | What do you get if you follow the greedy algorithm?
+32:05 | What's the first thing the thief does?
+32:07 | Takes the most valuable item, which is a watch.
+32:14 | And then what does he do after that?
+32:18 | Takes another watch.
+32:19 | And then?
+32:22 | Pardon?
+32:22 | STUDENT: [INAUDIBLE]
+32:24 | PROFESSOR: And then?
+32:24 | STUDENT: [INAUDIBLE]
+32:28 | PROFESSOR: No.
+32:29 | Not unless he wants to break the vase into little pieces
+32:32 | and stuff it in the corners.
+32:34 | The backpack is now full, right?
+32:38 | There's no more room.
+32:41 | So the greedy thief take that and leaves.
+32:45 | But it's not an optimal solution.
+32:52 | What should the thief have done?
+32:55 | What's the best thing you can do?
+32:57 | Instead of taking that one vase, the thief
+33:00 | could take two radios.
+33:03 | And get more value.
+33:06 | So the greedy thief, in some sense, gets the wrong answer.
+33:12 | But maybe isn't so dumb.
+33:16 | While greedy algorithms are not guaranteed to get you the
+33:19 | right answer all the time, they're often
+33:22 | very good to use.
+33:25 | And what they're good about is, they're easy to implement.
+33:31 | And they're fast to run.
+33:34 | You can imagine coding the solution up
+33:36 | and it's pretty easy.
+33:39 | And when it runs, it's pretty fast. Just takes the most
+33:44 | valuable, the next most valuable, the next most
+33:46 | valuable, I'm done.
+33:47 | And the thief leaves, and is gone.
+33:51 | So that's a good thing.
+33:53 | On the other hand, it's often the case in the world that
+33:56 | that's not good enough.
+33:59 | And we're not looking for an OK solution, but we're looking
+34:01 | for the best solution.
+34:04 | Optimal means best. And that's what the slow thief does.
+34:11 | So the slow thief thinks the following.
+34:14 | Well, what I'll do is I'll put stuff in the
+34:18 | backpack until it's full.
+34:21 | I'll compute its value.
+34:24 | Then I'll empty the backpack out, put another combination
+34:28 | of stuff compute its value, try all possible ways of
+34:32 | filling up the backpack, and then when I'm done, I'll know
+34:36 | which was the best. And that's the one I'll do.
+34:40 | So he's packing and unpacking, packing and unpacking, trying
+34:43 | all possible combinations of objects that will obey the
+34:46 | constraint.
+34:48 | And then choosing the winner.
+34:51 | Well, this is like an algorithm we've seen before.
+34:53 | It's not greedy.
+34:54 | What is this?
+34:56 | What category of algorithm is that?
+34:59 | Somebody?
+35:01 | Louder?
+35:02 | STUDENT: Brute force.
+35:04 | PROFESSOR: Brute force, exhaustive
+35:05 | enumeration, exactly.
+35:07 | We're exhausting all possibilities.
+35:09 | And then choosing the winner.
+35:12 | Well, that's what the slow thief tried.
+35:15 | Unfortunately it took so long that before he finished the
+35:19 | owner returned home, called the police and the thief ended
+35:21 | up in jail.
+35:23 | It happens.
+35:25 | Fortunately, while sitting in jail awaiting trial, the slow
+35:30 | thief decided to figure what was wrong.
+35:34 | And, amazingly enough, he had studied mathematics.
+35:37 | And had a blackboard in the cell.
+35:40 | So he was able to work it out.
+35:43 | So he first said, well, let me try and figure out what I was
+35:47 | really doing and why it took so long.
+35:50 | So first, let's think about what was the function the slow
+35:56 | thief was attempting to maximize.
+36:02 | The summation, from i equals 1 to n, where n is the number of
+36:10 | items, so I might label watch 1-0, watch 2-2, I don't care
+36:20 | that they're both watches.
+36:21 | They're two separate items. And then what I want to
+36:25 | maximize is the sum of the price of item i times whether
+36:34 | or not I took x i.
+36:40 | So think of x as a vector of 0's and 1's.
+36:51 | Hence the name of the problem.
+36:54 | If I'm going to keep that item, item i, if I'm going to
+36:57 | take it, I give it a 1.
+36:59 | If I'm not going to take it I give it a 0.
+37:03 | And so I just take the value of that item times whether or
+37:07 | not it's 0 or 1.
+37:11 | So my goal here is to choose x such that this is maximized.
+37:19 | Choose x such that that function is maximized, subject
+37:25 | to a constraint.
+37:28 | And the constraint, is it the sum from 1 to n of the weight
+37:48 | of the item, times x i, is less than or equal to c, the
+37:57 | maximum weight I'm allowed to put in my backpack.
+38:00 | In this case it was eight.
+38:04 | So now I have a nice, tidy mathematical formulation of
+38:08 | the problem.
+38:10 | And that's often the first step in problem reduction.
+38:14 | Is to go from a problem that has a bunch of words, and try
+38:18 | and write it down as a nice, tight mathematical
+38:21 | formulation.
+38:23 | So now I know the formulation is to find x, the vector x,
+38:28 | such that this constraint is obeyed and
+38:31 | this function is maximized.
+38:37 | That make sense to everybody?
+38:38 | Any questions about that?
+38:42 | Great.
+38:45 | So as the thief had thought, we can clearly solve this
+38:50 | problem by generating all possible values of x and
+38:57 | seeing which one solves this problem.
+39:03 | But now the thief started scratching his head and said,
+39:06 | well, how many possible values of x are there?
+39:13 | Well, how can we think about that?
+39:19 | Well, a nice way to think about that is to
+39:23 | say, I've got a vector.
+39:25 | So there's the vector with eight 0's in it.
+39:32 | Three, four, five, six, seven, eight.
+39:36 | Indicating I didn't take any of the items.
+39:44 | There's the vector, and again you'll see this in your
+39:48 | handout, says I only took the first item.
+39:55 | There's the one that says I only took the second item.
+40:00 | There's the one that says I took the first
+40:02 | and the second item.
+40:05 | And at the last, I have all 1's.
+40:09 | This series look like anything familiar to you?
+40:12 | These are binary numbers, right?
+40:15 | Eight digit binary numbers.
+40:16 | Zero, one, two, three.
+40:21 | What's the biggest number I can represent
+40:23 | with eight of these?
+40:26 | Somebody?
+40:31 | Well, suppose we had decimal numbers.
+40:34 | And I said I'm giving you three decimal digits.
+40:37 | What's the biggest number you can represent with three
+40:38 | decimal digits?
+40:43 | Pardon?
+40:43 | STUDENT: [INAUDIBLE]
+40:45 | PROFESSOR: Right.
+40:47 | Which is roughly what?
+40:50 | 10 to the?
+40:51 | STUDENT: [INAUDIBLE]
+40:55 | PROFESSOR: Right.
+40:58 | Yes.
+40:58 | STUDENT: [INAUDIBLE]
+41:01 | PROFESSOR: Right.
+41:01 | Exactly right.
+41:03 | So, in this case it's 2 to the 8th.
+41:07 | Because I have eight digits.
+41:08 | But exactly right.
+41:11 | More generally, it's 2 to the n.
+41:18 | Where n is the number of possible items I have to
+41:21 | choose from.
+41:26 | Well, now that we've figured that out, what we're seeing is
+41:33 | that the brute force algorithm is exponential.
+41:42 | In the number of items we have to choose from.
+41:46 | Not in the number that we take, but the number we have
+41:49 | to think about taking.
+41:52 | Exponential growth is a scary thing.
+41:57 | So now we can look at these two graphs,
+42:01 | look at the top one.
+42:03 | So there, we've compared n squared, quadratic growth,
+42:10 | which by the way Professor Grimson told you was bad, to,
+42:15 | really bad, which is exponential growth.
+42:19 | And in fact, if you look at the top figure it looks as
+42:22 | exponential or, quadratic isn't even growing at all.
+42:27 | You see how really fast exponential growth is?
+42:31 | You get to fifteen items and we're up at seventy thousand
+42:34 | already and counting.
+42:39 | The bottom graph has exactly the same data.
+42:42 | But what I've done is, I've use the logarithmic y-axis.
+42:47 | Later in the term, we'll spend quite a lot of time talking
+42:49 | about how do we visualize data.
+42:52 | How do we make sense of data.
+42:54 | I've done that because you can see here that the quadratic
+42:57 | one is actually growing.
+42:59 | It's just growing a lot more slowly.
+43:05 | So the moral here is simple one.
+43:08 | Exponential algorithms are typically not useful. n does
+43:15 | not have to get very big for exponential to fail.
+43:21 | Now, imagine that you're trying to pack a ship and
+43:24 | you've got ten thousand items to choose from.
+43:27 | 2 to the 10,000 is a really big number.
+43:34 | So what we see immediately, and the slow thief decided
+43:39 | just before being incarcerated for years and years, was that
+43:44 | it wasn't possible to do it that way.
+43:47 | He threw up his hands and said, it's an unsolvable
+43:51 | problem, I should have been greedy, there's no
+43:52 | good way to do this.
+43:55 | That gets us to the smart thief.
+43:58 | Why is this thief smart?
+43:59 | Because she took 600.
+44:02 | And she learned that in fact there is a good way to solve
+44:04 | this problem.
+44:06 | And that's what we're going to talk about next.
+44:10 | And that's something called dynamic programming.
+44:23 | A lot of people think this is a really hard and fancy
+44:26 | concept, and they teach in advanced algorithms classes.
+44:29 | And they do, but in fact as you'll see it's
+44:31 | really pretty simple.
+44:33 | A word of warning.
+44:35 | Don't try and figure out why it's called dynamic
+44:38 | programming.
+44:39 | It makes no sense at all.
+44:41 | It was invented by a mathematician called Bellman.
+44:45 | And he was at the time being paid by the Defense Department
+44:49 | to work on something else.
+44:51 | And he didn't want them to know what he was doing.
+44:54 | So he made up a name that he was sure they would have no
+44:56 | clue what it meant.
+44:58 | Unfortunately, we now have lived with it forever, so
+45:02 | don't think of it as actually being anything dynamic
+45:04 | particularly.
+45:05 | It's just a name.
+45:09 | It's very useful, and why we spend time on it for solving a
+45:13 | broad range of problems that on their surface are
+45:18 | exponentially difficult.
+45:20 | And, in fact, getting very fast solutions to them.
+45:25 | The key thing in dynamic programming, and we'll return
+45:28 | to both of these, is you're looking for a situation where
+45:32 | there are overlapping sub-problems and what's called
+45:45 | optimal substructure.
+45:47 | Don't expect to know what these mean yet.
+45:49 | Hopefully by the end of the day, Tuesday, they will both
+45:52 | make great sense to you.
+45:55 | Let's first look at the overlapping
+45:56 | sub-problems example.
+45:59 | You have on your handout, a recursive
+46:05 | implementation of Fibonacci.
+46:07 | Which we've seen before.
+46:25 | What I've done is I've augmented it with this global
+46:28 | called num calls just so I can keep track of how many times
+46:32 | it gets called.
+46:34 | And let's see what happens if we call fib of 5.
+46:48 | Well, quite a few steps.
+46:53 | What's the thing that you notice about this output?
+47:00 | There's something here that should tip us off that maybe
+47:03 | we're not doing this the most efficient way possible.
+47:09 | I called fib with 5 and then it calls it with 4.
+47:15 | And then that call calls fib with 3.
+47:17 | So I'm doing 4, 3, 2, 2, 1, 0.
+47:21 | And I'm doing 1, 2.
+47:22 | Well, what we see is I'm calling fib a lot of times
+47:26 | with the same argument.
+47:30 | And it makes sense.
+47:31 | Because I start with fib of 5, and then I have to do fib of 4
+47:36 | and fib of 3.
+47:39 | Well, fib of 4 is going to also have to do a fib of 3 and
+47:42 | a fib of 2 and a fib of 1, and a fib of 0.
+47:46 | And then the fib of 3 is going to do a fib of 2 and a fib of
+47:49 | 1 and a fib of 0.
+47:51 | And so I'm doing the same thing over and over again.
+47:56 | That's because I have what are called overlapping
+47:59 | sub-problems. I have used divide and conquer, as we seen
+48:04 | before, to recursively break it into smaller problems. But
+48:08 | the smaller problem of fib of 4 and the smaller problem of
+48:12 | fib of 3 overlap with each other.
+48:16 | And that leads to a lot of redundant computation.
+48:21 | And I've done fib of 5, which is a small number.
+48:24 | If we look at some other things, for example, let's get
+48:29 | rid of this.
+48:39 | Let's try see fib of 10.
+48:56 | Well, there's a reason I chose 10 rather than, say, 20.
+49:02 | Here fib got called 177 times.
+49:09 | Roughly speaking, the analysis of fib is actually quite
+49:13 | complex, of a recursive fib.
+49:15 | And I won't go through it, but what you can see is it's more
+49:18 | or less, it is in fact, exponential.
+49:21 | But it's not 2 to the something.
+49:23 | It's a more complicated thing.
+49:26 | But it grows quite quickly.
+49:29 | And the reason it does is because of this overlapping.
+49:34 | On Tuesday we'll talk about a different way to implement
+49:38 | Fibonacci, where the growth will be much less dramatic.
+49:44 | Thank you.

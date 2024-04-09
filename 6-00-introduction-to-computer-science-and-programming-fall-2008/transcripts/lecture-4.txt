@@ -1,0 +1,1177 @@
+0:00 | ANNOUNCER: Open content is provided under creative
+0:02 | commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high-quality educational resources for free.
+0:10 | To make a donation, or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu .
+0:19 | PROFESSOR ERIC GRIMSON: As I've done in the previous
+0:23 | lectures, let me set the stage for what we've been doing, so
+0:25 | we can use that to talk about what we're going to do today.
+0:30 | So far, we have the following in our language.
+0:35 | Right, we have assignment.
+0:41 | We have conditionals.
+0:46 | We have input/output.
+0:47 | And we have looping constructs.
+0:55 | These are things like FOR and WHILE loops.
+1:00 | And of course we've got some data to go with that.
+1:04 | One of the things we said last time was, with that set of
+1:07 | things, the ability to give values-- sorry, to give names
+1:11 | to values-- the ability to make decisions, the ability to
+1:14 | loop as a function of that, the ability get things in and
+1:16 | out, we said that that actually gave us a language we
+1:21 | said was Turing-complete.
+1:26 | And that meant, in English, that this was enough to write
+1:30 | any program.
+1:32 | Now that's a slight lie-- or actually in these days of
+1:34 | political debates, a slight misspeaking, a wonderful
+1:37 | word-- it is technically correct.
+1:40 | It is enough to allow us to write any program, but it's
+1:43 | not enough to allow us to easily write any program.
+1:47 | And so I joked, badly, I'll agree, at the end of last
+1:50 | lecture, that we can just stop now, go straight to the final
+1:52 | exam, because this is all you need to know.
+1:54 | The point is, yes it's enough to start with, but we want to
+1:58 | add things to this that let us problem solve well.
+2:00 | And one of the things to think about is, even though I've got
+2:03 | all of that, let's think about what I could do, if I wanted
+2:06 | to write a piece of code.
+2:09 | Right now, you've got to write it in one file.
+2:11 | It's a long sequence of instructions, it starts at the
+2:14 | beginning, walks through, may jump around a little bit, but
+2:17 | eventually comes down at the end.
+2:19 | It's okay for the things you're doing for the early
+2:21 | problem sets.
+2:23 | Ten lines of code.
+2:24 | Twenty lines of code.
+2:25 | Imagine instead, you're writing code that's a hundred
+2:27 | thousand lines, a million lines, of code.
+2:31 | You don't want to write it in this form.
+2:34 | All right, and the reason you don't want to do that is,
+2:36 | well, several.
+2:37 | First of all, it's really hard to figure out where everything
+2:39 | is, where everything goes, making sure I'm
+2:40 | in the right place.
+2:42 | To use an ancient expression from the 1970's, which only
+2:45 | John and I will appreciate, it's really hard to grok what
+2:48 | that code is doing, to understand what it's trying to
+2:50 | make happen.
+2:52 | And the reason that that's the case is, what we don't have,
+2:55 | are two important things.
+3:00 | We don't have decomposition, and we don't have abstraction.
+3:12 | And that's what we're going to add today.
+3:13 | So what does that mean?
+3:14 | Those are fancy terms. Decomposition is a way of
+3:18 | putting structure onto the code.
+3:20 | It's a way of breaking the code up into modules.
+3:23 | Modules that makes sense on their own.
+3:25 | Modules that we can reuse in multiple places.
+3:28 | Modules that, if you like, isolate
+3:29 | components of the process.
+3:32 | And abstraction is related to that, abstraction is going to
+3:35 | let us suppress details.
+3:37 | It's going to let us bury away the specifics of something,
+3:42 | and treat that computation like a black box.
+3:44 | And by black box, I mean, literally behaves like a
+3:47 | mysterious little black box.
+3:49 | You put some inputs in, it has a contract that says if you
+3:52 | put the right kind of inputs in you'll get a specific
+3:54 | output coming out, but you don't have to know what's
+3:57 | inside of that box.
+3:58 | And that abstraction is really important.
+4:01 | Again, imagine if I'm a writing a piece of code.
+4:04 | I want to just use it, I shouldn't have to worry about
+4:07 | what variables I use inside of it, I have shouldn't have to
+4:09 | worry about where that is in the code, I should be able to
+4:12 | just abstract it away.
+4:13 | And that's what we want to add today, are those two things.
+4:16 | Now, our mechanism for doing that-- or at least one
+4:19 | mechanism, I shouldn't say the only one-- one mechanism for
+4:23 | doing that is going to be to add functions to our language.
+4:30 | Now, the point of a function is that it's going to provide
+4:35 | both of these things, so the first thing it's going to do
+4:37 | is, it's going to let us break up into modules.
+4:44 | Second thing they're going to do is let us suppress detail.
+4:51 | And in essence what that does is, the functions, and we're
+4:53 | going to look at a bunch of examples in a second, these
+4:54 | functions are going to give us a way to, in some or in one
+4:58 | way of thinking about it is to create new primitives.
+5:00 | And I'm going to put those in quotes, it's a generalization.
+5:10 | What do I mean by that?
+5:12 | The idea of a function is, that I'm going to capture a
+5:14 | common pattern of computation.
+5:17 | Computing square root.
+5:18 | I'm going to capture it in a piece of code, I'm going to be
+5:21 | able to refer to it by a name, and I'm going to suppress the
+5:24 | details, meaning inside of that computation, you don't
+5:26 | need to know what it does.
+5:27 | You just need to know, if I give it the right kind of
+5:29 | input, it'll give me back an input that satisfies the
+5:31 | contract that I set up.
+5:34 | And that in essence says, I've just created the equivalent of
+5:37 | a new primitive.
+5:38 | Same way that I have multiplication or division as
+5:41 | a primitive, functions are going to give me, or somebody
+5:43 | else who wrote them for me as part of a library, a new
+5:46 | primitive that I'm going to be able to use.
+5:48 | And that gives me a lot of power in terms of what I want
+5:50 | to have inside of the language.
+5:52 | OK.
+5:55 | So, let's look at an example.
+5:58 | To try to see what we're going to do with this.
+6:01 | Before I do that though, let me try and give you an analogy
+6:03 | to keep this in mind of why we want to basically build these
+6:06 | abstractions and what we need in order to
+6:08 | have them work together.
+6:10 | So here's the supposed to say silly analogy.
+6:13 | You can tell my jokes are always bad.
+6:15 | John's are much better, by the way, which is why Thursday
+6:17 | will be a much better lay-- a better lecture.
+6:19 | But here's the example.
+6:20 | You've been hired by PBS to produce a nice thirteen-hour
+6:24 | documentary, or drama, that's going to run.
+6:28 | And, you know, you start by saying, OK, thirteen hours,
+6:32 | I'm going to break it up into thirteen different chunks.
+6:34 | I'm going to assign each chunk to a different writer.
+6:37 | And they're going to go off and write that element, that
+6:39 | hour's worth of stuff.
+6:41 | You can imagine what you get: each hours worth of drama, if
+6:45 | you like, may be great, but it may have absolutely nothing to
+6:49 | do with the other twelve hours.
+6:51 | And unless, you know, you've been hired to do Pirandello's
+6:54 | Six Characters In Search Of An Author, this is not a great
+6:57 | thing, because you get something
+6:58 | that is really confusing.
+7:00 | Now, what's the point of the analogy?
+7:01 | What do I need for those writers to
+7:03 | all interact together?
+7:04 | I need a specification.
+7:06 | I need a contract that says, here's what I want in terms of
+7:10 | things that you're going to take as input, to begin your
+7:12 | part of the drama, here's what you're going to produce at the
+7:15 | output, and the details of what they do
+7:17 | inside are up to them.
+7:20 | An idea of abstraction, that idea of specification, is
+7:22 | exactly what we want to use inside of our functions.
+7:25 | We won't make you write dramas like Pirandello, but we're
+7:27 | going to try make you at least write good code.
+7:29 | And that's we're going to try and do.
+7:30 | All right.
+7:31 | Let's set the stage for it.
+7:33 | Up on the screen, I've got--
+7:35 | I commented it out, but I've got a piece of code that
+7:39 | you've seen before, right up here.
+7:41 | OK?
+7:42 | What is that?
+7:43 | It's the piece of code we wrote for computing square
+7:45 | roots, square roots of actually perfect squares.
+7:48 | [UNINTELLIGIBLE]
+7:48 | Just to remind you what it does, we bound x to some
+7:51 | value, we set up an initial variable called ANS or answer,
+7:55 | and then we run through a little loop.
+7:57 | All right, we're-- well actually, I should say that
+7:59 | better, we first check to see, is x greater than or equal to
+8:02 | zero, if it's not, then we come down here and we print
+8:05 | something out, otherwise we run through a little loop to
+8:07 | get the answer, and then we check it and we
+8:09 | spit something out.
+8:10 | It does the computation, that's fine.
+8:13 | Suppose I want to compute square roots a lot of places
+8:16 | in a big chunk of code.
+8:18 | Right now, I have to take that piece of code and replicate it
+8:22 | everywhere I want in my larger file.
+8:24 | And I've got to worry about, is somebody else using ANS,
+8:27 | answer, as a variable, in which case I've got to be
+8:30 | really careful.
+8:30 | Is somebody else using x as a variable?
+8:32 | I've got to deal with a lot of those details.
+8:35 | I want to abstract that.
+8:36 | And the abstraction you see, right here.
+8:40 | I'm going to highlight it for a second so you can see it.
+8:42 | I want you to look at it on the handout as well.
+8:44 | This is the creation of a function.
+8:48 | And I want to describe both the syntax, what we're doing,
+8:51 | and then the semantics of how do we use it and
+8:53 | what does that mean.
+8:54 | So.
+8:56 | Here's the syntax of the function.
+9:01 | First of all, we have a keyword. def.
+9:04 | Definition or define, depending on which sort of
+9:07 | piece of history you come from.
+9:08 | This is a keyword to Python that says, when it reads this
+9:10 | in the file, it says, I'm creating a definition.
+9:13 | I'm creating a function.
+9:15 | And that's follow-- so this is, let me say this is a
+9:17 | keyboard-- that is followed immediately by a name.
+9:24 | And this equates to that.
+9:25 | In this case, sqrt, square root.
+9:28 | I'm saying, this is the name I'm going to
+9:30 | give to this function.
+9:31 | This is the name to which I'm going to refer when I want to
+9:33 | use this function.
+9:34 | All right?
+9:35 | And notice, immediately after that name, we have an open and
+9:41 | close paren with another variable name inside of that.
+9:45 | And this defines formal parameters of this function.
+9:56 | Yup.
+9:56 | PROFESSOR JOHN GUTTAG: [INAUDIBLE]
+9:58 | PROFESSOR ERIC GRIMSON: It does indeed, thank you.
+9:59 | This is me being a Scheme hacker, not a Python hacker.
+10:02 | Yes, def has to be lowercase or won't recognize it.
+10:04 | Thank you, John.
+10:06 | OK. def's the keyword.
+10:08 | I'm creating a function. sqrt-- again, I'm being
+10:10 | careful about case-sensitive, I'm using all lowercase here,
+10:12 | followed by an open paren, and I said, formal parameters.
+10:15 | We'll see there could be more than one there.
+10:17 | We're going to come back to what they mean in a second,
+10:19 | but for now, think of them as, or think of x, in this case,
+10:22 | as the place holder.
+10:23 | This place holder is saying, if you give me a value for x,
+10:27 | inside the body of this function I'm going to use that
+10:30 | value everywhere I see x.
+10:32 | Question.
+10:32 | STUDENT: [INAUDIBLE]
+10:36 | PROFESSOR ERIC GRIMSON: Ah, we're going to come back to
+10:36 | this in a second.
+10:37 | But the question was, do I always need an input?
+10:39 | I can have functions with no parameters, that's fine, I
+10:42 | will still need the open and close paren there to identify
+10:45 | that I have no parameters.
+10:46 | We're going to see an example in a second.
+10:48 | Good question.
+10:49 | Actually, I've got to get rid of this candy, so since it was
+10:51 | a good question, here you go.
+10:54 | Nice catch.
+10:56 | Almost. Sorry.
+10:58 | OK.
+10:59 | No, I'm not.
+11:00 | I'm sorry.
+11:00 | I thought you had it, and then I've got the wrong glasses on
+11:02 | and I realized you didn't, so I will, ah come
+11:04 | back to that later.
+11:05 | What are we doing here?
+11:06 | We got definition, we got name, we got a set of formal
+11:08 | parameters.
+11:09 | Right.
+11:10 | If you look at the rest of that code, gee, it looks a lot
+11:13 | like what I had elsewhere.
+11:14 | Of what I had outside of it, right?
+11:16 | It's running through a similar set of loops.
+11:18 | So in some sets, as long as x has the value I want, it ought
+11:21 | to do the right thing.
+11:22 | However, there's a couple of other changes there that we
+11:24 | want to highlight.
+11:26 | In particular, notice-- let me highlight it for you, if I can
+11:31 | find it with the wrong glasses on-- we've got
+11:34 | these return commands.
+11:37 | So return is another keyword.
+11:42 | And it basically says, when you get to this point in the
+11:48 | computation, stop the computation.
+11:52 | Literally, return the control from this function, and take
+11:56 | the value of the next expression, and return that as
+11:59 | the value of the whole computation.
+12:02 | Now, the one that we're most interested in is the one
+12:04 | where, in fact, it gets out ANS, so you see down here in
+12:07 | the code, there's a spot where it's going to return the value
+12:10 | of ANS, which is what we want, right?
+12:12 | That's the thing that holds the value that we intended to
+12:14 | have.
+12:15 | But there's another couple of places in that code where it's
+12:17 | got this funky-looking thing, return none, and notice none's
+12:20 | in a different color.
+12:22 | None is a special value, and it has the following
+12:33 | slightly-odd behavior: it is a value, we can return it--
+12:38 | God bless-- but what none says is, there is no value coming
+12:42 | back from this computation.
+12:44 | So when it is returned, and we'll see this in a second, to
+12:46 | the interpreter, it doesn't print.
+12:49 | OK.
+12:49 | It simply doesn't print anything.
+12:51 | Nonetheless, it is actually a value and we can use it, for
+12:53 | example, to do comparisons.
+12:55 | If we want to know, did this function return a value or
+12:58 | not, rather than reserving, say, -1 or some other special
+13:01 | thing which you might want to use some other ways, it
+13:03 | literally returns this very special value that says, there
+13:05 | is no actual value return from this computation.
+13:09 | OK.
+13:11 | Note, by the way, if I chase through each possible path,
+13:15 | like there's some IFs in here, there's some places to go, at
+13:18 | least in this piece of code, every possible path through
+13:21 | this code ends in a return.
+13:23 | And that's a good programming discipline, to
+13:25 | make sure that happens.
+13:27 | There's an exception, which we'll see in a second, but
+13:28 | I'll highlight, which is, if we get to the end of the
+13:30 | procedure, there's sort of an implicit return there.
+13:34 | In fact, a return of none, in that case.
+13:36 | It comes out of it.
+13:36 | But if I look at this, right?
+13:38 | If I come into this code, I'm going to check this branch
+13:41 | first, if it's not true, ah, there's a return at the end of
+13:43 | that branch.
+13:44 | If it is true, I do that, and then I've got a second test.
+13:48 | If it's true, I return, otherwise a return.
+13:50 | So there's a return branch on every possible
+13:52 | path through the code.
+13:54 | And that's valuable, it's something you want to think
+13:55 | about as your right your own.
+13:59 | OK.
+14:00 | What do I do to use this, in particular?
+14:04 | How do I invoke this?
+14:07 | OK, so I'm going to invoke a function by passing in values
+14:17 | for the parameters.
+14:24 | And in this case, that literally means typing sqrt,
+14:29 | with some value inside the parens.
+14:34 | OK.
+14:36 | Now, let's just try this out to see what happens.
+14:38 | I'm going to make sure I've got it there, so if I type,
+14:42 | for example, sqrt of 16, ah-ha!
+14:50 | What did it do?
+14:51 | Well, let's talk about what it did.
+14:53 | What this invocation does, is the following: it binds, and
+14:58 | I'm going to say this specifically for this example,
+15:01 | rather than general, it binds x to 16.
+15:06 | Just as you would have done with an assignment statement
+15:09 | up in the top level thing.
+15:10 | But this binding is local.
+15:16 | Meaning it only holds within the confines of the code of
+15:19 | this procedure.
+15:22 | Relative to that, think of that as creating what we, I'm
+15:24 | going to call a new environment.
+15:25 | Relative to that, it does all the other execution we would
+15:28 | do, including, notice the first instruction there is to
+15:30 | the set up a binding for ANS.
+15:32 | So answer, or ANS, is also bound only locally.
+15:42 | Meaning, inside the confines of this
+15:44 | environment of this procedure.
+15:46 | ANS starts off with a value of 0 and now we just run through
+15:49 | that loop just like we did before.
+15:50 | Writing Increments it slowly, checking to see if ANS squared
+15:53 | is bigger than x, and when it gets to that point, it checks
+15:56 | to see, is it actually a perfect square or not, and it
+15:58 | returns it.
+15:58 | And once it returns it, it returns a value from that
+16:02 | return, that in this case is just printed out.
+16:06 | All right.
+16:07 | Now I want to say a couple of things
+16:08 | about these local bindings.
+16:10 | I'm going to repeat this a second time,
+16:12 | because it's important.
+16:16 | These local bindings do not affect any global bindings.
+16:28 | What does that mean?
+16:30 | Let me show you a little example, and then we'll come
+16:32 | back to this.
+16:34 | I've got a little function here.
+16:36 | See, I've defined f of x to be a function that takes a value
+16:40 | of x in, changes x to x+1, and then just returns the value.
+16:45 | OK.
+16:45 | So it's just adding 1 to x.
+16:47 | But I want you to see now what happens if I use this.
+16:49 | Let's bind x to the value of 3.
+16:53 | It's creating a binding for x in this global environment.
+16:56 | This is what the interpreter sees.
+16:57 | All right?
+16:58 | In fact, if I look at x, its value is 3.
+17:01 | Let's bind z eh let's bind z to the-- if I could type it
+17:08 | would help-- say, f of 3.
+17:15 | OK?
+17:16 | So the value is z is 4, it's what I expect, right?
+17:20 | Locally x got bound to 3, I added 1 to it, whoop-dee-doo,
+17:22 | I get back a 4.
+17:24 | But what's the value of x?
+17:27 | It's still 3.
+17:29 | The way to think of this is, again, I've got multiple
+17:32 | scopes, or multiple frames, or if we're going to come back to
+17:35 | those terms, I'm going to use the word environment, because
+17:37 | I'm an old-time Lisp hacker, multiple environments in which
+17:39 | there are bindings.
+17:40 | So let me spell this out in just a little bit more detail.
+17:44 | What this is saying is the following.
+17:55 | When I'm talking to the interpreter, when I'm typing
+17:57 | things in as I just did, to that Python environment, I'm
+18:01 | getting what I'm going to call global bindings.
+18:03 | I'm going to draw a little chart here.
+18:15 | Think of this as the, as the world of the interpreter, in
+18:17 | that I've got things like x bound to the value of 3.
+18:23 | When I call or invoke a function, think of it as
+18:30 | creating a local table.
+18:41 | Inside that local table, I bind the formal parameter,
+18:47 | which is what I do I did 16 right to some value.
+18:51 | This x only gets seen by sqrt.
+18:55 | Inside of there, I can bind other things, like ANS gets
+18:59 | locally bound to 0, and then it increments around and
+19:02 | eventually we return that value out.
+19:04 | When I get to a return from sqrt, some value is returned
+19:09 | back to the interpreter, and that table goes away.
+19:14 | But that table does not affect any bindings for other
+19:18 | instances of the variable like x for ANS.
+19:22 | OK.
+19:24 | Let's look at a couple of examples, just to sort of
+19:26 | stress that.
+19:27 | And one of the things I wanted to show is, OK.
+19:33 | Again, I can now use a function just as if it was a
+19:37 | primitive, so this is just an assignment and I going to take
+19:39 | test to be the value of that, of course nothing gets printed
+19:42 | because that was an assignment statement.
+19:43 | All right?
+19:44 | So if I called sqrt alone, that return value is done, but
+19:47 | in this case I bound it to test, so I can go look at
+19:49 | test, and there it is.
+19:51 | What happens if I do that?
+19:58 | OK.
+19:59 | If you look at the code, it printed out, it's not a
+20:00 | perfect square, which is what I wanted, but now, what's the
+20:03 | value of test?
+20:05 | OK, I bound test to something, if I look at it, it doesn't
+20:09 | print anything, but-- if I could type--
+20:15 | I can ask, is test bound to that special name none?
+20:20 | The answer is yes.
+20:23 | Boy, this seems like a nuance, right?
+20:24 | But it's a valuable thing.
+20:25 | It says, in each case, I return some useful value from
+20:30 | this procedure.
+20:31 | I can check it, so if this was part of some other
+20:33 | computation, I want to know, did it find a
+20:35 | perfect square or not?
+20:36 | I don't have to go read what it printed out in the screen.
+20:39 | This has returned a value that I can use.
+20:41 | Because I could do a test to say, is this a return value?
+20:44 | If it's not, I'll do something else with it.
+20:46 | So the binding is still there, it simply
+20:48 | doesn't print it out.
+20:51 | OK.
+20:51 | What do we have out of this?
+20:53 | Simple, seems like, at least addition.
+20:56 | We've added this notion of a function.
+20:59 | I've highlighted some of the key things we got here, right?
+21:02 | We have that def keyword, we've got a name, we've got a
+21:04 | list-- or I shouldn't say a word list, we have a
+21:06 | collection of formal parameters that we're going to
+21:08 | use-- we have a body, and the body looks just like the
+21:11 | normal instructions we'd use, although by the way, we ought
+21:13 | to be able to use functions inside the body, which we're
+21:15 | going to do in a second, and then we're going to simply
+21:18 | return some values out of this.
+21:20 | Now I started by saying, build these functions.
+21:23 | I'm trying to get both decomposition and abstraction.
+21:27 | Well, you hopefully can see the decomposition, right?
+21:29 | I now have a module.
+21:30 | OK, let me set the stage.
+21:33 | Imagine I wanted to do sqrt, or square root-- no, I'm going
+21:35 | to use sqrt, that's the name I'm using here-- square root a
+21:37 | hundred different places in some piece of code.
+21:40 | Without function, I'd have to copy that piece of code
+21:43 | everywhere.
+21:44 | Now I got one just simple thing, and I simply have
+21:47 | isolated that module inside of that function.
+21:51 | What about abstraction?
+21:53 | Well, I've got part of what I want for abstraction.
+21:56 | Abstraction, again, says I'm going to suppress details.
+21:58 | Now that I've written sqrt, I can just use it anywhere I
+22:01 | want in the code.
+22:02 | You've got to rely on the fact that I wrote it correctly, but
+22:05 | you can basically suppress the details of how it's used.
+22:08 | There's one more piece that we'd like to get out of that,
+22:10 | and that is-- you may have been wondering, what's with
+22:13 | the funky stuttering here of three double-quotes in a row.
+22:17 | All right?
+22:17 | And that is a specification.
+22:20 | Which is a really valuable thing to have.
+22:22 | So what is the specification going to do?
+22:24 | It is my place, as a programmer, to write
+22:28 | information to the user.
+22:30 | This is me writing one hour of that episode of Pirandello and
+22:33 | telling the other authors, here's what I'm assuming as
+22:36 | you use it.
+22:37 | So it's up to me to do it right, but if I do it, I'm
+22:39 | going to specify, what does this function do?
+22:42 | What does it expect as input, and any other information I
+22:45 | want to pass on.
+22:46 | And notice, by the way, if I do that, I'm going to come
+22:49 | down here, and I type sqrt and open the paren, ah-ha!
+22:56 | It shows me what the creator, in this case actually I stole
+23:00 | this from John so what Professor Guttag put up as his
+23:02 | specification for this piece of code.
+23:06 | Now, it's not guaranteed it's right, right?
+23:07 | You're trusting the programmer did it right, but this now
+23:10 | tells you something.
+23:10 | What is this?
+23:11 | This is a wonderful piece of abstraction.
+23:13 | It is saying, you don't need to know squat about what's
+23:16 | inside the body of this function.
+23:18 | You don't have to worry about the parameter names, because
+23:19 | they're going to be preserved, you don't need to worry about
+23:21 | how I'm doing it, this tells you how you can use this, in
+23:24 | order to use it correctly.
+23:26 | Of course, I can then close it off, and off we go.
+23:30 | All right, so that notion of abstraction and I was going to
+23:32 | come back-- we're going to come back to multiple times
+23:34 | during the term-- and it's not just abstraction, it's the
+23:37 | idea of a specification.
+23:39 | And just to look ahead a little bit, you could easily
+23:41 | imagine that I might want to not just put a statement in
+23:43 | there, what the specs are, I might want to put some
+23:45 | constraints.
+23:46 | Some specific things to check for, to make sure that you're
+23:49 | calling the code right.
+23:50 | And it becomes a powerful way of reasoning about the code, a
+23:53 | powerful way of using the code, so those notions of
+23:55 | specs are really important.
+23:58 | Look, part of the reason I'm flaming at you is, something
+24:03 | like square root, it seems dumb to write specs on it.
+24:05 | Everybody knows what this is going to do.
+24:07 | But you want to get into that discipline of good hygiene,
+24:10 | good style.
+24:10 | You want to write the specs so that everybody does in fact
+24:13 | know what this piece of code is doing, and you're writing
+24:15 | it each time around.
+24:18 | OK.
+24:20 | Now that we've got functions, let's see what we can do as a
+24:25 | problem-solving tool using them.
+24:27 | In a particular, I've already said I want to get this notion
+24:29 | of modularity, it's a module I can isolate, and I want to get
+24:32 | the notion of abstracting away the details, let's see how we
+24:35 | can actually use that to actually write some reasonably
+24:39 | interesting pieces of code, but in particular, to see how
+24:42 | we can use it to capture the ideas of decomposition and
+24:45 | abstraction.
+24:47 | So I'm going to shift gears.
+24:49 | Start with a simple problem.
+24:57 | Boy, we're suddenly be transported to Nebraska.
+24:59 | Or where I grew up, Saskatchewan.
+25:01 | All right, we've got a farm air problem.
+25:03 | I got a farmer, walks out into his yard, one morning.
+25:07 | This farmer has a bunch of pigs in a punch-- it's been a
+25:10 | long day-- a bunch of pigs and a bunch of chickens.
+25:14 | And he walks out into the farmyard and he observes 20
+25:17 | heads and 56 legs.
+25:22 | And for sake of argument, there are no amputees among
+25:26 | the chickens and the pigs.
+25:28 | And the question is, so how many pigs does he have, and
+25:31 | how many chickens does he have?
+25:33 | Wow.
+25:34 | What a deep problem, right?
+25:36 | But you're going to see why we're going to
+25:37 | use this in a second.
+25:37 | So you know how to solve this, this is a
+25:39 | fifth-grade problem, right?
+25:40 | And what's the way to solve this?
+25:41 | System of linear equations.
+25:43 | What are the equations here?
+25:44 | Well, I could say, you know, the number of pigs plus the
+25:48 | number of chickens equals 20, right?
+25:53 | Because we've got 20 heads.
+25:54 | And then what else do I have?
+25:55 | Four times the number of pigs plus two times the number of
+26:00 | chickens, assuming they're not next to a
+26:02 | nuclear reactor, is 56.
+26:07 | And then how would you solve this?
+26:10 | Well, it's, you sort of know how you'd do it if this was
+26:11 | grammar school right?
+26:12 | You'd pull out your pencil and paper, you can do it as a
+26:14 | matrix inversion if you know how to do that, or you can
+26:16 | just simply do substitution of one equation into
+26:19 | another to solve it.
+26:21 | That's certainly one way to do it, but for computers that's
+26:24 | not necessarily the easiest way.
+26:26 | So another way of solving it is to do something we already
+26:29 | saw last time, which is basically, why not simply
+26:31 | enumerate all possible examples and check them?
+26:35 | You could say, I could have zero chickens and 20 pigs,
+26:39 | does that work?
+26:40 | I've got one chicken and nineteen pigs, does that work?
+26:41 | I've got two chickens and eighteen
+26:43 | pigs, you get the idea.
+26:44 | So I'm going to solve this by enumerate and check, which is
+26:52 | an example of what's called a brute-force algorithm.
+27:00 | Meaning, I'm just going to write a little
+27:02 | loop that does that.
+27:03 | All right, so let's go back to our code.
+27:07 | That's right, let me pull this over a little bit,
+27:10 | so I can see it.
+27:14 | And what I'd like you to look at, I'm going to highlight it
+27:16 | just for a second here, is those two pieces of code.
+27:19 | OK?
+27:20 | Let's start with solve.
+27:24 | OK.
+27:24 | Here's the idea of solve.
+27:25 | I'm going to have it take in as input how many legs I got,
+27:28 | how many heads do I have, and I just want to
+27:30 | write a little loop.
+27:32 | OK.
+27:32 | I know how to do that, right?
+27:34 | Write a little loop, all I'm going to do, is
+27:36 | run a FOR loop here.
+27:37 | I'm going to let the number of chickens be in this range.
+27:40 | Remember what range does, it gives me a set or a collection
+27:43 | or a tuple of integers from 0 up to 1 - is the last value,
+27:48 | so it's going to give me everything from 0 up to the
+27:49 | total number of heads.
+27:51 | Knowing that, I'm going to say, OK, how many pigs are
+27:53 | there, well that's just how we're, however many I had
+27:55 | total, minus that amount, and then I can see, how many legs
+27:58 | does that give, and then I can check, that the number of legs
+28:01 | that I would get for that solution, is it even equal to
+28:03 | the number of legs I started with, ah!
+28:06 | Interesting.
+28:06 | A return.
+28:08 | In particular, I'm going to return a tuple.
+28:10 | So, a pair or collection of those two values.
+28:14 | If it isn't, then I'm going to go back around the loop, and
+28:17 | notice what happens.
+28:18 | If I get all the way around the loop, that is, all the way
+28:22 | through that FOR loop and I never find a path that takes
+28:24 | me through here, then the last thing I'm going to do is
+28:27 | return a pair or a tuple with a special
+28:30 | simple number none twice.
+28:32 | Yep.
+28:32 | Are you telling me I want parens there and
+28:35 | not, and not braces?
+28:36 | All right.
+28:37 | I hate this language, because I always want to have parens.
+28:40 | Every time you see a square bracket, put a paren in.
+28:42 | All right?
+28:44 | Thank you, Christy.
+28:45 | I'll get it eventually .
+28:48 | Having done that, right, notice what I've got.
+28:51 | First of all, two parameters.
+28:53 | It's OK.
+28:54 | All it says is, when I call this, I need to pass in two
+28:56 | parameters for this to work.
+28:58 | All right?
+29:00 | Now, if I want to use that, I'm going to use a second
+29:02 | piece of code here, called Barnyard.
+29:03 | I'm going to read in a couple of values, convert them into
+29:06 | integers, and then I'm going to use solve to
+29:09 | get a solution out.
+29:11 | And what do I know about solve?
+29:12 | It is going to give me back a tuple a collection of two
+29:16 | things, and so check out the syntax.
+29:19 | I can give two names, which will get bound to the two
+29:22 | parts of that return tuple.
+29:25 | OK, pigs will be the first part, chickens will be the
+29:27 | second part.
+29:29 | OK, and then once I've got that, well, notice: I can then
+29:31 | check to see, did I return that special symbol none?
+29:35 | Is the first part.
+29:36 | That says, I took the branch through here that eventually
+29:38 | got to the end and said, there wasn't a solution, in which
+29:41 | case I'm
+29:41 | going to print out, there ain't no solution, otherwise
+29:44 | I'll print out the pieces.
+29:47 | All right, let's check it out.
+29:51 | Ah, what did I say?
+29:51 | Twenty and 56, Right?
+29:54 | OK, notice the form.
+29:57 | I've got two parameters, they're separated by a comma.
+30:02 | Ah, right.
+30:05 | Sorry?
+30:09 | Yeah, but I see-- it's legs and heads, but it should not
+30:12 | still have--
+30:16 | Oh, sorry.
+30:17 | Thank you.
+30:18 | I've been doing the wrong thing.
+30:19 | I want Barnyard this way, and if I had looked when I opened
+30:24 | the paren, it would have shown me a closed paren with no
+30:26 | parameters.
+30:27 | Aren't you glad I make mistakes, so you can see how
+30:29 | well I can fix from these?
+30:30 | All right.
+30:31 | Now I call that, and it says, tell me how many heads you
+30:33 | want, give it a 20, and tell it how many legs you want,
+30:37 | give it 56, and it prints out the answers.
+30:43 | I know, whoop-dee-doo.
+30:43 | But notice what's inside if here.
+30:45 | First of all, notice the modularity.
+30:47 | I've used solve.
+30:48 | All right?
+30:50 | Right there.
+30:51 | I've captured it as a computation.
+30:53 | It's buried away, all the details are suppressed.
+30:57 | I can use that to return values, which I can then use
+31:00 | elsewhere, which I did-- and if I just come back and
+31:02 | highlight this-- inside of that computation.
+31:05 | But I don't have to know, inside of Barnyard, what the
+31:08 | values are used inside of solve.
+31:11 | I don't know what the names of the variables are, I don't
+31:13 | care, I can basically suppress away that detail.
+31:17 | Second thing we saw is, that using this as a computation, I
+31:20 | can return multiple values.
+31:22 | Which is actually of real value to me
+31:23 | here as I use that.
+31:25 | OK.
+31:26 | Yeah.
+31:27 | Question.
+31:27 | STUDENT: [INAUDIBLE]
+31:38 | PROFESSOR ERIC GRIMSON: Ah.
+31:39 | The question was, when it returns, how does it
+31:41 | distinguish between local and other things?
+31:42 | So let me try and answer that.
+31:43 | Inside of solve, solve creates an environment where inside of
+31:47 | that, it has bindings for the parameters it's going to use.
+31:50 | All right?
+31:51 | Like, number of-- wait, what did we call a were solve--
+31:54 | number of legs and number of heads.
+31:56 | OK, those are bound locally.
+31:58 | When solve is done, it wraps up, if you like, a value that
+32:02 | it returns.
+32:03 | Which is that.
+32:04 | That expression, or that value, or that value,
+32:09 | literally gets passed back out of that local environment to
+32:12 | the value that comes back out of it.
+32:14 | So in particular, what's solved returns is a pair.
+32:18 | It could be the pair of none, none, it could be the pair of,
+32:22 | you know, whatever the answer was that we put up there.
+32:24 | That value comes back out and is now available inside the
+32:28 | scope of Barnyard.
+32:30 | OK.
+32:31 | And Barnyard then uses that.
+32:33 | Question?
+32:34 | STUDENT: [INAUDIBLE]
+32:39 | PROFESSOR ERIC GRIMSON: Here?
+32:40 | So the question is, why is this return on the same level
+32:42 | as the FOR?
+32:43 | Why do you think?
+32:43 | STUDENT: [INAUDIBLE]
+32:56 | PROFESSOR ERIC GRIMSON: No.
+32:56 | Good question.
+32:57 | All right?
+32:57 | So what's going to happen here?
+32:58 | If I'm inside this FOR, OK, and I'm running around, if I
+33:02 | ever hit a place where this test is true, I'm going to
+33:06 | execute that return, that return returns
+33:08 | from the entire procedure.
+33:11 | OK?
+33:11 | So the return comes back from the procedure.
+33:13 | So the question was, why is this return down at this
+33:17 | level, it says, well if I ever execute out of this FOR loop,
+33:20 | I get to the end of the FOR loop without hitting that
+33:22 | branch that took me through the return, then and only then
+33:25 | do I want to actually say, gee, I got to this place,
+33:28 | there isn't any value to return, I'm going to return
+33:30 | none and none.
+33:31 | I'm still trying to get rid of this candy, Halloween's
+33:33 | coming, where were we?
+33:34 | There's one, thank you.
+33:36 | I don't think I'm going to make it, I did.
+33:38 | Thank you.
+33:41 | Make sense?
+33:48 | The answer is no, I want parens to create tuple and I
+33:51 | get really confused about the difference
+33:52 | between lists and tuples.
+33:53 | For now, the code is working.
+34:00 | Yes is the answer, all right?
+34:02 | And we're having a difference of opinion as to whether we
+34:04 | should use a tuple or a list here, right?
+34:06 | But the answer is yes, you can.
+34:08 | And my real answer is, go try it out, because obviously you
+34:10 | can tell I frequently do this the wrong way and the TAs give
+34:12 | me a hard time every time.
+34:13 | John.
+34:14 | PROFESSOR JOHN GUTTAG: Is the microphone on?
+34:17 | PROFESSOR ERIC GRIMSON: Yes.
+34:18 | PROFESSOR JOHN GUTTAG: As you'll see next week, tuples
+34:21 | and lists are very close to the same thing.
+34:23 | In almost any place where you can get away with using tuples
+34:27 | you can use lists.
+34:29 | PROFESSOR ERIC GRIMSON: Yes.
+34:29 | PROFESSOR JOHN GUTTAG: But want to emphasize word is
+34:31 | almost, because we'll see a couple of places where if it
+34:34 | expects a tuple and you use a list you'll
+34:37 | get an error message.
+34:38 | But we'll see all that next week.
+34:40 | PROFESSOR ERIC GRIMSON: Right, when the real pro comes in to
+34:43 | pick up the pieces I'm leaving behind for him.
+34:46 | OK.
+34:47 | Let me pull this back up.
+34:48 | What we're doing now is we're building this encapsulation.
+34:51 | Now one of the things you notice here by the way is, you
+34:53 | know, this in essence just solves the simple problems.
+34:57 | Suppose I now add one other piece to this.
+35:01 | The farmer is not keeping a great set of things so in
+35:04 | addition to pigs, and chickens he raises spiders.
+35:11 | I have no idea why.
+35:14 | He's making silk I guess.
+35:16 | Right?
+35:17 | Why am I giving you this example?
+35:18 | I want to show you how easy it is to change the code.
+35:20 | But, notice, once I've added this I
+35:22 | actually have a problem.
+35:22 | This is now an under-constrained problem.
+35:24 | I have more unknowns than I have equations.
+35:28 | So you know from algebra I can't actually solve this.
+35:30 | There may be multiple solutions to this.
+35:33 | What would I have to do to change my code?
+35:35 | And the answer is fortunately not a lot.
+35:38 | So I'm going to ask you to look now at this set of
+35:41 | things, which is solve 1 and Barnyard 1.
+35:45 | OK.
+35:47 | The change is, well, on Barnyard 1 it looks much the
+35:49 | same as it did for Barnyard.
+35:50 | Right, I'm going to read in the values of the number of
+35:52 | heads and the number of legs.
+35:53 | I'm going to use solve 1 as before, but now I'm going to
+35:56 | bind out three variables.
+35:58 | And then I'm going to do a similar thing to
+35:59 | print things out.
+36:01 | But would the solver do?
+36:02 | Well here what I'd like to do is to run
+36:03 | through a couple of loops.
+36:06 | Right, how would I solve this problem?
+36:07 | You can use the same enumerate and check idea, but now say
+36:10 | gee let me pick how many pigs there are.
+36:13 | Is that the one I used first?
+36:14 | Sorry, let me pick the number of spiders there are.
+36:18 | Having chosen the number of spiders, let me pick how many
+36:21 | chickens I have. With those two in place, I now know how
+36:25 | many pigs I must have and I can run
+36:27 | through the same solution.
+36:28 | The reason I'm showing you this is this is another very
+36:31 | standard structure.
+36:32 | I now have two nested loops.
+36:35 | One running through a choice for one parameter, another one
+36:38 | running through a choice for a second parameter.
+36:40 | And then the rest of the solution
+36:41 | looks much like before.
+36:42 | I'm going to get the total number of legs out.
+36:44 | I'm going to check to see if it's right or not.
+36:45 | And again I'm going to return either a three tuple there or
+36:48 | a three tuple there.
+36:50 | It's part of what I want, because I'm going to bind
+36:52 | those values out.
+36:53 | And if I run that example, Barnyard 1, I don't know we'll
+37:03 | give it 20 heads, 56 legs; and it find a solution.
+37:09 | I ought to be able to run something else.
+37:14 | I don't know, give me some numbers.
+37:15 | How many heads?
+37:15 | Pick an integer, somebody.
+37:17 | STUDENT: 5.
+37:18 | PROFESSOR ERIC GRIMSON: 5.
+37:19 | All right.
+37:19 | How many legs?
+37:22 | 10?
+37:24 | All right.
+37:24 | We got an easy one.
+37:26 | Let's just for the heck of it --
+37:27 | I should have found some better examples
+37:29 | before I tried this.
+37:37 | No mutant spiders here.
+37:40 | OK, so what have I done?
+37:41 | I just added a little bit more now.
+37:42 | I'm now running through a pair of loops.
+37:43 | Again notice the encapsulation, that nice
+37:45 | abstraction going on, which is what I want.
+37:48 | Once I get to this stage though by the way, there might
+37:50 | be more than one solution.
+37:51 | Because in an under-constrained problem
+37:53 | there could be multiple solutions.
+37:55 | So suppose I want to capture all of them or
+37:57 | print all of them out.
+37:59 | Well I ought to be able to do that by simply
+38:00 | generalizing the loop.
+38:02 | And that's what the next piece of code on your a
+38:07 | hand out shows you.
+38:08 | I'm just going to let you look at this.
+38:09 | If you look at solve 2, it's going to run through the same
+38:13 | kind of loop, printing out all of the answers.
+38:16 | But it's going to keep going.
+38:17 | In other words it doesn't just return when it finds one, it's
+38:19 | going to run through all of them.
+38:22 | All right?
+38:23 | Sounds like a reasonable thing to do.
+38:24 | Notice one last piece.
+38:26 | If I'm going to do that, run through all possible answers,
+38:30 | I still want to know, gee, what if
+38:31 | there aren't any answers?
+38:32 | How do I return that case?
+38:35 | And that shows you one other nice little thing we want to
+38:37 | do, which is if I look in this code notice I set up a
+38:40 | variable up here called Solution Found, initially
+38:42 | bound to false.
+38:44 | The rest of that code's a pair of loops.
+38:47 | Pick the number of spiders.
+38:48 | Pick the number of chickens.
+38:49 | That sets up the number of pigs.
+38:50 | Figure out the legs.
+38:51 | See if it's right.
+38:52 | If it is right, I'm going to print out the information but
+38:55 | I'm also going to change that variable to true.
+38:58 | And that allows me then, at the end of that pair of loops
+39:01 | when I get down to this point right here, I can check to see
+39:05 | did I find any solution and if not in that case print out
+39:08 | there is no solution.
+39:11 | So this gives you another nice piece which is I can now look
+39:14 | for first solution, I can look for all solutions, and I can
+39:17 | maintain some internal variables that let me know
+39:20 | what I found.
+39:20 | A trick that you're going to use a lot as you write your
+39:22 | own functions.
+39:24 | All right, I want to end up with the last 10 minutes with
+39:27 | a different variation on how to use functions to think
+39:30 | about problems. And that is to
+39:32 | introduce the idea of recursion.
+39:35 | How many of you have heard the term used before?
+39:44 | How may have you heard the term used before in terms of
+39:48 | programming languages?
+39:50 | Great.
+39:51 | For the rest you, don't sweat it.
+39:52 | This is a highfalutin term that computer scientists use
+39:55 | to try and make them look like they're smarter than they
+39:57 | really are.
+39:58 | But it is a very handy way of thinking about, not just how
+40:01 | to program, but how to break problems down
+40:04 | into nice sized chunks.
+40:06 | And the idea behind recursion I'm going to describe with a
+40:09 | simple example.
+40:11 | And then I'm going to show you how we can actually use it.
+40:16 | The idea of recursion is that I'm going to take a problem
+40:20 | and break it down into a simpler version of the same
+40:23 | problem plus some steps that I can execute.
+40:26 | I'm go to show you an example of a procedure, sorry a
+40:28 | function, in a second.
+40:29 | But let me give you actually an analogy.
+40:32 | If you look at US law, and you look at the definition of the
+40:37 | US legal code that defines the notion of a
+40:39 | natural born US citizen.
+40:41 | It's actually a wonderful recursive definition.
+40:43 | So what's the definition?
+40:45 | If you're born in the United States you are by definition a
+40:49 | natural born US citizen.
+40:51 | We call that a base case.
+40:58 | It's basically the simplest possible
+41:05 | solution to the problem.
+41:07 | Now if you were not born in the United States, you may
+41:09 | still be, under definition, a natural born US citizen if
+41:14 | you're born outside this United States, both of your
+41:16 | parents are citizens of the United States and at least one
+41:19 | parent has lived in the United States.
+41:21 | There's a wonderful legal expression.
+41:24 | But notice what that is.
+41:25 | It's a recursive definition.
+41:26 | How do you know that your parents, at least one of your
+41:30 | parents satisfies the definition?
+41:32 | Well I've reduced the problem from am I a natural born US
+41:36 | citizen to is one of my parents a
+41:39 | natural born US citizen?
+41:41 | And that may generalize again and it keeps going until you
+41:44 | either get back to Adam and Eve, I guess.
+41:46 | I don't think they were born in the US as far as I know, or
+41:49 | you find somebody who satisfies that definition or
+41:52 | you find that none of your parents
+41:54 | actually are in that category.
+41:55 | But that second one is called the inductive step, or the
+42:00 | recursive step.
+42:01 | And in my words it says break the problem into a simpler
+42:10 | version of the same problem and some other steps.
+42:28 | And I think this is best illustrated by giving you a
+42:31 | simple little piece of code.
+42:33 | I use simple advisedly here.
+42:35 | This is actually a piece of code that is really easy to
+42:38 | think about recursively and is much more difficult to think
+42:41 | about in other ways.
+42:42 | And the piece of code is suppose I have a spring and I
+42:44 | want to know if it's a palindrome.
+42:46 | Does it read the same thing left to
+42:48 | right as right to left.
+42:50 | OK?
+42:51 | How would I solve that?
+42:53 | If the string has no elements in it it is obviously a
+42:58 | palindrome.
+42:59 | If the string has one element in it, it's a palindrome.
+43:02 | There's the base case.
+43:04 | If it's longer than one, what do I want to do?
+43:07 | Well I'd like to check the two end points to see are they the
+43:10 | same character?
+43:12 | And if they are, then oh, I just need to know is
+43:14 | everything else in the middle a palindrome?
+43:19 | I know it sounds simple, but notice what I just did.
+43:21 | I just used a recursive definition.
+43:23 | I just reduced it to a smaller version of the same problem.
+43:27 | That is if I can write code that would solve all instances
+43:30 | of smaller size strings, then what I just described will
+43:34 | solve the larger size one.
+43:36 | And in fact that's exactly what I have. I would like you
+43:39 | to look at this piece of code right here called
+43:42 | isPalindrome.
+43:44 | Notice what it says.
+43:46 | I'm going to pass in a string, call it s, binds it locally,
+43:51 | and it says the following.
+43:52 | It says if this is a string of length 0 or 1, I'm done.
+43:57 | I'm going to return the answer true.
+44:00 | Otherwise I'm going to check to see is the first and last,
+44:04 | there's that - 1 indexing, is the first and last element of
+44:07 | the string the same?
+44:10 | And if that's true is everything in the string,
+44:14 | starting at the first element and removing the last element,
+44:17 | a palindrome?
+44:19 | Let me remind you.
+44:19 | By saying first element remember we start at 0 as the
+44:21 | initial indexing point.
+44:24 | Wonderful recursive definition.
+44:27 | OK, let's try it out.
+44:31 | Go back over here and we're going to say isPalindrome.
+44:35 | How did I actually spell this?
+44:37 | Palindrome with a capital P. Only in New York, in Canada we
+44:44 | pronounce it Palindrome.
+44:46 | When you're teaching it you get to call it your way, I'm
+44:48 | going to call it my way.
+44:49 | Sorry John, you're absolutely right.
+44:52 | OK.
+44:53 | Notice by the way, there's that nice speck going on
+44:55 | saying put a string here.
+44:57 | It's going to return true if it's a PAIL-indrome and false
+44:59 | if it's a PAL-indrome.
+45:03 | And it says true.
+45:05 | Now maybe you're bugged by this.
+45:07 | I know you're bugged by my bad humor, but too bad.
+45:09 | Maybe you're bugged by this, saying wait a minute, how does
+45:11 | this thing stop?
+45:13 | This is the kind of definition that your high school geometry
+45:16 | teacher would have rapped your knuckles over.
+45:17 | You can't define things in terms of themselves.
+45:20 | This is an inductive definition.
+45:22 | Actually we could prove inductively that it holds, but
+45:24 | how do we know it stops?
+45:25 | Well notice what the computation is doing. it's
+45:28 | looking first to see am I in the base case, which I'm done.
+45:31 | If I'm not I'm just going to reduce this to a smaller
+45:34 | computation.
+45:35 | And as long as that smaller computation reduces to another
+45:38 | smaller computation, eventually I ought to get to
+45:41 | the place where I'm down in that base case.
+45:43 | And to see that I've written another version of this, which
+45:46 | I'm going to use here, where I'm going to give it a little
+45:49 | indentation.
+45:56 | I'm going to call this palindrome 1.
+45:58 | Sorry about that.
+45:59 | Palindrome 1.
+45:59 | I'm going to give it a little indentation so
+46:03 | that we can see this.
+46:07 | OK.
+46:07 | Code is right here.
+46:10 | And all it's doing is when I'm getting into the different
+46:13 | places I'm simply printing out information about where I am.
+46:15 | What I want you to see is notice what happened here.
+46:18 | OK.
+46:19 | I'm calling palindrome with that.
+46:22 | It first calls it on that problem.
+46:25 | And the code over here says, OK gee, if I'm in the base
+46:28 | case do something.
+46:29 | I'm not, so come down here check that the two end points
+46:32 | a and a are the same and call this again also.
+46:38 | Notice what happens.
+46:39 | There's this nice unwrapping of the problem.
+46:42 | I just doubled the indentation each time so you can see it.
+46:45 | So each successive call, notice what's happening.
+46:49 | The argument is getting reduced.
+46:52 | And we're going another level in.
+46:54 | When we get down to this point, we're calling it with
+46:56 | just a string of length one.
+46:58 | At that point we're in the base case and we can unwrap
+47:01 | this computation.
+47:03 | We say, ah, that's now true.
+47:04 | So I can return true here.
+47:06 | Given that that's true and I already checked the two end
+47:08 | points, that's true, that's true.
+47:10 | And I unwrap the computation to get back.
+47:14 | You are going to have to go play with this.
+47:16 | Rock it if you like to try and see where it goes.
+47:18 | But I want to stress again, as long as I do the base case
+47:21 | right and my inductive or recursive step reduces it to a
+47:25 | smaller version of the same problem, the code will in fact
+47:28 | converge and give me out an answer.
+47:31 | All right, I want to show you one last example of using
+47:35 | recursion because we're going to come back to this.
+47:37 | This is a classic example of using recursion.
+47:40 | And that is dating from the 1200s and
+47:44 | it is due to Fibonacci.
+47:46 | Does anyone know the history of what Fibonacci
+47:49 | was trying to do?
+47:51 | Sorry, let me re-ask that.
+47:52 | Fibonacci.
+47:56 | Which actually is son of Bonacci which is the name of
+47:58 | his father who was apparently a very friendly guy.
+48:00 | First of all, does anyone know what a Fibonacci number is?
+48:05 | Wow.
+48:06 | STUDENT: [INAUDIBLE]
+48:10 | PROFESSOR ERIC GRIMSON: Right, we're going to do that in a
+48:11 | second, but the answer is Fibonacci numbers, we define
+48:13 | the first two.
+48:14 | Which are both defined to be, or I can define them in
+48:16 | multiple ways, 0 and 1.
+48:17 | And then the next Fibonacci number is the sum of the
+48:19 | previous two.
+48:20 | And the next number is the sum of the previous two.
+48:22 | Do you know the history of this?
+48:23 | STUDENT: [INAUDIBLE].
+48:30 | PROFESSOR ERIC GRIMSON: Exactly.
+48:32 | Thank you.
+48:33 | Bad throw, I'm playing for the Yankees.
+48:35 | Sorry John.
+48:36 | The answer is Fibonacci actually was actually trying
+48:38 | to count rabbits back in the 1200s.
+48:40 | The idea was that rabbits could mate after a month, at
+48:43 | age one month.
+48:44 | And so he said, if you start off with a male and a female,
+48:47 | at the end of one month they have an offspring.
+48:49 | Let's assume they have two offspring.
+48:52 | At the end of the next month let's assume those offspring
+48:54 | have offspring.
+48:54 | Again a male and female.
+48:55 | The question was how many rabbits do you have at
+48:57 | the end of a year?
+48:58 | At the end of two years?
+48:58 | At the end of more than that number of years, and so.
+49:01 | We can do this with the following level definition.
+49:05 | We're going to let pairs of 0, the number of pairs at month
+49:08 | 0, actually it would not be 0 it would be 1.
+49:10 | We let the number of pairs at month 1 be 1.
+49:17 | And then the number of pairs at month n is the number of
+49:21 | pairs at month n - 1 plus the number of pairs
+49:25 | at month n - 2.
+49:27 | The sum of the previous two.
+49:30 | If I write Fibonacci, you see it right there.
+49:35 | And the reason I want to show you this is to notice that the
+49:37 | recursion can be doubled.
+49:39 | So this says, given a value x, if it's either 0 or 1, either
+49:43 | of those two cases, just return 1.
+49:45 | Otherwise break this down into two versions
+49:49 | of a simpler problem.
+49:50 | Fib of x - 1 and fib of x - 2, and then take the sum of those
+49:54 | and return that as the value.
+49:57 | Notice if I'm going to have two different sub problems I
+50:01 | need to have two base cases here to catch this.
+50:04 | And if I only had one it would error out.
+50:06 | And as a consequence, I can go off and ask about rabbits.
+50:11 | Let's see.
+50:13 | At the end of 12 months, not so bad.
+50:18 | At the end of two years, we're not looking so good.
+50:24 | At the end of three years, we are now in Australia.
+50:30 | Overrun with rabbits.
+50:31 | In fact I don't think the thing ever comes back, so I'm
+50:34 | going to stop it because it really gets hung up here.
+50:37 | And I'm going to restart it.
+50:40 | What's the point of this?
+50:42 | Again, now that I can think about things recursively, I
+50:44 | can similarly break things down into simpler versions of
+50:47 | the same problem.
+50:48 | It could be one version.
+50:49 | It could be multiple versions.
+50:51 | And we're going to come back throughout the term to think
+50:53 | about how to code programs that reflect this.
+50:56 | The last point I want to make to you is, you've started
+50:59 | writing programs that you would think of as being
+51:01 | inherently iterative.
+51:02 | They're running through a loop.
+51:04 | It's a common way of thinking about problems. Some problems
+51:07 | are naturally tackled that way.
+51:09 | There are other problems that are much more naturally
+51:11 | thought of in a recursive fashion.
+51:13 | And I would suggest palindrome as a great example of that.
+51:16 | That's easy to think about recursively.
+51:18 | It's much harder to think about iteratively.
+51:20 | And you want to get into the habit of deciding which is the
+51:22 | right one for you to use.
+51:24 | And with that, we'll see you next time.

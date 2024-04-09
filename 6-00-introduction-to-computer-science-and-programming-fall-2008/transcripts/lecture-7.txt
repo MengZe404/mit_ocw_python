@@ -1,0 +1,882 @@
+0:00 | ANNOUNCER: Open content is provided under a creative
+0:02 | commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation, or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu .
+0:19 | PROFESSOR JOHN GUTTAG: OK.
+0:23 | I finished up last time talking about lists.
+0:27 | And I pointed out that lists are mutable, showed you some
+0:30 | examples of mutation.
+0:34 | We can look at it here; we looked at append, which added
+0:39 | things to lists, we looked at delete, deleting things from a
+0:43 | list. You can also assign to a list, or to an element of a
+0:49 | list. So ivy sub 1, for example, could be assigned
+0:55 | minus 15, and that will actually mutate the list.
+1:03 | So heretofore, when we wrote assignment, what we always
+1:08 | meant, was changing the binding of a variable to a
+1:13 | different object.
+1:15 | Here, we are overloading the notation to say, no, no, ivys
+1:22 | is still bound to the same object, but an element of ivys
+1:29 | is bound to a different object.
+1:33 | If you think about it, that makes sense, because when we
+1:37 | have a list, what a list is, is a sequence of objects.
+1:49 | And what this says is, is the object named by the expression
+1:55 | ivys sub 1, is now bound to the object, if you will, named
+2:03 | by the constant minus 15.
+2:08 | So we can watch this run here.
+2:20 | Idle can-- that's exciting.
+2:25 | I hadn't expected that answer.
+2:30 | All right, your question.
+2:31 | STUDENT: [INAUDIBLE] four elements to ivys, and you tell
+2:32 | it to change the fifth element of ivys to negative 15, will
+2:36 | it add it or [INAUDIBLE]
+2:42 | PROFESSOR JOHN GUTTAG: Well, I'll tell you how ol-- let's
+2:44 | answer that the easy way.
+2:48 | We'll start up a shell and we'll try it.
+2:55 | All right, we'll just get out of what we were doing here.
+2:59 | And so, we now have some things, so we, for example,
+3:05 | have ivys, I can print ivys , and it's only got three
+3:11 | elements but your question probably is just as good for
+3:14 | adding the fourth as adding the fifth, so what would
+3:17 | happen if we say ivys sub 3-- because that of course is the
+3:24 | fourth element, right?
+3:32 | Let's find out.
+3:36 | OK.
+3:36 | Because what that does is, it's changing the binding of
+3:45 | the name ivys, in this case, sub 1.
+3:49 | What it looked at here, with the name ivys sub 3, and said
+3:52 | that name doesn't-- isn't bound, right?
+3:56 | That isn't there.
+3:58 | So it couldn't do it, so instead that's what append is
+4:00 | for, is to stick things on to the end of the list. But a
+4:05 | very good question.
+4:08 | So we can see what we did here, and, but of course I can
+4:16 | now, if I choose, say something like, ivys sub 1 is
+4:25 | assigned minus 15, and now if I print ivys, there it is.
+4:32 | And again, this points out something I wanted to me--
+4:35 | I mentioned last time, list can be heterogeneous, in the
+4:41 | sense that the elements can be multiple different types.
+4:45 | As you see here, some of the elements are strings and some
+4:47 | of the elements are integers.
+4:51 | Let's look at another example.
+4:56 | Let's suppose, we'll start with the list,
+5:01 | I'll call it l 1.
+5:08 | This, by the way, is a really bad thing I just did.
+5:12 | What was-- what's really bad about calling a list l 1?
+5:15 | STUDENT: [INAUDIBLE]
+5:18 | PROFESSOR JOHN GUTTAG: Is it l 1, or is it 11, or is it l l?
+5:22 | It's a bad habit to get into when you write programs, so I
+5:27 | never use lowercase L except when I'm spelling the word
+5:30 | where it's obvious, because otherwise I get all sorts of
+5:33 | crazy things going on.
+5:35 | All right, so let's make it the list 123.
+5:41 | All right?
+5:43 | Now, I'll say L 2 equals L 1.
+5:50 | Now I'll print L 2.
+5:54 | Kind of what you'd guess, but here's the interesting
+5:57 | question: if I say L 1 is assigned 0, L 1 sub 0 is
+6:05 | assigned 4, I'll print L 1.
+6:10 | That's what you expect, but what's going to happen
+6:13 | if I print L 2?
+6:22 | 423 as well, and that's because what happened is I had
+6:27 | this model, which we looked at last time, where I had the
+6:32 | list L 1, which was bound to an object, and then the
+6:44 | assignment L 2 gets L 1, bound the name L 2 to the same
+6:51 | object, so when I mutated this object, which I reached
+6:58 | through the name L 1 to make that 4, since this name was
+7:05 | bound to the same object, when I print it, I got 423.
+7:12 | So that's the key thing to-- to realize; that what the
+7:17 | assignment did was have two separate
+7:21 | paths to the same object.
+7:25 | So I could get to that object either through this path or
+7:28 | through that path, it didn't matter which path I use to
+7:31 | modify it, I would see it when I looked at the other.
+7:35 | Yes.
+7:36 | STUDENT: [INAUDIBLE]
+7:44 | PROFESSOR JOHN GUTTAG: So the question, if I said a is
+7:50 | assigned 2, b is assigned a, and then a is assigned 3.
+7:56 | Is that your question?
+7:58 | So the question is, a is assigned 1, b is assigned a, a
+8:06 | is assigned 2, and then if I print b, I'll get 1.
+8:18 | Because these are not mutable, this is going to be assigned
+8:24 | to an object in the store, so we'll draw the picture over
+8:29 | here, that we had initially a is bound to an object with 1
+8:36 | in it, and then b got bound to the same object, but then when
+8:46 | I did the assignment, what that did was it broke this
+8:51 | connection, and now had a assigned to a different
+8:56 | object, with the number, in this case, 2 in it.
+9:04 | Whereas the list assignment you see here did not rebind
+9:12 | the object l 1, it changed this.
+9:18 | OK?
+9:18 | Now formally I could have had this pointing off to another
+9:21 | object containing 4, but that just seemed excessive, right?
+9:26 | But you see the difference.
+9:28 | Great question, and a very important thing to understand,
+9:32 | and that's why I'm belaboring this point, since this is
+9:35 | where people tend to get pretty confused, and this is
+9:39 | why mutation is very important to understand.
+9:42 | Yeah.
+9:43 | STUDENT: [UNINTELLIGIBLE]
+9:45 | PROFESSOR JOHN GUTTAG: I'm just assuming
+9:46 | it'll be a great question.
+9:47 | STUDENT: [INAUDIBLE]
+9:57 | PROFESSOR JOHN GUTTAG: Exactly.
+9:59 | So if-- very good question-- so, for example, we can just
+10:05 | do it here.
+10:07 | The question was, suppose I now type L 1 equals the empty
+10:15 | list. I can print L 1, and I can print L 2, because again,
+10:30 | that's analogous to this example, where I just swung
+10:34 | the binding of the identifier.
+10:37 | So this is important, it's a little bit subtle, but if you
+10:40 | don't really understand this deeply, you'll find yourself
+10:44 | getting confused a lot.
+10:48 | All right?
+10:50 | OK.
+10:51 | Let me move on, and I want to talk about one more type.
+10:59 | By the way, if you look at the handout from last time, you'll
+11:02 | see that there's some other examples of mutation,
+11:04 | including a function that does mutation.
+11:07 | It's kind of interesting, but I don't think we need-- think
+11:09 | we've probably done enough here that I
+11:11 | hope it now make sense.
+11:15 | That one type I want to talk about still is dictionaries.
+11:34 | Like lists, dictionaries are mutable, like lists, they can
+11:47 | be heterogeneous, but unlike lists, they're not ordered.
+11:58 | The elements in them don't have an order, and
+12:01 | furthermore, we have generalized the indexing.
+12:17 | So lists and strings, we can only get at elements by
+12:24 | numbers, by integers, really.
+12:29 | Here what we use is, think of every element of the
+12:33 | dictionary as a key value pair, where the keys are used
+12:48 | as the indices.
+12:51 | So we can have an example, let's look at it.
+13:01 | So, if you look at the function show dics here,
+13:05 | you'll see I've declared a variable called e to f, ah,
+13:11 | think of that as English to French, and I've defined a
+13:15 | dictionary to do translations.
+13:18 | And so, we see that the string one corresponds the-- the key
+13:25 | one corresponds to the value un the key soccer corresponds
+13:32 | to the French word football, et cetera.
+13:39 | It's kind of bizarre, but the French call soccer football.
+13:45 | And then I can index in it.
+13:49 | So if I print e to f of soccer, it will print the
+13:53 | string football.
+13:56 | So you can imagine that this is a very powerful mechanism.
+14:07 | So let's look what happens when I run--
+14:09 | start to run this.
+14:29 | All right.
+14:30 | So, it says not defined-- and why did it say not defined,
+14:35 | there's an interesting question.
+14:36 | Let's just make sure we get this right, and we start the
+14:41 | show up again--
+14:55 | All right, so, I run it, and sure
+14:58 | enough, it shows football.
+15:02 | What happens if I go e to f of 0?
+15:10 | I get a key error.
+15:13 | Because, remember, these things are not ordered.
+15:16 | There is no 0th element.
+15:19 | 0 is not a key of this particular object.
+15:24 | Now I could have made 0 a key, keys don't have to be strings,
+15:28 | but as it happened, I didn't.
+15:32 | So let's comment that out, so we don't get stuck again.
+15:55 | Where we were before, I've printed it here, you might be
+15:59 | a little surprised of the order.
+16:01 | Why is soccer first?
+16:04 | Because the order of this doesn't matter.
+16:07 | That's why it's using set braces, so
+16:10 | don't worry about that.
+16:12 | The next thing I'm doing is-- so that's that, and then--
+16:19 | I'm now going to create another one, n to s, for
+16:24 | numbers to strings, where my keys are numbers, in this case
+16:29 | the number 1 corresponds to the word one, and
+16:33 | interestingly enough, I'm also going to have the word one
+16:35 | corresponding to the number 1.
+16:38 | I can use anything I want for keys, I can use anything I
+16:41 | want for values.
+16:45 | And now if we look at this, we see, I can get this.
+16:50 | All right.
+16:51 | So these are extremely valuable.
+16:56 | I can do lots of things with these, and you'll see that as
+16:59 | we get to future assignments, we'll make heavy use of
+17:01 | dictionaries.
+17:03 | Yeah.
+17:04 | Question.
+17:04 | STUDENT: [INAUDIBLE]
+17:07 | PROFESSOR JOHN GUTTAG: You can, but you don't know what
+17:09 | order you'll get them in.
+17:11 | What you can do is you can iterate keys, which gives you
+17:16 | the keys in the dictionary, and then you can choose them,
+17:20 | but there's no guarantee in the order in
+17:22 | which you get keys.
+17:25 | Now you might wonder, why do we have dictionaries?
+17:28 | It would be pretty easy to implement them with lists,
+17:33 | because you could have a list where each element of the list
+17:37 | was a key value pair, and if I wanted to find the value
+17:41 | corresponding to a key, I could say for e in the list,
+17:46 | if the first element of e is the key, then I get the value,
+17:49 | otherwise I look at the next element in the list.
+17:52 | So adding dictionaries, as Professor Grimson said with so
+17:56 | many other things, doesn't give you any more
+17:58 | computational power.
+18:01 | It gives you a lot of expressive convenience, you
+18:04 | can write the programs much more cleanly, but most
+18:08 | importantly, it's fast.
+18:12 | Because if you did what I suggested with the list, the
+18:15 | time to look up the key would be linear in the length of the
+18:17 | list. You'd have to look at each element until
+18:20 | you found the key.
+18:21 | Dictionaries are implemented using a magic technique called
+18:25 | hashing, which we'll look at a little bit later in the term,
+18:32 | which allows us to retrieve keys in constant time.
+18:36 | So it doesn't matter how big the dictionary is, you can
+18:39 | instantaneously retrieve the value associated with the key.
+18:45 | Extremely powerful.
+18:46 | Not in the next problems set but in the problem set after
+18:49 | that, we'll be exploiting that facility of dictionaries.
+18:54 | All right.
+18:55 | Any questions about this?
+18:58 | If not, I will turn the podium over to Professor Grimson.
+19:02 | PROFESSOR ERIC GRIMSON: I've stolen it.
+19:04 | This is like tag team wrestling, right?
+19:24 | Professor Guttag has you on the ropes, I get
+19:25 | to finish you off.
+19:31 | Try this again.
+19:34 | OK.
+19:35 | We wanted to finish up that section, we're now going to
+19:37 | start on a new section, and I want to try and do one and a
+19:42 | half things in the remaining time.
+19:44 | I'm going to introduce one topic that we're going to deal
+19:46 | with fairly quickly, and then we tackle the second topic,
+19:50 | it's going to start today, and we're going to carry on.
+19:52 | So let me tell the two things I want to do.
+19:54 | I want to talk a little bit about how you use the things
+19:57 | we've been building in terms of functions to help you
+19:59 | structure and organize your code.
+20:01 | It's a valuable tool that you want to have as a programmer.
+20:05 | And then we're going to turn to the question of efficiency.
+20:07 | How do we measure efficiency of algorithms?
+20:09 | Which is going to be a really important thing that we want
+20:11 | to deal with, and we'll start it today, it's undoubtedly
+20:13 | going to take us a couple more lectures to finish it off.
+20:16 | Right, so how do you use the idea of
+20:19 | functions to organize code?
+20:21 | We've been doing it implicitly, ever since we
+20:24 | introduced functions.
+20:25 | I want to make it a little more explicit, and I want to
+20:27 | show you a tool for doing that.
+20:29 | And I think the easy way to do is-- is to
+20:31 | do it with an example.
+20:32 | So let's take a really simple example.
+20:34 | I want to compute the length of the
+20:37 | hypotenuse of a right triangle.
+20:39 | And yeah, I know you know how to do it, but let's think
+20:41 | about what might happen if I wanted to do that.
+20:43 | And in particular, if I think about that problem-- actually
+20:47 | I want to do this-- if I think about that problem, I'm going
+20:57 | to write a little piece of pseudo code.
+20:59 | Just to think about how I would break that problem up.
+21:03 | Pseudo code.
+21:04 | Now, you're all linguistic majors, pseudo means false,
+21:08 | this sounds like code that ain't going to run, and that's
+21:10 | not the intent of the term.
+21:12 | When I say pseudo code, what I mean is, I'm going to write a
+21:14 | description of the steps, but not in a particular
+21:18 | programming language.
+21:19 | I'm going to simply write a description of what
+21:20 | do I want to do.
+21:22 | So if I were to solve this problem, here's the way I
+21:24 | would do it.
+21:24 | I would say, first thing I want to do, is I want to input
+21:28 | a value for the base as a float.
+21:38 | Need to get the base in.
+21:40 | Second thing I want to do, I need to get the height, so I'm
+21:43 | going to input a value for the height, also as a float, a
+21:49 | floating point.
+21:51 | OK.
+21:52 | I get the two values in, what do I need to do, well, you
+21:54 | sort of know that, right?
+21:55 | I want to then do, I need to find the square root-- b
+22:04 | squared plus h squared, right?
+22:07 | The base plus the height, that's the thing I want for
+22:09 | the hypotenuse-- and I'm going to save that as a float in
+22:17 | hyp, for hypotenuse.
+22:20 | And then finally I need to print something out, using the
+22:28 | value in hyp.
+22:34 | OK.
+22:34 | Whoop-dee-doo, right?
+22:35 | Come on.
+22:36 | We know how to do this.
+22:37 | But notice what I did.
+22:40 | First of all, I've used the notion of modularity.
+22:42 | I've listed a sequence of modules, the things that I
+22:45 | want to do.
+22:46 | Second thing to notice, is that little piece of pseudo
+22:49 | code is telling me things about values.
+22:53 | I need to have a float.
+22:55 | I need to have another float here, it's giving me some
+22:57 | information.
+22:58 | Third thing to notice is, there's a flow of control.
+23:01 | The order which these things are going to happen.
+23:04 | And the fourth thing to notice is, I've used abstraction.
+23:07 | I've said nothing about how I'm going to make square root.
+23:11 | I'm using it as an abstraction, saying I'm going
+23:13 | to have square root from somewhere, maybe I'll build it
+23:14 | myself, maybe somebody gives it to me as part of a library,
+23:17 | so I'm burying the details inside of it.
+23:20 | I know this is a simple example, but when you mature
+23:23 | as a programmer, one of the first things you should do
+23:25 | when you sit down to tackle some problem is write
+23:28 | something like this pseudo code.
+23:30 | I know Professor Guttag does it all the time.
+23:31 | I know, for a lot of you, it's like, OK,
+23:33 | I got a heavy problem.
+23:34 | Let's see, def Foobar open paren, a bunch of parameters.
+23:39 | Wrong way to start.
+23:40 | Start by thinking about what are the sequences.
+23:41 | This also, by the way, in some sense, gives me the beginnings
+23:44 | of my comments for what the structure of my
+23:47 | code is going to be.
+23:48 | OK.
+23:49 | If we do that, if you look at the handout then, I can now
+23:52 | start implementing this.
+23:54 | I wanted to show you that, so, first thing I'm going to do is
+23:56 | say, all right, I know I'm going to need square root in
+23:58 | here, so I'm going to, in fact, import math.
+24:03 | That's a little different from other import statements.
+24:05 | This says I'm going to get the entire math library and bring
+24:08 | it in so I can use it.
+24:10 | And then, what's the first thing I wanted to do?
+24:12 | I need to get a value for base as a float.
+24:15 | Well OK, and that sounds like I'm going to need to do input
+24:16 | of something, you can see that statement there, it's-- got
+24:20 | the wrong glasses on but right there--
+24:21 | I'm going to do an input with a little message, and I'm
+24:24 | going to store it in base.
+24:26 | But here's where I'm going to practice a little bit of
+24:28 | defensive programming.
+24:30 | I can't rely on Professor Guttag if I give this-- if
+24:32 | this code to him, I can't rely on him to type in a float.
+24:36 | Actually I can, because he's a smart guy, but in general, I
+24:38 | can't rely on the user--
+24:39 | PROFESSOR JOHN GUTTAG: I wouldn't do it right
+24:42 | to see if you did.
+24:42 | PROFESSOR ERIC GRIMSON: Actually,
+24:42 | he's right, you know.
+24:43 | He would not do it, just to see if I'm doing it right.
+24:45 | I can't rely on the user.
+24:47 | I want to make sure I get a float in it,
+24:48 | so how do I do that?
+24:49 | Well, here's one nice little trick.
+24:52 | First of all, having read in that value, I can check to
+24:56 | see, is it of the right type?
+24:57 | Now, this is not the nicest way to do it but it'll work.
+24:59 | I can look at the type of the value of base and compare it
+25:03 | to the type of an actual float and see, are they the same?
+25:05 | Is this a real or a float?
+25:08 | If it is, I'm done.
+25:10 | How do I go back if it isn't?
+25:12 | Well, I'm going to create a little infinite loop.
+25:14 | Not normally a good idea.
+25:16 | I set up a variable here, called input OK.
+25:19 | Initially it's false, because I have no input.
+25:21 | And then I run a loop in which I read something in, I check
+25:25 | to see if it's the right type, if it is, I change that
+25:28 | variable to say it's now the correct type, which means the
+25:31 | next time through the loop, I'm going to say I'm all set
+25:34 | and I'm going to bounce out.
+25:35 | But if it is not, it's going to print out a message here
+25:38 | saying, you screwed up, somewhat politely, and it's
+25:42 | going to go back around.
+25:43 | So it'll just cycle until I get something
+25:45 | of the right type.
+25:47 | Nice way of doing it.
+25:49 | Right, what's the second thing I do?
+25:50 | Well, I get the same sort of thing to read in the height,
+25:53 | once I have that I'm going to take base squared plus height
+25:56 | squared, and there's a form that we've just seen once
+25:59 | before, and it's going to repeat it, that is math.SQRT
+26:02 | and it says the following: it says, take from the math
+26:07 | library the function called sqrt.
+26:11 | OK.
+26:12 | We're going to come back to this when we get to objects,
+26:13 | it's basically picking up that object and it's applying that,
+26:16 | putting that value into hype, and then just printing
+26:19 | something out.
+26:21 | And again, if I just run this, just to show that it's going
+26:23 | to do the right thing, it says enter base, I'm obnoxious, it
+26:28 | says oops, wasn't a float, so we'll be nice about it, and I
+26:33 | enter a height, and it prints out what I expected.
+26:37 | I just concatenated those strings together, by the way,
+26:39 | at the end.
+26:39 | All right.
+26:41 | Notice what I did.
+26:43 | OK.
+26:44 | I went from this description, it gives me [UNINTELLIGIBLE]
+26:47 | some information.
+26:48 | I need to have a particular type.
+26:49 | I made sure I had the particular type.
+26:51 | I've used some abstraction to suppress some details here.
+26:55 | Now if you look at that list, there is actually something I
+26:58 | didn't seem to check, which is, I said I wanted a float
+27:03 | stored in hyp.
+27:04 | How do I know I've got a float in hyp?
+27:07 | Well I'm relying on the contract, if you like, that
+27:11 | the manufacturer of square root put together, which is,
+27:13 | if I know I'm giving it two floats, which I do because I
+27:15 | make sure they're floats, the contract, if you like, of
+27:18 | square root says I'll give you back a float.
+27:20 | So I can guarantee I've got something of the right type.
+27:24 | OK.
+27:24 | I know this is boring as whatever.
+27:26 | But there's an important point here.
+27:28 | Having now used this pseudo code to line things up, I can
+27:31 | start putting some additional structure on this.
+27:33 | And in particular, I'm sure you're looking at this going--
+27:37 | will look at it if we look at the right piece--
+27:39 | going, wait a minute.
+27:41 | This chunk of code and this chunk of code, they're really
+27:46 | doing the same thing.
+27:48 | And this is something I want to use.
+27:49 | If I look at those two pieces of computation, I can see a
+27:53 | pattern there.
+27:53 | It's an obvious pattern of what I'm doing.
+27:56 | And in particular, I can then ask the following question,
+27:59 | which is, what's different between those
+28:01 | two pieces of code?
+28:03 | And I suggest two things, right?
+28:05 | One is, what's the thing I print out when
+28:07 | I ask for the input?
+28:09 | The second thing is, what do I print out if I actually don't
+28:12 | get the right input in?
+28:14 | And so the only two differences are, right there,
+28:17 | and there versus here and here.
+28:20 | So this is a good place to think about, OK, let me
+28:23 | capture that.
+28:24 | Let me write a function, in fact the literal thing I would
+28:26 | do is to say, identify the things that change, give each
+28:30 | of them a variable name because I want to refer to
+28:33 | them, and then write a function that captures the
+28:35 | rest of that computation just with those
+28:37 | variable names inside.
+28:39 | And in fact, if you look down-- and I'm just going to
+28:42 | highlight this portion, I'm not going to run it-- but if
+28:43 | you look down here, that's exactly what that does.
+28:48 | I happen to have it commented out, right?
+28:50 | What does it do?
+28:50 | It has height, it says, I've got two names of things: the
+28:52 | request message and the error message.
+28:54 | The body of that function looks exactly like the
+28:57 | computation up above, except I'm simply using those in
+29:00 | place of the specific message I had before.
+29:04 | And then the only other difference is obviously, it's
+29:06 | a function I need to return a value.
+29:07 | So when I'm done, I'm going to give the value back out.
+29:10 | All right?
+29:11 | And that then let's me get to, basically, this code.
+29:17 | Having done that, I simply call base with get float, I
+29:20 | call height with get float, and do the rest of the work.
+29:23 | All right.
+29:24 | What's the point of doing this?
+29:27 | Well, notice again.
+29:28 | What have I done?
+29:28 | I've captured a module inside of a function.
+29:31 | And even though it's a simple little thing here, there's
+29:33 | some a couple of really nice advantages to this.
+29:36 | All right?
+29:37 | First one is there's less code to read.
+29:39 | It's easier to debug.
+29:40 | I don't have as much to deal with.
+29:42 | But the more important thing is, I've now separated out
+29:45 | implementation from functionality, or
+29:48 | implementation from use.
+29:50 | What does that mean?
+29:51 | It means anybody using that little function get float
+29:55 | doesn't have to worry about what's inside of it.
+29:57 | So for example, I decide I want to change the message I
+29:59 | print out, I don't have to change the function, I just
+30:02 | pass in a different parameter.
+30:04 | Well if I-- you know, with [UNINTELLIGIBLE PHRASE sorry,
+30:08 | let me say it differently.
+30:09 | I don't need to worry about how checking is done, it's
+30:11 | handled inside of that function.
+30:14 | If I decide there's a better way to get input, and there
+30:17 | is, then I can make it to change what I don't have to
+30:20 | change the code that uses the input.
+30:23 | So, if you like, I've built a separation between the user
+30:27 | and the implementer.
+30:28 | And that's exactly one of the reasons why I want to have the
+30:31 | functions, because I've separated those out.
+30:33 | Another way of saying it is, anything that uses get float
+30:37 | doesn't care what the details are inside or shouldn't, and
+30:39 | if I change that definition, I don't have to change anything
+30:42 | elsewhere in my code, whereas if I just have the raw code in
+30:46 | there, I have to go off and do it.
+30:48 | Right, so the things we want you to take away from this
+30:50 | are, get into the habit of using pseudo code when you sit
+30:54 | down to start a problem, write out what are the steps.
+30:57 | I will tell you that a good programmer, at least in my
+31:00 | mind, may actually go back and modify the pseudo code as they
+31:03 | realize they're missing things, but it's easier to do
+31:05 | that when you're looking at a simple set of steps, than when
+31:08 | you're in the middle of a pile of code.
+31:10 | And get into the habit of using it to help you define
+31:13 | what is the flow of control.
+31:14 | What are the basic modules, what information needs to be
+31:17 | passed between those modules in order to
+31:19 | make the code work.
+31:22 | OK.
+31:23 | That was the short topic.
+31:25 | I will come back to this some more and you're going to get
+31:26 | lots of practice with this.
+31:28 | What I want to do is to start talking
+31:30 | about a different topic.
+31:31 | Which is efficiency.
+31:33 | And this is going to sound like a weird topic, we're
+31:36 | going to see why it's of value in a second.
+31:39 | I want to talk about efficiency, and we're going
+31:43 | to, or at least I'm going to, at times also refer to this as
+31:47 | orders of growth, for reasons that you'll see over the next
+31:51 | few minutes.
+31:54 | Now, efficiency is obviously an important consideration
+31:57 | when you're designing code, although I have to admit, at
+32:00 | least for me, I usually want to at least start initially
+32:02 | with code that works, and then worry about how I might go
+32:05 | back and come up with more efficient implementation.
+32:07 | I like to have something I can rely on, but it is an
+32:09 | important issue.
+32:11 | And our goal over the next couple of lectures, is
+32:14 | basically to give you a sense of this.
+32:16 | So we're not going to turn you into an expert on
+32:17 | computational efficiency.
+32:19 | That's, there are whole courses on that, there's some
+32:21 | great courses here on that, it takes some mathematical
+32:23 | sophistication, we're going to push that off a little bit.
+32:26 | But what we-- what we do want to do, is to give you some
+32:28 | intuition about how to approach questions of
+32:30 | efficiency.
+32:31 | We want you to have a sense of why some programs complete
+32:36 | almost before you're done typing it.
+32:39 | Some programs run overnight.
+32:42 | Some programs won't stop until I'm old and gray.
+32:45 | Some programs won't stop until you're old and gray.
+32:49 | And these are really different efficiencies, and we want to
+32:51 | give you a sense of how do you reason about those different
+32:53 | kinds of programs.
+32:55 | And part of it is we want you to learn how to have a
+32:57 | catalog, if you like, of different classes of
+33:00 | algorithms, so that when you get a problem, you try and map
+33:03 | it into an appropriate class, and use the leverage, if you
+33:07 | like, of that class
+33:08 | of algorithms. Now.
+33:12 | It's a quick sidebar, I've got to say, I'm sure talking about
+33:13 | efficiency to folks like you probably seems really strange.
+33:17 | I mean, you grew up in an age when computers were blazingly
+33:20 | fast, and have tons of memory, so why in the world do you
+33:23 | care about efficiency?
+33:24 | Some of us were not so lucky.
+33:27 | So I'll admit, my first computer I program was a PDP6,
+33:32 | only Professor Guttag even knows what PDP stands for, it
+33:34 | was made by Digital Equipment Company, which does not exist
+33:37 | anymore, is now long gone.
+33:39 | It had, I know, this is old guy stories, but
+33:41 | it had 160k of memory.
+33:46 | Yeah.
+33:46 | 160k.
+33:46 | 160 kilobits of memory.
+33:50 | I mean, your flash cards have more than that, right?
+33:53 | It had a processor speed of one megahertz.
+33:56 | It did a million operations per second.
+34:00 | So let's think about it.
+34:02 | This sucker, what's it got in there?
+34:04 | That Air Mac, it's, see, it's got, its go-- my Air Mac, I
+34:07 | don't know about John's, his is probably better, mine has
+34:09 | 1.8 gigahertz speed.
+34:12 | That's 1800 times faster.
+34:15 | But the real one that blows me away is, it has 2 gig of
+34:18 | memory inside of it.
+34:19 | That's 12 thousand times more memory.
+34:23 | Oh, and by the way?
+34:24 | The PDP6, it was in a rack about this tall.
+34:27 | From the floor, not from the table.
+34:29 | All right, so you didn't grow up in the late 1800s like I
+34:31 | did, you don't have to worry about this
+34:33 | sort of stuff, right?
+34:34 | But a point I'm trying to make is, it sounds like anymore
+34:36 | computers have gotten so blazingly fast, why should you
+34:39 | worry about it?
+34:39 | Let me give you one other anecdote that I can't resist.
+34:42 | This is the kind of thing you can use at cocktail parties to
+34:44 | impress your friends from Harvard.
+34:45 | OK.
+34:47 | Imagine I have a little lamp, a little goose-- one of those
+34:50 | little gooseneck lamps, I'd put it on the table here, I'd
+34:52 | put the height about a f-- about a foot off the table.
+34:55 | And if I was really good, I could hit, or time it so that
+34:58 | when I hurt-- yeah, try again.
+35:00 | When I turn this on switch on in the lamp, at exactly the
+35:03 | same time, I'm going to hit a key on my computer and start
+35:05 | it running.
+35:07 | OK.
+35:07 | In the length of time it takes for the light to get from that
+35:12 | bulb to the table, this machine processes two
+35:16 | operations.
+35:19 | Oh come on, that's amazing.
+35:21 | Two operations.
+35:22 | You know, you can do the simple numbers, right?
+35:24 | [UNINTELLIGIBLE PHRASE]
+35:25 | Light travels basically a foot in a nanosecond.
+35:28 | Simple rule of thumb.
+35:30 | Now, the nanosecond is what, 10 to the minus 9 seconds.
+35:32 | This thing does 2 gig worth of operations.
+35:38 | A gig is 10 to the 9, so it does two operations in the
+35:40 | length of time it takes light to get from one foot off the
+35:43 | table down to the table.
+35:44 | That's amazing.
+35:45 | So why in the world do you care about efficiency?
+35:48 | Well the problem is that the problems grow faster than the
+35:52 | computers speed up.
+35:55 | I'll give you two examples.
+35:56 | I happen to work in medical imaging.
+35:57 | Actually, so does Professor Guttag.
+35:58 | In my in my area of research, it's common for us to want to
+36:02 | process about 100 images a second in order to get real
+36:04 | time display.
+36:05 | Each image has about a million elements in it.
+36:08 | I've got to process about a half a gig of data a second in
+36:12 | order to get anything out of it.
+36:14 | Second example.
+36:15 | Maybe one that'll hit a little more home to you.
+36:18 | I'm sure you all use Google, I'm sure it's a verb in your
+36:20 | vocabulary, right?
+36:22 | Now, Google processes-- ten million?
+36:24 | Ten billion pages?
+36:25 | John?
+36:25 | I think ten billion was the last number I heard.
+36:27 | Does that sound about right?
+36:28 | PROFESSOR JOHN GUTTAG: I think it might
+36:30 | actually be more by now.
+36:31 | PROFESSOR ERIC GRIMSON: Maybe more by now.
+36:32 | But let's, for the sake of argument, ten billion pages.
+36:34 | Imagine you want to search through Google to find a
+36:38 | particular page.
+36:39 | You want to do it in a second.
+36:41 | And you're going to just do it the brute force way, assuming
+36:43 | you could even reach all of those pages in that time.
+36:46 | Well, if you're going to do that, you've got to be able to
+36:49 | find what you're looking for in a page in two steps.
+36:53 | Where a step is a comparison or an arithmetic operation.
+36:57 | Ain't going to happen, right?
+36:58 | You just can't do it.
+36:59 | So again, part of the point here is that things grow-- or
+37:03 | to rephrase it, interesting things grow at
+37:05 | an incredible rate.
+37:06 | And as a consequence, brute force methods are typically
+37:09 | not going to work.
+37:12 | OK.
+37:12 | So that then leads to the question about what should we
+37:14 | do about this?
+37:14 | And probably the obvious thing you'll think about is, we'll
+37:17 | come up with a clever algorithm.
+37:19 | And I want to disabuse you of that notion.
+37:21 | It's a great idea if you can do it,
+37:23 | The guy who--
+37:24 | I think I'm going to say this right, John, right?
+37:25 | Sanjay?
+37:26 | Ghemawat?-- with a guy who was a graduate of our department,
+37:29 | who is the heart and soul behind Google's really fast
+37:31 | search, is an incredibly smart guy, and he did come up with a
+37:34 | really clever algorithm about how you structure that search,
+37:36 | in order to make it happen.
+37:37 | And he probably made a lot of money along the way.
+37:39 | So if you have a great idea, you know, talk to a good
+37:41 | patent attorney and get it locked away.
+37:44 | But in general, it's hard to come up with the
+37:46 | really clever algorithm.
+37:48 | What you're much better at doing is saying how do I take
+37:51 | the problem I've got and map it into a class of algorithms
+37:54 | about which I know and use the efficiencies of those to try
+37:58 | and figure out how to make it work.
+38:00 | So what we want to do, is, I guess another way of saying it
+38:03 | is, efficiency is really about choice of algorithm.
+38:12 | And we want to help you learn how to map a problem into a
+38:18 | class of algorithms of some efficiency.
+38:24 | That's our goal.
+38:27 | OK.
+38:28 | So to do this, we need a little more abstract way of
+38:31 | talking about efficiency, and so, the question is, how do we
+38:34 | think about efficiency?
+38:35 | Typically there's two things we want to measure.
+38:39 | Space and time.
+38:43 | Sounds like an astrophysics course, right?
+38:46 | Now, space usually we-- ach, try it again.
+38:51 | When we talk about space, what we usually refer to is, how
+38:54 | much computer memory does it take to complete a computation
+38:57 | of a particular size?
+38:59 | So let me write that down, it's how much memory do I need
+39:08 | to complete a computation.
+39:09 | And by that, I mean, not how much memory do I need to store
+39:13 | the size of the input, it's really how much internal
+39:16 | memory do I use up as I go through the computation?
+39:19 | I've got some internal variables I have to store,
+39:20 | what kinds of things do I have to keep track of?
+39:24 | You're going to see the arguments about space if you
+39:26 | take some of the courses that follow on, and again, some
+39:28 | nice courses about that.
+39:29 | For this course, we're not going to worry
+39:31 | about space that much.
+39:33 | What we're really going to focus on is time.
+39:36 | OK.
+39:37 | So we're going to focus here.
+39:39 | And the obvious question I could start with is, and
+39:44 | suppose I ask you, how long does the algorithm implemented
+39:49 | by this program take to run?
+39:52 | How might I answer that question?
+39:56 | Any thoughts?
+40:01 | Yeah.
+40:01 | STUDENT: [INAUDIBLE]
+40:06 | PROFESSOR ERIC GRIMSON: Ah, you're jumping
+40:06 | ahead of me, great.
+40:07 | The answer was, find a mathematical expression
+40:09 | depending on the number of inputs.
+40:11 | It was exactly where I want to go.
+40:12 | Thank you.
+40:13 | I was hoping for a simpler answer, which is, just run it.
+40:18 | Which is, yeah I know, seems like a dumb
+40:20 | thing to say, right?
+40:21 | One of the things you could imagine is just try it on and
+40:23 | input, see how long it takes.
+40:25 | You're all cleverer than that, but I want to point out why
+40:28 | that's not a great idea.
+40:29 | First of all, that depends on which input I've picked.
+40:30 | All right?
+40:32 | Obviously the algorithm is likely to depend on the size
+40:34 | of the input, so this is not a great idea.
+40:36 | Second one is, it depends on which machine I'm running on.
+40:38 | If I'm using a PDP6, it's going to take a whole lot
+40:41 | longer than if I'm using an Air Mac.
+40:44 | All right?
+40:45 | Third one is, it may depend on which version
+40:47 | of Python I'm running.
+40:48 | Depends on how clever the implementer of Python was.
+40:51 | Fourth one is, it may depend on which programming language
+40:53 | I'm doing it in.
+40:54 | So I could do it empirically, but I don't want to do that
+40:57 | typically, it's just not a great way to get at it.
+40:58 | And so in fact, what we want is exactly what
+41:02 | the young lady said.
+41:02 | I'm going to ask the following question, which is-- let me
+41:06 | write it down-- what is the number of the basic steps
+41:16 | needed as a function of the input size?
+41:31 | That's the question we're going to try and address.
+41:35 | If we can do this, this is good, because first of all, it
+41:37 | removes any questions about what machine I'm running on,
+41:40 | it's talking about fundamentally, how hard is
+41:41 | this problem, and the second thing is, it is going to do it
+41:44 | specifically in terms of the input.
+41:47 | Which is one of the things that I was worried about.
+41:50 | OK.
+41:51 | So to do this, we're going to have to do a couple of things.
+41:54 | All right, the first one is, what do we mean by input size?
+41:57 | And unfortunately, this depends on the problem.
+42:00 | It could be what's the size of the integer I pass in as an
+42:03 | argument, if that's what I'm passing in.
+42:04 | It could be, how long is the list, if I'm processing a list
+42:08 | or a tuple It could be, how many bits
+42:10 | are there in something.
+42:11 | So it-- that is something where we have to simply be
+42:13 | clear about specifying what we're using as input size.
+42:17 | And we want to characterize it mathematically as some number,
+42:19 | or some variable rather, the length of the list, the size
+42:22 | of the integer, would be the thing we'd want to do.
+42:25 | Second thing we've got to worry about is,
+42:28 | what's a basic step?
+42:29 | All right, if I bury a whole lot of computation inside of
+42:33 | something, I can say, wow, this program, you know, runs
+42:36 | in one step.
+42:37 | Unfortunately, that one step calls the Oracle at Delphi and
+42:40 | gets an answer back.
+42:41 | Maybe not quite what you want.
+42:43 | We're typically going to use as basic steps the built-in
+42:47 | primitives that a machine comes with.
+42:49 | Or another way of saying it is, we're going to use as the
+42:50 | basic steps, those operations that run in constant time, so
+42:53 | arithmetic operations.
+42:55 | Comparisons.
+42:57 | Memory access, and in fact one of the things we're going to
+42:59 | do here, is we're going to assume a particular model,
+43:08 | called a random access model, which basically says, we're
+43:16 | going to assume that the length of time it takes me to
+43:19 | get to any location in memory is constant.
+43:23 | It's not true, by the way, of all programming languages.
+43:25 | In fact, Professor Guttag already talked about that, in
+43:26 | some languages lists take a time linear with the
+43:30 | length to get to it.
+43:31 | So we're to assume we can get to any piece of data, any
+43:33 | instruction in constant time, and the second assumption
+43:36 | we're going to make is that the basic primitive steps take
+43:39 | constant time, same amount of time to compute.
+43:42 | Again, not completely true, but it's a good model, so
+43:44 | arithmetic operations, comparisons, things of that
+43:47 | sort, we're all going to assume are basically in that
+43:49 | in that particular model.
+43:52 | OK.
+43:52 | Having done that, then, there are three things that we're
+43:54 | going to look at.
+43:56 | As I said, what we want to do is, we want to count the
+43:57 | number of basic steps it takes to compute a computation as a
+44:01 | function of input size.
+44:02 | And the question is, what do we want to count?
+44:04 | Now, one possibility is to do best case.
+44:10 | Over all possible inputs to this function, what's the
+44:13 | fastest it runs?
+44:14 | The fewest, so the minimum, if you like.
+44:19 | It's nice, but not particularly helpful.
+44:21 | The other obvious one to do would be worst case.
+44:27 | Again, over all possible inputs to this function,
+44:30 | what's the most number of steps it takes to do the
+44:32 | computation?
+44:34 | And the third possibility, is to do the expected case.
+44:38 | The average.
+44:43 | I'm going to think of it that way.
+44:46 | In general, people focus on worst case.
+44:49 | For a couple of reasons.
+44:50 | In some ways, this would be nicer, do expected cases, it's
+44:53 | going to tell you on average how much you expect to take,
+44:56 | but it tends to be hard to compute, because to compute
+44:58 | that, you have to know a distribution on input.
+45:02 | How likely are all the inputs, are they all equally likely,
+45:04 | or are they going to depend on other things?
+45:05 | And that may depend on the user, so you can't
+45:07 | kind of get at that.
+45:08 | We're, as a consequence, going to focus on worst case.
+45:12 | This is handy for a couple of reasons.
+45:13 | One, it means there are no surprises.
+45:16 | All right?
+45:17 | If you run it, you have a sense of the upper bound,
+45:19 | about how much time it's going to take to do this
+45:21 | computation, so you're not going to get surprised by
+45:23 | something showing up.
+45:25 | The second one is, a lot of the time, the worst case is
+45:28 | the one that happens.
+45:29 | Professor Guttag used an example of looking in the
+45:31 | dictionary for something.
+45:33 | Now, imagine that dictionary actually has something that's
+45:35 | a linear search to go through it, as opposed to the hashing
+45:38 | he did, so it's a list, for example.
+45:40 | If it's in there, you'll find it perhaps very quickly.
+45:42 | If it's not there, you've got to go through everything to
+45:44 | say it's not there.
+45:45 | And so the worst case often is the one that shows up,
+45:47 | especially in things like search.
+45:50 | So, as a consequence, we're going to stick with the worst
+45:55 | case analysis.
+45:57 | Now, I've got two minutes left.
+45:59 | I was going to start showing you some examples, but I
+46:01 | think, rather than doing that, I'm going to stop here, I'm
+46:04 | going to give you two minutes back of time, but I want to
+46:06 | just point out to you that we are going to have fun next
+46:09 | week, because I'm going to show you what in the world
+46:14 | that has to do with efficiency.
+46:16 | So with that, we'll see you next time.

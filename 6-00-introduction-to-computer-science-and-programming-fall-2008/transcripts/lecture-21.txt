@@ -1,0 +1,703 @@
+0:00 | OPERATOR: The following content is provided under a
+0:01 | Creative Commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu.
+0:19 | PROFESSOR: So let's start.
+0:22 | I have written a number on the board here.
+0:25 | Anyone want to speculate what that number represents?
+0:32 | Well, you may recall at the end of the last lecture, we
+0:34 | were simulating pi, and I started up running it with a
+0:39 | billion darts.
+0:41 | And when it finally terminated, this was the
+0:45 | estimate of pi it gave me with a billion.
+0:50 | Not bad, not quite perfect, but still pretty good.
+0:57 | In fact when I later ran it with 10 billion darts, which
+1:00 | took a rather long time to run, didn't do much better.
+1:04 | So it's converging very slowly now near the end.
+1:10 | When we use an algorithm like that one to perform a Monte
+1:14 | Carlo simulation, we're trusting, as I said, that fate
+1:18 | will give us an unbiased sample, a sample that would be
+1:22 | representative of true random throws.
+1:27 | And, indeed in this case, that's a pretty good
+1:30 | assumption.
+1:31 | The random number generator is not truly random, it's what's
+1:34 | called pseudo-random, in that if you start it with the same
+1:38 | initial conditions, it will give you the same results.
+1:42 | But it's close enough for, at least for government work, and
+1:47 | other useful projects.
+1:51 | We do have to think about the question, how many samples
+1:55 | should we run?
+1:57 | Was a billion darts enough?
+2:00 | Now since we sort of all started knowing what pi was,
+2:04 | we could look at it and say, yeah, pretty good.
+2:07 | But suppose we had no clue about the actual value of pi.
+2:14 | We still have to think about the
+2:16 | question of how many samples?
+2:28 | And also, how accurate do we believe our result is, given
+2:38 | the number of samples?
+2:40 | As you might guess, these two questions are closely related.
+2:45 | That, if we know in advance how much accuracy we want, we
+2:52 | can sometimes use that to calculate how
+2:54 | many samples we need.
+3:03 | But there's still always the issue.
+3:10 | It's never possible to achieve perfect
+3:13 | accuracy through sampling.
+3:16 | Unless you sample the entire population.
+3:20 | No matter how many samples you take, you can never be sure
+3:25 | that the sample set is typical until you've checked every
+3:30 | last element.
+3:32 | So if I went around MIT and sampled 100 students to try
+3:38 | and, for example, guess the fraction of students at MIT
+3:43 | who are of Chinese descent.
+3:46 | Maybe 100 students would be enough, but maybe I would get
+3:52 | unlucky and draw the wrong 100.
+3:55 | In the sense of, by accident, 100 Chinese descent, or 100
+3:59 | non-Chinese descent, which would give
+4:01 | me the wrong answer.
+4:04 | And there would be no way I could be sure that I had not
+4:08 | drawn a biased sample, unless I really did have the whole
+4:18 | population to look at.
+4:22 | So we can never know that our estimate is correct.
+4:28 | Now maybe I took a billion darts, and for some reason got
+4:32 | really unlucky and they all ended up inside
+4:35 | or outside the circle.
+4:38 | But what we can know, is how likely it is that our answer
+4:42 | is correct, given the assumptions.
+4:46 | And that's the topic we'll spend the next few lectures
+4:48 | on, at least one of the topics.
+4:50 | It's saying, how can we know how likely it is that our
+4:54 | answer is good.
+4:56 | But it's always given some set of assumptions, and we have to
+5:01 | worry a lot about those assumptions.
+5:04 | Now in the case of our pi example, our assumption was
+5:10 | that the random number generator was indeed giving us
+5:14 | random numbers in the interval 0 to 1.
+5:18 | So that was our underlying assumption.
+5:23 | Then using that, we looked at a plot, and we saw that after
+5:28 | time the answer wasn't changing very much.
+5:33 | And we use that to say, OK, it looks like we're actually
+5:36 | converging on an answer.
+5:40 | And then I ran it again, with another trial, and it
+5:44 | converged again at the same place.
+5:49 | And the fact that that happened several times led me
+5:52 | to at least have some reason to believe that I was actually
+5:56 | finding a good approximation of pi.
+6:04 | That's a good thing to do.
+6:07 | It's a necessary thing to do.
+6:09 | But it is not sufficient.
+6:11 | Because errors can creep into many places.
+6:16 | So that kind of technique, and in fact, almost all
+6:20 | statistical techniques, are good at establishing, in some
+6:26 | sense, the reproduce-ability of the result, and that it is
+6:30 | statistically valid, and that there's no error, for example,
+6:35 | in the way I'm generating the numbers.
+6:40 | Or I didn't get very unlucky.
+6:43 | However, they're other places other than bad luck where
+6:48 | errors can creep in.
+6:51 | So let's look at an example here.
+6:53 | I've taken the algorithm we looked at last time for
+6:59 | finding pi, and I've made a change.
+7:08 | You'll remember that we were before using 4 as our
+7:13 | multiplier, and here what I've done is, just gone in and
+7:17 | replaced 4 by 2.
+7:20 | Assuming that I made a programming error.
+7:25 | Now let's see what happens when we run it.
+7:35 | Well, a bad thing has happened.
+7:42 | Sure enough, we ran it and it converged, started to
+7:48 | converge, and if I ran 100 trials each one would converge
+7:53 | at roughly the same place.
+7:56 | Any statistical test I would do, would say that my
+8:00 | statistics are sound, I've chosen enough samples, and for
+8:03 | some accuracy, it's converting.
+8:05 | Everything is perfect, except for what?
+8:10 | It's the wrong answer.
+8:13 | The moral here, is that just because an answer is
+8:18 | statistically valid, does not mean it's the right answer.
+8:45 | And that's really important to understand, because you see
+8:49 | this, and we'll see more examples later, not today, but
+8:53 | after Thanksgiving, comes up all the time in the
+8:56 | newspapers, in scientific articles, where people do a
+9:00 | million tests, do all the statistics right, say here's
+9:04 | the answer, and it turns out to be completely wrong.
+9:08 | And that's because it was some underlying assumption that
+9:12 | went into the decision, that was not true.
+9:17 | So here, the assumption is, that I've done my algebra
+9:20 | right for computing pi based upon where the darts land.
+9:27 | And it turns out, if I put 2 here, my algebra is wrong.
+9:32 | Now how could I discover this?
+9:35 | Since I've already told you no statistical test is
+9:38 | going to help me.
+9:40 | What's the obvious thing I should be doing when I get
+9:42 | this answer?
+9:44 | Somebody?
+9:45 | Yeah?
+9:50 | STUDENT: [INAUDIBLE]
+9:50 | PROFESSOR: Exactly.
+9:54 | Checking against reality.
+9:57 | I started with the notion that pi had some relation to the
+10:01 | area of a circle.
+10:03 | So I could use this value of pi, draw a
+10:08 | circle with a radius.
+10:11 | Do my best to measure the area.
+10:13 | I wouldn't need to get a very good, accurate measurement,
+10:17 | and I would say, whoa, this isn't even close.
+10:20 | And that would tell me I have a problem.
+10:25 | So the moral here is, to check results
+10:37 | against physical reality.
+10:50 | So for example, the current problem set, you're doing a
+10:53 | simulation about what happens to viruses
+10:56 | when drugs are applied.
+11:00 | If you were doing this for a pharmaceutical company, in
+11:03 | addition to the simulation, you'd want to run some real
+11:06 | experiments.
+11:08 | And make sure that things matched.
+11:17 | OK, what this suggests, is that we often use simulation,
+11:29 | and other computational techniques, to try and model
+11:35 | the real world, or the physical world, in
+11:38 | which we all live.
+11:42 | And we can use data to do that.
+11:46 | I now want to go through another set of examples, and
+11:51 | we're going to look at the interplay of three things:
+11:55 | what happens when you have data, say from measurements,
+12:02 | and models that at least claim to explain the data.
+12:15 | And then, consequences that follow from the models.
+12:26 | This is often the way science works, its the way engineering
+12:30 | works, we have some measurements, we have a theory
+12:35 | that explains the measurements, and then we
+12:38 | write software to explore the consequences of that theory.
+12:43 | Including, is it plausible that it's really true?
+12:48 | So I want to start, as an example, with a
+12:53 | classic chosen from 8.01.
+12:57 | So I presume, everyone here has taken 8.01?
+13:01 | Or in 8.01?
+13:02 | Anyone here who's not had an experience with 801?
+13:08 | All right, well.
+13:11 | I hope you know about springs, because we're going to talk
+13:13 | about springs.
+13:15 | So if you think about it, I'm now just talking not about
+13:18 | springs that have water in them, but springs that you
+13:21 | compress, you know, and expand, and things like that.
+13:25 | And there's typically something called the spring
+13:28 | constant that tells us how stiff the spring is, how much
+13:42 | energy it takes to compress this spring.
+13:45 | Or equivalently, how much pop the spring has when you're no
+13:49 | longer holding it down.
+13:53 | Some springs are easy to stretch, they have a small
+13:56 | spring constant.
+13:58 | Some strings, for example, the ones that hold up an
+14:01 | automobile, suspension, are much harder
+14:04 | to stretch and compress.
+14:08 | There's a theory about them called Hooke's Law.
+14:20 | And it's quite simple.
+14:28 | Force, the amount of force exerted by a spring, is equal
+14:32 | to minus some constant times the distance you have
+14:38 | compressed the spring.
+14:44 | It's minus, because the force is exerted in an opposite
+14:47 | direction, trying to spring up.
+14:50 | So for example, we could look at it this way.
+14:55 | We've got a spring, excuse my art here.
+15:01 | And we put some weight on the spring, which has therefore
+15:05 | compressed it a little bit.
+15:08 | And the spring is exerting some upward force.
+15:13 | And the amount of force it's exerting is proportional to
+15:18 | the distance x.
+15:26 | So, if we believe Hooke's Law, and I give you a spring, how
+15:34 | can we find out what this constant is?
+15:38 | Well, we can do it by putting a weight on top of the spring.
+15:45 | It will compress the spring a certain amount, and then the
+15:50 | spring will stop moving.
+15:53 | Now gravity would normally have had this weight go all
+15:56 | the way down to the bottom, if there was no spring.
+16:00 | So clearly the spring is exerting some force in the
+16:03 | upward direction, to keep that mass from going down to the
+16:08 | table, right?
+16:14 | So we know what that force is there.
+16:17 | If we compress the spring to a bunch of different distances,
+16:23 | by putting, say, different size weights on it, we can
+16:29 | then solve for the spring constant, just the way,
+16:35 | before, we solved for pi.
+16:39 | So it just so happens, not quite by accident, that I've
+16:47 | got some data from a spring.
+16:50 | So let's look at it.
+16:52 | So here's some data taken from measuring a spring.
+16:57 | This is distance and force, force computed from the mass,
+17:01 | basically, right?
+17:02 | Because we know that these have to be in balance.
+17:07 | And I'm not going to ask you to in your head estimate the
+17:10 | constant from these, but what you'll see is, the format is,
+17:16 | there's a distance, and then a colon, and then the force.
+17:22 | Yeah?
+17:22 | STUDENT: [INAUDIBLE]
+17:29 | PROFESSOR: Ok, right, yes, thank you.
+17:37 | All right, want to repeat that more loudly for everyone?
+17:41 | STUDENT: [INAUDIBLE]
+17:42 | PROFESSOR: Right, right, because the x in the equation
+17:48 | -- right, here we're getting an equilibrium.
+17:53 | OK, so let's look at what happens when we try and
+17:57 | examine this.
+17:59 | We'll look at spring dot pi.
+18:05 | So it's pretty simple.
+18:07 | First thing is, I've got a function that reads in the
+18:10 | data and parses it.
+18:12 | You've all done more complicated parsing of data
+18:15 | files than this.
+18:16 | So I won't belabor the details.
+18:19 | I called it get data rather than get spring data, because
+18:22 | I'm going to use the same thing for a lot of
+18:24 | other kinds of data.
+18:26 | And the only thing I want you to notice, is that it's
+18:29 | returning a pair of arrays.
+18:36 | OK, not lists.
+18:38 | The usual thing is, I'm building them up using lists,
+18:41 | because lists have append and arrays don't, and then I'm
+18:44 | converting them to arrays so I can do matrix kinds of
+18:48 | operations on them.
+18:50 | So I'll get the distances and the forces.
+18:54 | And then I'm just going to plot them, and we'll see what
+18:57 | they look like.
+18:58 | So let's do that.
+19:10 | There they are.
+19:14 | Now, if you believe Hooke's Law, you could look at this
+19:19 | data, and maybe you wouldn't like it.
+19:25 | Because Hooke's Law implies that, in fact, these points
+19:29 | should lie in a straight line, right?
+19:33 | If I just plug in values here, what am I going to get?
+19:44 | A straight line, right?
+19:46 | I'm just multiplying k times x.
+19:49 | But I don't have a straight line, I have a little scatter
+19:51 | of points, kind of it looks like a straight
+19:54 | line, but it's not.
+19:57 | And why do you think that's true?
+19:59 | What's going on here?
+20:03 | What could cause this line not to be straight?
+20:12 | Have any you ever done a physics experiment?
+20:17 | And when you did it, did your results actually match the
+20:21 | theory that your high school teacher, say,
+20:23 | explained to you.
+20:27 | No, and why not.
+20:30 | Yeah, you have various kinds of experimental or measurement
+20:35 | error, right?
+20:39 | Because, when you're doing these experiments, at least
+20:44 | I'm not perfect, and I suspect at least most of you are not
+20:47 | perfect, you get mistakes.
+20:50 | A little bit of error creeps in inevitably.
+20:54 | And so, when we acquired this data, sure enough there was
+20:57 | measurement error.
+21:00 | And so the points are scattered around.
+21:04 | This is something to be expected.
+21:06 | Real data almost never matches the theory precisely.
+21:13 | Because there usually is some sort of experimental error
+21:16 | that creeps into things.
+21:24 | So what should we do about that?
+21:28 | Well, what usually people do, when they think about this, is
+21:32 | they would look at this data and say, well, let me fit a
+21:36 | line to this.
+21:37 | Somehow, say, what would be the line that best
+21:43 | approximates these points?
+21:47 | And then the slope of that line would give
+21:51 | me the spring constant.
+21:57 | So that raises the next question, what do I mean by
+22:05 | finding a line that best fits these points?
+22:09 | How do we, fit, in this case, a line, to the data?
+22:26 | First of all, I should ask the question, why did I say let's
+22:29 | fit a line?
+22:31 | Maybe I should have said, let's fit a parabola, or let's
+22:34 | fit a circle?
+22:38 | Why should I had said let's fit a line.
+22:45 | Yeah?
+22:45 | STUDENT: [INAUDIBLE]
+22:49 | PROFESSOR: Well, how do I know that the
+22:51 | plot is a linear function?
+22:57 | Pardon?
+23:01 | Well, so, two things.
+23:04 | One is, I had a theory.
+23:08 | You know, I had up there a model, and my model suggested
+23:13 | that I expected it to be linear.
+23:17 | And so if I'm testing my model, I should and fit a
+23:20 | line, my theory, if you will.
+23:23 | But also when I look at it, it looks kind of like a line.
+23:26 | So you know, if I looked at it, and it didn't look like a
+23:29 | line, I might have said, well, my model must be badly broken.
+23:34 | So let's try and see if we can fit it.
+23:38 | Whenever we try and fit something, we need some sort
+23:43 | of an objective function that captures the
+23:53 | goodness of a fit.
+23:56 | I'm trying to find, this is an optimization problem of the
+23:59 | sort that we've looked at before.
+24:01 | I'm trying to find a line that optimizes
+24:06 | some objective function.
+24:10 | So a very simple objective function here, is called the
+24:15 | least squares fit.
+24:24 | I want to find the line that minimizes the sum of
+24:37 | observation sub i, the i'th data point I have, minus what
+24:47 | the line, the model, predicts that point should have been,
+24:54 | and then I'll square it.
+24:59 | So I want to minimize this value.
+25:03 | I want to find the line that gives me the
+25:07 | smallest value for this.
+25:10 | Why do you think I'm squaring the difference?
+25:12 | What would happen if I didn't square the difference?
+25:17 | Yeah?
+25:18 | Positive and negative errors might cancel each other out.
+25:24 | And in judging the quality of the fit, I don't really care
+25:28 | deeply -- you're going to get very fat the way you're
+25:31 | collecting candy here --
+25:34 | I don't care deeply whether the error is, which side, it
+25:37 | is, just that it's wrong.
+25:39 | And so by squaring it, it's kind of like taking the
+25:43 | absolute value of the error, among other things.
+25:47 | All right, so if we look at our example here,
+25:54 | what would this be?
+26:02 | I want to minimize, want to find a line that minimizes it.
+26:07 | So how do I do that?
+26:10 | I could easily do it using successive
+26:13 | approximation, right?
+26:17 | I could choose a line, basically what I am, is I'm
+26:20 | choosing a slope, here, right?
+26:23 | And, I could, just like Newton Raphson, do successive
+26:27 | approximation for awhile, and get the best fit.
+26:34 | That's one way to do the optimization.
+26:37 | It turns out that for this particular optimization
+26:41 | there's something more efficient.
+26:44 | You can actually, there is a closed form way of attacking
+26:48 | this, and I could explain that, but in fact, I'll
+26:52 | explain something even better.
+26:55 | It's built into Pylab.
+27:04 | So Pylab has a function built-in called polyfit.
+27:14 | Which, given a set of points, finds the polynomial that
+27:19 | gives you the best least squares
+27:21 | approximation to those points.
+27:28 | It's called polynomial because it isn't necessarily going to
+27:33 | be first order, that is to say, a line.
+27:36 | It can find polynomials of arbitrary degree.
+27:42 | So let's look at the example here, we'll see how it works.
+27:48 | So let me uncomment it.
+27:59 | So I'm going to get k and b equals Pylab dot polyfit here.
+28:07 | What it's going to do is, think about a polynomial.
+28:14 | I give you a polynomial of degree one, you have all
+28:18 | learned that it's a x plus b, b is the constant, and x is
+28:26 | the single variable.
+28:29 | And so I multiply a by x and I add b to it, and as I vary x I
+28:34 | get new values.
+28:36 | And so polyfit, in this case, will take the set of points
+28:47 | defined by these two arrays and return me a value for a
+28:52 | and a value for b.
+28:57 | Now here I've assigned a to k, but don't worry about that.
+29:05 | And then, I'm gonna now generate the predictions that
+29:11 | I would get from this k and b, and plot those.
+29:19 | So let's look at it.
+29:32 | So here it said the k is 31.475, etc., and it's plotted
+29:39 | the line that it's found.
+29:43 | Or I've plotted the line.
+29:45 | You'll note, a lot of the points don't lie on the line,
+29:48 | in fact, most of the points don't lie on the line.
+29:53 | But it's asserting that this is the best it
+29:56 | can do with the line.
+29:58 | And there's some points, for example, up here, that are
+30:02 | kind of outliers, that are pretty far from the line.
+30:07 | But it has minimized the error, if you will, for all of
+30:11 | the points it has.
+30:15 | That's quite different from, say, finding the line that
+30:18 | touches the most points, right?
+30:22 | It's minimizing the sum of the errors.
+30:29 | Now, given that I was just looking for a constant to
+30:32 | start with, why did I bother even plotting the data?
+30:40 | I happen to have known before I did this that polyfit
+30:43 | existed, and what I was really looking for was this line.
+30:49 | So maybe I should have just done the polyfit and said
+30:51 | here's k and I'm done.
+30:55 | Would that have been a good idea?
+31:01 | Yeah?
+31:01 | STUDENT: You can't know without seeing the actual data
+31:06 | how well it's actually fitting it.
+31:10 | PROFESSOR: Right.
+31:11 | Exactly right.
+31:12 | That says, well how would I know that it was fitting it
+31:15 | badly or well, and in fact, how would I know that my
+31:19 | notion of the model is sound, or that my experiment isn't
+31:23 | completely broken?
+31:25 | So always, I think, always look at the real data.
+31:31 | Don't just, I've seen too many papers where people show me
+31:34 | the curve that fits the data, and don't show me the data,
+31:38 | and it always makes me very nervous.
+31:40 | So always look at the data, as well as however you're
+31:44 | choosing to fit it.
+31:46 | As an example of that, let's look at another set of inputs.
+31:53 | This is not a spring.
+32:05 | It's the same get data function as before, ignore
+32:08 | that thing at the top.
+32:13 | I'm going to analyze it and we'll look at it.
+32:26 | So here I'm plotting the speed of something over time.
+32:33 | So I plotted it, and I've done a least squares fit using
+32:39 | polyfit just as before to get a line, and I put the line vs.
+32:44 | the data, and here I'm a little suspicious.
+32:51 | Right, I fit a line, but when I look at it, I don't think
+32:55 | it's a real good fit for the data.
+32:59 | Somehow modeling this data as a line is probably not right.
+33:14 | A linear model is not good for this data.
+33:17 | This data is derived from something, a
+33:20 | more complex process.
+33:23 | So take a look at it, and tell me what order were calling of
+33:27 | polynomial do you think might fit this data?
+33:29 | What shape does this look like to you?
+33:34 | Pardon?
+33:35 | STUDENT: Quadratic.
+33:36 | PROFESSOR: Quadratic, because the shape is a what?
+33:40 | It's a parabola.
+33:41 | Well, I don't know if I dare try this one all
+33:43 | the way to the back.
+33:45 | Ooh, at least I didn't hurt anybody.
+33:50 | All right, fortunately it's just as easy to fit a ravel
+33:54 | parabola as a line.
+33:59 | So let's look down here.
+34:06 | I've done the same thing, but instead of passing it one, as
+34:11 | I did up here as the argument, I'm passing it two.
+34:15 | Saying, instead of fitting a polynomial of degree one, fit
+34:18 | a polynomial of degree two.
+34:21 | And now let's see what it looks like.
+34:32 | Well, my eyes tell me this is a much better
+34:39 | fit than the line.
+34:44 | So again, that's why I wanted to see the scatter plot, so
+34:49 | that I could at least look at it with my eyes, and say,
+34:53 | yeah, this looks like a better fit.
+34:58 | All right, any question about what's going on here?
+35:07 | What we've been looking at is something called linear
+35:13 | regression.
+35:23 | It's called linear because the relationship of the dependent
+35:30 | variable y to the independent variables is assumed to be a
+35:39 | linear function of the parameters.
+35:43 | It's not because it has to be a linear function of
+35:47 | the value of x, OK?
+35:50 | Because as you can see, we're not getting a line, we're
+35:53 | getting a parabola.
+35:56 | Don't worry about the details, the point I want to make is,
+36:00 | people sometimes see the word linear regression and think it
+36:03 | can only be used to find lines.
+36:06 | It's not so.
+36:11 | So when, for example, we did the quadratic, what we had is
+36:16 | y equals a x squared plus b x plus c.
+36:26 | The graph vs. x will not be a straight line, right, because
+36:30 | I'm squaring x.
+36:34 | But it is, just about, in this case, the single variable x.
+36:43 | Now, when I looked at this, I said, all right, it's clear
+36:49 | that the yellow curve is a better fit than the red.
+36:55 | It's a red line.
+36:59 | But that was a pretty informal statement.
+37:03 | I can actually look at this much more formally.
+37:11 | And we're going to look at something that's the
+37:14 | statisticians call r squared.
+37:18 | Which in the case of a linear regression is the coefficient
+37:26 | of determination.
+37:34 | Now, this is a big fancy word for something that's actually
+37:38 | pretty simple.
+37:41 | So what r squared its going to be, and this is on your
+37:44 | handout, is 1 minus e e over d v. So e e is going to be the
+37:58 | errors in the estimation.
+38:02 | So I've got some estimated values, some predicted values,
+38:06 | if you will, given to me by the model, either the line or
+38:11 | the parabola in this case.
+38:14 | And I've got some real values, corresponding to each of those
+38:18 | points, and I can look at the difference between the 2 And
+38:25 | that will tell me how much difference there is between
+38:29 | the estimated data and the, well, between the predicted
+38:35 | data and the measured data, in this case.
+38:42 | And then I want to divide that by the variance in the
+38:49 | measured data.
+38:51 | The data variance.
+38:59 | How broadly scattered the measured points are.
+39:03 | And I'll do that by comparing the mean of the measured data,
+39:10 | to the measured data.
+39:13 | So I get the average value of the measured data, and I look
+39:16 | at how different the points I measure are.
+39:21 | So I just want to give to you, informally, because I really
+39:26 | don't care if you understand all the math.
+39:28 | What I do want you to understand, when someone tells
+39:32 | you, here's the r squared value, is, informally what it
+39:37 | really is saying.
+39:39 | It's attempting to capture the proportion of the response
+39:47 | variation explained by the variables in the model.
+39:51 | In this case, x.
+39:56 | So you'll have some amount of variation that is explained by
+40:04 | changing the values of the variables.
+40:08 | So if, actually, I'm going to give an example and then come
+40:11 | back to it more informally.
+40:12 | So if, for example, r squared were to equal 0.9, that would
+40:21 | mean that approximately 90 percent of the variation in
+40:26 | the variables can be explained by the model.
+40:34 | OK, so we have some amount of variation in the measured
+40:36 | data, and if r squared is 0.9, it says that 90 percent can be
+40:42 | explained by the models, and the other 10 percent cannot.
+40:49 | Now, that other 10 percent could be experimental error,
+40:54 | or it could be that, in fact, you need more
+40:57 | variables in the model.
+41:00 | That there are what are called lurking variables.
+41:05 | I love this term.
+41:09 | A lurking variable is something that actually
+41:12 | effects the result, but is not reflected in the model.
+41:18 | As we'll see a little bit later, this is a very
+41:26 | important thing to worry about, when you're looking at
+41:29 | experimental data and you're building models.
+41:32 | So we see this, for example, in the medical literature,
+41:36 | that they will do some experiment, and they'll say
+41:41 | that this drug explains x, or has this affect.
+41:46 | And the variables they are looking at are, say, the
+41:49 | disease the patient has, and the age of the patient.
+41:55 | Well, maybe the gender of the patient is also important, but
+42:00 | it doesn't happen to be in the model.
+42:04 | Now, if when they did a fit, it came out with 0.9, that
+42:09 | says at worst case, the variables we didn't consider
+42:12 | could cause a 10 percent error.
+42:19 | But, that could be big, that could matter a lot.
+42:23 | And so as you get farther from 1, you ought to get very
+42:29 | worried about whether you actually have
+42:33 | all the right variables.
+42:35 | Now you might have the right variables, and just experiment
+42:37 | was not conducted well, But it's usually the case that the
+42:42 | problem is not that, but that there are lurking variables.
+42:46 | And we'll see examples of that.
+42:49 | So, easier to read than the math, at least by me, easier
+42:52 | to read than the math, is the implementation of r square.
+43:07 | So it's measured and estimated values, I get the diffs, the
+43:12 | differences, between the estimated and the measured.
+43:15 | These are both arrays, so I subtract 1 array from the
+43:19 | other, and then I square it.
+43:20 | Remember, this'll do an element-wise subtraction, and
+43:24 | then square each element.
+43:26 | Then I can get the mean, by dividing the sum of the array
+43:32 | measured by the length of it.
+43:38 | I can get the variance, which is the measured mean minus the
+43:42 | measured value, again squared.
+43:46 | And then I'll return 1 minus this.
+43:53 | All right?
+43:55 | So, just to make sure we sort of understand the code, and
+43:59 | the theory here as well, what would we get if we had
+44:04 | absolutely perfect prediction?
+44:08 | So if every measured point actually fit on the curb
+44:11 | predicted by our model, what would r square return?
+44:19 | So in this case, measured and estimated would be identical.
+44:24 | What gets return by this?
+44:30 | Yeah, 1.
+44:32 | Exactly right.
+44:38 | Because when I compute it, it will turn out that these two
+44:43 | numbers will be the, I'll get 0, 1 minus 0 is 0, right?
+44:50 | Because the differences will be zero.
+44:55 | OK?
+44:59 | So I can use this, now, to actually get a notion of how
+45:04 | good my fit is.
+45:08 | So let's look at speed dot pi again here, and now I'm going
+45:13 | to uncomment these two things, where I'm going to, after I
+45:17 | compute the fit, I'm going to then measure it.
+45:30 | And you'll see here that the r squared error for the linear
+45:34 | fit is 0.896, and for the quadratic fit is 0.973.
+45:42 | So indeed, we get a much better fit here.
+45:47 | So not only does our eye tell us we have a better fit, our
+45:51 | more formal statistical measure tells us we have a
+45:55 | better fit, and it tells us how good it is.
+45:57 | It's not a perfect fit, but it's a pretty
+46:02 | good fit, for sure.
+46:07 | Now, interestingly enough, it isn't surprising that the
+46:13 | quadratic fit is better than the linear fit.
+46:20 | In fact, the mathematics of this should tell us it can
+46:24 | never be worse.
+46:28 | How do I know it can never be worse?
+46:31 | That's just, never is a really strong word.
+46:35 | How do I know that?
+46:38 | Because, when I do the quadratic fit, if I had
+46:42 | perfectly linear data, then this coefficient, whoops, not
+46:47 | that coefficient, wrong, this coefficient, could be 0.
+46:56 | So if I ask it to do a quadratic fit to linear data,
+47:01 | and the a is truly perfectly linear, this coefficient will
+47:06 | be 0, and my model will turn out to be the same as the
+47:09 | linear model.
+47:12 | So I will always get at least as good a fit.
+47:19 | Now, does this mean that it's always better to use a higher
+47:25 | order polynomial?
+47:27 | The answer is no, and let's look at why.
+47:38 | So here what I've done is, I've taken seven points, and
+47:48 | I've generated, if you look at this line here, the y-values,
+47:54 | for x in x vals, points dot append x
+47:57 | plus some random number.
+48:00 | So basically I've got something linear in x, but I'm
+48:04 | perturbing, if you will, my data by some random value.
+48:08 | Something between 0 and 1 is getting added to things.
+48:11 | And I'm doing this so my points won't lie on a
+48:14 | perfectly straight line.
+48:19 | And then we'll try and fit a line to it.
+48:24 | And also, just for fun, we'll try and fit a fifth order
+48:28 | polynomial to it.
+48:30 | And let's see what we get.
+48:40 | Well, there's my line, and there's my fifth order
+48:44 | polynomial.
+48:45 | Neither is quite perfect, but which do you think looks like
+48:50 | a closer fit?
+48:53 | With your eye.
+49:00 | Well, I would say the red line, the red curve, if you
+49:04 | will, is a better fit, and sure enough if we look at the
+49:09 | statistics, we'll see it's 0.99, as opposed to 0.978.
+49:16 | So it's clearly a closer fit.
+49:21 | But that raises the very important question: does
+49:30 | closer equal better, or tighter, which is another word
+49:36 | for closer?
+49:40 | And the answer is no.
+49:44 | It's a tighter fit, but it's not necessarily better, in the
+49:49 | sense of more useful.
+49:52 | Because one of the things I want to do when I build a
+49:55 | model like this, is have something
+49:56 | with predictive power.
+50:00 | I don't really necessarily need a model to tell me where
+50:05 | the points I've measured lie, because I have them.
+50:08 | The whole purpose of the model is to give me some way to
+50:12 | predict where unmeasured points would lie, where future
+50:17 | points would lie.
+50:19 | OK, I understand how the spring works, and I can guess
+50:23 | where it would be if things I haven't had the time to
+50:26 | measure, or the ability to measure.
+50:31 | So let's look at that.
+50:38 | Let's see, where'd that figure go.
+50:41 | It's lurking somewhere.
+50:47 | All right, we'll just kill this for now.
+50:54 | So let's generate some more points, and I'm going to use
+51:00 | exactly the same algorithm.
+51:05 | But I'm going to generate twice as many points.
+51:09 | But I'm only fitting it to the first half.
+51:14 | So if I run this one, figure one is what
+51:24 | we looked at before.
+51:26 | The red line is fitting them a little better.
+51:29 | But here's figure two.
+51:33 | What happens when I extrapolate the curve to the
+51:37 | new points?
+51:39 | Well, you can see, it's a terrible fit.
+51:43 | And you would expect that, because my data was basically
+51:46 | linear, and I fit in non-linear curve to it.
+51:52 | And if you look at it you can see that, OK, look at this, to
+51:56 | get from here to here, it thought I had to take off
+51:59 | pretty sharply.
+52:02 | And so sure enough, as I get new points, the prediction
+52:06 | will postulate that it's still going up, much more steeply
+52:11 | than it really does.
+52:14 | So you can see it's a terrible prediction.
+52:18 | And that's because what I've done is, I over-fit the data.
+52:28 | I've taken a very high degree polynomial, which has given me
+52:32 | a good close fit, and I can always get a fit, by the way.
+52:36 | If I choose a high enough degree polynomial, I can fit
+52:40 | lots and lots of data sets.
+52:43 | But I have reason to be very suspicious.
+52:47 | The fact that I took a fifth order polynomial to get six
+52:49 | points should make me very nervous.
+52:57 | And it's a very important moral.
+52:59 | Beware of over-fitting.
+53:01 | If you have a very complex model, there's a good chance
+53:08 | that it's over-fit.
+53:12 | The larger moral is, beware of statistics without any theory.
+53:18 | You're just cranking away, you get a great r squared, you say
+53:21 | it's a beautiful fit.
+53:23 | But there was no real theory there.
+53:26 | You can always find a fit.
+53:29 | As Disraeli is alleged to have said, there are three kinds of
+53:32 | lies: lies, damned lies, and statistics.
+53:38 | And we'll spend some more time when we get back from
+53:41 | Thanksgiving looking at how to lie with statistics.
+53:44 | Have a great holiday, everybody.

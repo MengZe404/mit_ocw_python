@@ -1,0 +1,1271 @@
+0:00 | The following content is provided under a Creative
+0:02 | Commons license.
+0:03 | Your support will help MIT OpenCourseware continue to
+0:06 | offer high-quality educational resources for free.
+0:10 | To make a donation, or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseware, at
+0:17 | ocw.mit.edu .
+0:17 | PROFESSOR: Good morning.
+0:18 | Try it again.
+0:19 | Good morning.
+0:22 | STUDENTS: Good morning.
+0:25 | PROFESSOR: Thank you.
+0:27 | This is 6.00, also known as Introduction to Computer
+0:31 | Science and Programming.
+0:32 | My name is Eric Grimson, I have together Professor John
+0:35 | Guttag over here, we're going to be lecturing
+0:37 | the course this term.
+0:39 | I want to give you a heads up; you're getting some serious
+0:41 | firepower this term.
+0:43 | John was department head for ten years, felt like a
+0:47 | century, and in course six, I'm the current department
+0:50 | head in course six.
+0:51 | John's been lecturing for thirty years, roughly.
+0:55 | All right, I'm the young guy, I've only been lecturing for
+0:58 | twenty-five years.
+0:59 | You can tell, I have less grey hair than he does.
+1:03 | What I'm trying to say to you is, we take this
+1:05 | course really seriously.
+1:07 | We hope you do as well.
+1:08 | But we think it's really important for the department
+1:10 | to help everybody learn about computation, and that's what
+1:14 | this course is about.
+1:16 | What I want to do today is three things: I'm going to
+1:19 | start-- actually, I shouldn't say start, I'm going to do a
+1:22 | little bit of administrivia, the kinds of things you need
+1:24 | to know about how we're going to run the course.
+1:26 | I want to talk about the goal of the course, what it is
+1:30 | you'll be able to do at the end of this course when you
+1:32 | get through it, and then I want to begin talking about
+1:35 | the concepts and tools of computational thinking, which
+1:39 | is what we're primarily going to focus on here.
+1:41 | We're going to try and help you learn how to think like a
+1:43 | computer scientist, and we're going to begin talking about
+1:45 | that towards the end of this lecture and of course
+1:47 | throughout the rest of the lectures that carry on.
+1:50 | Right, let's start with the goals.
+1:52 | I'm going to give you goals in two levels.
+1:55 | The strategic goals are the following: we want to help
+1:58 | prepare freshmen and sophomores who are interested
+2:02 | in majoring in course six to get an easy entry into the
+2:05 | department, especially for those students who don't have
+2:07 | a lot of prior programming experience.
+2:09 | If you're in that category, don't panic, you're
+2:11 | going to get it.
+2:12 | We're going to help you ramp in and you'll certainly be
+2:14 | able to start the course six curriculum and do just fine
+2:17 | and still finish on target.
+2:20 | We don't expect everybody to be a course six major,
+2:22 | contrary to popular opinion, so for those are you not in
+2:25 | that category, the second thing we want to do is we want
+2:27 | to help students who don't plan to major in course six to
+2:30 | feel justifiably confident in their ability to write and
+2:34 | read small pieces of code.
+2:37 | For all students, what we want to do is we want to give you
+2:40 | an understanding of the role computation can and cannot
+2:43 | play in tackling technical problems. So that you will
+2:47 | come away with a sense of what you can do, what you can't do,
+2:50 | and what kinds of things you should use to tackle complex
+2:53 | problems.
+2:54 | And finally, we want to position all students so that
+2:56 | you can easily, if you like, compete for things like your
+3:00 | office and summer jobs.
+3:02 | Because you'll have an appropriate level of
+3:04 | confidence and competence in your ability to do
+3:06 | computational problem solving.
+3:08 | Those are the strategic goals.
+3:10 | Now, this course is primarily aimed at students who have
+3:15 | little or no prior programming experience.
+3:19 | As a consequence, we believe that no student here is
+3:21 | under-qualified for this course: you're all MIT
+3:24 | students, you're all qualified to be here.
+3:26 | But we also hope that there aren't any students here who
+3:29 | are over-qualified for this course.
+3:31 | And what do I mean by that?
+3:32 | If you've done a lot prior programming, this is probably
+3:37 | not the best course for you, and if you're in that
+3:39 | category, I would please encourage you to talk to John
+3:42 | or I after class about what your goals are, what kind of
+3:45 | experience you have, and how we might find you a course
+3:48 | that better meets your goals.
+3:51 | Second reason we don't want over-qualified students in the
+3:54 | class, it sounds a little nasty, but the second reason
+3:56 | is, an over-qualified student, somebody who's, I don't know,
+3:59 | programmed for Google for the last five years, is going to
+4:03 | have an easy time in this course, but we don't want such
+4:05 | a student accidentally intimidating the rest of you.
+4:08 | We don't want you to feel inadequate when you're simply
+4:12 | inexperienced.
+4:13 | And so, it really is a course aimed at students with little
+4:16 | or no prior programming experience.
+4:18 | And again, if you're not in that category, talk to John or
+4:20 | I after class, and we'll help you figure out where you might
+4:22 | want to go.
+4:24 | OK.
+4:24 | Those are the top-level goals of the course.
+4:26 | Let's talk sort of at a more tactical level, about what do
+4:29 | we want you to know in this course.
+4:31 | What we want you to be able to do by the time
+4:33 | you leave this course?
+4:34 | So here are the skills that we would like you to acquire.
+4:41 | Right, the first skill we want you to acquire, is we want you
+4:44 | to be able to use the basic tools of computational
+4:46 | thinking to write small scale programs. I'm going to keep
+4:50 | coming back to that idea, but I'm going to call it
+4:52 | computational thinking.
+4:57 | And that's so you can write small pieces of code.
+5:00 | And small is not derogatory here, by the way, it just says
+5:02 | the size of things you're going to be able to do.
+5:05 | Second skill we want you to have at the end of this course
+5:08 | is the ability to use a vocabulary of computational
+5:10 | tools in order to be able to understand
+5:13 | programs written by others.
+5:15 | So you're going to be able to write, you're going
+5:16 | to be able to read.
+5:19 | This latter skill, by the way, is incredibly valuable.
+5:24 | Because you won't want to do everything from scratch
+5:26 | yourself, you want to be able to look at what is being
+5:28 | created by somebody else and understand what is inside of
+5:31 | there, whether it works correctly and how you can
+5:33 | build on it.
+5:34 | This is one of the few places where
+5:35 | plagiarism is an OK thing.
+5:37 | It's not bad to, if you like, learn from the skills of
+5:40 | others in order to create something you want to write.
+5:42 | Although we'll come back to plagiarism as a
+5:44 | bad thing later on.
+5:46 | Third thing we want you to do, is to understand the
+5:48 | fundamental both capabilities and limitations of
+5:52 | computations, and the costs associated with them.
+5:55 | And that latter statement sounds funny, you don't think
+5:57 | of computations having limits, but they do.
+5:59 | There're some things that cannot be computed.
+6:01 | We want you to understand where those limits are.
+6:03 | So you're going to be able to understand
+6:05 | abilities and limits.
+6:15 | And then, finally, the last tactical skill that you're
+6:18 | going to get out of this course is you're going to have
+6:19 | the ability to map scientific problems into a
+6:22 | computational frame.
+6:24 | So you're going to be able to take a description of a
+6:26 | problem and map it into something computational.
+6:37 | Now if you think about it, boy, it sounds
+6:39 | like grammar school.
+6:41 | We're going to teach you to read, we're going to teach you
+6:43 | to write, we're going to teach you to understand what you can
+6:46 | and cannot do, and most importantly, we're going to
+6:49 | try and give you the start of an ability to take a
+6:52 | description of a problem from some other domain, and figure
+6:55 | out how to map it into that domain of computation so you
+6:57 | can do the reading and writing that you want to do.
+7:01 | OK, in a few minutes we're going to start talking then
+7:03 | about what is computation, how are we going to start building
+7:05 | those tools, but that's what you should take away, that's
+7:07 | what you're going to gain out of this course by the time
+7:09 | you're done.
+7:11 | Now, let me take a sidebar for about five minutes to talk
+7:14 | about course administration, the administrivia, things that
+7:17 | we're going to do in the course, just so you know what
+7:19 | the rules are.
+7:20 | Right, so, class is two hours of lecture a week.
+7:24 | You obviously know where and you know when,
+7:26 | because you're here.
+7:27 | Tuesdays and Thursdays at 11:00.
+7:29 | One hour of recitation a week, on Fridays, and we'll come
+7:32 | back in a second to how you're going to get set up for that.
+7:34 | And nine hours a week of outside-the-class work.
+7:38 | Those nine hours are going to be primarily working on
+7:40 | problem sets, and all the problems sets are going to
+7:42 | involve programming in Python, which is the language we're
+7:45 | going to be using this term.
+7:48 | Now, one of the things you're going to see is the first
+7:50 | problem sets are pretty easy.
+7:51 | Actually, that's probably wrong, John, right?
+7:52 | They're very easy.
+7:54 | And we're going to ramp up.
+7:55 | By the time you get to the end of the term, you're going to
+7:57 | be dealing with some fairly complex things, so one of the
+7:59 | things you're going to see is, we're going to make heavy use
+8:01 | of libraries, or code written by others.
+8:04 | It'll allow you to tackle interesting problems I'll have
+8:06 | you to write from scratch, but it does mean that this skill
+8:11 | here is going to be really valuable.
+8:13 | You need to be able to read that code and understand it,
+8:15 | as well as write your own.
+8:18 | OK.
+8:19 | Two quizzes.
+8:20 | During the term, the dates have already been scheduled.
+8:23 | John, I forgot to look them up, I think it's October 2nd
+8:25 | and November 4th, it'll be on the course website.
+8:29 | My point is, go check the course website, which by the
+8:31 | way is right there.
+8:34 | If you have, if you know you have a conflict with one of
+8:37 | those quiz dates now, please see John or I right away.
+8:40 | We'll arrange something ahead of time.
+8:42 | But if you--
+8:44 | The reason I'm saying that is, you know, you know that you're
+8:45 | getting married that day for example, we will excuse you
+8:47 | from the quiz to get married.
+8:49 | We'll expect you come right back to do the quiz by the
+8:51 | way, but the--
+8:53 | Boy, tough crowd.
+8:54 | All right.
+8:57 | If you have a conflict, please let us know.
+8:59 | Second thing is, if you have an MIT documented special need
+9:03 | for taking quizzes, please see John or I well in advance.
+9:07 | At least two weeks before the quiz.
+9:08 | Again, we'll arrange for this, but you need to give us enough
+9:10 | warning so that we can deal with that.
+9:13 | OK, the quizzes are open book.
+9:16 | This course is not about memory.
+9:20 | It's not how well you can memorize facts: in fact, I
+9:22 | think both John and I are a little sensitive to memory
+9:24 | tests, given our age, right John?
+9:26 | This is not about how you memorize things, it's about
+9:28 | how you think.
+9:29 | So they're open note, open book.
+9:30 | It's really going to test your ability to think.
+9:34 | The grades for the course will be assigned roughly, and I use
+9:38 | the word roughly because we reserve the right to move
+9:40 | these numbers around a little bit, but basically in the
+9:42 | following percentages: 55% of your grade comes from the
+9:44 | problem sets, the other 45% come from the quizzes.
+9:48 | And I should've said there's two quizzes and a final exam.
+9:50 | I forgot, that final exam during final period.
+9:52 | So the quiz percentages are 10%, 15%, and 20%.
+9:55 | Which makes up the other 45%.
+9:59 | OK.
+10:00 | Other administrivia.
+10:02 | Let me just look through my list here.
+10:05 | First problem set, problem set zero, has already been posted.
+10:07 | This is a really easy one.
+10:09 | We intend it to be a really easy problem set.
+10:11 | It's basically to get you to load up Python on your machine
+10:14 | and make sure you understand how to interact with it.
+10:17 | The first problem set will be posted shortly, it's also
+10:19 | pretty boring-- somewhat like my lectures but not John's--
+10:23 | and that means, you know, we want you just to
+10:25 | get going on things.
+10:26 | Don't worry, we're going to make them more interesting as
+10:27 | you go along.
+10:28 | Nonetheless, I want to stress that none of these problems
+10:31 | sets are intended to be lethal.
+10:33 | We're not using them to weed you out, we're using them to
+10:36 | help you learn.
+10:36 | So if you run into a problem set that just, you
+10:39 | don't get, all right?
+10:41 | Seek help.
+10:43 | Could be psychiatric help, could be a TA.
+10:46 | I recommend the TA.
+10:47 | My point being, please come and talk to somebody.
+10:50 | The problems are set up so that, if you start down the
+10:53 | right path, it should be pretty straight-forward to
+10:55 | work it through.
+10:56 | If you start down a plausible but incorrect path, you can
+11:00 | sometimes find yourself stuck in the weeds somewhere, and we
+11:02 | want to bring you back in.
+11:03 | So part of the goal here is, this should not be a grueling,
+11:08 | exhausting kind of task, it's really something that should
+11:10 | be helping you learn the material.
+11:12 | If you need help, ask John, myself, or the TAs.
+11:15 | That's what we're here for.
+11:17 | OK.
+11:18 | We're going to run primarily a paperless subject, that's why
+11:22 | the website is there.
+11:23 | Please check it, that's where everything's going to be
+11:24 | posted in terms of things you need to know.
+11:27 | In particular, please go to it today, you will find a form
+11:30 | there that you need to fill out to register for, or sign
+11:33 | up for rather, a recitation.
+11:35 | Recitations are on Friday.
+11:37 | Right now, we have them scheduled at 9:00, 10:00,
+11:39 | 11:00, 12:00, 1:00, and 2:00.
+11:41 | We may drop one of the recitations, just depending on
+11:45 | course size, all right?
+11:46 | So we reserve the right, unfortunately, to have to move
+11:48 | you around.
+11:49 | My guess is that 9:00 is not going to be a tremendously
+11:52 | popular time, but maybe you'll surprise me.
+11:54 | Nonetheless, please go in and sign up.
+11:56 | We will let you sign up for whichever recitation makes
+11:58 | sense for you.
+11:59 | Again, we reserve the right to move people around if we have
+12:02 | to, just to balance load, but we want you to find something
+12:04 | that fits your schedule rather than ours.
+12:08 | OK.
+12:09 | Other things.
+12:10 | There is no required text.
+12:12 | If you feel exposed without a text book, you really have to
+12:17 | have a textbook, you'll find one recommended-- actually I'm
+12:20 | going to reuse that word, John, at least suggest it, on
+12:23 | the course website.
+12:24 | I don't think either of us are thrilled with the text, it's
+12:26 | the best we've probably found for Python, it's OK.
+12:28 | If you need it, it's there.
+12:29 | But we're going to basically not rely on any specific text.
+12:33 | Right.
+12:34 | Related to that: attendance here is
+12:36 | obviously not mandatory.
+12:38 | You ain't in high school anymore.
+12:40 | I think both of us would love to see your smiling faces, or
+12:42 | at least your faces, even if you're not
+12:44 | smiling at us every day.
+12:46 | Point I want to make about this, though, is that we are
+12:49 | going to cover a lot of material that is not in the
+12:52 | assigned readings, and we do have assigned readings
+12:53 | associated with each one of these lectures.
+12:57 | If you choose not to show up today-- or sorry, you did
+13:00 | choose to show up today, if you choose not to show up in
+13:03 | future days-- we'll understand, but please also
+13:05 | understand that the TAs won't have a lot of patience with
+13:08 | you if you're asking a question about something that
+13:10 | was either covered in the readings, or covered in the
+13:12 | lecture and is pretty straight forward.
+13:14 | All right?
+13:14 | We expect you to behave responsibly
+13:16 | and we will as well.
+13:18 | All right.
+13:20 | I think the last thing I want to say is, we will not be
+13:22 | handing out class notes.
+13:26 | Now this sounds like a draconian measure;
+13:27 | let me tell you why.
+13:29 | Every study I know of, and I suspect every one John knows,
+13:31 | about learning, stresses that students learn best when they
+13:35 | take notes.
+13:36 | Ironically, even if they never look at them.
+13:40 | OK.
+13:40 | The process of writing is exercising both halves of your
+13:44 | brain, and it's actually helping you learn, and so
+13:46 | taking notes is really valuable thing.
+13:48 | Therefore we're not going to distribute notes.
+13:50 | What we will distribute for most lectures is a handout
+13:53 | that's mostly code examples that we're going to do.
+13:55 | I don't happen to have one today because we're not going
+13:57 | to do a lot of code.
+13:58 | We will in future.
+13:59 | Those notes are going to make no sense, I'm guessing,
+14:02 | outside of the lecture, all right?
+14:04 | So it's not just, you can swing by 11:04 and grab a copy
+14:08 | and go off and catch some more sleep.
+14:10 | What we recommend is you use those notes to take your own
+14:13 | annotations to help you understand what's going on,
+14:15 | but we're not going to provide class notes.
+14:17 | We want you to take your own notes to help you, if you
+14:20 | like, spur your own learning process.
+14:23 | All right.
+14:24 | And then finally, I want to stress that John, myself, all
+14:28 | of the staff, our job is to help you learn.
+14:32 | That's what we're here for.
+14:32 | It's what we get excited about.
+14:35 | If you're stuck, if you're struggling, if you're not
+14:38 | certain about something, please ask.
+14:40 | We're not mind readers, we can't tell when you're
+14:42 | struggling, other than sort of seeing the expression on your
+14:44 | face, we need your help in identifying that.
+14:48 | But all of the TAs, many of whom are sitting down in the
+14:50 | front row over here, are here to help, so come and ask.
+14:53 | At the same time, remember that they're students too.
+14:56 | And if you come and ask a question that you could have
+14:59 | easily answered by doing the reading, coming to lecture, or
+15:02 | using Google, they're going to have less patience.
+15:05 | But helping you understand things that really are a
+15:07 | conceptual difficulty is what they're here for and what
+15:10 | we're here for, so please come and talk to us.
+15:14 | OK.
+15:15 | That takes care of the administrivia preamble.
+15:17 | John, things we add?
+15:18 | PROFESSOR GUTTAG: Two more quick things.
+15:34 | This semester, your class is being videotaped for
+15:35 | OpenCourseware.
+15:35 | If any of you don't want your image recorded and posted on
+15:36 | the web, you're supposed to sit in the back three rows.
+15:38 | PROFESSOR GRIMSON: Ah, thank you.
+15:39 | I forgot.
+15:39 | PROFESSOR GUTTAG: --Because the camera may pan.
+15:40 | I think you're all very good-looking and give MIT a
+15:40 | good image, so please, feel free to be filmed.
+15:40 | PROFESSOR GRIMSON: I'll turn around, so if you want to, you
+15:45 | know, move to the back, I won't see who moves.
+15:48 | Right.
+15:48 | Great.
+15:48 | Thank you, John.
+15:49 | PROFESSOR GUTTAG: So that, the other thing I want to mention
+15:57 | is, recitations are also very important.
+16:00 | We will be covering material in recitations that're not in
+16:00 | the lectures, not in the reading, and we do expect you
+16:03 | to attend recitations.
+16:03 | PROFESSOR GRIMSON: Great.
+16:04 | Thanks, John.
+16:06 | Any questions about the administrivia?
+16:08 | I know it's boring, but we need to do it so you know what
+16:10 | the ground rules are.
+16:12 | Good.
+16:13 | OK.
+16:14 | Let's talk about computation.
+16:16 | As I said, our strategic goal, our tactical goals, are to
+16:19 | help you think like a computer scientist. Another way of
+16:23 | saying it is, we want to give you the skill so that you can
+16:25 | make the computer do what you want it to do.
+16:28 | And we hope that at the end of the class, every time you're
+16:30 | confronted with some technical problem, one of your first
+16:32 | instincts is going to be, "How do I write the piece of code
+16:35 | that's going to help me solve that?"
+16:37 | So we want to help you think like a computer
+16:39 | scientist. All right.
+16:41 | And that, is an interesting statement.
+16:45 | What does it mean, to think like a computer scientist?
+16:55 | Well, let's see.
+16:59 | The primary knowledge you're going to take away from this
+17:00 | course is this notion of computational problem solving,
+17:02 | this ability to think in
+17:04 | computational modes of thought.
+17:07 | And unlike in a lot of introductory courses, as a
+17:10 | consequence, having the ability to memorize is not
+17:12 | going to help you.
+17:13 | It's really learning those notions of the tools that you
+17:16 | want to use.
+17:18 | What in the world does it mean to say
+17:19 | computational mode of thought?
+17:20 | It sounds like a hifalutin phrase you use when you're
+17:22 | trying to persuade a VC to fund you.
+17:24 | Right.
+17:25 | So to answer this, we really have to ask a different
+17:27 | question, a related question; so, what's computation?
+17:31 | It's like a strange statement, right?
+17:32 | What is computation?
+17:35 | And part of the reason for putting it up is that I want
+17:38 | to, as much as possible, answer that question by
+17:41 | separating out the mechanism, which is the computer, from
+17:45 | computational thinking.
+17:47 | Right.
+17:47 | The artifact should not be what's driving this.
+17:49 | It should be the notion of, "What does it mean to do
+17:51 | computation?"
+17:53 | Now, to answer that, I'm going to back up one more level.
+17:56 | And I'm going to pose what sounds like a philosophy
+17:57 | question, which is, "What is knowledge?" And you'll see in
+18:01 | about two minutes why I'm going to do this.
+18:02 | But I'm going to suggest that I can divide knowledge into at
+18:04 | least two categories.
+18:07 | OK, and what is knowledge?
+18:08 | And the two categories I'm going to divide them into are
+18:12 | declarative and imperative knowledge.
+18:19 | Right.
+18:20 | What in the world is declarative knowledge?
+18:22 | Think of it as statements of fact.
+18:25 | It's assertions of truth.
+18:27 | Boy, in this political season, that's a really dangerous
+18:29 | phrase to use, right?
+18:30 | But it's a statement of fact.
+18:32 | I'll stay away from the political comments.
+18:34 | Let me give you an example of this.
+18:35 | Right.
+18:36 | Here's a declarative statement.
+18:37 | The square root of x is that y such that y squared equals x,
+18:46 | y's positive.
+18:48 | You all know that.
+18:50 | But what I want you to see here, is that's a
+18:52 | statement of fact.
+18:54 | It's a definition.
+18:55 | It's an axiom.
+18:55 | It doesn't help you find square roots.
+19:00 | If I say x is 2, I want to know, what's the square root
+19:02 | of 2, well if you're enough of a geek, you'll say 1.41529 or
+19:06 | whatever the heck it is, but in general, this doesn't help
+19:10 | you find the square root.
+19:12 | The closest it does is it would let you test. You know,
+19:15 | if you're wandering through Harvard Square and you see an
+19:17 | out-of-work Harvard grad, they're handing out examples
+19:19 | of square roots, they'll give you an example and you can
+19:21 | test it to see, is the square root of
+19:23 | 2, 1.41529 or whatever.
+19:26 | I don't even get laughs at Harvard jokes, John, I'm going
+19:29 | to stop in a second here, all right?
+19:31 | All right, so what am I trying to say here?
+19:33 | It doesn't -- yeah, exactly.
+19:36 | We're staying away from that, really quickly, especially
+19:38 | with the cameras rolling.
+19:39 | All right.
+19:40 | What am I trying to say?
+19:41 | It tells you how you might test something but it doesn't
+19:44 | tell you how to.
+19:46 | And that's what imperative knowledge is.
+19:48 | Imperative knowledge is a description of
+19:51 | how to deduce something.
+19:52 | So let me give you an example of a piece
+19:54 | of imperative knowledge.
+19:56 | All right, this is actually a very old piece of imperative
+19:58 | knowledge for computing square roots, it's attributed to
+20:00 | Heron of Alexandria, although I believe that the Babylonians
+20:04 | are suspected of knowing it beforehand.
+20:07 | But here is a piece of imperative knowledge.
+20:09 | All right?
+20:10 | I'm going to start with a guess, I'm going to call it g.
+20:17 | And then I'm going to say, if g squared is close to x, stop.
+20:26 | And return g.
+20:28 | It's a good enough answer.
+20:30 | Otherwise, I'm going to get a new guess by taking g, x over
+20:38 | g, adding them, and dividing by two.
+20:42 | Then you take the average of g and x over g.
+20:44 | Don't worry about how came about, Heron found this out.
+20:47 | But that gives me a new guess, and I'm going to repeat.
+20:56 | That's a recipe.
+20:58 | That's a description of a set of steps.
+21:01 | Notice what it has, it has a bunch of nice things that we
+21:04 | want to use, right?
+21:05 | It's a sequence of specific instructions
+21:08 | that I do in order.
+21:10 | Along the way I have some tests, and depending on the
+21:13 | value of that test, I may change where I am in that
+21:17 | sequence of instructions.
+21:18 | And it has an end test, something that tells me when
+21:20 | I'm done and what the answer is.
+21:22 | This tells you how to find square roots.
+21:24 | it's how-to knowledge.
+21:25 | It's imperative knowledge.
+21:27 | All right.
+21:27 | That's what computation basically is about.
+21:31 | We want to have ways of capturing this process.
+21:35 | OK, and that leads now to an interesting question, which
+21:37 | would be, "How do I build a mechanical process to capture
+21:43 | that set of computations?" So I'm going to suggest that
+21:46 | there's an easy way to do it--
+21:50 | I realized I did the boards in the wrong order here-- one of
+21:53 | the ways I could do it is, you could imagine building a
+21:55 | little circuit to do this.
+21:57 | If I had a couple of elements of stored values in it, I had
+22:00 | some wires to move things around, I had a little thing
+22:02 | to do addition, little thing to do division, and a
+22:05 | something to do the testing, I could build a little circuit
+22:07 | that would actually do this computation.
+22:09 | OK.
+22:11 | That, strange as it sounds, is actually an example of the
+22:15 | earliest computers, because the earliest computers were
+22:18 | what we call fixed-program computers, meaning that they
+22:31 | had a piece of circuitry designed to do a specific
+22:34 | computation.
+22:35 | And that's what they would do: they would do that specific
+22:38 | computation.
+22:40 | You've seen these a lot, right?
+22:41 | A good example of this: calculator.
+22:47 | It's basically an example of a fixed-program computer.
+22:51 | It does arithmetic.
+22:53 | If you want play video games on it, good luck.
+22:55 | If you want to do word processing on it, good luck.
+22:58 | It's designed to do a specific thing.
+23:00 | It's a fixed-program computer.
+23:03 | In fact, a lot of the other really interesting early ones
+23:05 | similarly have this flavor, to give an example: I never know
+23:09 | how to pronounce this, Atanasoff, 1941.
+23:14 | One of the earliest computational things was a
+23:16 | thing designed by a guy named Atanasoff, and it basically
+23:18 | solved linear equations.
+23:22 | Handy thing to do if you're doing 1801, all right, or
+23:26 | 1806, or whatever you want to do those things in.
+23:29 | All it could do, though, was solve those equations.
+23:31 | One of my favorite examples of an early computer was done by
+23:36 | Alan Turing, one of the great computer scientists of all
+23:39 | time, called the bombe, which was designed to break codes.
+23:43 | It was actually used during WWII to break
+23:45 | German Enigma codes.
+23:46 | And what it was designed to do, was to solve
+23:48 | that specific problem.
+23:49 | The point I'm trying to make is, fixed-program computers is
+23:53 | where we started, but it doesn't really get us to where
+23:55 | we'd like to be.
+23:55 | We want to capture this idea of problem solving.
+23:58 | So let's see how we'd get there.
+24:01 | So even within this framework of, given a description of a
+24:05 | computation as a set of steps, in the idea that I could build
+24:08 | a circuit to do it, let me suggest for you what would be
+24:10 | a wonderful circuit to build.
+24:13 | Suppose you could build a circuit with the following
+24:15 | property: the input to this circuit would be any other
+24:18 | circuit diagram.
+24:20 | Give it a circuit diagram for some computation, you give it
+24:22 | to the circuit, and that circuit would wonderfully
+24:26 | reconfigure itself to act like the circuits diagram.
+24:30 | Which would mean, it could act like a calculator.
+24:33 | Or, it could act like Turing's bombe.
+24:35 | Or, it could act like a square root machine.
+24:38 | So what would that circuit look like?
+24:39 | You can imagine these tiny little robots wandering
+24:42 | around, right?
+24:42 | Pulling wires and pulling out components and
+24:44 | stacking them together.
+24:45 | How would you build a circuit that could take a circuit
+24:47 | diagram in and make a machine act like that circuit?
+24:53 | Sounds like a neat challenge.
+24:55 | Let me change the game slightly.
+24:59 | Suppose instead, I want a machine that can take a
+25:02 | recipe, the description of a sequence of steps, take that
+25:07 | as its input, and then that machine will now act like what
+25:12 | is described in that recipe.
+25:15 | Reconfigure itself, emulate it, however you want to use
+25:17 | the words, it's going to change how it does the
+25:19 | computation.
+25:21 | That would be cool.
+25:23 | And that exists.
+25:24 | It's called an interpreter.
+25:26 | It is the basic heart of every computer.
+25:29 | What it is doing, is saying, change the game.
+25:33 | This is now an example of a stored-program computer.
+25:40 | What that means, in a stored-program computer, is
+25:48 | that I can provide to the computer a sequence of
+25:51 | instructions describing the process I want it to execute.
+25:55 | And inside of the machine, and things we'll talk about, there
+25:58 | is a process that will allow that sequence to be executed
+26:02 | as described in that recipe, so it can behave like any
+26:06 | thing that I can describe in one of those recipes.
+26:09 | All right.
+26:10 | That actually seems like a really nice thing to have, and
+26:14 | so let me show you what that would basically look like.
+26:19 | Inside of a stored-program computer, we would have the
+26:22 | following: we have a memory, it's connected to two things;
+26:31 | control unit, in what's called an ALU, an arithmetic logic
+26:37 | unit, and this can take in input, and spit out output,
+26:46 | and inside this stored-program computer, excuse me, you have
+26:50 | the following: you have a sequence of instructions.
+26:55 | And these all get stored in there.
+27:03 | Notice the difference.
+27:05 | The recipe, the sequence of instructions, is actually
+27:07 | getting read in, and it's treated just like data.
+27:10 | It's inside the memory of the machine, which means we have
+27:12 | access to it, we can change it, we can use it to build new
+27:15 | pieces of code, as well as we can interpret it.
+27:19 | One other piece that goes into this computer--
+27:21 | I never remember where to put the PC, John, control?
+27:23 | ALU?
+27:25 | Separate?
+27:26 | I'll put it separate-- you have a thing
+27:29 | called a program counter.
+27:31 | And here's the basis of the computation.
+27:34 | That program counter points to some location in memory,
+27:38 | typically to the first instruction in the sequence.
+27:43 | And those instructions, by the way, are very simple: they're
+27:45 | things like, take the value out of two places in memory,
+27:48 | and run them through the multiplier in here, a little
+27:51 | piece of circuitry, and stick them back into
+27:53 | someplace in memory.
+27:54 | Or take this value out of memory, run it through some
+27:57 | other simple operation, stick it back in memory.
+28:00 | Having executed this instruction, that counter goes
+28:03 | up by one and we move to the next one.
+28:05 | We execute that instruction, we move to the next one.
+28:08 | Oh yeah, it looks a whole lot like that.
+28:13 | Some of those instructions will involve tests: they'll
+28:16 | say, is something true?
+28:18 | And if the test is true, it will change the value of this
+28:22 | program counter to point to some other place in the
+28:25 | memory, some other point in that sequence of instructions,
+28:28 | and you'll keep processing.
+28:30 | Eventually you'll hopefully stop, and a value gets spit
+28:32 | out, and you're done.
+28:34 | That's the heart of a computer.
+28:35 | Now that's a slight misstatement.
+28:37 | The process to control it is intriguing and interesting,
+28:39 | but the heart of the computer is simply this notion that we
+28:42 | build our descriptions, our recipes, on a sequence of
+28:46 | primitive instructions.
+28:47 | And then we have a flow of control.
+28:50 | And that flow of control is what I just described.
+28:51 | It's moving through a sequence of instructions, occasionally
+28:53 | changing where we are as we move around.
+28:57 | OK.
+28:58 | The thing I want you to take away from this, then, is to
+29:02 | think of this as, this is, if you like, a recipe.
+29:06 | And that's really what a program is.
+29:19 | It's a sequence of instructions.
+29:21 | Now, one of things I left hanging is, I said, OK, you
+29:23 | build it out of primitives.
+29:24 | So one of the questions is, well, what are the right
+29:25 | primitives to use?
+29:28 | And one of the things that was useful here is, that we
+29:31 | actually know that the set of primitives that you want to
+29:33 | use is very straight-forward.
+29:37 | OK, but before I do that, let me drive home this idea of why
+29:39 | this is a recipe.
+29:42 | Assuming I have a set of primitive instructions that I
+29:44 | can describe everything on, I want to know what can I build.
+29:47 | Well, I'm going to do the same analogy to a real recipe.
+29:49 | So, real recipe.
+29:51 | I don't know.
+29:51 | Separate six eggs.
+29:54 | Do something.
+29:55 | Beat until the-- sorry, beat the whites
+29:57 | until they're stiff.
+29:59 | Do something until an end test is true.
+30:02 | Take the yolks and mix them in with the sugar and water--
+30:04 | No.
+30:05 | Sugar and flour I guess is probably what I want, sugar
+30:06 | and water is not going to do anything interesting for me
+30:08 | here-- mix them into something else.
+30:11 | Do a sequence of things.
+30:13 | A traditional recipe actually is based on a small set of
+30:17 | primitives, and a good chef with, or good cook, I should
+30:21 | say, with that set of primitives, can create an
+30:23 | unbounded number of great dishes.
+30:26 | Same thing holds true in programming.
+30:28 | Right.
+30:29 | Given a fixed set of primitives, all right, a good
+30:37 | programmer can program anything.
+30:43 | And by that, I mean anything that can be described in one
+30:45 | of these process, you can capture in that set of
+30:47 | primitives.
+30:49 | All right, the question is, as I started to say, is, "What
+30:51 | are the right primitives?" So there's a little bit of, a
+30:54 | little piece of history here, if you like.
+30:55 | In 1936, that same guy, Alan Turing, showed that with six
+31:01 | simple primitives, anything that could be described in a
+31:05 | mechanical process, it's actually algorithmically,
+31:08 | could be programmed just using those six primitives.
+31:12 | Think about that for a second.
+31:14 | That's an incredible statement.
+31:16 | It says, with six primitives, I can rule the world.
+31:20 | With six primitives, I can program anything.
+31:23 | A couple of really interesting consequences of that, by the
+31:25 | way, one of them is, it says, anything you can do in one
+31:29 | programming language, you can do in
+31:31 | another programming language.
+31:33 | And there is no programming language that is better-- well
+31:36 | actually, that's not quite true, there are some better at
+31:37 | doing certain kinds of things-- but there's nothing
+31:39 | that you can do in C that you can't do in Fortran.
+31:43 | It's called Turing compatibility.
+31:45 | Anything you can do with one, you can do with another, it's
+31:46 | based on that fundamental result.
+31:49 | OK.
+31:50 | Now, fortunately we're not going to start with Turing's
+31:53 | six primitives, this would be really painful programming,
+31:56 | because they're down at the level of, "take this value and
+31:59 | write it onto this tape." First of all, we don't have
+32:01 | tapes anymore in computers, and even if we did, you don't
+32:04 | want to be programming at that level.
+32:05 | What we're going to see with programming language is that
+32:07 | we're going to use higher-level abstracts.
+32:09 | A broader set of primitives, but nonetheless the same
+32:12 | fundamental thing holds.
+32:13 | With those six primitives, you can do it.
+32:16 | OK.
+32:18 | So where are we here?
+32:19 | What we're saying is, in order to do computation, we want to
+32:22 | describe recipes, we want to describe this sequence of
+32:24 | steps built on some primitives, and we want to
+32:28 | describe the flow of control that goes through those
+32:30 | sequence of steps as we carry on.
+32:33 | So the last thing we need before we can start talking
+32:35 | about real programming is, we need to
+32:36 | describe those recipes.
+32:39 | All right, And to describe the recipes, we're
+32:41 | going to want a language.
+32:54 | We need to know not only what are the primitives, but how do
+32:57 | we make things meaningful in that language.
+33:01 | Language.
+33:03 | There we go.
+33:05 | All right.
+33:07 | Now, it turns out there are--
+33:08 | I don't know, John, hundreds?
+33:09 | Thousands?
+33:10 | Of programming languages?
+33:11 | At least hundreds-- of programming languages around.
+33:13 | PROFESSOR JOHN GUTTAG: [UNINTELLIGIBLE]
+33:16 | PROFESSOR ERIC GRIMSON: True.
+33:16 | Thank you.
+33:18 | You know, they all have, you know,
+33:20 | their pluses and minuses.
+33:21 | I have to admit, in my career here, I think I've taught in
+33:23 | at least three languages, I suspect you've taught more,
+33:26 | five or six, John?
+33:27 | Both of us have probably programmed in more than those
+33:29 | number of languages, at least programmed that many, since we
+33:31 | taught in those languages.
+33:33 | One of the things you want to realize is,
+33:35 | there is no best language.
+33:36 | At least I would argue that, I think John would agree.
+33:38 | We might both agree we have our own nominees for worst
+33:40 | language, there are some of those.
+33:43 | There is no best language.
+33:44 | All right?
+33:44 | They all are describing different things.
+33:46 | Having said that, some of them are better suited for some
+33:48 | things than others.
+33:51 | Anybody here heard of MATLAB Maybe programmed in MATLAB?
+33:55 | It's great for doing things with vectors and matrices and
+33:58 | things that are easily captured in that framework.
+34:01 | But there's some things that are a real
+34:02 | pain to do in MATLAB.
+34:03 | So MATLAB's great for that kind of thing.
+34:05 | C is a great language for programming things that
+34:07 | control data networks, for example.
+34:10 | I happen to be, and John teases me about this
+34:12 | regularly, I'm an old-time Lisp programmer, and that's
+34:14 | how I was trained.
+34:16 | And I happen to like Lisp and Scheme, it's a great language
+34:19 | when you're trying to deal with problems where you have
+34:20 | arbitrarily structured data sets.
+34:23 | It's particularly good at that.
+34:25 | So the point I want to make here is that there's no
+34:27 | particularly best language.
+34:30 | What we're going to do is simply use a language that
+34:32 | helps us understand.
+34:33 | So in this course, the language we're
+34:34 | going to use is Python.
+34:38 | Which is a pretty new language, it's growing in
+34:39 | popularity, it has a lot of the elements of some other
+34:42 | languages because it's more recent, it inherits things
+34:44 | from it's pregenitors, if you like.
+34:48 | But one of the things I want to stress is, this course is
+34:50 | not about Python.
+34:54 | Strange statement.
+34:55 | You do need to know how to use it, but it's not about the
+34:58 | details of, where do the semi-colons go in Python.
+35:00 | All right?
+35:02 | It's about using it to think.
+35:04 | And what you should take away from this course is having
+35:06 | learned how to design recipes, how to structure recipes, how
+35:10 | to do things in modes in Python.
+35:13 | Those same tools easily transfer
+35:15 | to any other language.
+35:16 | You can pick up another language in a week, couple of
+35:18 | weeks at most, once you know how to do Python.
+35:22 | OK.
+35:23 | In order to talk about Python and languages, I want to do
+35:25 | one last thing to set the stage for what we're going to
+35:28 | do here, and that's to talk about the different dimensions
+35:30 | of a language.
+35:31 | And there're three I want to deal with.
+35:33 | The first one is, whether this is a high-level
+35:35 | or low-level language.
+35:41 | That basically says, how close are you
+35:42 | the guts of the machine?
+35:43 | A low-level language, we used to call this assembly
+35:45 | programming, you're down at the level of, your primitives
+35:48 | are literally moving pieces of data from one location of
+35:51 | memory to another, through a very simple operation.
+35:54 | A high-level language, the designer has created a much
+35:57 | richer set of primitive things.
+35:59 | In a high-level language, square root might simply be a
+36:02 | primitive that you can use, rather than you having to go
+36:04 | over and code it.
+36:06 | And there're trade-offs between both.
+36:08 | Second dimension is, whether this is a general versus a
+36:12 | targeted language.
+36:15 | And by that I mean, do the set of primitives support a broad
+36:18 | range of applications, or is it really aimed at a very
+36:22 | specific set of applications?
+36:23 | I'd argue that MATLAB is basically a targeted language,
+36:25 | it's targeted at matrices and vectors and things like that.
+36:29 | And the third one I want to point out is, whether this is
+36:31 | an interpreted versus a compiled language.
+36:41 | What that basically says is the following: in an
+36:44 | interpreted language, you take what's called the source code,
+36:46 | the thing you write, it may go through a simple checker but
+36:49 | it basically goes to the interpreter, that thing inside
+36:52 | the machine that's going to control the flow of going
+36:54 | through each one of the instructions,
+36:55 | and give you an output.
+36:57 | So the interpreter is simply operating directly on your
+37:00 | code at run time.
+37:02 | In a compiled language, you have an intermediate step, in
+37:05 | which you take the source code, it runs through what's
+37:07 | called a checker or a compiler or both, and it creates what's
+37:10 | called object code.
+37:11 | And that does two things: one, it helps catch bugs in your
+37:16 | code, and secondly it often converts it into a more
+37:19 | efficient sequence of instructions before you
+37:21 | actually go off and run it.
+37:24 | All right?
+37:24 | And there's trade-offs between both.
+37:25 | I mean, an interpreted language is often easier to
+37:27 | debug, because you can still see your raw code there, but
+37:30 | it's not always as fast. A compiled language is usually
+37:32 | much faster in terms of its execution.
+37:34 | And it's one of the things you may want to trade off.
+37:37 | Right.
+37:38 | In the case of Python, it's a high-level language.
+37:43 | I would argue, I think John would agree with me, it's
+37:45 | basically a general-purpose language.
+37:47 | It happens to be better suited for manipulating strings than
+37:50 | numbers, for example, but it's really a
+37:51 | general-purpose language.
+37:53 | And it's primarily--
+37:55 | I shouldn't say primarily, it is an interpreted language.
+37:58 | OK?
+37:59 | As a consequence, it's not as good as helping debug, but it
+38:03 | does let you-- sorry, that's the wrong way of saying-- it's
+38:04 | not as good at catching some things before you run them, it
+38:07 | is easier at some times in debugging as you go
+38:09 | along on the fly.
+38:11 | OK.
+38:11 | So what does Python look like?
+38:13 | In order to talk about Python-- actually, I'm going
+38:15 | to do it this way-- we need to talk about how to
+38:22 | write things in Python.
+38:22 | Again, you have to let me back up slightly and set the stage.
+38:26 | Our goal is to build recipes.
+38:28 | You're all going to be great chefs by the
+38:29 | time you're done here.
+38:30 | All right?
+38:32 | Our goal is to take problems and break them down into these
+38:35 | computational steps, these sequence of instructions
+38:37 | that'll allow us to capture that process.
+38:40 | To do that, we need to describe: not only, what are
+38:42 | the primitives, but how do we capture things legally in that
+38:45 | language, and interact with the computer?
+38:47 | And so for that, we need a language.
+38:49 | We're about to start talking about the elements of the
+38:51 | language, but to do that, we also need to separate out one
+38:54 | last piece of distinction.
+38:58 | Just like with a natural language, we're going to
+38:59 | separate out syntax versus semantics.
+39:02 | So what's syntax?
+39:03 | Syntax basically says, what are the legal expressions in
+39:09 | this language?
+39:16 | Boy, my handwriting is atrocious, isn't it?
+39:22 | There's a English sequence of words.
+39:25 | It's not since syntactically correct, right?
+39:27 | It's not a sentence.
+39:28 | There's no verb in there anywhere, it's just
+39:30 | a sequence of nouns.
+39:31 | Same thing in our languages.
+39:32 | We have to describe how do you put together legally formed
+39:36 | expressions.
+39:38 | OK?
+39:39 | And as we add constructs to the language, we're going to
+39:41 | talk about.
+39:42 | Second thing we want to talk about very briefly as we go
+39:45 | along is the semantics of the language.
+39:48 | And here we're going to break out two pieces; static
+39:50 | semantics and full semantics.
+39:53 | Static semantics basically says which programs are
+40:01 | meaningful.
+40:05 | Which expressions make sense.
+40:09 | Here's an English sentence.
+40:17 | It's syntactically correct.
+40:20 | Right?
+40:20 | Noun phrase, verb, noun phrase.
+40:23 | I'm not certain it's meaningful, unless you are in
+40:25 | the habit of giving your furniture personal names.
+40:29 | What's the point?
+40:30 | Again, you can have things that are syntactically legal
+40:32 | but not semantically meaningful, and static
+40:35 | semantics is going to be a way of helping us decide what
+40:38 | expressions, what pieces of code, actually have real
+40:41 | meaning to it.
+40:41 | All right?
+40:43 | The last piece of it is, in addition to having static
+40:47 | semantics, we have sort of full semantics.
+40:53 | Which is, what does the program mean?
+40:58 | Or, said a different way, what's going to
+40:59 | happen when I run it?
+41:08 | That's the meaning of the expression.
+41:09 | That's what you want.
+41:10 | All right?
+41:10 | You want to know, what's the meaning of this piece of code?
+41:13 | When I run it, what's going to happen?
+41:14 | That's what I want to build.
+41:16 | The reason for pulling this out is, what you're going to
+41:18 | see is, that in most languages, and certainly in
+41:21 | Python-- we got lots of help here-- all right, Python comes
+41:29 | built-in with something that will check your static, sorry,
+41:31 | your syntax for you.
+41:33 | And in fact, as a sidebar, if you turn in a problem set that
+41:37 | is not syntactically correct, there's a simple button that
+41:40 | you push that will check your syntax.
+41:42 | If you've turned in a program that's not syntactically
+41:44 | correct, the TAs give you a zero.
+41:46 | Because it said you didn't even take the time to make
+41:48 | sure the syntax is correct.
+41:49 | The system will help you find it.
+41:50 | In Python, it'll find it, I think one bug at
+41:53 | a time, right John?
+41:53 | It finds one syntax error at a time, so you have to be a
+41:55 | little patient to do it, but you can check that
+41:57 | the syntax is right.
+41:59 | You're going to see that we get some help here on the
+42:06 | static semantics, and I'm going to do an example in a
+42:08 | second, meaning that the system, some languages are
+42:11 | better than others on it, but it will try and help you catch
+42:15 | some things that are not semantically correct
+42:20 | statically.
+42:21 | In the case of Python, it does that I think all at run time.
+42:23 | I'm looking to you again, John, I think there's no
+42:26 | pre-time checks.
+42:27 | Its-- sorry?
+42:27 | PROFESSOR JOHN GUTTAG: [UNINTELLIGIBLE]
+42:28 | PROFESSOR ERIC GRIMSON: There is some.
+42:31 | OK.
+42:32 | Most of them, I think though, are primarily caught at run
+42:35 | time, and that's a little bit of a pain because you don't
+42:36 | see it until you go and run the code, and there are some,
+42:38 | actually we're going to see an example I think in a second
+42:40 | where you find it, but you do get some help there.
+42:43 | The problem is, things that you catch here are actually
+42:47 | the least worrisome bugs.
+42:49 | They're easy to spot, you can't run the program with
+42:52 | them there, so you're not going to get weird answers.
+42:55 | Not everything is going to get caught in
+42:58 | static semantics checking.
+42:59 | Some things are going to slide through, and
+43:00 | that's actually a bother.
+43:03 | It's a problem.
+43:04 | Because it says, your program will still give you a value,
+43:07 | but it may not be what you intended, and you can't always
+43:10 | tell, and that may propagate it's way down through a whole
+43:12 | bunch of other computations before it causes some
+43:14 | catastrophic failure.
+43:16 | So actually, the problem with static semantics is you'd like
+43:19 | it to catch everything, you don't always get it.
+43:21 | Sadly we don't get much help here.
+43:23 | Which is where we'd like it.
+43:25 | But that's part of your job.
+43:27 | OK.
+43:27 | What happens if you actually have something that's both
+43:30 | syntactically correct, and appears to have correct static
+43:32 | semantics, and you run it?
+43:33 | It could run and give you the right answer, it could crash,
+43:37 | it could loop forever, it could run and apparently give
+43:43 | you the right answer.
+43:45 | And you're not always going to be able to tell.
+43:47 | Well, you'll know when it crashes, that doesn't help you
+43:49 | very much, but you can't always tell whether
+43:51 | something's stuck in an infinite loop or whether it's
+43:52 | simply taking a long time to compute.
+43:54 | You'd love to have a system that spots that for you, but
+43:57 | it's not possible.
+43:58 | And so to deal with this last one, you
+44:00 | need to develop style.
+44:02 | All right?
+44:06 | Meaning, we're going to try to help you with how to develop
+44:09 | good programming style, but you need to write in a way in
+44:12 | which it is going to be easy for you to spot the places
+44:15 | that cause those semantic bugs to occur.
+44:19 | All right.
+44:20 | If that sounds like a really long preamble, it is.
+44:23 | Let's start with Python.
+44:24 | But again, my goal here is to let you see what computation's
+44:28 | about, why we need to do it, I'm going to remind you one
+44:30 | last time, our goal is to be able to have a set of
+44:32 | primitives that we combine into complex expressions,
+44:35 | which we can then abstract to treat as primitives, and we
+44:38 | want to use that sequence of instructions in this flow of
+44:43 | control computing, in order to deduce new information.
+44:47 | That imperative knowledge that we talked about right there.
+44:50 | So I'm going to start today, we have about five or ten
+44:52 | minutes left, I think, in order-- sorry, five minutes
+44:54 | left-- in order to do this with some beginnings of
+44:56 | Python, and we're going to pick this up obviously, next
+44:58 | time, so; simple parts of Python.
+45:02 | In order to create any kinds of expressions, we're going to
+45:04 | need values.
+45:06 | Primitive data elements.
+45:07 | And in Python, we have two to start with; we have numbers,
+45:13 | and we have strings.
+45:16 | Numbers is what you'd expect.
+45:18 | There's a number.
+45:21 | There's another number.
+45:21 | All right?
+45:24 | Strings are captured in Python with an open quote and some
+45:28 | sequence of characters followed by a closed quote.
+45:33 | Associated with every data type in Python is a type,
+45:37 | which identifies the kind of thing it is.
+45:40 | Some of these are obvious.
+45:41 | Strings are just a type on their own.
+45:44 | But for numbers, for example, we can have
+45:46 | a variety of types.
+45:47 | So this is something that we would call an
+45:49 | integer, or an INT.
+45:50 | And this is something we would call a
+45:54 | floating point, or a float.
+45:57 | Or if you want to think of it as a real number.
+45:59 | And there's some others that we can see.
+46:01 | We're going to build up this taxonomy if you like, but the
+46:04 | reason it's relevant is, associated with each one of
+46:07 | those types is a set of operators that expect certain
+46:11 | types of input in order to do their job.
+46:13 | And given those types of input, will get back output.
+46:16 | All right.
+46:17 | In order to deal with this, let me show you an example,
+46:19 | and I hope that comes up, great.
+46:21 | What I have here is a Python shell, and I'm going to just
+46:25 | show you some simple examples of how we start building
+46:27 | expressions.
+46:28 | And this'll lead into what you're going to see next time
+46:30 | as well as what you're going to do tomorrow.
+46:32 | So.
+46:33 | Starting with the shell, I can type in expressions.
+46:37 | Actually, let me back up and do this in video.
+46:38 | I can type in a number, I get back a number, I can type in a
+46:42 | string, I get back the string.
+46:46 | Strings, by the way, can have spaces in them, they can have
+46:49 | other characters, it's simply a sequence of things, and
+46:52 | notice, by the way, that the string five-- sorry, the
+46:59 | string's digit five digit two is different
+47:02 | than the number 52.
+47:03 | The quotes are around them to make that distinction.
+47:05 | We're going to see why in a second.
+47:07 | What I'm doing, by the way, here is I'm simply typing in
+47:09 | expressions to that interpreter.
+47:11 | It's using its set of rules to deduce the value and print
+47:13 | them back out.
+47:15 | Things I might like to do in here is, I might like to do
+47:17 | combinations of things with these.
+47:19 | So we have associated with simple things, a set of
+47:23 | operations.
+47:27 | So for numbers, we have the things you'd expect, the
+47:32 | arithmetics.
+47:33 | And let me show you some examples of that.
+47:35 | And actually, I'm going to do one other distinction here.
+47:38 | What I typed in, things like-- well, let me start this way--
+47:42 | there's an expression.
+47:44 | And in Python the expression is, operand, operator,
+47:48 | operand, when we're doing simple expressions like this,
+47:51 | and if I give it to the interpreter, it gives me back
+47:53 | exactly what you'd expect, which is that value.
+47:56 | OK?
+47:57 | The distinction I'm going to make is, that's an expression.
+47:59 | The interpreter is going to get a value for it.
+48:01 | When we start building up code, we're
+48:03 | going to use commands.
+48:04 | Or statements.
+48:05 | Which are actually things that take in a value and ask the
+48:08 | computer to do something with it.
+48:09 | So I can similarly do this, which is going to look strange
+48:13 | because it's going to give me the same value back out, but
+48:16 | it actually did a slightly different thing.
+48:17 | And notice, by the way, when I typed it how print showed up
+48:19 | in a different color?
+48:21 | That's the Python saying, that is a command, that is a
+48:24 | specific command to get the value of the expression and
+48:26 | print it back out.
+48:27 | When we start writing code, you're going to see that
+48:29 | difference, but for now, don't worry about it, I just want to
+48:31 | plant that idea.
+48:33 | OK.
+48:33 | Once we've got that, we can certainly, though,
+48:35 | do things like this.
+48:39 | Notice the quotes around it.
+48:42 | And it treats it as a string, it's simply getting me back
+48:44 | the value of that string, 52 times 7, rather than
+48:47 | the value of it.
+48:49 | Now, once we've got that, we can start doing things.
+48:52 | And I'm going to use print here-- if I could type, in
+48:53 | order to just to get into that, I can't type, here we
+48:55 | go-- in order to get into the habit.
+48:57 | I can print out a string.
+49:00 | I can print out--
+49:07 | Ah!--
+49:09 | Here's a first example of something that
+49:10 | caught one of my things.
+49:11 | This is a static semantic error.
+49:15 | So what went on here?
+49:16 | I gave it an expression that had an operand in there.
+49:18 | It expected arithmetic types.
+49:21 | But I gave two strings.
+49:23 | And so it's complaining at me, saying, you can't do this.
+49:26 | I don't know how to take two strings and
+49:27 | multiply them together.
+49:30 | Unfortunately-- now John you may disagree with me on this
+49:32 | one-- unfortunately in Python you can, however,
+49:34 | do things like this.
+49:37 | What do you figure that's going to do?
+49:39 | Look legal?
+49:41 | The string three times the number three?
+49:45 | Well it happens to give me three threes in a row.
+49:49 | I hate this.
+49:50 | I'm sorry, John, I hate this.
+49:51 | Because this is overloading that multiplication operator
+49:55 | with two different tasks.
+49:56 | It's saying, if you give me two numbers, I'll
+49:57 | do the right thing.
+49:58 | If you give me a number and a string, I'm going to
+50:00 | concatenate them together, it's really different
+50:02 | operations, but nonetheless, it's what it's going to do.
+50:05 | STUDENT: [UNINTELLIGIBLE]
+50:11 | PROFESSOR ERIC GRIMSON: There you go.
+50:12 | You know, there will be a rebuttal phase a little later
+50:14 | on, just like with the political debates, and he
+50:16 | likes it as a feature, I don't like it, you can tell he's not
+50:18 | a Lisp programmer and I am.
+50:20 | All right.
+50:21 | I want to do just a couple more quick examples.
+50:22 | Here's another one.
+50:23 | Ah-ha!
+50:24 | Give you an example of a syntax error.
+50:28 | Because 52A doesn't make sense.
+50:31 | And you might say, wait a minute, isn't that a string,
+50:32 | and the answer's no, I didn't say it's a string by putting
+50:34 | quotes around it.
+50:35 | And notice how the machine responds differently to it.
+50:38 | In this case it says, this is a syntax error, and it's
+50:41 | actually highlighting where it came from so I can go
+50:43 | back and fix it.
+50:44 | All right.
+50:45 | Let's do a couple of other simple examples.
+50:48 | All right?
+50:49 | I can do multiplication.
+50:50 | I've already seen that.
+50:51 | I can do addition.
+50:52 | Three plus five.
+50:54 | I can take something to a power, double star, just take
+50:58 | three to the fifth power.
+50:59 | I can do division, right?
+51:03 | Whoa.
+51:04 | Right?
+51:05 | Three divided by five is zero?
+51:08 | Maybe in Bush econom-- no, I'm not going to do any political
+51:10 | comments today, I will not say that, all right?
+51:12 | What happened?
+51:14 | Well, this is one of the places where
+51:15 | you have to be careful.
+51:16 | It's doing integer division.
+51:19 | So, three divided by five is zero, with a
+51:22 | remainder of three.
+51:23 | So this is the correct answer.
+51:24 | If I wanted to get full, real division, I should make one of
+51:28 | them a float.
+51:30 | And yes, you can look at that and say, well is that right?
+51:32 | Well, up to some level of accuracy, yeah, that's .6 is
+51:35 | what I'd like to get out.
+51:36 | All right.
+51:38 | I can do other things.
+51:40 | In a particular, I have similar operations on strings.
+51:46 | OK, I can certainly print out strings, but I can actually
+51:48 | add strings together, and just as you saw, I can multiply
+51:51 | strings, you can kind of guess what this is going to do.
+51:53 | It is going to merge them together into one thing.
+51:58 | I want--
+51:59 | I know I'm running you slightly over, I want to do
+52:00 | one last example, it's, I also want to be able to do, have
+52:03 | variables to store things.
+52:05 | And to do that, in this it says, if I have a value, I
+52:11 | want to keep it around, to do that, I can
+52:12 | do things like this.
+52:20 | What does that statement do?
+52:21 | It says, create a name for a variable-- which I just did
+52:24 | there, in fact, let me type it in-- mystring, with an equal
+52:28 | sign, which is saying, assign or bind to that name the value
+52:32 | of the following expression.
+52:35 | As a consequence, I can now refer to
+52:37 | that just by its name.
+52:39 | If I get the value of mystring, there it is, or if I
+52:43 | say, take mystring and add to it the string, mylastname, and
+52:49 | print it back out.
+52:51 | So this is the first start of this.
+52:53 | What have we done?
+52:54 | We've got values, numbers and strings.
+52:57 | We have operations to associate with them.
+52:59 | I just threw a couple up here.
+53:00 | You're going to get a chance to explore them, and you'll
+53:02 | see not only are there the standard numerics for strings,
+53:04 | there are things like length or plus or other things you
+53:06 | can do with them.
+53:08 | And once I have values, I want to get a hold of them so I can
+53:10 | give them names.
+53:11 | And that's what I just did when I bound that.
+53:12 | I said, use the name mystring to be bound to or have the
+53:16 | value of Eric, so I can refer to it anywhere else that I
+53:19 | want to use it.
+53:20 | And I apologize for taking you over, we'll come back to this
+53:23 | next time, please go to the website to sign up for
+53:25 | recitation for tomorrow.

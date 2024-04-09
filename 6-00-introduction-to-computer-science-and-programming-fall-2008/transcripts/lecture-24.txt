@@ -1,0 +1,785 @@
+0:00 | OPERATOR: The following content is provided under a
+0:02 | Creative Commons license.
+0:03 | You're support will help MIT OpenCourseWare continue to
+0:06 | offer high quality educational resources for free.
+0:10 | To make a donation or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare course at
+0:17 | ocw.mit.edu.
+0:19 | PROFESSOR: All right.
+0:21 | Today's lecture, mostly I want to talk about what computer
+0:25 | scientists do.
+0:27 | We've sort of been teaching you computer science in the
+0:30 | small, I want to pull back and think in the large about, what
+0:34 | do people do once they learn about computer science?
+0:36 | And then I'll wrap up with a quick overview of what I think
+0:40 | we've accomplished this term.
+0:42 | So what does a computer scientist do?
+0:45 | What they really do is, almost everything.
+0:48 | Graduates of our department, other departments, have done
+0:51 | things like animation for movies you've all seen, they
+0:55 | keep airplanes from falling out of the sky, they help
+0:59 | surgeons do a better job of brain surgery, that's
+1:01 | something Professor Grimson has worked on.
+1:04 | All sorts of exciting things.
+1:10 | Mostly what they have in common, and it's incredibly
+1:13 | varied, what you can do with computer science, but it all
+1:17 | involves thinking computationally.
+1:20 | And if I had to use a single phrase to describe 6.00,
+1:25 | that's the phrase I would use.
+1:27 | The semester is really about computational thinking.
+1:31 | I think this will be a fundamental skill used by
+1:34 | everyone in the world by the middle of the current century.
+1:39 | And it'll be like the, it will become one of the three r's,
+1:43 | reading writing arithmetic.
+1:47 | And I haven't quite figured I how to put an r in the front
+1:49 | of it, but sooner or later.
+1:53 | So what is it?
+1:54 | Well, the process is the process that we've sort of
+1:57 | been advocating throughout the semester.
+2:01 | You identify or invent useful abstractions.
+2:04 | Sometimes they're out there, and we can just pluck them.
+2:08 | Sometimes you have to invent them ourselves.
+2:12 | We then formulate a solution to a problem as some sort of a
+2:15 | computational experiment.
+2:19 | Typically using those abstractions.
+2:22 | Then comes the part that many you get bogged down in, but
+2:26 | it'll get easier for you as you go on.
+2:29 | Is to design and construct a sufficiently efficient
+2:33 | implementation of the experiment.
+2:36 | And I want to emphasize the word sufficiently here, in
+2:39 | that it only has to be fast enough to run
+2:42 | it and get an answer.
+2:43 | And it doesn't have to be the fastest possible.
+2:48 | We then need to validate the experimental setup, convince
+2:52 | ourselves that the code is right, and then run the
+2:55 | experiment, and then evaluate the results, and
+2:58 | then repeat as needed.
+3:01 | And that's, of course, the key.
+3:03 | By now you've all learned that these experiments rarely are
+3:07 | done the first time you run them.
+3:10 | But of course, this is true of experiments in biology and
+3:12 | physics and chemistry and everything else.
+3:16 | But this is the basic process.
+3:18 | And I think, it's a view that's not universally held,
+3:23 | but I think is the correct view of what computational
+3:26 | thinking is all about.
+3:29 | It's an experimental discipline.
+3:33 | So the two a's are abstraction, choosing the
+3:37 | right abstraction, and operating in terms of multiple
+3:42 | layers of abstraction simultaneously.
+3:45 | And that's a little bit tricky.
+3:47 | Something that you've worked on this term.
+3:50 | You invent some beautiful, high level of abstraction.
+3:56 | But then you have to think about it, and implement it
+3:58 | using the rather low level abstractions provided by the
+4:01 | programming language.
+4:04 | So we'll do a simulation of, well, the stock market, we've
+4:10 | looked at it just recently.
+4:12 | And you've got this abstraction of a stock, and at
+4:15 | one level, when we're thinking about the market, we think of
+4:18 | a stock abstractly, as something that has a price
+4:20 | that moves up and down.
+4:22 | But then at the same time, we say, well, is the movement
+4:25 | Gaussian, or uniform, and we're operating at a somewhat
+4:29 | different level.
+4:31 | And then at a lower level, we're asking questions like,
+4:34 | well, how should we represent it? is?
+4:37 | It a dictionary, is it a list, that sort of thing.
+4:41 | And we always bounce back and forth and spend a lot of time
+4:46 | thinking about how the layers relate.
+4:49 | Now the other thing that's important, and it really
+4:53 | distinguishes, I think, computing from a lot of other
+4:55 | disciplines.
+4:57 | Is, we don't just write elegant descriptions of
+5:02 | abstractions on paper, the way you say, would do in
+5:06 | mathematics.
+5:07 | But we have to then automate those attractions.
+5:11 | And we always think in terms of, how can we mechanize the
+5:14 | abstractions?
+5:15 | And that's the computational part, in many ways.
+5:19 | How can we do that?
+5:21 | Well, we can do it because we have precise and exacting
+5:25 | notations in which to express these models.
+5:29 | So I'll say a few words about the model of stocks, or a few
+5:32 | words about the model of a drunk wandering around a
+5:35 | field, but I can't get away with just the words.
+5:40 | Eventually I have to convert the words to code.
+5:44 | And that's sort of the acid test of truth.
+5:47 | Have I really understood what the words mean?
+5:50 | Because if I don't, I can't actually convert it to code.
+5:54 | And that's both the cursing and the bless of being a
+5:57 | computer scientist. It's the curse because, you
+6:02 | can't fake it, right?
+6:05 | And that's one of the reasons that many students end up
+6:08 | spending a lot of time in a course like 6.00.
+6:12 | Because they know whether or not their program works.
+6:17 | When you write a proof in math, you can delude we into
+6:20 | thinking it's a solid proof, when it isn't.
+6:23 | When you write an essay, you can delude yourself into
+6:26 | thinking it's brilliant, when it isn't.
+6:28 | But here, you look at what it does, and it either did what
+6:32 | you thought it would do or didn't.
+6:34 | And so that means you sometimes have to work extra
+6:37 | hard, but the blessing is, when it's done, you really
+6:41 | know you've done it.
+6:43 | And you've got something useful.
+6:45 | And that's because there's a machine that will execute your
+6:49 | descriptions.
+6:51 | And that's what makes it fun.
+6:55 | So some examples of computational thinking.
+6:58 | How difficult is this problem?
+7:00 | That's what we talked about when we talked about
+7:02 | complexity.
+7:04 | And we talked about, for many problems, for all problems,
+7:08 | there's an intrinsic difficulty of solving the
+7:11 | problem with the computation.
+7:13 | Independent of how efficient your particular solution is.
+7:18 | And then the question is, how can I best solve it?
+7:21 | Theoretical computer science has given us precise meaning
+7:24 | to these and related questions.
+7:29 | Thinking recursively, another good example.
+7:32 | Where we take a seemingly difficult problem, and
+7:36 | reformulate it into one which we know how to solve.
+7:41 | Very often, it's a smaller instance of
+7:44 | the original problem.
+7:46 | And we say, gosh, this is hard to solve.
+7:49 | But then we think, well suppose the list only had two
+7:51 | elements in it, would I know how to sort it?
+7:53 | Yeah.
+7:55 | Well, then we can build up and say, therefore I can use that
+7:58 | idea to sort a list of any size.
+8:02 | As part of this thinking recursively we learn about
+8:05 | reduction, we learned how to, say, reduce the problem of
+8:11 | deciding what courses to take to an optimization problem in
+8:16 | terms of the knapsack problem.
+8:18 | Once we did that, we could say, oh, we know how to solve
+8:20 | all knapsack problems, dynamic programming has been around a
+8:23 | long time, we'll just do that.
+8:27 | So we do a lot of these reductions, in betting,
+8:30 | transformations, transforming one problem into another, and
+8:33 | simulations.
+8:36 | So some other examples, choosing an appropriate
+8:39 | representation, modeling the relevant abstracts of a
+8:43 | problem to make it practical.
+8:46 | And this is the essence of abstraction that computer
+8:48 | scientists learn, is how to figure out what's relevant and
+8:53 | ignore what is irrelevant, or less relevant.
+8:57 | Focus on the important things.
+8:59 | That's an enormous skill in not only
+9:02 | computing, but in life.
+9:05 | We worry about worst-case scenarios, damage containment,
+9:09 | error correction, all of this we talked about, we talked
+9:12 | about debugging, defensive programming, making sure the
+9:16 | types were right, but again these are very general things
+9:19 | that we think about.
+9:21 | And we think about the fact, sometimes, it's kind of a nice
+9:25 | idea, the fact that there exists really hard problems is
+9:29 | actually a good thing.
+9:32 | Because that's what let's us do things like use encryption
+9:35 | to get privacy of our data, or privacy for our
+9:39 | communications, privacy of our phone calls.
+9:42 | Because we have learned that some problems are
+9:44 | intrinsically difficult to solve, and that's what coding
+9:48 | is all about.
+9:50 | Or encryption is all about.
+9:52 | That's a nice thing.
+9:54 | I now want to talk more specifically about what one
+9:59 | group of computer scientists does.
+10:02 | And that's my research group.
+10:04 | Which consists of mostly graduate students, but every
+10:09 | year I try and incorporate a few undergraduates in it.
+10:13 | We work in the area of medicine, it's also the area
+10:15 | in which Professor Grimson does most of his work.
+10:19 | The goal is pretty simple: we want to help people live
+10:22 | longer and better lives.
+10:25 | Right?
+10:26 | I don't think any of you will think that's a worthless goal.
+10:31 | But, a second goal is, we want to have fun
+10:33 | while we're doing it.
+10:35 | Because life is way too short to do anything that's not fun
+10:39 | for very long.
+10:41 | So we push the frontiers of computer science, electrical
+10:44 | engineering, and medicine.
+10:46 | Working in close collaboration with physicians, and here
+10:50 | you've got logos of some of the hospitals
+10:51 | with which we work.
+10:54 | It is, of course, fairly technical work.
+10:57 | We use machine learning, clustering, data mining,
+11:00 | algorithm design, signal processing.
+11:03 | And everything we do ends up, eventually, getting translated
+11:09 | to code which we then run.
+11:13 | And so we worry a lot about software
+11:14 | systems and the quality.
+11:17 | We do write systems that, for example, inject electrical
+11:21 | signals into people's brains.
+11:24 | And it's kind of important, when you do that, that the
+11:25 | software does what it's intended to do.
+11:28 | At least if you like the people.
+11:31 | So some specific activities, and this is only a sampling.
+11:36 | We work on extracting clinically useful information
+11:39 | from electrical signals in the human body.
+11:43 | Mostly the heart, the brain, and connected anatomy.
+11:46 | For those of you who've never studied anatomy, I've labeled
+11:49 | the heart and the brain in the diagram for you.
+11:53 | The two major projects in this area we've been working on, is
+11:57 | predicting adverse cardiac events and detecting and
+12:02 | responding to epileptic seizures.
+12:06 | And I want to say a few words about each of those.
+12:11 | We'll skip this.
+12:13 | So example one, treating epilepsy.
+12:19 | I suspect most of you are surprised by the fact that one
+12:22 | percent of the world's population has epilepsy.
+12:27 | This is true in almost every part of the world.
+12:30 | It's true in the United States, it's true in
+12:32 | underdeveloped countries in Central Africa.
+12:35 | It seems to be one of the few diseases that's invariant to
+12:39 | economic situations.
+12:43 | One of the reasons that people are surprised by this number
+12:47 | is, most folks who have epilepsy try
+12:49 | to keep it a secret.
+12:52 | There's a long history, getting back to witches,
+12:55 | people with epilepsy were deemed to be witches, were
+12:57 | burned at the stake, things of that nature.
+13:02 | People who have epilepsy are not allowed by the FAA to work
+13:06 | on maintenance of aircraft.
+13:10 | It's a ridiculous restriction, but it's in the law, so I know
+13:15 | someone with epilepsy who's kept it a secret because he
+13:18 | doesn't want to lose his job.
+13:21 | That's a different sermon.
+13:23 | It's characterized by recurrent seizures, generated
+13:28 | by abnormal electrical activity in the brain.
+13:33 | It's really less a disease than a description of
+13:37 | symptoms, because there are lots of independent, different
+13:41 | causes of it.
+13:43 | It can be inherited, that's a significant fraction.
+13:47 | Or it can be acquired, typically by some sort of
+13:51 | insult to the brain.
+13:54 | People who have strokes or serious infections will
+13:59 | develop epilepsy.
+14:00 | Hemorrhages, and increasingly head injuries.
+14:06 | Turns out to be an illness that is of now great
+14:09 | interested the Defense Department because people are
+14:12 | coming back from Iraq with epilepsy.
+14:16 | So those of you who don't have a strong stomach, you might
+14:19 | want to avert your eyes.
+14:21 | Here's one manifestation of it.
+14:23 | On the left is an EEG, and that's, in this case, a
+14:27 | recording of the electrical activity in the surface of
+14:31 | this girl's brain.
+14:32 | You can see she's wearing what looks like a very funny
+14:35 | looking shower cap.
+14:36 | That's where the electrodes are.
+14:38 | And it's recording the electrical activity in the
+14:41 | brain, on the right is obviously a video.
+14:44 | Well, pretty frightening.
+14:46 | Not all seizures are quite that frightening.
+14:48 | In fact, most of them are not.
+14:50 | Sometimes people have what are called absence seizures, where
+14:53 | they just sort of black out for a period of time.
+14:58 | Still not a good thing if you're, say, driving a car
+15:00 | when that happens.
+15:03 | The key issue here, is that the onset of the seizure seems
+15:08 | unpredictable.
+15:10 | And in particular, it seems unpredictable to the person
+15:15 | who has the seizure.
+15:17 | And that's the real risk.
+15:19 | Seizures are typically self-limiting.
+15:22 | They will correct themselves over time.
+15:25 | Eventually this girl will return to, quote, normal.
+15:31 | The seizure itself will probably be over in a minute
+15:33 | or two, and for about an hour she'll be confused, and then
+15:37 | she'll be OK again.
+15:39 | But, because they're unpredictable, even people who
+15:42 | have as few as, say, two a year, it dominates their life.
+15:50 | So, if you're that girl, and even if you're going to have
+15:53 | one of those a year, you're never going to be
+15:55 | allowed on a bicycle.
+15:57 | Because if that happens when you're on a bicycle, it's
+15:59 | really bad.
+16:01 | If you're an adult, and you have one or two year, you
+16:03 | should never drive a car.
+16:04 | Imagine if you've been driving a car when that happened.
+16:10 | Almost everybody with epilepsy eventually
+16:13 | suffers a serious injury.
+16:15 | They have a seizure while they're on a flight of stairs,
+16:17 | and they fall down and fracture their skull.
+16:20 | They get intra-cranial hematomas, they get burns if
+16:23 | they're cooking at the stove, they drown in the bathtub.
+16:27 | And it's the unpredictability that's bad.
+16:32 | Death is high, two to three times out of the general
+16:34 | population.
+16:35 | Typically by accident related to the seizure.
+16:40 | And then there's something called sudden unexplained
+16:44 | death in epilepsy patients, SUDEP, which is estimated to
+16:50 | be one per 100 patients per year.
+16:55 | Just will die, and no one knows why.
+16:58 | Frequently it will be at night, while they're in bed,
+17:02 | and the conjecture is, they have a seizure, and end up
+17:04 | face down in the pillow, smother, that kind of thing.
+17:08 | So you can imagine, if you're a parent, you have a child
+17:10 | with this, you don't sleep much.
+17:13 | Really very sad.
+17:15 | So we want to do something about that.
+17:19 | And our idea is to detect the seizure early.
+17:23 | There are two onset times, electrographic and clinical.
+17:28 | Electrographic is when the brain first starts looking
+17:31 | suspicious, and clinical is when there's a overt physical
+17:36 | symptom, that stiffness you saw in that young girl.
+17:40 | Probably it went by too fast for any of you to notice, but
+17:44 | if you'd looked carefully at the EEG on the left of that
+17:47 | picture, you would have seen it going abnormal before she
+17:53 | had any clinical symptoms. Because the symptoms are
+17:57 | caused by the electrical activity in the brain, by
+18:00 | definition, it proceeds the symptoms, or at least doesn't
+18:03 | follow them.
+18:05 | So our idea was to try and detect the
+18:08 | electrographic onset.
+18:11 | If you could do this, you could provide warning.
+18:14 | So you could tell somebody, sit down before you fall down.
+18:18 | Get out of the bathtub.
+18:19 | Back away from the stove.
+18:22 | Just an oral warning would be tremendously useful.
+18:25 | You could summon help.
+18:27 | You could tell a parent, come quick, your child is having a
+18:31 | seizure right now in bed or elsewhere.
+18:34 | There are fast-acting drugs, Ativan, which if you inhale at
+18:39 | the start of a seizure, can stop it, reduce it.
+18:43 | And our particular interest is neural stimulation.
+18:46 | There is reason to believe, it's yet to be proved, that if
+18:51 | you apply the correct electrical stimulation at the
+18:54 | very beginning of a seizure, you can block it.
+18:58 | Or at least ameliorate it greatly.
+19:02 | So, here's a picture of an EEG.
+19:04 | And I'll just point out, seizures can
+19:07 | be tricky to find.
+19:08 | You might think this is a seizure, but it isn't.
+19:11 | That's blinking your eyes.
+19:13 | Oh well.
+19:16 | Here is the seizure, but in fact, it's begun about here.
+19:21 | Where things don't look particularly ominous.
+19:25 | So it's pretty subtle to detect.
+19:30 | One of the problems is, EEG varies across patients.
+19:35 | And epileptics have abnormal baselines.
+19:38 | Yeah?
+19:38 | STUDENT: [INAUDIBLE]
+19:48 | PROFESSOR: Highly variable in patients, but
+19:50 | that's kind of typical.
+19:52 | But that would be plenty of time to back away from the
+19:56 | stove, or get off a bicycle.
+19:59 | Not so much time to get off the Mass Turnpike, if you're
+20:03 | driving a car.
+20:05 | But it would be great, if you can give 10
+20:07 | or 15 seconds warning.
+20:08 | In fact, if you could give five seconds warning, it would
+20:11 | be tremendously useful.
+20:14 | And for the treatments, it's even different, right?
+20:18 | Yes, you're exactly right, in that particular case.
+20:21 | The problem is, one of the things I've discovered in
+20:24 | medicine, my work, is that almost all healthy people look
+20:29 | alike, and all sick people look different.
+20:34 | So, EEG, if you have epilepsy, your quote, normal EEG, when
+20:40 | you're not having a seizure, looks weird compared to people
+20:44 | who don't have epilepsy.
+20:48 | People have been building seizure detectors for about 40
+20:52 | years now, and they don't work very well.
+20:55 | Every EEG that gets shipped comes with a seizure detector,
+20:59 | and the first thing most hospitals do is, turn it off.
+21:03 | Because it just doesn't work.
+21:07 | The good news is, that even though each epileptics brain
+21:11 | signals look different, once you've learned what an
+21:15 | individual's signal looks like, it's pretty consistent.
+21:19 | Both the interictal, between seizure, and the
+21:22 | start of the seizure.
+21:25 | Well, that tells a computer scientist, let's use machine
+21:30 | learning to figure out what that patient's EEG looks like.
+21:36 | And build a highly specific detector that will work great
+21:41 | for one person, and not at all for anybody else.
+21:45 | And then we'll just install it, and you know, everyone
+21:48 | gets their own.
+21:50 | So instead of one size fits all, it's design a detector to
+21:55 | fit the patient.
+21:58 | We have been working on this now for about six years.
+22:03 | We've done, we've looked at about 80 patients now, more.
+22:09 | And, highly successful.
+22:12 | And I'm not going to weigh you down with all the statistical
+22:18 | tests and everything, but we've done the kind of things
+22:20 | I talked about in class.
+22:21 | Looking at the data, doing the statistics, and suffice it to
+22:25 | say, it works great.
+22:27 | For nine out of 10 patients, roughly.
+22:31 | And for the tenth, we just have to say,
+22:33 | sorry, we can't do it.
+22:35 | But, you know, you can't help everybody all the time.
+22:40 | We're currently, what you see here, is a picture of a neural
+22:43 | stimulator.
+22:44 | The stimulator itself gets implanted under the clavicle,
+22:49 | and then a wire runs up and wraps around the left vagus
+22:52 | nerve, which is the longest nerve in the human body.
+22:56 | It runs all away from the head, down
+22:57 | into the lower intestine.
+22:59 | Latin for wanderer.
+23:01 | Does amazing things, like control whether
+23:03 | you're hungry or not.
+23:07 | Its main, one of its main functions, is it controls the
+23:10 | parasympathetic nervous system for the heart.
+23:13 | And it's the nerve that the brain uses to tell
+23:16 | the heart, slow down.
+23:18 | But, in addition to transmitting down from the
+23:21 | brain, you can transmit up the nerve.
+23:24 | And in fact, the left one, for reasons I don't understand,
+23:28 | translates much better up than the right one does.
+23:31 | Which transmits much better down.
+23:34 | So use the left one.
+23:36 | And the notion is, if at the start of a seizure, we put a
+23:39 | current on that wire, we stimulate the brain and we
+23:42 | stop the seizure.
+23:44 | That's the theory.
+23:46 | It's been shown to stop seizures in rats.
+23:50 | But I don't much care about helping rats.
+23:54 | People purport to have shown it stops seizures in adults,
+23:59 | or in people.
+24:00 | The level of evidence is, honestly, ambiguous.
+24:04 | Because what they've done is, they've implanted it, and they
+24:09 | give the patient a magnet.
+24:11 | And say, when you're having a seizure, swipe the magnet
+24:13 | across, sorry about that, swipe the magnet across the
+24:17 | stimulator, it will turn it on and stop your seizure.
+24:21 | Well, could you imagine that little girl trying to swipe a
+24:23 | magnet across her chest?
+24:26 | Not likely.
+24:27 | So most people don't do it successfully.
+24:33 | Some people report, I thought I was about to have a seizure,
+24:37 | I swiped the magnet and I didn't have it.
+24:40 | Well, how do we know?
+24:43 | Did they really stop it, or did they just imagine they
+24:45 | were going to have one?
+24:47 | So it's pretty ambiguous, but we're now in the process of
+24:50 | doing some real tests at Beth Israel
+24:53 | Deaconness Medical Center.
+24:55 | And we've been admitting patients, and controlling the
+24:58 | stimulator, and so far I'm optimistic.
+25:02 | All right, one more example.
+25:05 | Predicting death.
+25:06 | Well, that's kind of ominous sounding.
+25:11 | About one and a quarter million Americans have an
+25:14 | acute coronary syndrome each year.
+25:17 | That's to say, some sort of a cardiac event.
+25:20 | A heart attack, or an arrhythmia of some sort,
+25:26 | various kinds of things, unstable angina.
+25:29 | And of that one and a quarter million people, 15 percent to
+25:33 | 20 percent of them will die of a cardiac-related event within
+25:37 | the next 4 years.
+25:39 | Pretty high.
+25:41 | In fact, about 5% within the next 90 days, there about.
+25:47 | So what do you do?
+25:50 | The key thing, we have treatments.
+25:52 | We actually know how to treat most of these things.
+25:54 | But we don't know who to give the treatments to?
+25:57 | So, for example, who gets an implanted defibrillator?
+26:00 | Who should be treated aggressively with statins?
+26:05 | We think we've found a new way to decide who should get which
+26:09 | of these kinds of treatments.
+26:10 | Something called morphological variability, which I'll talk
+26:14 | about only briefly.
+26:16 | We've tested it on a fairly large database.
+26:19 | We have a database with about 8,000 patients.
+26:23 | We've looked at 2 days for each patient, each day has 24
+26:26 | hours, each hour has 60 minutes, each minute has, on
+26:30 | average, 70 heartbeats.
+26:32 | That's a lot of heartbeats.
+26:35 | Over a billion.
+26:38 | So a lot of the techniques we've talked about this term,
+26:40 | about how do you deal with big things, I live with every day.
+26:45 | Actually, more accurately, my students live with every day,
+26:48 | and I commiserate.
+26:51 | But the tests are pretty convincing.
+26:56 | As an example, they're implanted defibrillators,
+27:01 | they, too, go under the clavicle.
+27:04 | Fortunately we have two clavicles.
+27:07 | And then they connect to the heart, and they notice, they
+27:10 | have a sensor, they notice the heart is beating very badly,
+27:14 | and they shock the heart.
+27:16 | So you've all seen medical shows, where people put
+27:17 | paddles on, say, clear, the patient goes boom boom, and
+27:21 | then they say, sinus rhythm restored.
+27:24 | Well, this does the same thing, but you
+27:26 | walk around with it.
+27:28 | Now, you don't want to turn on all the time, because as you
+27:30 | can see, it delivers quite a jolt.
+27:35 | Interestingly, this is an article from this fall, from
+27:38 | the New York Times, 90 percent of the people who get one
+27:42 | implanted, and the device itself costs about $50,000,
+27:47 | let alone the cost of implanting it.
+27:50 | 90 percent receive negative medical benefit.
+27:55 | How do I know that they received medical benefit?
+27:58 | Well, I know that 90% of them are never turned on.
+28:04 | Remember, there's a sensor that decides whether
+28:06 | to apply the shock.
+28:07 | 90 percent of them, the sensor never says, turn on.
+28:12 | So 90 percent of them can deliver no benefit because
+28:15 | they're never used.
+28:17 | On the other hand, clearly having the surgery to implant
+28:20 | this, is some risk.
+28:23 | So that's why the benefit is not only
+28:25 | neutral, but negative.
+28:26 | You've had fairly serious surgery, you've risked
+28:29 | infection, and, in fact, this year several people died.
+28:34 | I think three or four died when leads broke
+28:36 | off on these things.
+28:39 | So, clearly we're putting in too many of them, if only 10
+28:44 | percent are used.
+28:45 | On the other hand, roughly every one minute and 50
+28:49 | seconds, somebody in this country dies a
+28:51 | sudden cardiac death.
+28:55 | More often once every two minutes.
+28:59 | 100 of them during the course of this lecture.
+29:05 | If these people all had defibrillators implanted, many
+29:09 | of them would not die.
+29:11 | So, we have a therapy, we just don't know who to give it to.
+29:16 | So, what does this look like?
+29:18 | Again, this is pretty strong stuff.
+29:25 | That's what sudden cardiac death looks like.
+29:28 | An apparently healthy guy, suddenly he's dead.
+29:34 | It's things like this that remind us why we can do real
+29:39 | useful things with our talents or skills.
+29:42 | So how do you identify high risk cases?
+29:44 | Lots of different ways, I won't go through them, but
+29:47 | we're focusing again on the electrical
+29:49 | signals in the heart.
+29:51 | We're trying to evaluate the shape of the heartbeat and
+29:54 | what's going on.
+29:57 | I won't go through details, the only thing I wanted to
+29:59 | point out is, we use dynamic programming
+30:04 | to actually do this.
+30:05 | So the key idea in our method depends upon dynamic
+30:09 | programming.
+30:13 | We've evaluated it several times.
+30:18 | Here's one evaluation.
+30:20 | We took the 25 percent of the population that we thought was
+30:24 | at the highest risk.
+30:26 | And you'll notice that within, actually the first 30 days,
+30:30 | 4.19 percent of those people were dead.
+30:34 | This is a retrospective study, by the way.
+30:36 | The ECG had been recorded, and we knew, we had follow-ups on
+30:41 | them, and of the people we said were not, the other 3/4
+30:45 | of the population, a very small fraction died.
+30:49 | So this is called a Kaplan Meier curve, and it
+30:54 | shows a huge gap.
+30:56 | And in fact, roughly speaking, if we think you were at high
+30:59 | risk, you were 8 1/2 times more likely to die within a
+31:02 | month, within 90 days.
+31:06 | And the good news is, we don't do this just so we can say,
+31:09 | make your will.
+31:11 | Get your affairs in order.
+31:13 | We actually do this so that we can say, all right, this is a
+31:15 | person who should maybe get a defibrillator, maybe should
+31:19 | have their arteries cleaned out.
+31:22 | Maybe should take a blood thinner.
+31:24 | Once we know who's at risk, we can do something about it.
+31:28 | All right, all I want to do is just give you a flavor of the
+31:33 | kinds of things you've been learning, are really useful,
+31:37 | and can be used to really do things that are worth doing.
+31:42 | So wrapping up the term, what have you learned?
+31:46 | Well, you know, I think we'll start with this.
+31:50 | If you think what you could do in September, and what you can
+31:54 | do now, you've really come a long way, right?
+31:57 | So try and go back and do problem set number one, and
+32:02 | see how long it takes you now, and how long it took you then.
+32:06 | You'll discover that you really are at a place you were
+32:09 | not in September.
+32:13 | We covered five major topics.
+32:16 | Learning a language for expressing computations,
+32:19 | that's Python.
+32:20 | I already talked about the
+32:22 | importance of having a notation.
+32:25 | Learning about the process of writing and debugging
+32:27 | programs. But more generally, learning about the process of
+32:32 | moving from some relatively ambiguous problem statement.
+32:36 | As you've all noticed in the current problem set, we left a
+32:39 | lot of things unspecified.
+32:42 | You know, and the email was flying back and forth, and
+32:44 | often the answer was, you figure it out.
+32:48 | Because that's one of the things we want you to learn.
+32:51 | To go from some problem statement to a computational
+32:54 | formulation.
+32:57 | As a tool to that, you learned a basic set of recipes, bunch
+33:01 | of different algorithms. And you learned how to use
+33:05 | simulations to deal with problems that did not have
+33:09 | nice closed form solutions.
+33:12 | Why Python?
+33:14 | Well, believe it or not, it's an easy language to learn,
+33:18 | compared to other languages.
+33:20 | Simple syntax, it's interpretive, which helps with
+33:23 | the debugging, you don't have to worry about managing memory
+33:27 | as you would in a language like C. It's modern.
+33:31 | It supports, in a fairly elegant way, object-oriented
+33:35 | programming and classes, and it's increasingly popular.
+33:39 | It's used increasing in other subjects at MIT and other
+33:43 | universities, increasing in industry, and a large and
+33:48 | ever-growing set of libraries.
+33:51 | We talked about writing, testing, and debugging
+33:54 | programs. And if I had one message I want you to remember
+33:59 | about all of this, it's be slow.
+34:04 | Slow down, take it one step at a time, take your time and be
+34:10 | methodical, systematic, and careful.
+34:14 | Understand the problem first. Then think about the overall
+34:18 | structure of the solution, and the algorithms independently
+34:23 | of how you're going to code it up.
+34:25 | So you might say, well, I'm going to use dynamic
+34:27 | programming.
+34:29 | And that's an independent decision from Python or Java
+34:32 | or C++ , or anything else to implement it.
+34:37 | And in fact, it's pretty easy to translate a well-organized
+34:40 | program from one language to another.
+34:44 | Break it into small parts, and we talked about unit testing
+34:48 | and the importance of that.
+34:49 | Nobody can build anything big in one fell swoop.
+34:54 | So, break it into small parts, identify useful abstractions,
+34:58 | both functional and data, code and unit test each part, and
+35:04 | first worry about functionality.
+35:06 | Are you getting the correct answer?
+35:08 | And then efficiency.
+35:09 | And a piece of that is, learn to use pseudo code to help
+35:13 | yourself out.
+35:15 | As I said earlier, be systematic when debugging.
+35:19 | Think about the scientific method.
+35:22 | It's not just something that we use to torture middle
+35:25 | school students.
+35:27 | And when you write a program and it doesn't work, ask
+35:30 | yourself, why it did what it did?
+35:34 | Focus on understanding why the program is doing what it's
+35:38 | doing, rather than why it's not doing what
+35:41 | you wanted it to?
+35:44 | Because as soon as you know why it's doing what it's
+35:46 | doing, you'll know how to fix it.
+35:48 | But if you skip that step, you'll waste an
+35:50 | awful lot of time.
+35:55 | Going from problem statement to computation.
+35:58 | We said a lot of this, you break the problem into a
+36:00 | series of smaller problems. Ideally, reducing it to a
+36:05 | problem you already have code to solve, or somebody else's
+36:08 | code to solve.
+36:12 | My first instinct when I have to solve a problem is, I type,
+36:16 | I go to Google, and I type, I think about, oh this is really
+36:21 | an x problem, a shortest path problem.
+36:23 | I type Python shortest path, and I see what code
+36:27 | pops up on my screen.
+36:30 | But I can't do that until I've realized, oh, it's really a
+36:33 | shortest path, or it's really a knapsack.
+36:36 | If I type Python select courses, I won't
+36:40 | get anything useful.
+36:43 | Think about what kind of output you'd like to see.
+36:46 | I often start thinking about a program by first asking
+36:49 | myself, what's the output going to look like?
+36:52 | And I'll actually write the output down.
+36:55 | And then I'll see if I can't write a program to generate
+36:57 | that kind of output.
+37:01 | Often you can take a problem formulated as an optimization
+37:04 | problem, a lot of thing reduce to finding the minimum or
+37:08 | maximum values, satisfying some set of constraints.
+37:12 | So when you're given something like, how do I find the
+37:15 | directions from here to Providence, think about it as
+37:20 | an optimization problem.
+37:22 | And also, think about whether you really have to solve it.
+37:26 | It's very often the case that an approximate solution is all
+37:30 | you really need.
+37:31 | And they're a lot faster.
+37:34 | So, we think about approximation formally, in the
+37:38 | sense of, say, Newton Raphson, we looked at, successive
+37:43 | approximation.
+37:44 | But more informally, an approximation can be, solve a
+37:48 | simpler problem.
+37:50 | That you don't really need to solve the problem you thought
+37:53 | needed to solve, if you solve something simpler, it
+37:56 | will do just fine.
+37:58 | So you don't find the best solution, you just find a
+38:01 | pretty good solution.
+38:02 | Or you simplify the assumptions and say, well, I'm
+38:07 | going to find directions, and to make my problem a little
+38:10 | simpler, I'm not going to allow myself to take any roads
+38:16 | except highways to get from city a to city b.
+38:20 | It may not be the shortest, but it's an easier problem to
+38:23 | solve because are so many fewer roads.
+38:29 | We talked about algorithms, we talked about big o notation,
+38:32 | orders of growth, that's very important.
+38:35 | We talked a little bit about amortized analysis, that you
+38:39 | might want to, say, sort something first if you were
+38:41 | going to do a lot of searching.
+38:43 | We looked at a bunch of kinds of algorithms.
+38:46 | I've listed them here.
+38:47 | I'm, by the way, going to send you a list with all this stuff
+38:49 | on it, among other things, so don't feel you need to
+38:52 | transcribe it.
+38:54 | But a lot of, surprisingly large number of algorithms, to
+38:57 | cover in one semester, when you think about it.
+39:00 | Exhaustive enumeration, successive approximation,
+39:03 | greedy, divide and conquer, decision trees, dynamic
+39:06 | programming.
+39:07 | Quite a lot.
+39:09 | Specific algorithms and specific optimization
+39:12 | problems. We spent a lot of time on simulation.
+39:18 | It's important, but maybe not as important as all that time,
+39:22 | relative to the semester, but it gave me an excuse to talk
+39:27 | about some things that I wanted to cover.
+39:30 | So it gave me a framework to talk a little bit about
+39:32 | probability and statistics.
+39:35 | And it's my view, personally, that every MIT student should
+39:38 | be made to take such a course.
+39:40 | Since they're not, I tried to sneak it in here.
+39:45 | But it's all, it's important stuff to know.
+39:49 | It gave me an excuse to build some interesting programs. So,
+39:54 | what I hope you noticed, is as I went through these things, I
+39:59 | actually tried to develop the programs incrementally, to
+40:02 | talk about the abstractions, to talk about how
+40:05 | I would test them.
+40:07 | And so, just as important as the simulation itself, was the
+40:12 | process of building the simulation.
+40:16 | And so I just shows that as a mechanism to go through some
+40:19 | case studies of building some interesting programs. It let
+40:25 | us talk about random choice.
+40:27 | Much of the world is, or at least appears to be,
+40:30 | stochastic.
+40:32 | And therefore, we have to model randomness in programs.
+40:36 | And even we don't have to, it can be used to solve problems
+40:40 | that are not inherently random, like finding
+40:42 | the value of pi.
+40:46 | It let us look at the issue of assessing the
+40:48 | quality of an answer.
+40:50 | We look at things, said, do we believe that that answer is
+40:52 | right or not?
+40:54 | And building models of, at least parts of, the world.
+40:58 | Some pervasive themes that we talked about.
+41:01 | The power of abstraction, systematic problem solving,
+41:05 | these will be useful even if you never again write a
+41:07 | program in your whole life.
+41:10 | What next?
+41:12 | Well, many of you, almost all of you, have worked very hard
+41:16 | this semester.
+41:17 | I hope you feel that you've got a return on your
+41:20 | investment.
+41:20 | Only you know that.
+41:22 | As I said earlier, take a look at the problem sets, and see
+41:25 | whether you think you've learned anything.
+41:28 | I'd like you to remember after you leave this course, that
+41:32 | you've got a skill you can use to solve problems. And when
+41:36 | you sit down, and there's some issue that you don't know,
+41:40 | just knock out a program to get your answer.
+41:44 | I do it all the time, and it's very useful.
+41:48 | If you want to take more courses, there are
+41:50 | others you can take.
+41:52 | 6.01, the first course for Course 6 majors,
+41:56 | you will find easy.
+41:58 | Experience says, people who take 6.00 first don't
+42:02 | understand what all the fuss is about 6.01.
+42:05 | You'll also find it fun and interesting.
+42:07 | 6.034, the introduction to AI, is now using Python.
+42:11 | You know everything you need to know to take that.
+42:14 | 6.005, which is software engineering, you know
+42:18 | everything you need to take that.
+42:20 | And, for many of you, you can take 6.006, which is a really
+42:25 | interesting kind of algorithms course.
+42:28 | More advanced algorithms, particularly those you who
+42:31 | like math would find 6.006 really fun.
+42:34 | So if you want to take more courses, there
+42:36 | are courses to take.
+42:38 | Thank you all, good luck with the rest of the semester.

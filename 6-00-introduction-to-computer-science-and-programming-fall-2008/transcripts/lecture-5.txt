@@ -1,0 +1,612 @@
+0:00 | ANNOUNCER: Open content is provided under a creative
+0:02 | commons license.
+0:03 | Your support will help MIT OpenCourseWare continue to
+0:06 | offer high-quality educational resources for free.
+0:10 | To make a donation, or view additional materials from
+0:13 | hundreds of MIT courses, visit MIT OpenCourseWare at
+0:17 | ocw.mit.edu .
+0:17 | PROFESSOR JOHN GUTTAG: Good morning.
+0:24 | We should start with the confession, for those of you
+0:26 | looking at this on OpenCourseWare, that I'm
+0:29 | currently lecturing to an empty auditorium.
+0:34 | The fifth lecture for 600 this term, we ran into some
+0:38 | technical difficulties, which left us with a recording we
+0:43 | weren't very satisfied with.
+0:45 | So, I'm-- this is a redo, and if you will hear no questions
+0:51 | from the audience and that's because there is no audience.
+0:54 | Nevertheless I will do my best to pretend.
+0:57 | I've been told this is a little bit like giving a
+1:00 | speech before the US Congress when C-SPAN is
+1:04 | the only thing watching.
+1:07 | OK.
+1:09 | Computers are supposed to be good for crunching numbers.
+1:14 | And we've looked a little bit at numbers this term, but I
+1:18 | now want to get into looking at them in more depth than
+1:21 | we've been doing.
+1:23 | Python has two different kinds of numbers.
+1:32 | So far, the only kind we've really paid any attention to
+1:36 | is type int.
+1:40 | And those were intended to mirror the integers, as we all
+1:45 | learned about starting in elementary school.
+1:48 | And they're good for things that you can count.
+1:52 | Any place you'd use whole numbers.
+1:55 | Interestingly, Python, unlike some languages, has what are
+2:00 | called arbitrary precision integers.
+2:09 | By that, we mean, you can make numbers as big as
+2:12 | you want them to.
+2:14 | Let's look at an example.
+2:17 | We'll just take a for a variable name, and we'll set a
+2:21 | to be two raised to the one-thousandth power.
+2:27 | That, by the way, is a really big number.
+2:31 | And now what happens if we try and display it?
+2:34 | We get a lot of digits.
+2:37 | You can see why I'm doing this on the screen instead of
+2:39 | writing it on the blackboard.
+2:43 | I'm not going to ask you whether you believe this is
+2:45 | the right answer, trust me, trust Python.
+2:48 | I would like you to notice, at the very end of this is the
+2:52 | letter L.
+2:55 | What does that mean?
+2:58 | It means long.
+3:05 | That's telling us that it's representing these-- this
+3:10 | particular integer in what it calls it's
+3:13 | internal long format.
+3:18 | You needn't worry about that.
+3:20 | The only thing to say about it is, when you're dealing with
+3:22 | long integers, it's a lot less efficient than when you're
+3:26 | dealing with smaller numbers.
+3:28 | And that's all it's kind of warning you, by printing this
+3:31 | L.
+3:35 | About two billion is the magic number.
+3:38 | When you get over two billion, it's now going to deal with
+3:41 | long integers, so if, for example, you're trying to deal
+3:44 | with the US budget deficit, you will need integers of type
+3:48 | L.
+3:50 | OK.
+3:52 | Let's look at another interesting example.
+3:54 | Suppose I said, b equal to two raised to the nine hundred
+4:00 | ninety-ninth power.
+4:04 | I can display b, and it's a different number, considerably
+4:10 | smaller, but again, ending in an L.
+4:14 | And now, what you think I'll get if we try a divided by b?
+4:21 | And remember, we're now doing integer division.
+4:25 | Well, let's see.
+4:27 | We get 2L.
+4:31 | Well, you'd expect it to be two, because if you think
+4:34 | about the meaning of exponentiation, indeed, the
+4:37 | difference between raising something to the nine hundred
+4:40 | ninety-ninth power and to the one-thousandth power should
+4:43 | be, in this case, two, since that's what we're
+4:46 | raising to a power.
+4:49 | Why does it say 2L, right?
+4:52 | Two is considerably less than two billion, and that's
+4:56 | because once you get L, you stay L. Not particularly
+5:00 | important, but kind of worth knowing.
+5:04 | Well, why am I bothering you with this whole issue of how
+5:08 | numbers are represented in the computer?
+5:12 | In an ideal world, you would ignore this completely, and
+5:15 | just say, numbers do what numbers are supposed to do.
+5:20 | But as we're about to see, sometimes in Python, and in
+5:23 | fact in every programming language, things behave
+5:28 | contrary to what your intuition suggests.
+5:32 | And I want to spend a little time helping you understand
+5:35 | why this happens.
+5:38 | So let's look at a different kind of number.
+5:41 | And now we're going to look at what Python, and almost every
+5:48 | other programming language, calls type float.
+5:53 | Which is short for floating point.
+6:03 | And that's the way that programming languages
+6:06 | typically represent what we think of as real numbers.
+6:12 | So, let's look at an example.
+6:15 | I'm going to set the variable x to be 0.1, 1/10, and now
+6:24 | we're going to display x.
+6:28 | Huh?
+6:29 | Take a look at this.
+6:31 | Why isn't it .1?
+6:34 | Why is it 0.1, a whole bunch of zeros, and then this
+6:38 | mysterious one appearing at the end?
+6:43 | Is it because Python just wants to be obnoxious and is
+6:45 | making life hard?
+6:47 | No, it has to do with the way the numbers are represented
+6:52 | inside the computer.
+6:54 | Python, like almost every modern programming language,
+6:59 | represents numbers using the i triple e floating point
+7:05 | standard, and it's i triple e 754.
+7:20 | Never again will you have to remember that it's 754.
+7:23 | I promise not to ask you that question on a quiz.
+7:27 | But that's what they do.
+7:29 | This is a variant of scientific notation.
+7:41 | Something you probably learned about in high school, as a way
+7:46 | to represent very large numbers.
+7:49 | Typically, the way we do that, is we represent the numbers in
+7:54 | the form of a mantissa and an exponent.
+8:07 | So we represent a floating point number as a pair, of a
+8:12 | mantissa and an exponent.
+8:20 | And because computers work in the binary system, it's unlike
+8:26 | what you probably learned in high school, where we raise
+8:29 | ten to some power.
+8:31 | Here we'll always be raising two to some power.
+8:35 | Maybe a little later in the term, if we talk about
+8:37 | computer architecture, we'll get around to explaining why
+8:40 | computers working binary, but for now, just assume that they
+8:45 | do and in fact they
+8:46 | always have. All right.
+8:50 | Purists manage to refer to the mantissa as a significant, but
+9:01 | I won't do that, because I'm an old guy and it was a
+9:05 | mantissa when I first learned about it and I just can't
+9:08 | break myself of the habit.
+9:11 | All right.
+9:11 | So how does this work?
+9:18 | Well, when we recognize so-- when we represent something,
+9:22 | the mantissa is between one and two.
+9:35 | Whoops.
+9:37 | Strictly less than two, greater than or equal to one.
+9:42 | The exponent, is in the range, -1022 to +1023.
+10:07 | So this lets us represent numbers up to about 10 to the
+10:13 | 308th, plus or minus 10 to the 308th, plus or minus.
+10:19 | So, quite a large range of numbers.
+10:24 | Where did these magic things come from?
+10:26 | You know, what-- kind of a strange numbers to see here.
+10:29 | Well, it has to do with the fact that computers typically
+10:37 | have words in them, and the words today in a modern
+10:41 | computer are 64 bits.
+10:46 | For many years they were 32 bits, before that they were 16
+10:50 | bits, before that they were 8 bits, they've continually
+10:54 | grown, but we've been at 64 for a while and I think we'll
+10:58 | be stuck at 64 for a while.
+11:02 | So as we do this, what we do is, we get one bit for the
+11:07 | sign-- is it a positive or negative number?--
+11:13 | 11 for the exponent, and that leaves 52 for the mantissa.
+11:28 | And that basically tells us how we're storing numbers.
+11:32 | Hi, are you here for the 600 lecture?
+11:34 | There is none today, because we have a quiz this evening.
+11:40 | It's now the time that the lecture would normally have
+11:43 | started, and a couple of students who forgot that we
+11:46 | have a quiz this evening, instead of a lecture, just
+11:49 | strolled in, and now strolled out.
+11:53 | OK.
+11:55 | You may never need to know these constants again, but
+12:00 | it's worth knowing that they exist, and that basically,
+12:04 | this gives us about the equivalent of seventeen
+12:08 | decimal digits of precision.
+12:13 | So we can represent numbers up to seventeen
+12:16 | decimal digits long.
+12:21 | This is an important concept to understand, that unlike the
+12:26 | long ints where they can grow arbitrarily big, when we're
+12:30 | dealing with floating points, if we need something more than
+12:33 | seventeen decimal digits, in Python at least, we won't be
+12:37 | able to get it.
+12:39 | And that's true in many languages.
+12:41 | Now the good news is, this is an enormous number, and it's
+12:45 | highly unlikely that ever in your life, you will need more
+12:49 | precision than that.
+12:51 | All right.
+12:53 | Now, let's go back to the 0.1 mystery that we started at,
+13:00 | and ask ourselves, why we have a problem representing that
+13:06 | number in the computer, hence, we get something funny out
+13:10 | from we try and print it back.
+13:14 | Well, let's look at an easier problem first. Let's look at
+13:19 | representing the fraction 1/8.
+13:26 | That has a nice representation.
+13:29 | That's equal in decimal to 0.125, and we can represent it
+13:37 | conveniently in both base 10 and base 2.
+13:42 | So if you want to represent it in base 10, what is it?
+13:53 | What is that equal to?
+13:56 | Well, we'll take a mantissa, 1.25, and now we need to
+14:02 | multiply it by something that we can represent nicely, and
+14:09 | in fact that will be times 10 to the -1.
+14:14 | So the exponent would simply be -1, and we have a nice
+14:17 | representation.
+14:20 | Suppose we want to represent it in base 2?
+14:24 | What would it be?
+14:29 | 1.0 times-- anybody?--
+14:37 | Well, 2 to the -3.
+14:44 | So, in binary notation, that would be written as 0.001.
+14:53 | So you see, 1/8 is kind of a nice number.
+14:56 | We can represent it nicely in either base 10 or base 2.
+15:01 | But how about that pesky fraction 1/10?
+15:14 | Well, in base 10, we know how to represent, it's
+15:20 | 1 times 10 to the--
+15:27 | 10 to the what?--
+15:28 | 10 to the 1?
+15:30 | No.
+15:32 | But in base 2, it's a problem.
+15:41 | There is no finite binary number that exactly represents
+15:47 | this decimal fraction.
+15:51 | In fact, if we try and find the binary number, what we
+15:55 | find is, we get an infinitely repeating series.
+15:59 | Zero zero zero one one zero zero one one zero
+16:06 | zero, and et cetera.
+16:09 | Stop at any finite number of bits, and you get only an
+16:14 | approximation to the decimal fraction 1/10.
+16:20 | So on most computers, if you were to print the decimal
+16:27 | value of the binary approximation-- and that's
+16:31 | what we're printing here, on this screen, right?
+16:33 | We think in decimal, so Python quite nicely for us is
+16:37 | printing things in decimal-- it would have to display--
+16:43 | well I'm not going to write it, it's a very long number,
+16:47 | lots of digits-- however, in Python, whenever we display
+16:55 | something, it uses the built-in function repr, short
+17:01 | for representation, that it converts the internal
+17:05 | representation in this case of a number, to a string, and
+17:10 | then displays that string in this case on the screen.
+17:15 | For floats, it rounds it to seventeen digits.
+17:24 | There's that magic number seventeen again.
+17:31 | Hence, when it rounds it to seventeen digits, we get
+17:36 | exactly what you see in the bottom of the screen up there.
+17:44 | Answer to the mystery, why does it display this?
+17:49 | Now why should we care?
+17:52 | Well, it's not so much that we care about what gets
+17:54 | displayed, but we have to think about the implications,
+17:59 | at least sometimes we have to think about the implications,
+18:02 | of what this inexact representation of numbers
+18:05 | means when we start doing more-or-less complex
+18:09 | computations on those numbers.
+18:13 | So let's look at a little example here.
+18:17 | I'll start by starting the variable s to 0.0 .
+18:21 | Notice I'm being careful to make it a float.
+18:24 | And then for i in range, let's see, let's take 10, we'll
+18:33 | increase s by 0.1 .
+18:44 | All right, we've done that, and now, what happens
+18:47 | when I print s?
+18:52 | Well, again you don't get what your intuition
+18:56 | says you should get.
+18:58 | Notice the last two digits, which are eight and nine.
+19:05 | Well, what's happening here?
+19:09 | What's happened, is the error has accumulated.
+19:13 | I had a small error when I started, but every time I
+19:17 | added it, the error got bigger and it accumulates.
+19:22 | Sometimes you can get in trouble in a computation
+19:27 | because of that.
+19:30 | Now what happens, by the way, if I print s?
+19:32 | That's kind of an interesting question.
+19:36 | Notice that it prints one.
+19:40 | And why is that?
+19:42 | It's because the print command has done a rounding here.
+19:46 | It automatically rounds.
+19:50 | And that's kind of good, but it's also kind of bad, because
+19:54 | that means when you're debugging your program, you
+19:56 | can get very confused.
+19:59 | You say, it says it's one, why am I getting a different
+20:02 | answer when I do the computation?
+20:04 | And that's because it's not really one inside.
+20:08 | So you have to be careful.
+20:10 | Now mostly, these round-off errors balance each other out.
+20:16 | Some floats are slightly higher than they're supposed
+20:18 | to be, some are slightly lower, and in most
+20:21 | computations it all comes out in the wash and you get the
+20:24 | right answer.
+20:25 | Truth be told, most of the time, you can avoid worrying
+20:30 | about these things.
+20:32 | But, as we say in Latin, caveat computor.
+20:37 | Sometimes you have to worry a little bit.
+20:40 | Now there is one thing about floating points about which
+20:44 | you should always worry.
+20:49 | And that's really the point I want to drive home, and that's
+20:54 | about the meaning of double equal.
+21:08 | Let's look at an example of this.
+21:12 | So we've before seen the use of import, so I'm going to
+21:16 | import math, it gives me some useful mathematical functions,
+21:21 | then I'm going to set the variable a to the
+21:24 | square root of two.
+21:29 | Whoops.
+21:31 | Why didn't this work?
+21:33 | Because what I should have said is math dot
+21:36 | square root of two.
+21:42 | Explaining to the interpreter that I want to get the
+21:45 | function sqrt from the module math.
+21:52 | So now I've got a here, and I can look at what a is, yeah,
+21:59 | some approximation to the square root about of two.
+22:02 | Now here's the interesting question.
+22:04 | Suppose I ask about the Boolean a times a equals
+22:10 | equals two.
+22:13 | Now in my heart, I think, if I've taken the square root of
+22:16 | number and then I've multiplied it by itself, I
+22:19 | could get the original number back.
+22:22 | After all, that's the meaning of square root.
+22:25 | But by now, you won't be surprised if the answer of
+22:28 | this is false, because we know what we've stored is only an
+22:33 | approximation to the square root.
+22:37 | And that's kind of interesting.
+22:39 | So we can see that, by, if I look at a times a, I'll get
+22:44 | two point a whole bunch of zeros and then
+22:46 | a four at the end.
+22:48 | So this means, if I've got a test in my program, in some
+22:53 | sense it will give me the unexpected answer false.
+22:58 | What this tells us, is that it's very risky to ever use
+23:04 | the built-in double--equals to compare floating points, and
+23:08 | in fact, you should never be testing for equality, you
+23:13 | should always be testing for close enough.
+23:18 | So typically, what you want to do in your program, is ask the
+23:22 | following question: is the absolute value of a times a
+23:30 | minus 2.0 less than epsilon?
+23:40 | If we could easily type Greek, we'd have written it that way,
+23:43 | but we can't.
+23:46 | So that's some small value chosen to be appropriate for
+23:50 | the application.
+23:52 | Saying, if these two things are within epsilon of each
+23:55 | other, then I'm going to treat them as equal.
+24:00 | And so what I typically do when I'm writing a Python code
+24:04 | that's going to deal with floating point numbers, and I
+24:06 | do this from time to time, is I introduce a function called
+24:12 | almost equal, or near, or pick your favorite word, that does
+24:18 | this for me.
+24:20 | And wherever I would normally written double x equals y,
+24:24 | instead I write, near x,y, and it computes it for me.
+24:31 | Not a big deal, but keep this in mind, or as soon as you
+24:36 | start dealing with numbers, you will get very frustrated
+24:39 | in trying to understand what your program does.
+24:43 | OK.
+24:45 | Enough of numbers for a while, I'm sure some of you will find
+24:48 | this a relief.
+24:52 | I now want to get away from details of floating point, and
+24:57 | talk about general methods again, returning to the real
+25:01 | theme of the course of solving problems using computers.
+25:06 | Last week, we looked at the rather silly problem of
+25:11 | finding the square root of a perfect square.
+25:15 | Well, that's not usually what you need.
+25:21 | Let's think about the more useful problem of finding the
+25:25 | square root of a real number.
+25:27 | Well, you've just seen how you do that.
+25:29 | You import math and you call sqrt.
+25:32 | Let's pretend that we didn't know that trick, or let's
+25:36 | pretend it's your job to introduce-- implement,
+25:39 | rather-- math.
+25:41 | And so, you need to figure out how to implement square root.
+25:46 | Why might this be a challenge?
+25:49 | What are some of the issues?
+25:52 | And there are several.
+25:53 | One is, what we've just seen might not be an exact answer.
+26:09 | For example, the square root of two.
+26:16 | So we need to worry about that, and clearly the way
+26:20 | we're going to solve that, as we'll see, is using a concept
+26:24 | similar to epsilon.
+26:26 | In fact, we'll even call it epsilon.
+26:33 | Another problem with the method we looked at last time
+26:36 | is, there we were doing exhaustive enumeration.
+26:40 | We were enumerating all the possible answers, checking
+26:44 | each one, and if it was good, stopping.
+26:47 | Well, the problem with reals, as opposed to integers, is we
+26:55 | can't enumerate all guesses.
+27:06 | And that's because the reals are uncountable.
+27:14 | If I ask you to enumerate the positive integers, you'll say
+27:19 | one, two, three, four, five.
+27:22 | If I ask you to enumerate the reals, the positive reals,
+27:28 | where do you start?
+27:29 | One over a billion, plus who knows?
+27:32 | Now as we've just seen in fact, since there's a limit to
+27:37 | the precision floating point, technically you can enumerate
+27:42 | all the floating point numbers.
+27:44 | And I say technically, because if you tried to do that, your
+27:48 | computation would not terminate any time soon.
+27:53 | So even though in some, in principle you could enumerate
+27:57 | them, in fact you really can't.
+27:59 | And so we think of the floating points, like the
+28:02 | reals, as being innumerable.
+28:04 | Or not innumerable, as to say as being uncountable.
+28:10 | So we can't do that.
+28:14 | So we have to find something clever, because we're now
+28:19 | searching a very large space of possible answers.
+28:24 | What would, technically you might call
+28:26 | a large state space.
+28:29 | So we're going to take our previous method of guess and
+28:33 | check, and replace it by something called guess, check,
+28:41 | and improve.
+28:45 | Previously, we just generated guesses in some systematic
+28:50 | way, but without knowing that we were getting
+28:53 | closer to the answer.
+28:55 | Think of the original barnyard problem with the chickens and
+28:58 | the heads and the legs, we just enumerated possibilities,
+29:01 | but we didn't know that one guess was better than the
+29:04 | previous guess.
+29:07 | Now, we're going to find a way to do the enumeration where we
+29:12 | have good reason to believe, at least with high
+29:18 | probability, that each guess is better than
+29:22 | the previous guess.
+29:25 | This is what's called successive approximation.
+29:41 | And that's a very important concept.
+29:45 | Many problems are solved computationally using
+29:50 | successive approximation.
+29:56 | Every successive approximation method has
+30:00 | the same rough structure.
+30:03 | You start with some guess, which would be the initial
+30:09 | guess, you then iterate-- and in a minute I'll tell you why
+30:20 | I'm doing it this particular way, over some range.
+30:29 | I've chosen one hundred, but doesn't have to be one
+30:32 | hundred, just some number there-- if f of x, that is to
+30:44 | say some some function of my--
+30:47 | Whoops, I shouldn't have said x.
+30:50 | My notes say x, but it's the wrong thing-- if f of x, f of
+30:58 | the guess, is close enough, so for example, if when I square
+31:05 | guess, I get close enough to the number who's root I'm--
+31:09 | square root I'm looking for, then I'll return the guess.
+31:20 | If it's not close enough, I'll get a better guess.
+31:39 | If I do my, in this case, one hundred iterations, and I've
+31:45 | not get-- gotten a guess that's good enough, I'm going
+31:48 | to quit with some error.
+31:54 | Saying, wow.
+31:55 | I thought my method was good enough that a hundred guesses
+31:59 | should've gotten me there.
+32:00 | If it didn't, I may be wrong.
+32:03 | I always like to have some limit, so that my program
+32:07 | can't spin off into the ether, guessing forever.
+32:12 | OK.
+32:12 | Let's look at an example of that.
+32:35 | So here's a successive approximation
+32:40 | to the square root.
+32:42 | I've called it square root bi.
+32:45 | The bi is not a reference to the sexual preferences of the
+32:49 | function, but a reference to the fact that this is an
+32:53 | example of what's called a bi-section method.
+33:12 | The basic idea behind any bi-section method is the same,
+33:18 | and we'll see lots of examples of this semester, is that you
+33:21 | have some linearly-arranged space of possible answers.
+33:31 | And it has the property that if I take a guess somewhere,
+33:35 | let's say there, I guess that's the answer to the
+33:39 | question, if it turns out that's not the answer, I can
+33:45 | easily determine whether the answer lies to the left or the
+33:50 | right of the guess.
+33:53 | So if I guess that 89.12 is the square root of a number,
+33:59 | and it turns out not to be the square root of the number, I
+34:03 | have a way of saying, is 89.12 too big or too small.
+34:08 | If it was too big, then I know I'd better guess
+34:11 | some number over here.
+34:13 | It was too small, then I'd better guess
+34:16 | some number over here.
+34:20 | Why do I call it bi-section?
+34:23 | Because I'm dividing it in half, and in general as we'll
+34:27 | see, when I know what my space of answers is, I always, as my
+34:33 | next guess, choose something half-way along that line.
+34:37 | So I made a guess, and let's say was too small, and I know
+34:41 | the answer is between here and here, this was too small, I
+34:46 | now know that the answer is between here and here, so my
+34:49 | next guess will be in the middle.
+34:53 | The beauty of always guessing in the middle is, at each
+34:56 | guess, if it's wrong, I get to throw out half
+35:00 | of the state space.
+35:02 | So I know how long it's going to take me to search the
+35:05 | possibilities in some sense, because I'm getting
+35:10 | logarithmically progressed.
+35:16 | This is exactly what we saw when we looked at recursion in
+35:21 | some sense, where we solved the problem by, at each step,
+35:25 | solving a smaller problem.
+35:28 | The same problem, but on a smaller solution space.
+35:33 | Now as it happens, I'm not using recursion in this
+35:35 | implementation we have up on the screen, I'm doing it
+35:38 | iteratively but the idea is the same.
+35:42 | So we'll take a quick look at it now, then we'll quit and
+35:46 | we'll come back to in the next lecture a little more
+35:48 | thoroughly.
+35:51 | I'm going to warn you right now, that there's a bug in
+35:53 | this code, and in the next lecture, we'll see if we can
+35:57 | discover what that is.
+36:00 | So, it takes two arguments; x, the number whose square root
+36:04 | we're looking for, and epsilon, how
+36:07 | close we need to get.
+36:09 | It assumes that x is non-negative, and that epsilon
+36:15 | is greater than zero.
+36:18 | Why do we need to assume that's epsilon is
+36:20 | greater than zero?
+36:21 | Well, if you made epsilon zero, and then say, we're
+36:24 | looking for the square root of two, we know we'll
+36:26 | never get an answer.
+36:29 | So, we want it to be positive, and then it returns y such
+36:35 | that y times y is within epsilon of x.
+36:39 | It's near, to use the terminology we used before.
+36:44 | The next thing we see in the program, is two assert
+36:47 | statements.
+36:49 | This is because I never trust the people who call my
+36:54 | functions to do the right thing.
+36:57 | Even though I said I'm going to assume certain things about
+37:00 | x and epsilon, I'm actually going to test it.
+37:04 | And so, I'm going to assert that x is greater than or
+37:07 | equal to zero, and that epsilon is greater than zero.
+37:11 | What assert does, is it tests the predicate, say x greater
+37:16 | than or equal to zero, if it's true, it does nothing, just
+37:21 | goes on to the next statement.
+37:23 | But if it's false, it prints a message, the string, which is
+37:28 | my second argument here, and then the program just stops.
+37:33 | So rather than my function going off and doing something
+37:35 | bizarre, for example running forever, it just stops with a
+37:39 | message saying, you called me with arguments you shouldn't
+37:42 | have called me with.
+37:45 | All right, so that's the specification and then my
+37:49 | check of the assumptions.
+37:52 | The next thing it does, is it looks for a range such that I
+37:59 | believe I am assured that my answer lies between the ran--
+38:04 | these values, and I'm going to say, well, my answer will be
+38:08 | no smaller than zero, and no bigger than x.
+38:13 | Now, is this the tightest possible range?
+38:16 | Maybe not, but I'm not too fussy about that.
+38:19 | I'm just trying to make sure that I cover the space.
+38:25 | Then I'll start with a guess, and again I'm not going to
+38:28 | worry too much about the guess, I'm going to take low
+38:31 | plus high and divide by two, that is to say, choose
+38:36 | something in the middle of this space, and then
+38:40 | essentially do what we've got here.
+38:44 | So it's a little bit more involved here, I'm going to
+38:46 | set my counter to one, just to keep checking, then say, while
+38:52 | the absolute value of the guess squared minus x is
+38:55 | greater than epsilon, that is to say, why my guess is not
+38:59 | yet good enough, and the counter is not greater than a
+39:03 | hundred, I'll get the next guess.
+39:09 | Notice by the way, I have a print statement here which
+39:11 | I've commented out, but I sort of figured that my program
+39:15 | would not work correctly the first time, and so, I, when I
+39:20 | first typed and put in a print statement, it would let me see
+39:24 | what was happening each iteration through this loop,
+39:27 | so that if it didn't work, I could get a sense of why not.
+39:30 | In the next lecture, when we look for the bug in this
+39:33 | program, you will see me uncomment out that print
+39:36 | statement, but for now, we go to the next thing.
+39:42 | And we're here, we know the guess wasn't good enough, so I
+39:46 | now say, if the guess squared was less than x, then I will
+39:52 | change the low bound to be the guess.
+39:58 | Otherwise, I'll change the high bound to be the guess.
+40:03 | So I move either the low bound or I move the high bound,
+40:05 | either way I'm cutting the search space
+40:07 | in half each step.
+40:10 | I'll get my new guess.
+40:13 | I'll increment my counter, and off I go.
+40:17 | In the happy event that eventually I get a good enough
+40:20 | guess, you'll see a--
+40:23 | I'll exit the loop.
+40:26 | When I exit the loop, I checked, did I exit it because
+40:30 | I exceeded the counter, I didn't have
+40:32 | a good-enough guess.
+40:34 | If so, I'll print the message iteration count exceeded.
+40:39 | Otherwise, I'll print the result and return it.
+40:46 | Now again, if I were writing a square root function to be
+40:48 | used in another program, I probably wouldn't bother
+40:51 | printing the result and the number of iterations and all
+40:54 | of that, but again, I'm doing that here for, because we want
+40:57 | to see what it's doing.
+40:58 | All right.
+41:00 | We'll run it a couple times and then I'll let
+41:02 | you out for the day.
+41:06 | Let's go do this.
+41:20 | All right.
+41:21 | We're here.
+41:23 | Well, notice when I run it, nothing happens.
+41:25 | Why did nothing happen?
+41:26 | Well, nothing happens, it was just a function.
+41:29 | Functions don't do anything until I call them.
+41:33 | So let's call it.
+41:37 | Let's call square root bi with 40.001 Took only one at--
+41:49 | iteration, that was pretty fast, estimated two as an
+41:52 | answer, we're pretty happy with that answer.
+41:55 | Let's try another example.
+41:59 | Let's look at nine.
+42:03 | I always like to, by the way, start with questions whose
+42:05 | answer I know.
+42:08 | We'll try and get a little bit more precise.
+42:11 | Well, all right.
+42:12 | Here it took eighteen iterations.
+42:16 | Didn't actually give me the answer three, which we know
+42:19 | happens to be the answer, but it gave me something that was
+42:24 | within epsilon of three, so it meets the specification, so I
+42:28 | should be perfectly happy.
+42:32 | Let's look at another example.
+42:38 | Try a bigger number here.
+42:46 | All right?
+42:47 | So I've looked for the square root of a thousand, here it
+42:50 | took twenty-nine iterations, we're kind of creeping up
+42:53 | there, gave me an estimate.
+42:55 | Ah, let's look at our infamous example of two, see
+42:59 | what it does here.
+43:12 | Worked around.
+43:14 | Now, we can see it's actually working, and I'm getting
+43:20 | answers that we believe are good-enough answers, but we
+43:25 | also see that the speed of what we talk about as
+43:28 | convergence-- how many iterations it takes, the
+43:31 | number of iterations-- is variable, and it seems to be
+43:35 | related to at least two things, and we'll see more
+43:38 | about this in the next lecture.
+43:40 | The size of the number whose square root we're looking for,
+43:44 | and the precision to which I want the answer.
+43:49 | Next lecture, we'll look at a, what's wrong with this one,
+43:54 | and I would ask you to between now and the next lecture,
+43:58 | think about it, see if you can find the bug yourself, we'll
+44:01 | look first for the bug, and then after that, we'll look at
+44:05 | a better method of finding the answer.
+44:08 | Thank you.

@@ -1,0 +1,1190 @@
+0:00 | The following content is provided under a Creative
+0:02 | Commons license.
+0:03 | Your support will help MIT OpenCourseware
+0:06 | continue to offer high-quality educational resources for free.
+0:10 | To make a donation, or view additional materials
+0:13 | from hundreds of MIT courses, visit MIT OpenCourseware
+0:16 | at ocw.mit.edu.
+0:17 | PROFESSOR ERIC GRIMSON: All right, I'm
+0:22 | going to start today by talking about,
+0:24 | so what have we been doing?
+0:26 | What have we actually done over the last few lectures?
+0:28 | And I want to suggest that what we've done
+0:30 | is, we've outlined a lot of the basic elements of programming.
+0:34 | A lot of the basic elements we're
+0:36 | going to need to write code.
+0:37 | And I want to just highlight it for you because we're going
+0:39 | to come back and look at it.
+0:40 | So I'm going to suggest that we've
+0:42 | looked at three different kinds of things.
+0:45 | We've talked about data, we've talked about operations,
+0:51 | and we've talked about commands or statements.
+0:59 | All right?
+1:00 | Data's what we expect.
+1:01 | It's our way of representing fundamentally
+1:04 | the kinds of information we want to move around.
+1:06 | And here, I'm going to suggest we've seen numbers,
+1:11 | we've seen strings, and I'm going
+1:14 | to add Booleans here as well.
+1:16 | They're a third kind of value that we
+1:18 | saw when we started talking about conditions.
+1:21 | We saw, associated with that primitive data,
+1:23 | we have ways of taking data in and creating
+1:25 | new kinds of data out, or new versions of data out,
+1:28 | so we have operations.
+1:31 | Things like addition and multiplication,
+1:32 | which we saw not only apply to numbers,
+1:34 | but we can use them on things like strings
+1:36 | and we're going to come back to them again.
+1:38 | Can't use them on Booleans, they have a different set of things.
+1:41 | They do things like AND, and OR.
+1:45 | And of course there's a bunch of other ones in there,
+1:47 | I'm not going to put them all up,
+1:48 | but we're building up a little collection, if you like,
+1:50 | of those operations.
+1:51 | And then the main thing we've done
+1:53 | is, we've talked about commands.
+1:54 | So I'm going to suggest we've seen now four different things.
+1:57 | We've seen assignment, how to bind a name to a value.
+2:04 | We've seen input and output.
+2:10 | Print for output, for example, and raw input for input.
+2:15 | We've seen conditionals, or said another way, branches,
+2:23 | ways of changing the flow of control
+2:26 | through that sequence of instructions we're building up.
+2:28 | And the last thing we added were loop mechanisms.
+2:31 | And here we saw, while.
+2:40 | It's the first example we've seen.
+2:44 | So what've we done so far?
+2:46 | Now, interestingly, this set of instructions
+2:50 | was actually quite powerful, and we're
+2:51 | going to come back to that later on, in terms
+2:53 | of what we can do with it, but what we've really done
+2:56 | is, given that basis, we're now talking about,
+2:58 | how do we write common patterns of code,
+3:00 | how do we write things that solve
+3:02 | particular kinds of problems.
+3:03 | So what I want you to do, is to keep in mind, those
+3:05 | are the bases, we ought to be able to do
+3:07 | a lot with that bases, but what we're really interested in
+3:09 | is not filling out a whole bunch of other things in here,
+3:12 | but how do we put them together into common templates.
+3:14 | And we're going to do that today.
+3:16 | Second thing we've been doing, I want
+3:18 | to highlight for you is, we've along the way, mostly just
+3:21 | verbally rather than writing it down,
+3:22 | but we've been talking about good style.
+3:27 | Good programming style.
+3:28 | All right?
+3:28 | Things that we ought to do, as you
+3:30 | put these pieces together, in order
+3:32 | to give you really good code.
+3:33 | And you should be collecting those together.
+3:34 | Give you some examples.
+3:35 | What have we talked about?
+3:36 | We've talked about things like using comments
+3:39 | to highlight what you're doing in the code,
+3:40 | to make it easier to debug.
+3:42 | We talked about type discipline, the notion
+3:46 | that you should check the types of operands
+3:49 | before you apply operators to them, to make sure that they're
+3:52 | what the code is expecting.
+3:54 | We talked about descriptive use of good variable names,
+3:57 | as a way, in essence, of documenting your code.
+4:00 | The fourth one we talked about was this idea
+4:02 | of testing all possible branches through a piece of code,
+4:05 | if it's got conditionals in it, to make sure
+4:08 | that every possible input is going
+4:09 | to give you an output that you actually want to see.
+4:11 | So, you know, you can start writing your own, kind of,
+4:14 | Miss Manners book, if you like, I mean,
+4:15 | are what are good programming, you
+4:17 | know-- I wonder what you'd call them,
+4:18 | John, good programming hygiene?
+4:20 | Good programming style?
+4:21 | Good programming practices?-- Things that you
+4:23 | want to do to write good code.
+4:26 | OK.
+4:26 | What we're going to do today is, we're
+4:28 | going to start now building up, beyond just these pieces,
+4:32 | although they're valuable, to start creating two things: one,
+4:35 | common patterns of code that tackle
+4:37 | certain classes of problems, and secondly we're
+4:40 | going to talk about tools you can use to help understand
+4:43 | those pieces of things.
+4:45 | OK.
+4:46 | So last time around, we talked about, or introduced if you
+4:49 | like, iterative programs.
+4:52 | And I want to generalize that for a second,
+5:00 | because we're going to come back and use this a lot.
+5:08 | And I want to do a very high-level description
+5:10 | of what goes into an iterative program,
+5:11 | or how I would think about this, all right?
+5:13 | And I know if John disagrees with me he'll tell me,
+5:15 | but this is my way of thinking about it.
+5:17 | If I want to try and decide how to tackle
+5:19 | a problem in an iterative matter, here the steps
+5:21 | I'm going to go through.
+5:23 | First thing I'm going to do, is I'm
+5:24 | going to choose a variable that's going to count.
+5:35 | What I meant-- what in the world do I mean by that?
+5:37 | I'm thinking about a problem, I'm
+5:39 | going to show you an example in a second, first thing I'm
+5:41 | going to do is say, what is the thing that's
+5:43 | going to change every time I run through the same set of code?
+5:46 | What is counting my way through this process?
+5:48 | Now I'm putting count in double quotes,
+5:51 | not to make it a string, but to say, this is count generically.
+5:54 | It could be counting one by one through the integers,
+5:56 | it could also be taking a collection of data
+5:58 | and going through them one by one.
+6:00 | It could be doing counting in some other mechanism.
+6:02 | But what's the variable I want to use?
+6:05 | Second thing I do, I need to initialize it.
+6:11 | And I need to initialize it outside of the loop.
+6:16 | That is, where do I want to start?
+6:18 | And I need to make sure I have a command that sets that up.
+6:21 | The third thing I'm going to do, is
+6:23 | I need to set up the right end test.
+6:28 | How do I know when I'm done with the loop?
+6:31 | And obviously, that ought to involve
+6:33 | the variable in some way, or it's not
+6:34 | going to make a lot of sense, so this includes the variable,
+6:37 | since that's the thing that's changing.
+6:40 | All right.
+6:41 | The fourth thing I'm going to do,
+6:43 | is I'm going to then construct the block of code.
+6:51 | And I want to remind you, that block of code
+6:53 | is a set of instructions, the same set of instructions
+6:55 | that are going to be done each time through the loop.
+6:58 | All that's going to change, is the value the variable
+7:00 | or the value of some data structures.
+7:02 | And remind you that inside of here,
+7:05 | I'd better be changing the variable.
+7:10 | All right, if that variable that's counting is not
+7:12 | changing, I'm going to be stuck in an infinite loop,
+7:14 | so I ought to [UNINTELLIGIBLE PHRASE] that ,
+7:16 | right, expect somewhere in there,
+7:18 | a change of that variable.
+7:20 | All right?
+7:21 | And then the last thing I want to do,
+7:22 | is just decide, you know, what do I do when I'm done.
+7:32 | OK.
+7:33 | I know.
+7:33 | It looks boring.
+7:35 | But it's a structure of the things
+7:36 | I want to think about when I go through trying
+7:38 | to take a problem and mapping it into a iterative program.
+7:41 | Those are the things I want to see if I go along.
+7:43 | All right.
+7:44 | So let me give you an example.
+7:47 | I'm given an integer that's a perfect square,
+7:50 | and I want to write a little piece of code that's going
+7:53 | to find the square root of it.
+7:54 | All right, so I'm cheating a little,
+7:55 | I know it's a perfect square, somebody's
+7:56 | given it to me, we'll come back in a second to generalizing it,
+7:59 | so what would the steps be that I'd use to walk through it?
+8:02 | Well if you think about these steps,
+8:04 | here's an easy way to do it.
+8:06 | Let's start at 1.
+8:07 | Let's call x the thing I'm trying
+8:08 | to find the square root of.
+8:09 | Let's start at 1.
+8:10 | Square it.
+8:12 | If it's not greater than x, take 2.
+8:16 | Square it.
+8:17 | If it's not greater than x, take 3.
+8:19 | Square it.
+8:19 | And keep going, until the square of one of those integers
+8:22 | is greater than or equal to-- sorry, just greater than x.
+8:27 | OK, why am I doing that?
+8:28 | When I get greater than x, I've gone past the place
+8:31 | where I want to be.
+8:32 | And obviously, when I get to something
+8:34 | whose square is equal to x, I've got the answer I want,
+8:36 | and I kick it out.
+8:37 | So who knows what I've done?
+8:39 | I've identified the thing I'm going to use to count,
+8:41 | something some variable is going to just count the integers,
+8:43 | I've identified the end test, which
+8:45 | is when that square is bigger than the thing I'm looking
+8:48 | for, I've identified basically what I want
+8:51 | to do inside the loop, which is simply
+8:53 | keep changing that variable, and I
+8:55 | didn't say what I want to do when I'm done,
+8:57 | essentially print out the answer.
+9:00 | OK, so how can I code this up?
+9:01 | Well, you might think, let's just jump in
+9:02 | and write some code, I don't want to quite do that though,
+9:04 | because I want to show you another tool that's
+9:06 | valuable for thinking about how to structure the code,
+9:10 | and that is a something called a flow chart.
+9:15 | Now.
+9:17 | People of Professor Guttag's and my age,
+9:19 | unfortunately remember flow charts back-- as they say,
+9:22 | on the Simpsons, back in the day, back in the 1960's, John,
+9:24 | right?-- really good programmers had these wonderful little
+9:27 | plastic stencils, I tried to find one,
+9:29 | I couldn't find it It's a little stencil with little cut-out
+9:31 | shapes on it, that you used to draw flow charts,
+9:33 | I'm going to show you in a second,
+9:34 | and you tucked it right in here next to your pocket protector
+9:37 | with all your pens in it, you know,
+9:38 | so, your belt was also about this high,
+9:40 | and your glasses were this thick, you know,
+9:41 | we have a few of those nerds left,
+9:43 | we mostly keep them in the museum,
+9:45 | but that was what you did with the flow chart.
+9:48 | Despite making a bad joke about it,
+9:49 | we're going to do the same thing here.
+9:50 | We're going to do the same thing here,
+9:50 | we're going to chart out a little bit of what
+9:53 | should go into actually making this thing work.
+9:56 | So here's a simple flow chart that I'm
+9:58 | going to use to capture what I just described.
+10:01 | And I'm going to, again, I'm actually
+10:02 | going to do it the way they used to do it, and draw
+10:06 | a rectangle with rounded corners, that's
+10:09 | my starting point, and then what did I say to do?
+10:12 | I said I need to identify a variable,
+10:14 | I'm going to give it a name, let's just call ANS,
+10:16 | for answer, and I need to initialize it,
+10:19 | so I'm going to come down, and in a square box,
+10:22 | I'm going to initialize ANS to 0.
+10:29 | And now I want to run through the loop.
+10:31 | What's the first thing I do in a loop?
+10:33 | I test an end test.
+10:34 | So the flow chart says, and the tradition was
+10:36 | to do this in a diamond shape, I'm
+10:40 | going to check if ANS times ANS-- oh,
+10:44 | which way did I want to do this-- is less than
+10:47 | or equal to x.
+10:51 | Now that's a test.
+10:52 | There are two possibilities.
+10:54 | If the answer is yes, then I'm still looking for the answer,
+11:00 | what do I want to do?
+11:01 | Well, I don't have to do anything other
+11:03 | than change the counter.
+11:04 | So I'm going to go to ANS is ANS plus 1,
+11:09 | and I'm going to do it again.
+11:17 | Eventually, if I've done this right, that test is no--
+11:22 | and I wonderfully ran out of room here-- in which case,
+11:24 | I'm going to go to a print statement, which was always
+11:27 | done in a trapezoid, and print out ANS.
+11:32 | I should have put a box below it that says stop.
+11:36 | OK?
+11:38 | While.
+11:39 | And notice what I got here.
+11:40 | Actually, this is a useful tool for visualizing
+11:43 | how I'm trying to put it together,
+11:44 | because it lets me see where the loop is,
+11:47 | right there, it lets me see the end test,
+11:50 | it lets me make sure that I'm in fact initializing the variable
+11:53 | and I'm checking the right things as I go along.
+11:55 | And the idea of this flow chart is, if you start, you know,
+11:58 | a little ball bearing here, it's going to roll down, setting up
+12:01 | an assignment statement, and then, depending on here,
+12:03 | it's like there's a pair of flippers in there,
+12:05 | it does the test, it sets the ball this way
+12:06 | to change it to ANS plus 1, and comes back around,
+12:09 | eventually it's going to drop through and print out
+12:11 | the answer.
+12:12 | The reason I'm going to show you this flow chart,
+12:14 | I'm going to do one other example in a second,
+12:16 | but I want to show you a comparison.
+12:17 | Remember last time, we wrote this simple piece of code
+12:19 | to print out even or odd.
+12:21 | If, you know, x, it was in fact, even or odd.
+12:25 | So let me show you what a flow chart
+12:26 | for that would look like, because I want to make
+12:28 | a comparison point here.
+12:35 | If I were to do a flow chart for that one, I'd do the following.
+12:40 | It reminds you, that the test here
+12:48 | was, we took x if that's what we were looking for,
+12:50 | it did integer division by 2, multiplied it by 2,
+12:54 | and we check to see if that was the same as x.
+12:58 | If the answer is yes, then we did a print of even.
+13:10 | If the answer was no, we did a print of odd,
+13:21 | and we then carried on.
+13:27 | Again, while.
+13:28 | But there's an important point here.
+13:30 | Remember last time, I said that there's
+13:32 | different kinds of complexity in our code,
+13:35 | and I suggested for simple branching programs, the amount
+13:39 | of time it takes to run that program
+13:41 | is, in essence, bounded by the number of instructions,
+13:44 | because you only execute each instruction at most once.
+13:47 | It didn't depend on the size of the input.
+13:49 | And you can see that there.
+13:52 | I start off, either I take this path and carry on,
+13:57 | or I take that path and carry on, but each box, if you like,
+14:01 | gets touched exactly once.
+14:02 | On the other hand, look at this one.
+14:06 | This depends now on the size of x.
+14:10 | All right?
+14:11 | Because what am I going to do?
+14:13 | I'm going to come down and say, is ANS squared less than
+14:15 | or equal to x?
+14:15 | If it is, I'm going to go around, and execute
+14:18 | that statement, check it again, and go around and execute that.
+14:21 | So I'm going to cycle around that loop there
+14:24 | enough times to get to the answer,
+14:26 | and that number of times is going to depend on the input,
+14:28 | so as I change the input, I'm going
+14:30 | to change the complexity of the code.
+14:33 | Now this happens to be what we would call a linear process,
+14:37 | because the number of times I go around the loop
+14:39 | is directly related to the size of the argument.
+14:41 | If I double the argument, I'm going
+14:42 | to double the number of times I go around the loop.
+14:45 | If I increase it by five, I'm going
+14:46 | to increase by five the number of times I go around the loop.
+14:49 | We'll see later on, there are classes of computation
+14:51 | that are inherently much more complex.
+14:54 | We hate them, because they're costly,
+14:55 | but they're sometimes inherently that way.
+14:57 | But you can see the comparison between these two.
+15:01 | OK.
+15:01 | Now, having done that, let's build this code.
+15:07 | Yeah, if my machine will come back up, there we go.
+15:11 | So, I'm going to now go ahead and write
+15:14 | a little piece of code, and I put it here
+15:16 | and I hope you can actually see these better this time,
+15:20 | let me uncomment that region.
+15:23 | All right.
+15:25 | So, there's basically an encapsulation of that code,
+15:28 | right?
+15:29 | It says-- what, look at this, where am I,
+15:32 | right here-- I've got some value for x initially,
+15:34 | I'm going to set ANS to 0, just like there,
+15:37 | and there's my loop, there's the test, which is right like that,
+15:41 | is ANS squared less than or equal to x,
+15:43 | if it is, there's the block corresponding to the loop,
+15:48 | change ANS, and eventually when I'm done with all this thing,
+15:50 | I'm just going to print ANS out.
+15:53 | OK.
+15:53 | All right, let me show you one other tool that I want to use.
+15:57 | Which is, I've written that piece of code,
+16:00 | I ought to check it.
+16:01 | Well, I could just run it, but another useful thing to do
+16:04 | is, I'm, especially as I want to debug these things,
+16:07 | is to simulate that code.
+16:08 | And I'm going to do this because, as Professor
+16:12 | Guttag noticed to me, students seem reluctant to do this.
+16:15 | I guess it's not macho enough, John,
+16:16 | to just, you know, you know, go off and do things by hand,
+16:19 | you ought to just run them, but it's a valuable tool
+16:22 | to get into, so let me do that here.
+16:23 | STUDENT: [UNINTELLIGIBLE]
+16:25 | PROFESSOR ERIC GRIMSON: I'm doing such a great job.
+16:28 | I've got to say, when my, I've got two sons, now aged eighteen
+16:30 | and twenty, they used to think I had
+16:31 | the coolest job in the world because I
+16:33 | came home covered in chalk.
+16:34 | Now they have a different opinion that you can probably
+16:37 | figure out.
+16:39 | All right.
+16:40 | Simulate the code.
+16:41 | What I mean by that is, pick a simple set of values,
+16:43 | and let's walk through it to see what happens.
+16:46 | And this is useful because it's going
+16:47 | to allow me to A, make sure that I've got something that's
+16:50 | going to terminate, it's going to let
+16:51 | me make sure that in fact I'm doing
+16:53 | the right kinds of updates.
+16:54 | I could do this, by the way, by running the code
+16:57 | and putting print statements in various places as well,
+16:59 | but the hand simulation is valuable,
+17:00 | so let me just start it.
+17:02 | What do I have here?
+17:03 | I need the variable, ANS, I need x,
+17:10 | and I need ANS times ANS, ANS times ANS.
+17:11 | Right.
+17:12 | Those are the three things that are
+17:13 | involved in this computation. and I pick
+17:15 | something reasonably simple.
+17:17 | The ANS starts at 0.
+17:19 | I set up x, I think, to be 16 there.
+17:22 | So what does the loop say?
+17:23 | I can either look at my flow chart,
+17:24 | or I can look at the code.
+17:25 | If I look at the flow chart, it says, I'm at this point.
+17:28 | Look at ANS squared.
+17:29 | Is it less than or equal to-- sorry,
+17:30 | first of all, ANS squared is 0, is it less than or equal to x,
+17:33 | yes.
+17:34 | So what do I do?
+17:35 | Change ANS.
+17:36 | X doesn't change.
+17:39 | Back around to the test.
+17:41 | What's ANS squared?
+17:42 | It's 1.
+17:43 | Is it less than or equal to 16?
+17:45 | Sure.
+17:46 | Run the loop again.
+17:47 | ANS becomes 2.
+17:49 | X stays 16.
+17:50 | ANS squared is 4.
+17:53 | Is that less than or equal to 16?
+17:55 | Yes.
+17:55 | Aren't you glad I didn't pick x equals 500?
+17:58 | All right.
+18:00 | ANS goes up by 0.
+18:02 | ANS squared is nine.
+18:03 | Still less than or equal to 16.
+18:06 | ANS goes to 4.
+18:07 | X stays the same.
+18:10 | 4 squared is 16.
+18:12 | Is 16 less than or equal to 16?
+18:14 | Yes.
+18:15 | So ANS goes to five.
+18:17 | ANS squared becomes 25.
+18:19 | Ah!
+18:19 | That is now no longer true here, so I print out 5.
+18:25 | Right.
+18:27 | Sure.
+18:27 | Square root of 16 is 5.
+18:28 | It's Bush economics.
+18:31 | OK?
+18:33 | I know.
+18:33 | I'm not supposed to make bad jokes like that.
+18:37 | What happened?
+18:38 | Yeah.
+18:39 | STUDENT: It doesn't stop at the right place.
+18:47 | PROFESSOR ERIC GRIMSON: It doesn't
+18:49 | stop at the right place.
+18:49 | Thank you.
+18:49 | Exactly.
+18:50 | Right?
+18:50 | My bug here is right there.
+18:53 | Ah, let me find my cursor.
+18:58 | I probably want that.
+18:59 | Right?
+19:00 | I want less than, rather than less than or equal to.
+19:02 | This is an easy bug to come up with.
+19:05 | But imagine, if you don't do the test,
+19:07 | you're going to get answers that don't make any sense.
+19:09 | And in fact, if we just go ahead and run this now,
+19:11 | hopefully we get out-- oops, sorry,
+19:17 | I'm going to have to change this quickly,
+19:19 | I still have some things uncommented
+19:20 | at the bottom, yeah, there they are,
+19:23 | I don't think we need that yet, all
+19:25 | right, we will comment those out.
+19:32 | OK.
+19:35 | So.
+19:38 | Why did I do it?
+19:39 | It's a simple example, I agree, but notice what I just did.
+19:41 | It allowed me to highlight, is the code doing the right thing?
+19:44 | I spotted an error here, I could have spotted it
+19:47 | by running it on different test sets, and using prints things,
+19:49 | another way of doing it, but this idea
+19:51 | of at least simulating it on simple examples
+19:53 | lets you check a couple of important questions.
+19:56 | And in fact, now let me ask those two questions
+19:58 | about this piece of code.
+20:00 | First question is, for what values of integers--
+20:03 | we're going to assume integers-- but for what values of x
+20:06 | does this code terminate?
+20:09 | And the second question is, for what values of x
+20:12 | does it give me back the right answer?
+20:14 | All right, first question.
+20:18 | What values of x does it terminate?
+20:22 | Again, assume x is an integer.
+20:26 | Well, break it down into pieces.
+20:27 | Suppose x is positive.
+20:29 | Does it terminate?
+20:32 | Sure.
+20:33 | All right?
+20:33 | Because ANS starts out as 0, so ANS squared is
+20:37 | 0, and each time through the loop, ANS is increasing.
+20:41 | That means, at some point, in some finite number of steps,
+20:44 | ANS squared has got to get bigger than x if x is positive.
+20:47 | So for positive integers, it terminates.
+20:50 | And it probably, I think we can deduce,
+20:52 | returns the right answer here.
+20:54 | Right.
+20:54 | X is negative.
+20:56 | X is -16.
+20:59 | Does this code terminate?
+21:05 | Boy, I feel like Arnold Schwarzenegger.
+21:08 | Does this terminate?
+21:11 | Somebody.
+21:11 | STUDENT: [UNINTELLIGIBLE]
+21:13 | PROFESSOR ERIC GRIMSON: Ah, thank you,
+21:15 | so it does terminate, right?
+21:16 | You're sitting too far back, let me try-- oh, too far!-- Sorry.
+21:21 | Come get me one later if you can't find it.
+21:23 | Yes, it stops at the first step, right?
+21:25 | Let's look at it.
+21:26 | It says, if answer, sorry, imagine x is -16, ANS is 0,
+21:30 | is 0 less than -16, no.
+21:35 | So what does it do?
+21:37 | It prints out 0.
+21:39 | Ah!
+21:40 | So that now answers my second question, it does terminate,
+21:43 | but does it give me the right answer?
+21:46 | No.
+21:47 | Right?
+21:47 | It gives me an answer, and imagine
+21:49 | I'm using this somewhere else, you know, it's going to go off
+21:51 | and say, gee, the square root of -16 is 0.
+21:54 | Well, it really should be a, you know, an imaginary number,
+21:56 | but this is not a valuable thing to have come back.
+21:59 | So that's the second thing I've just highlighted here,
+22:01 | is that I now have the ability to check whether it
+22:05 | does the right thing.
+22:06 | And those are two things that you'd
+22:08 | like to do with every looping construct you write:
+22:10 | you'd like to be able to assure yourself that they will always
+22:13 | terminate, and then the second thing you'd like to do,
+22:16 | is to assure yourself that it does give you back
+22:18 | a reasonable answer.
+22:19 | We started to talk about ways to do the former.
+22:21 | It's looking at the end test.
+22:22 | It's looking at the kinds of conditions
+22:24 | you're going to put in.
+22:25 | For the latter, this is a place where
+22:27 | running test cases would do a good job of helping with that.
+22:31 | Nonetheless, having done that, let's look at a better way
+22:34 | to write this.
+22:35 | Which is right here, it is also, I think, on your sheet,
+22:40 | I'm going to uncomment that, and comment this one out, yeah.
+22:47 | All right?
+22:50 | So let's look at this code for a second.
+22:53 | Notice what this does.
+22:54 | Certainly the heart of it, right in here,
+22:57 | is still the same thing.
+22:59 | But notice what this does.
+23:00 | The first thing it does is, it says, let's check
+23:02 | and make sure x is greater than or equal to 0.
+23:05 | If it isn't, notice what's going to happen.
+23:07 | None of that block is going to get executed,
+23:09 | and it's going to come down here and print out
+23:11 | a useful piece of information, which says, hey,
+23:13 | you gave me a negative number.
+23:15 | I don't know how to do this.
+23:17 | If it is, in fact, positive, then we're going to go in here,
+23:20 | but now notice what we're doing here.
+23:21 | There is the basic thing we did before, right?
+23:23 | We're checking the end test and incrementing,
+23:25 | actually I was going to, I commented that out for a reason
+23:28 | you'll see in a second, but I, normally I
+23:29 | would keep this on, which would let me, at each step,
+23:31 | see what it's doing.
+23:33 | If I ran this, it would print out each step.
+23:35 | Which is helping me make sure that it's
+23:37 | incrementing the right way.
+23:38 | OK, once it gets to the end of that, what's it going to do?
+23:41 | It's going to come down here and, oh.
+23:44 | What's that doing?
+23:46 | Well, I cheated when I started.
+23:47 | I said, somebody's giving me a perfect square,
+23:49 | I'm looking for the square root of it.
+23:51 | But suppose I gave this thing 15, and asked it to run.
+23:55 | It'd still give me an answer.
+23:56 | It just would not be the answer I'm looking for.
+23:59 | So now, in this case, this code is going to, when we get here,
+24:02 | check, and if you haven't seen that strange thing there,
+24:04 | that exclamation point in computer-ese called a bang,
+24:07 | it says if ANS star ANS is not equal to x, all right?
+24:13 | What's that say, it says, I've already
+24:15 | gotten to the end of the loop, I'm now
+24:16 | past where I wanted to be, and I'm
+24:17 | going to check to make sure that, in fact, this really
+24:19 | is a perfect square.
+24:20 | If it isn't, print out something says,
+24:22 | ah, you gave me something that wasn't a perfect square.
+24:25 | And only if that is true, am I going to print out the answer.
+24:32 | It's the same computation.
+24:34 | But this is a nice way of writing it,
+24:36 | often called defensive programming.
+24:47 | And I think we have lots of variations on it-- I don't
+24:49 | know about John, what your favorite is,
+24:50 | for the definition of defensive programming-- for me it says,
+24:54 | make sure that I'm going through all possible paths
+24:56 | through the code, make sure I'm printing out, or returning
+24:59 | if you like, useful information for each style, sorry,
+25:02 | for each path through the code, make sure
+25:04 | that for all possible inputs there
+25:06 | is a path through the code, or a way
+25:08 | to get through the code, that does not cause an error
+25:10 | or infinite loop.
+25:11 | What else would you add, John?
+25:12 | PROFESSOR JOHN GUTTAG: Well, we'll
+25:15 | come back to this later in the term,
+25:18 | and talk in some detail about particular techniques.
+25:22 | The basic idea of defensive programming
+25:25 | is, to assume that A, if you're getting inputs from a user,
+25:28 | they won't necessarily give you the input you've asked for,
+25:31 | so if you ask for a positive number,
+25:33 | don't count on them giving you one, and B,
+25:36 | if you're using a piece of a program written
+25:38 | by a programmer who is not perfect,
+25:41 | perhaps yourself, there could be mistakes in that program,
+25:46 | and so you write your program under the assumption that,
+25:49 | not only might the user make a mistake,
+25:52 | other parts of your program might make a mistake,
+25:54 | and you just put in lots of different tests
+25:57 | under the assumption that you'd rather catch
+26:00 | that something has gone wrong,
+26:01 | then have it go wrong and not know it.
+26:04 | And we'll talk later in the term about dozens
+26:06 | of different tricks, but the main thing to keep in mind
+26:09 | is the general principle that people are dumb.
+26:14 | And will make mistakes.
+26:16 | And therefore, you write your programs
+26:17 | so that catastrophes don't occur when those mistakes are made.
+26:22 | PROFESSOR ERIC GRIMSON: Good.
+26:24 | As John said, we're going to come back to it.
+26:26 | But that's what, basically the goal here.
+26:28 | And you saw me put my hands up when I said stupid programmer?
+26:30 | I've certainly written code that has this problem,
+26:33 | I've tried to use my own code that has this problem,
+26:35 | and good to us, right, good hygiene,
+26:38 | I'm going to use that word again here,
+26:40 | of getting into the habit of writing defensive code up
+26:42 | front, it's part of that collection of things
+26:44 | that you ought to do, is a great thing to do.
+26:46 | I stress it in particular because, I
+26:48 | know you're all going to get into this stage;
+26:50 | you've got a problem set due in a couple of hours,
+26:54 | you're still writing the code, you don't want to waste time,
+26:56 | and I'm going to use quotes on "waste time", doing those
+26:59 | extra things to do the defensive programming,
+27:01 | you just want to get the darn thing done.
+27:02 | It's a bad habit to get into, because when you come back
+27:05 | to it, it may haunt you later on down the road.
+27:07 | So really get into that notion of trying
+27:08 | to be defensive as you program.
+27:11 | OK.
+27:12 | The other thing I want to say here,
+27:13 | is that this style of program we just wrote,
+27:17 | is actually a very common one.
+27:18 | And we're going to give it a nice little name, often
+27:26 | referred to as exhaustive enumeration.
+27:29 | What does that mean?
+27:30 | It says, I'm literally walking through all possible values
+27:34 | of some parameter, some element of the computation,
+27:38 | testing everything until I find the right answer.
+27:40 | All right, so it's, you know, again, I
+27:42 | can even write that down, essentially saying,
+27:44 | try all reasonable values until you find the solution.
+28:01 | And you might say, well, wait a minute,
+28:02 | isn't that going to be really expensive?
+28:05 | And the answer is, yeah, I guess, if you want to search,
+28:07 | you know, all the pages on Google, one by one,
+28:10 | yes, probably, it's going to take a while.
+28:12 | But there are an awful lot of computations for which this
+28:14 | is the right way to do it.
+28:15 | You just want to exhaustively go through things.
+28:17 | And just to give you a sense of that,
+28:19 | let me show you an example.
+28:20 | I'm going to change this, all right?
+28:25 | Nice big number.
+28:30 | You know, computers are fast these days.
+28:32 | I can make this even bigger, it's
+28:33 | going to do it fairly quickly, so it really
+28:34 | is quick to do this.
+28:35 | It doesn't mean that exhaustive enumeration is a bad idea,
+28:38 | it is often the right idea to use.
+28:40 | So we've seen one example of this,
+28:42 | this idea of walking through all the integers looking
+28:44 | for the square root.
+28:46 | Let's look at some other examples,
+28:47 | in order to try and see other ways in which we could do it.
+28:52 | OK.
+28:52 | In particular, let's go over to here,
+28:55 | and let me show you a second example.
+28:58 | And let me comment that out.
+29:07 | Here's another problem that I'd like to solve.
+29:11 | Suppose I want to find all the divisors of some integer,
+29:13 | I want to figure out what all the divisors are
+29:17 | that go evenly into it.
+29:19 | Again, same kind of reasoning says, given some value
+29:21 | x, I happened to pick a small one here, what's an easy way
+29:23 | to do this?
+29:24 | Well, let's just start at one.
+29:27 | That's my variable I'm going to change and check.
+29:29 | Does it divide evenly into x?
+29:32 | If it does, print it out.
+29:33 | Move on to the next one, print it out.
+29:35 | So again, I can do the same kind of thing here,
+29:37 | you can see that, in fact, let's just
+29:39 | run it to make sure it does the right thing, OK?
+29:44 | In fact, if I go back to the code,
+29:47 | what did I decide to do here?
+29:48 | I say, starting with an initialization of I,
+29:51 | there's my first step, as equal to 1,
+29:53 | I'm going to walk through a little loop
+29:55 | where I check, as long-- first of all,
+29:57 | as long as I is less than x, so there's my end test,
+29:59 | I'm going to do something.
+30:00 | And in this case, the something is,
+30:02 | I'm going to look to see if I divides x evenly.
+30:06 | So I'll remind you of that amp-- sorry,
+30:07 | that percent sign there, that says if x divided by I
+30:11 | has a 0 remainder, because this gives me back the remainder,
+30:13 | if that's equal to 0, print something out.
+30:16 | And there's my nice increment.
+30:19 | Simple little piece of code.
+30:20 | Notice again, exactly the same form:
+30:22 | I picked the thing I wanted to vary,
+30:24 | I initialized it outside the loop,
+30:26 | I have a test to see when I'm done,
+30:28 | and then I've got a set of instructions
+30:29 | I'm doing every time inside the loop.
+30:31 | In this case, it's doing the check on the remainder
+30:33 | and printing them out.
+30:34 | And when I'm done with the whole thing,
+30:36 | before I end the increment of the variable,
+30:38 | you know, when I'm done, I'm just not returning anything
+30:40 | out.
+30:42 | OK.
+30:42 | So now you've seen two simple examples.
+30:45 | Let me generalize this.
+30:47 | In this case, my incrementer was just adding 1 to an integer,
+30:51 | it's a pretty straightforward thing to do.
+30:53 | But you can imagine thinking about this a little
+30:55 | differently.
+30:56 | If I somehow had a collection, an ordered collection of all
+30:59 | the integers, from 1 to 10, I could
+31:02 | imagine doing the same thing, where now what I'm doing
+31:05 | is, I'm starting with the first element of that collection,
+31:07 | doing something, going to the next element,
+31:09 | doing something, going to the next element, doing something,
+31:10 | I'm just walking through the sequence of elements.
+31:12 | Right?
+31:13 | And I haven't said yet, how do I get that collection,
+31:16 | but you could certainly conceptualize
+31:17 | that, if I had that collection, that would be nice thing to do.
+31:21 | That is a more common pattern.
+31:23 | That is basically saying, given some collection of data,
+31:27 | I want to have again a looping mechanism, where
+31:29 | now my process is, walk through this, the collection,
+31:32 | one element at a time.
+31:33 | And for that, we have a particular construct,
+31:41 | called a FOR loop.
+31:42 | It's going to do exactly that for us.
+31:44 | It's going to be more general than this,
+31:46 | and we're going to come back to that,
+31:47 | in fact, Professor Guttag's going to pick this up
+31:48 | in a couple of lectures, but we can talk right now
+31:50 | about the basic form.
+31:51 | The form of a FOR loop says, FOR,
+31:54 | and I'm going to put little angle braces in here
+31:56 | again, to say, for some variable,
+31:57 | like a name I want to get to it, in some collection,
+32:08 | and then I have a block of code.
+32:14 | And what it's saying semantically is,
+32:17 | using that variable as my placeholder,
+32:19 | have it walk through this collection,
+32:21 | starting at the first thing, execute that code, then
+32:23 | the next thing, execute that code, and so on.
+32:26 | One of the advantages of this is,
+32:29 | that I don't have to worry about explicitly
+32:32 | updating my variable.
+32:33 | That happens for me automatically.
+32:35 | And that's very nice, because this
+32:36 | allows me to be sure that my FOR loop is going to terminate.
+32:39 | And because, as long as this collection is finite,
+32:43 | this thing is just going to walk through.
+32:45 | All right?
+32:46 | So, if I show you, for example, I'm
+32:48 | going to comment this one out in the usual manner,
+32:53 | and let's look at uncommenting that, there
+33:03 | is the same piece of code.
+33:07 | Now, I slung something by you, or snuck something
+33:09 | by you, which is, I hadn't said how
+33:10 | to generate the set of integers from 1 to 10.
+33:14 | So, range is a built-in Python function.
+33:16 | I'm going to come back to it in a second.
+33:18 | For now, just think of it as saying, it
+33:20 | gives you all the integers from 1 up to, but not including, x.
+33:25 | OK.
+33:26 | But now you can see the form.
+33:27 | This now says, OK, let I start as the first thing in there,
+33:30 | which is 1, and then do exactly as I did before,
+33:32 | the same thing, but notice I don't need
+33:34 | to say how to increment it.
+33:36 | It's happening automatically for me.
+33:38 | OK.
+33:40 | In fact, if I run it, it does the same thing,
+33:45 | which is what I would expect.
+33:47 | OK.
+33:49 | Now, the advantage of the FOR, as I said, is that it has,
+33:54 | then, if you like, a cleaner way of reading it.
+33:57 | I don't have to worry about, do I initialize it,
+33:59 | did I forget to initialize it outside the loop,
+34:01 | it happens automatically just by the syntax of it,
+34:03 | right there, that's going to start with the first element.
+34:06 | I don't have to worry about, did I
+34:07 | remember to put the incrementer in,
+34:08 | it's going to automatically walk it's way through there.
+34:11 | Second advantage of the FOR is, that right now, we're
+34:13 | thinking about it just as a sequence of integers.
+34:15 | We could imagine it's just counting its way through.
+34:17 | But we're going to see, very shortly,
+34:19 | that in fact those collections could be arbitrary.
+34:21 | We're going to have other ways of building them,
+34:23 | but it could be a collection of all the primes.
+34:25 | Hm.
+34:26 | There's an interesting thing to do.
+34:27 | It could be a collection of, ah, you know, I don't know,
+34:30 | batting averages of somebody or other.
+34:32 | It could be arbitrary collections
+34:34 | that you've come up with in other ways.
+34:35 | The FOR is, again, going to let you walk through that thing.
+34:38 | So it does not have to be something
+34:39 | that could be described procedurally, such as add 1
+34:43 | just to the previous element.
+34:45 | It could be any arbitrary collection.
+34:47 | And if I were to use that again, I'd
+34:48 | just put it on your handout, I could go back
+34:50 | and rewrite that thing that I had previously
+34:52 | for finding the square roots of the perfect squares,
+34:55 | just using the FOR loop.
+34:57 | OK.
+34:58 | What I want to do, though, is go on to-- or, sorry,
+35:01 | go back to-- my divisor example. [UNINTELLIGIBLE PHRASE] OK.
+35:07 | Try again.
+35:08 | I've got a number, I want to find the divisors.
+35:09 | Right now, what my code is doing is,
+35:11 | it's printing them up for me, which is useful.
+35:14 | But imagine I actually wanted to gather them together.
+35:17 | I wanted to collect them, so I could do something with them.
+35:20 | I might want to add them up.
+35:21 | Might want to multiply them together.
+35:22 | Might want to do, I don't know, something else with them,
+35:24 | find common divisors, of things by looking at them.
+35:27 | I need, in fact, a way to make explicit,
+35:30 | what I can't do that with range, is
+35:31 | I need a way to collect things together.
+35:34 | And that's going to be the first of our more compound data
+35:37 | structures, and we have exactly such a structure,
+35:40 | and it's called a tuple.
+35:49 | This is an ordered sequence of elements.
+35:59 | Now, I'm going to actually add something
+36:01 | to it that's going to make sense in a little while,
+36:03 | or in a couple of lectures, which is, it is immutable.
+36:09 | Meaning, I cannot change it, and we'll see why that's important
+36:12 | later on.
+36:12 | But for now, tuple is this ordered sequence of structures.
+36:17 | OK.
+36:18 | And how do I create them?
+36:20 | Well, the representation is, following a square bracket,
+36:32 | followed by a sequence of elements, separated by commas,
+36:35 | followed by a closed square bracket.
+36:38 | And that is literally what I said,
+36:39 | it is an ordered sequence of elements,
+36:41 | you can see where they are.
+36:44 | OK?
+36:44 | So, let me do a little example of this.
+36:46 | If I go back over here, let's define-- er,
+36:53 | can't type-- I can look at the value of test,
+37:02 | it's an ordered sequence.
+37:03 | I need to get elements out of it.
+37:05 | So again, I have a way of doing that.
+37:07 | In particular, I can ask for the zeroth element of test.
+37:12 | OK, notice, I'm putting a square bracket around it,
+37:16 | and it gives me-- I know this sounds confusing,
+37:18 | but this is a long tradition, it gives me-- ah, yes.
+37:21 | STUDENT: [UNINTELLIGIBLE]
+37:24 | PROFESSOR ERIC GRIMSON: Sorry?
+37:31 | STUDENT: [UNINTELLIGIBLE]
+37:32 | PROFESSOR ERIC GRIMSON: I created a list here?
+37:33 | Ah, thank you.
+37:35 | I'm glad you guys are on top of it.
+37:37 | You're saying I want that.
+37:40 | Is that right, John?
+37:43 | Yes?
+37:43 | OK.
+37:44 | Sorry.
+37:45 | You're going to see why this was a mistake in a little while.
+37:48 | I did not want to make a list, I wanted
+37:49 | to create a tuple thank you for catching it.
+37:51 | I want parens, not square brackets there.
+37:53 | You'll also see in a little while why both of these things
+37:56 | would work this way, but it's not what I wanted.
+37:58 | OK?
+37:59 | So I guess I should go back, and let
+38:00 | me do this correctly this way.
+38:09 | Again, I can look at test, and I guess test now
+38:13 | if I want to get the element out-- angle
+38:16 | bracket or square bracket?
+38:18 | I still want square bracket, that's what I thought-- OK.
+38:21 | Now I can go back to where I was,
+38:22 | which is a strange piece of history, which
+38:24 | is, we start counting at 0.
+38:27 | So the-- I hate to say it this way,
+38:29 | the first element of this tuple is at position 0, or index 0,
+38:33 | OK?-- so I can get the zeroth one out, I can get, if I do 2,
+38:39 | I get the third thing out, because it goes 0, 1, 2--
+38:42 | notice, however, if I do something that tries to go
+38:46 | outside the length of the tuple it complains, which is right.
+38:53 | Tuples? also have another nice structure,
+38:54 | which is, I can go the other direction, which
+38:56 | is, if I want to get the last element of that tuple
+39:02 | I give it a negative index.
+39:03 | So, imagine, you think of it as, is it starting right, just
+39:05 | before the beginning of the thing,
+39:07 | if I give it a 0 it's going to take the first one,
+39:09 | if I give it a 1, it's going to take the next one,
+39:11 | but I can go the other direction, if I give it a -1,
+39:14 | it picks up the last element of the tuple.
+39:15 | And again, I can go -2, go back.
+39:21 | So this is what we would call selection.
+39:27 | We can do things like foo of 0 to get out
+39:31 | the particular element.
+39:34 | I can also pick up pieces of that tuple.
+39:38 | Again I want to show you the format here.
+39:40 | If I give it this strange expression,
+39:45 | this is saying I want to get the piece of the tuple
+39:47 | starting at index 1, it's going to be the second element,
+39:51 | and going up to but not including index 3.
+39:53 | And it gives me back that piece.
+39:58 | Actually a copy of that piece of the tuple.
+40:02 | This is called slicing.
+40:13 | And then just to complete this.
+40:15 | Two other nice things you can do with slices are you
+40:18 | can get the beginning or the end of tuple.
+40:22 | So, for example, if I say TEST and I don't give it a start
+40:25 | but I give it an end, then it gives me all the elements
+40:28 | up to that point.
+40:30 | And I can obviously do the other direction
+40:32 | which is I can say skip to index 2 and all the remaining pieces.
+40:42 | This lets me slice out, if you like,
+40:45 | the front part or back part or a middle part of the tuple as I
+40:48 | go along.
+40:50 | What in the world does that have to do with my divisor example?
+40:55 | Well, actually, before I do that let me in fact fill in a piece
+40:57 | here.
+40:57 | Which is remember I said range we could think of conceptually
+41:00 | as a tuple -- or sorry as a sequence of these things.
+41:07 | In fact it gives me back, now I hate this,
+41:09 | it's actually a list it's not a tuple.
+41:12 | But for now think of it as giving you
+41:13 | back an explicit version of that representation of all
+41:17 | those elements.
+41:18 | You'll see why I'm going to make that distinction
+41:20 | in a couple of lectures.
+41:22 | All right.
+41:23 | What does this have to do with my divisor example?
+41:25 | This says I can make tuples, but imagine now going back
+41:28 | to my divisor example and I want to gather up
+41:31 | the elements as I go along.
+41:33 | I ought to be able to do that by in fact just adding
+41:36 | the pieces in.
+41:38 | And that's what I'm going to do over here.
+41:42 | Which is, let me comment that out, let me uncomment that.
+41:56 | And I guess I need the same thing here, right?
+41:58 | I need parens not, thank you.
+42:04 | You can tell I'm an old time list packer.
+42:06 | I really do love these things.
+42:08 | And is that right, John?
+42:15 | OK, so my apologies that your handout is wrong.
+42:17 | I did not think to check about the difference
+42:19 | between these things.
+42:20 | Nonetheless, having done that, let's
+42:22 | look at what I'm going to do.
+42:24 | I now want to run a loop where I need
+42:26 | to collect things together.
+42:28 | I'm going to give a name to that.
+42:29 | And what you see there is I'm going to call divisors
+42:31 | initially an empty tuple, something has nothing in it.
+42:35 | Right here.
+42:35 | And then I'm going to run through the same loop
+42:37 | as before, going through this set of things, doing the check.
+42:40 | Now what I'd like to do, every time
+42:41 | I find a divisor I'd like to gather it together.
+42:44 | So I'm going to create a tuple of one element, the value of i.
+42:49 | And then, ah, cool.
+42:51 | Here's that addition operation that's badly overloaded.
+42:54 | This is why Professor Guttag likes and I don't.
+42:56 | Because given that this is a tuple and that's a tuple,
+43:01 | I can just add them together.
+43:02 | That is concatenate them, if you like, one on the end of it.
+43:06 | And if I keep doing that, when I'm done divisor
+43:09 | will be a collection of things.
+43:10 | So let me just run it.
+43:15 | All right.
+43:17 | This is what I get for trying to --
+43:20 | STUDENT There should be a comment
+43:22 | after the i in parentheses.
+43:22 | PROFESSOR ERIC GRIMSON: Thank you.
+43:24 | Right there.
+43:26 | All right, we'll try this again.
+43:31 | OK.
+43:35 | And there are the set of devices.
+43:37 | Thank you.
+43:37 | Who did that?
+43:38 | Somebody gets, no?
+43:41 | Yours?
+43:41 | Thank you.
+43:42 | Nice catch too by the way.
+43:44 | All right, so now that you can see that I can screw up
+43:46 | programming, which I just did.
+43:47 | But we fixed it on the fly.
+43:49 | Thank you.
+43:49 | What have we done?
+43:51 | We've now got a way of collecting things together,
+43:54 | right?
+43:55 | And this is the first version of something we'd like to use.
+43:58 | Now that I've gotten that bound as a name,
+43:59 | I could go in and do things with that.
+44:01 | I could go in and say give me the fourth divisor,
+44:04 | give me the second through fifth divisor.
+44:06 | Again as I suggested if I've got two integers
+44:08 | and I want to find common divisors
+44:10 | I could take those two lists and walk through them.
+44:11 | I shouldn't say list, those two tuples,
+44:12 | and walk through them to find the pieces that match up.
+44:15 | So I've got a way now of gathering data together.
+44:19 | The last thing I want to do is to say all right,
+44:21 | now that we've got this idea of being able to collect things
+44:25 | into collections, we've got the ability now to use looping
+44:29 | structures as we did before but we can walk down then doing
+44:33 | things to them, where else might we have this need to do things
+44:37 | with looping structures?
+44:40 | And I'm going to suggest you've already seen it.
+44:43 | What's a string?
+44:45 | Well at some level it is an ordered sequence of characters.
+44:49 | Right?
+44:51 | Now it is not represented this same way.
+44:53 | You don't see strings inside these open parens
+44:55 | and closed parens.
+44:56 | You don't see strings with commas between them,
+44:59 | but it has the same kind of property.
+45:01 | It is in ordered sequence of characters.
+45:04 | We'd like to do the same thing with strings.
+45:07 | That is we'd like to be able to get pieces of them out.
+45:09 | We'd like to be able add them together or concatenate them
+45:11 | together.
+45:11 | We'd like to be able to slice them.
+45:13 | And in fact we can.
+45:17 | So strings also support things like selection, slicing,
+45:33 | and a set of other parameters, other properties.
+45:35 | And let's just look at that.
+45:36 | Again if I go back here, let me comment this out.
+45:47 | Right here are a pair of strings that I've set up, s 1 and s 2.
+45:55 | Let me just run these.
+45:57 | We can go back over here.
+46:00 | So I can see the value of s 1, it's a string.
+46:03 | I can do things like s 1 and s 2.
+46:07 | As we saw before, it simply concatenates them together
+46:09 | and gives me back a longer string.
+46:11 | But I can also ask for parts of this.
+46:13 | So I can, for example, say give me the first element
+46:20 | of string 1, s 1.
+46:23 | Ah, that's exactly what we would have
+46:25 | thought if this was represented as an ordered sequence
+46:28 | of things.
+46:29 | Again I should have said first, index 0, the first one.
+46:32 | I can similarly go in and say I'd
+46:34 | like all the things between index 2 and index 4.
+46:41 | And again, remember what that does.
+46:42 | Index 2 says start a 0.
+46:44 | 1, 2.
+46:44 | So a, b, c.
+46:47 | And then it goes up to but not including index 4
+46:49 | so it gets c and d and then it stops.
+46:53 | I can similarly, just as I did with the tuples,
+46:55 | I can ask for everything up to some point
+47:01 | or I can ask for everything starting at some point
+47:03 | and carrying on.
+47:06 | Now what you're seeing here then is the beginning
+47:09 | of complex data structures.
+47:11 | And the nice thing is that there's
+47:13 | a shared behavior there.
+47:14 | Just as I can have tuples as an ordered collection of things,
+47:17 | strings behave as an ordered collection of things.
+47:20 | So I can start thinking about doing manipulation on strings.
+47:23 | I can concatenate them together, I can find pieces inside
+47:27 | of them, I could actually do things with them.
+47:28 | And let me show you just a simple little example
+47:30 | of something I might want to do.
+47:35 | Suppose I take, I better comment this one out
+47:42 | or it's going to spit it out.
+47:44 | Let me comment that out.
+47:47 | Suppose I take a number.
+47:50 | I'd like to add up all the digits inside of the number.
+47:53 | I can use the tools I've just described
+47:55 | in order to capture that.
+47:56 | So what would I want to do?
+47:57 | I'd like to somehow walk down each of the digits
+47:59 | one at a time and add them up.
+48:02 | Ah, that's a looping mechanism, right?
+48:04 | I need to have some way of walking through them.
+48:06 | An easy way to do it would be inside of a FOR.
+48:08 | And what would I like to do?
+48:10 | Well I need to take that number and I'm
+48:12 | going to turn it into a string.
+48:13 | So notice what I'm going to do right here.
+48:16 | I take that number and convert it into a string.
+48:19 | That's an example of that type conversion we did earlier on.
+48:22 | By doing that it makes it possible for me to treat it
+48:25 | as an ordered sequence of characters.
+48:27 | And so what's the loop going to do?
+48:29 | It's going to say FOR c, which was
+48:30 | my name for the character in that string.
+48:32 | That means starting at the first one,
+48:34 | I'm going to do something to it.
+48:35 | And what am I'm going to do?
+48:37 | I'm going to take that character,
+48:38 | convert it back into an integer, and add it into some digits.
+48:43 | And I've done a little short hand here,
+48:45 | which is I should have said some digits is
+48:47 | equal to some digits plus this.
+48:49 | But that little short hand there is
+48:51 | doing exactly the same thing.
+48:52 | It is adding that value into some digits
+48:54 | and putting it back or signing it back into some digits.
+48:57 | And I'll walk through that loop and when
+48:59 | I'm done I can print out the total thing does.
+49:04 | And if I do that, I get out what I would expect.
+49:10 | So what have I done?
+49:12 | We've now generalized the idea of iteration
+49:15 | into this little pattern.
+49:17 | Again as I said this is my version of it, but you can see,
+49:19 | every one of the examples we've used so far
+49:21 | has that pattern to it.
+49:22 | Figure out what I'm trying to walk through.
+49:24 | What's the collection of things I'm trying to walk through.
+49:26 | Figure out what I want to do at each stage.
+49:28 | Figure out what the end test is.
+49:29 | Figure out what I'm going to do at the end of it.
+49:31 | I can write it explicitly.
+49:32 | I can write it inside of a FOR loop.
+49:34 | And we've started to add, and we'll
+49:36 | see a lot more of this, examples of collections of structures
+49:40 | so that we don't just have to do something that
+49:42 | can be easily described as walking through a set of things
+49:44 | but can actually be a collection that you walk through.
+49:47 | The last thing I want to point out to you
+49:49 | is, I started out with this list.
+49:54 | I haven't added anything to the list, right?
+49:58 | I mean I've got a different kind of looping mechanism.
+50:00 | I guess I should say that's not quite true.
+50:02 | I've added the ability to have more complex data
+50:04 | structures here.
+50:06 | But I dropped a hint in the first lecture
+50:08 | about what you could computer with things.
+50:10 | In fact if you think for a second about that list,
+50:13 | you could ask what can I compute with just
+50:15 | that set of constructs?
+50:17 | And the answer is basically anything.
+50:19 | This is an example of what is referred
+50:21 | to frequently as being a Turing complete language.
+50:26 | That is to say with just those set of constructs, anything
+50:29 | you can describe algorithmically you can compute
+50:32 | with that set of constructs.
+50:34 | So there's good news and bad news.
+50:36 | The good news is it sounds like we're done.
+50:38 | Class is cancelled until final exam because this is all you
+50:41 | need to know, right?
+50:43 | The bad news is of course that's not true.
+50:44 | The real issue is to figure out how to build constructs out
+50:48 | of this that tackle particular problems,
+50:49 | but the fundamental basics of computation
+50:52 | are just captured in that set of mechanisms.
+50:55 | All right, we'll see you next time.
